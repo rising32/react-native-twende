@@ -1,0 +1,23 @@
+{
+  "name": "TwendeApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "react": "^0.14.8",
+    "react-native": "^0.23.1",
+    "react-native-fbsdk": "^0.1.0",
+    "react-native-form": "^2.0.5",
+    "react-native-gmaps": "^1.0.9",
+    "react-native-maps": "^0.3.2",
+    "react-native-material-design": "^0.3.5",
+    "react-native-material-ui": "^0.4.2",
+    "react-native-push-notification": "^1.0.6",
+    "react-native-vector-icons": "^2.0.1"
+  },
+  "devDependencies": {
+    "react-native-simple-auth": "^0.3.0"
+  }
+}
