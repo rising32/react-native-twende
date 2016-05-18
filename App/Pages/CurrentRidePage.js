@@ -71,7 +71,9 @@ var RequestRidePage = React.createClass({
 
         var title = "Driver has accepted";
         var message = `${this.props.driver.name}: I'm on my way...`;
-        NotifyAction.local(title, message);
+        window.setTimeout(() => {
+            NotifyAction.local(title, message);
+        }, 5000)
     },
 
     requestRide: function () {

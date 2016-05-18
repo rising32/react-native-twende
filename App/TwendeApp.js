@@ -25,7 +25,7 @@ var DriverListPage = require('./Pages/DriverListPage');
 var DriverHomePage = require('./Pages/DriverHomePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
 
-var CurrentUserAction = require('./Actions/CurrentUserAction');
+var CurrentUserActions = require('./Actions/CurrentUserActions');
 var CurrentUserStore = require('./Stores/CurrentUserStore');
 
 var Drawer = require('./Components/Drawer');
@@ -44,7 +44,7 @@ var TwendeApp = React.createClass({
         },
 
         logout: function () {
-            CurrentUserAction.logout();
+            CurrentUserActions.logout();
             this.closeDrawer();
             this.navigator.replace({id: 'LoginPage'});
         },

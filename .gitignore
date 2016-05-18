@@ -33,10 +33,6 @@ local.properties
 node_modules/
 npm-debug.log
 
-# Other settings
+**/*.keystore
 .flowconfig
 .watchmanconfig
-
-# Secrets
-*.keystore
-**/*.keystore

@@ -7,7 +7,7 @@ var {
     Image,
     } = React;
 var TokenStore = require('../Stores/TokenStore');
-var CurrentUserAction = require('../Actions/CurrentUserAction');
+var CurrentUserActions = require('../Actions/CurrentUserActions');
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 import {colors, styles} from "../Styles";
 
@@ -28,7 +28,7 @@ var SplashPage = React.createClass({
                 });
             }
         });
-        CurrentUserAction.reloadUser();
+        CurrentUserActions.reloadUser();
     },
 
     render: function() {

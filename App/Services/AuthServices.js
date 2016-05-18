@@ -52,7 +52,7 @@ var AuthService = {
                 password: password
             })
         }).catch(function (error) {
-            throw new Error(error.message)
+            throw new Error(JSON.stringify(error))
         })
     }
 };

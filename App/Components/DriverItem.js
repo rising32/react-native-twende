@@ -11,6 +11,7 @@ var {
 
 import {colors, styles} from "../Styles";
 var IconText = require('../Components/IconText');
+var config = require('../../config');
 
 
 var DriverItem = React.createClass({
@@ -32,7 +33,7 @@ var DriverItem = React.createClass({
             <View style={styles.item}>
                 <View style={styles.item_content}>
                     <Image
-                        source={{uri: 'http://twende.loekvan.gent/' + this.props.driver.avatar}}
+                        source={{uri: config.mediaUrl + this.props.driver.avatar}}
                         style={styles.item_image}
                     />
                     <View style={{flex: 1}}>

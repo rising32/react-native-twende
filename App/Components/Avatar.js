@@ -7,13 +7,14 @@ var {
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
+var config = require('../../config');
 
 var Avatar = React.createClass({
 
     render: function () {
         return (
             <Image
-                source={{uri: 'http://twende.loekvan.gent/' + this.props.image}}
+                source={{uri: config.mediaUrl + this.props.image}}
                 style={{
                     width: 70,
                     height: 70,
