@@ -7,38 +7,57 @@ var {
 var LocalKeyStore  = require('../Stores/LocalKeyStore');
 var TokenStore  = require('../Stores/TokenStore');
 
+import { EventEmitter } from "events";
+import events from "../Constants/Events";
+import actions from "../Constants/Actions";
+import dispatcher from "../Dispatcher";
 
-var CurrentUserStore = {
-    _listeners: [],
-    _currentUser: {},
-    get: function(callback) {
+
+class CurrentUserStore extends EventEmitter {
+
+    constructor() {
+        super();
+        this._currentUser = {};
+
+    };
+
+    get() {
         return this._currentUser;
-    },
-    set: function(currentUser){
+    };
+
+    set(currentUser){
         this._currentUser = currentUser;
-        this.notifyListeners(currentUser);
-        return {};
-    },
-    setLoginError: function(error) {
-        this._currentUser = {};
-        this.notifyListeners(false);
-    },
-    clear: function(error) {
-        this._currentUser = {};
-        this.notifyListeners(false);
-    },
+        this.emit(events.currentUserLoaded, currentUser);
+    };
 
-    notifyListeners: function(currentUser){
-        for (var t = 0; t < this._listeners.length; t++) {
-            this._listeners[t](currentUser);
+    clear() {
+        this._currentUser = {};
+        this.emit(events.userLoggedOut);
+    };
+
+    error() {
+        this._currentUser = {};
+        this.emit(events.loginFailed);
+    };
+
+    handleActions(action) {
+        switch(action.type) {
+            case actions.receiveCurrentUser:
+                this.set(action.currentUser);
+                break;
+            case actions.logoutCurrentUser:
+                this.clear();
+                break;
+            case actions.errorFetchCurrentUser:
+                this.error();
+                break;
         }
-    },
-    addListener: function(listener) {
-        this._listeners.push(listener);
-    },
-    clearListeners: function(){
-        this._listeners = [];
-    }
-};
+    };
+}
 
-module.exports = CurrentUserStore;
+
+const currentUserStore = new CurrentUserStore;
+
+dispatcher.register(currentUserStore.handleActions.bind(currentUserStore));
+
+export default currentUserStore;

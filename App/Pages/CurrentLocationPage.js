@@ -4,15 +4,13 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
     View,
-    Platform,
     Text,
     TextInput,
     Navigator,
-    TouchableOpacity,
     TouchableHighlight
     } = ReactNative;
+
 var MapView = require('react-native-maps');
-var CurrentUserStore = require('../Stores/CurrentUserStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 var RideActions = require('../Actions/RideActions');
 var RideStore = require('../Stores/RideStore');
@@ -20,12 +18,14 @@ var NavIcon = require('../Components/NavIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
 import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
+import CurrentUserStore from '../Stores/CurrentUserStore';
+
 
 var CurrentLocationPage = React.createClass({
 
     getInitialState: function () {
         return {
-            currentUser: CurrentUserStore.get(),
+            currentUser: this.props.currentUser,
             origin_text: '',
             origin: {
                 latitude: -1.23825,
@@ -39,25 +39,28 @@ var CurrentLocationPage = React.createClass({
                 longitudeDelta: 0.01
             }
         }
+    },
 
+    componentWidMount: function (props) {
+        this.refreshLocation();
     },
 
     dragOrigin: function (loc) {
         var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
-        this.setState({
-            origin: loc,
-            region: {
-                latitude: loc.latitude,
-                longitude: loc.longitude,
-                latitudeDelta: this.state.region.latitudeDelta,
-                longitudeDelta: this.state.region.longitudeDelta
-            },
-            origin_text: myLoc
-        })
+        //this.setState({
+        //    origin: loc,
+        //    region: {
+        //        latitude: loc.latitude,
+        //        longitude: loc.longitude,
+        //        latitudeDelta: this.state.region.latitudeDelta,
+        //        longitudeDelta: this.state.region.longitudeDelta
+        //    },
+        //    origin_text: myLoc
+        //})
     },
 
     onRegionChange: function (region) {
-        this.setState({region: region});
+        //this.setState({region: region});
     },
 
     refreshLocation: function () {
@@ -81,32 +84,14 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    togglePickupSearch: function () {
-        if (this.state.pickupSearch) {
-            this.setState({pickupSearch: false});
-        } else {
-            this.setState({pickupSearch: true});
-
-        }
-    },
-
-    setPickupLocation: function () {
-        this.setState({pickupSearch: false})
-    },
-
     nextStep: function () {
         var navigator = this.props.navigator;
         var ride = {
             origin:      this.state.origin,
             origin_text: this.state.origin_text
         };
-
         RideActions.create(ride);
         navigator.replace({id: 'DriverListPage'});
-    },
-
-    componentDidMount: function (props) {
-        this.refreshLocation();
     },
 
     render: function () {
@@ -121,48 +106,8 @@ var CurrentLocationPage = React.createClass({
         );
     },
 
-
-    renderPickupLocation: function () {
-        if (this.state.pickupSearch) {
-            return (
-                <View style={styles.map_info_container}>
-                    <Text style={styles.map_text}>
-                        Where can I pick you up?
-                    </Text>
-                    <View style={{borderWidth: 3, borderColor: 'green'}}>
-                        <TextInput
-                            placeholder={"Pickup location"}
-                            autoCorrect={false}
-                            onChangeText={(text) => this.setState({origin_text: text})}
-                            style={styles.text_input}
-                            value={this.state.origin_text}
-                        />
-                    </View>
-                    <TouchableHighlight
-                        style={styles.primary_button}
-                        onPress={this.togglePickupSearch}
-                    >
-                        <Text style={styles.primary_button_text}>SET</Text>
-                    </TouchableHighlight>
-                </View>
-            );
-        } else {
-            return (
-                <View style={styles.map_info_container}>
-                    <Text style={styles.map_text}>
-                        Pick-up Location
-                    </Text>
-                    <Text style={styles.map_title}>
-                        {this.state.origin_text}
-                    </Text>
-                </View>
-            );
-        }
-    },
-
     renderScene: function (route, navigator) {
         var locationInput = null;
-        var pickupLocation = this.renderPickupLocation();
         return (
             <View style={styles.page}>
                 <View style={styles.map}>
@@ -189,7 +134,14 @@ var CurrentLocationPage = React.createClass({
                             </View>
                         </TouchableHighlight>
 
-                        {pickupLocation}
+                        <View style={styles.map_info_container}>
+                            <Text style={styles.map_text}>
+                                Pick-up Location
+                            </Text>
+                            <Text style={styles.map_title}>
+                                {this.state.origin_text}
+                            </Text>
+                        </View>
 
                         <TouchableHighlight
                             onPress={this.refreshLocation}

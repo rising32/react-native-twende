@@ -6,6 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "events": "^1.1.0",
+    "flux": "^2.1.1",
+    "object-assign": "^4.1.0",
     "react": "^0.14.8",
     "react-native": "^0.23.1",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",

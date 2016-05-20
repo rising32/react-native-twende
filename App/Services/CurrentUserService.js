@@ -14,26 +14,24 @@ var CurrentUserService = {
         };
     },
 
-    getProfile: function (token) {
+    reloadCurrentUser: function (token, resolve, reject) {
         fetch(config.api.profile, {
             method: 'GET',
             headers: this._headers(token),
             timeout: 3000
-
         }).then((response) => {
             if (response.status !== 200) {
-                alert('Error getting profile: ' + JSON.stringify(error));
-                CurrentUserStore.setLoginError();
+                reject(response)
             }
             return response.json();
-        }).then((profile) => {
-            CurrentUserStore.set(profile);
-            return profile
+        }).then((currentUser) => {
+            resolve(currentUser);
         }).catch((error) => {
-            console.log('Error getting profile: ' + JSON.stringify(error));
+            reject(error)
         });
     },
-    updateUser: function (currentUser) {
+
+    updateCurrentUser: function (currentUser, resolve, reject) {
         if (currentUser.picture) {
             currentUser.avatar = currentUser.picture;
         } else {
@@ -46,17 +44,39 @@ var CurrentUserService = {
             timeout: 3000
         }).then((response) => {
             if (response.status !== 200) {
-                alert('Error saving profile: ' + JSON.stringify(response));
-                alert('Error saving profile: ' + JSON.stringify(response));
+                reject(response);
             }
             return response.json();
-        }).then((profile) => {
-            CurrentUserStore.set(profile);
-            return profile
+        }).then((currentUser) => {
+            resolve(currentUser);
         }).catch((error) => {
-            //alert('Error getting saving: ' + error);
+            reject(error);
         });
-    }
+    },
+
+    loginCurrentUser: function (credentials, resolve, reject) {
+        fetch(config.api.token, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        }).then((response) => {
+            if (response.status !== 200) {
+                reject(response)
+            }
+            return response.json()
+        }).then((data) => {
+            var token = data.token;
+            TokenStore.set(token, () => {
+                this.reloadCurrentUser(token, resolve, reject);
+            });
+        }).catch((error) => {
+            reject(error);
+        });
+    },
+
 
 };
 

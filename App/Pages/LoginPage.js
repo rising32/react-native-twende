@@ -10,44 +10,38 @@ var {
     TouchableHighlight,
     } = React;
 
-
-var AuthServices = require('../Services/AuthServices');
-var CurrentUserStore = require('../Stores/CurrentUserStore');
 import {colors, styles} from "../Styles";
 var IconText = require('../Components/IconText');
 const FBSDK = require('react-native-fbsdk');
 const {
     LoginButton,
     } = FBSDK;
+import events from "../Constants/Events";
+import Dispatcher from "../Dispatcher";
+import CurrentUserStore from '../Stores/CurrentUserStore';
+import { loginCurrentUser }  from '../Actions/CurrentUserActions';
+
 
 var LoginPage = React.createClass({
 
-    componentWillMount: function (props) {
-        CurrentUserStore.addListener((currentUser) => {
-            this.setState({
-                loading: false
-            });
-            if (currentUser) {
-                if (currentUser.is_driver) {
-                    this.props.navigator.push({id: 'DriverHomePage'});
-                } else {
-                    this.props.navigator.push({id: 'DriverListPage'});
-                }
-            } else {
-                this.setState({error: true, password: ''});
-            }
-        });
-        this.state = {
+    getInitialState: function() {
+        return {
             error: false,
             loading: false,
-            currentUser: null,
+            currentUser: {},
             username: 'test',
             password: 'test'
         };
     },
 
-    componentWillUnmount: function () {
-        //CurrentUserStore.clearListeners();
+    componentDidMount: function (props) {
+        CurrentUserStore.on(events.loginFailed, (error) => {
+            this.setState({
+                currentUser: {},
+                error: true
+            });
+        });
+
     },
 
     login: function () {
@@ -55,8 +49,11 @@ var LoginPage = React.createClass({
             loading: true,
             error: false
         });
-        console.log('logging in...');
-        AuthServices.login(this.state.username, this.state.password);
+
+        loginCurrentUser(
+            this.state.username,
+            this.state.password
+        );
     },
 
     render: function () {
@@ -75,6 +72,7 @@ var LoginPage = React.createClass({
         return (
             <View style={[styles.page, styles.page_full, styles.card]}>
                 {error}
+                <Text>Hierrr: {this.state.error}</Text>
                 <TextInput
                     placeholder={"Username"}
                     autoCorrect={false}

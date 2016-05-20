@@ -31,7 +31,6 @@ var DriverHomePage = React.createClass({
     getInitialState: function(props) {
         return {
             position: {},
-            currentUser: {},
             items: []
         }
     },
@@ -45,7 +44,7 @@ var DriverHomePage = React.createClass({
         RequestStore.addListener((items) => {
             this.setState({items: items});
         });
-        this.setState({currentUser: this.props.currentUser});
+        this.setState({currentUser: this.props.state.currentUser});
         this.refreshItems();
 
     },
@@ -117,7 +116,7 @@ var DriverHomePage = React.createClass({
                     </Text>
                     <MKSwitch
                         color={colors.action}
-                        checked={this.state.currentUser.is_available}
+                        checked={this.state.props.currentUser.is_available}
                     />
                     <Text>
                         Available
@@ -144,7 +143,6 @@ var NavigationBarRouteMapper = {
         return null;
     },
     Title(route, navigator, index, nextState) {
-        this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
                 DRIVER HOME

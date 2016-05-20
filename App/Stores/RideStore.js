@@ -5,6 +5,8 @@ var {
   AsyncStorage
 } = React;
 var LocalKeyStore  = require('../Stores/LocalKeyStore');
+import { EventEmitter } from "events";
+import {events} from "../Constants/Events";
 
 
 var RideStore = {

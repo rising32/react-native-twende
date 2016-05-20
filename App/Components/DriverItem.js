@@ -16,10 +16,6 @@ var config = require('../../config');
 
 var DriverItem = React.createClass({
 
-    showDriverDetails: function(){
-        alert(`Show details for ${this.props.driver.name}...`);
-    },
-
     fuzzyDistance: function() {
         let dist = this.props.driver.distance;
         if (dist > 1000) {

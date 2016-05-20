@@ -1,12 +1,19 @@
+'use strict';
+
+var React = require('react-native');
+var {
+    AsyncStorage
+} = React;
+
 var DriverService = require('../Services/DriverService');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 
-var DriverActions = {
-    loadList: function () {
-        GeoLocationStore.refresh((position) => {
-            DriverService.getList(position);
-        });
-    }
-};
+import dispatcher from "../Dispatcher";
+import actions from "../Constants/Actions";
 
-module.exports = DriverActions;
+
+export function loadDriverList() {
+    GeoLocationStore.refresh((position) => {
+        DriverService.getList(position);
+    });
+}

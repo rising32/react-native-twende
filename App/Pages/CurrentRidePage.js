@@ -151,7 +151,6 @@ var NavigationBarRouteMapper = {
     RightButton(route, navigator, index, nextState) {
     },
     Title(route, navigator, index, nextState) {
-        this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
                 MY RIDE

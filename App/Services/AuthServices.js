@@ -3,6 +3,7 @@ var TokenStore = require('../Stores/TokenStore');
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var CurrentUserService = require('../Services/CurrentUserService');
 var ApiClient = require('../Services/ApiClient');
+import {events} from "../Constants/Events";
 
 
 var AuthService = {
@@ -20,7 +21,8 @@ var AuthService = {
             })
         }).then((response) => {
             if (response.status !== 200) {
-                CurrentUserStore.setLoginError();
+
+                //this.eventEmitter.emit(events.loginFailed, {error: response.json()});
             }
             return response.json()
         }).then((data) => {
@@ -29,7 +31,7 @@ var AuthService = {
                 CurrentUserService.getProfile(token);
             });
         }).catch((error) => {
-            console.log('Login error')
+            this.eventEmitter.emit(events.loginFailed, {error: error});
         });
     },
 

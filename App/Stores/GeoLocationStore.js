@@ -6,6 +6,9 @@ var {
     } = React;
 
 var Geolocation = require('Geolocation');
+import { EventEmitter } from "events";
+import {events} from "../Constants/Events";
+
 
 var GeoLocationStore = {
     _listeners: [],

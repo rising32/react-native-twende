@@ -2,28 +2,56 @@
 
 var React = require('react-native');
 var {
-    AsyncStorage
-} = React;
+    AsyncStorage,
+    } = React;
+import { EventEmitter } from "events";
+import events from "../Constants/Events";
+import actions from "../Constants/Actions";
+import dispatcher from "../Dispatcher";
 
 
-var TokenStore = {
-    _token: null,
-    get: function (callback) {
-        if (!this._token) {
-            AsyncStorage.getItem('token').then((token) => {
-                this._token = token;
-                return token;
-            });
-        } else {
+class TokenStore extends EventEmitter {
+
+    constructor() {
+        super();
+        this._token = null;
+
+    };
+
+    get(callback) {
+        if (this._token) {
             return this._token;
         }
-    },
-    set: function (token, callback) {
+        AsyncStorage.getItem('token').then((token) => {
+            this._token = token;
+            return token;
+        });
+    };
+
+    set(token, callback) {
         this._token = token;
         AsyncStorage.setItem('token', token, () => {
             callback(token);
         });
-    }
-};
+    };
 
-module.exports = TokenStore;
+    clear() {
+        AsyncStorage.removeItem('token');
+        this._token = null;
+    };
+
+    handleActions(action) {
+        switch(action.type) {
+            case actions.logoutCurrentUser:
+                this.clear();
+                break;
+
+        }
+    };
+}
+
+const tokenStore = new TokenStore;
+
+dispatcher.register(tokenStore.handleActions.bind(tokenStore));
+
+module.exports = tokenStore;

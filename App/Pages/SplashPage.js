@@ -7,28 +7,28 @@ var {
     Image,
     } = React;
 var TokenStore = require('../Stores/TokenStore');
-var CurrentUserActions = require('../Actions/CurrentUserActions');
-var CurrentUserStore = require('../Stores/CurrentUserStore');
 import {colors, styles} from "../Styles";
+
+import events from "../Constants/Events";
+import CurrentUserStore from '../Stores/CurrentUserStore';
+import { reloadCurrentUser }  from '../Actions/CurrentUserActions';
+
 
 var SplashPage = React.createClass({
 
     componentWillMount: function() {
         var navigator = this.props.navigator;
-        CurrentUserStore.addListener((currentUser) => {
-            if (currentUser) {
-                if (currentUser.is_driver) {
-                    this.props.goToPage('DriverHomePage');
-                } else {
-                    this.props.goToPage('CurrentLocationPage');
-                }
+
+        CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
+            console.log(currentUser);
+            if (currentUser.is_driver) {
+                this.props.goToPage('DriverHomePage');
             } else {
-                navigator.replace({
-                    id: 'LoginPage'
-                });
+                this.props.goToPage('CurrentLocationPage');
             }
         });
-        CurrentUserActions.reloadUser();
+
+        reloadCurrentUser();
     },
 
     render: function() {
