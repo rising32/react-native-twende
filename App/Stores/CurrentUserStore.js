@@ -37,7 +37,7 @@ class CurrentUserStore extends EventEmitter {
 
     error() {
         this._currentUser = {};
-        this.emit(events.loginFailed);
+        this.emit(events.noCurrentUser);
     };
 
     handleActions(action) {

@@ -5,6 +5,7 @@ var React = require('react-native');
 var {
     View,
     Text,
+    Form,
     TextInput,
     Navigator,
     TouchableHighlight,
@@ -24,7 +25,7 @@ import { loginCurrentUser }  from '../Actions/CurrentUserActions';
 
 var LoginPage = React.createClass({
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             error: false,
             loading: false,
@@ -41,7 +42,14 @@ var LoginPage = React.createClass({
                 error: true
             });
         });
-
+        CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
+            var currentUser = CurrentUserStore.get();
+            if (currentUser.is_driver) {
+                this.props.goToPage('DriverHomePage');
+            } else {
+                this.props.goToPage('CurrentLocationPage');
+            }
+        });
     },
 
     login: function () {
@@ -67,27 +75,38 @@ var LoginPage = React.createClass({
         );
     },
 
+    nextField: function (field) {
+        console.log(this.refs);
+        //this.refs.password.focus();
+    },
+
     renderScene: function (route, navigator) {
         var error = this.state.error ? <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
         return (
             <View style={[styles.page, styles.page_full, styles.card]}>
                 {error}
-                <Text>Hierrr: {this.state.error}</Text>
                 <TextInput
+                    scrollRef={"username"}
                     placeholder={"Username"}
                     autoCorrect={false}
                     onChangeText={(text) => this.setState({username: text})}
                     style={styles.text_input}
                     value={this.state.username}
+                    onSubmitEditing={() => this.nextField()}
                 />
                 <TextInput
                     placeholder={"Password"}
+                    returnKeyType={'go'}
                     secureTextEntry={true}
                     onChangeText={(text) => this.setState({password: text})}
                     style={styles.text_input}
                     value={this.state.password}
+                    onSubmitEditing={() => this.login()}
                 />
                 <TouchableHighlight
+                    smartScrollOptions={{
+                        type: 'text'
+                    }}
                     style={styles.primary_button}
                     onPress={this.login}
                 >

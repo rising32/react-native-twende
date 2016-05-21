@@ -18,16 +18,13 @@ var SplashPage = React.createClass({
 
     componentWillMount: function() {
         var navigator = this.props.navigator;
-
         CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
-            console.log(currentUser);
             if (currentUser.is_driver) {
                 this.props.goToPage('DriverHomePage');
             } else {
                 this.props.goToPage('CurrentLocationPage');
             }
         });
-
         reloadCurrentUser();
     },
 

@@ -21,7 +21,7 @@ var CurrentUserService = {
             timeout: 3000
         }).then((response) => {
             if (response.status !== 200) {
-                reject(response)
+                return reject(response)
             }
             return response.json();
         }).then((currentUser) => {
@@ -75,8 +75,7 @@ var CurrentUserService = {
         }).catch((error) => {
             reject(error);
         });
-    },
-
+    }
 
 };
 
