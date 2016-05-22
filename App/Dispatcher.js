@@ -1,3 +1,5 @@
-import { Dispatcher } from "flux";
+import QueueDispatcher from 'flux-queue-dispatcher';
 
-export default new Dispatcher();
+var dispatcher = new QueueDispatcher();
+export default dispatcher;
+export const dispatch = dispatcher.queueDispatch.bind(dispatcher);

@@ -12,19 +12,23 @@ var {
     TouchableHighlight
     } = ReactNative;
 var MapView = require('react-native-maps');
-var CurrentUserStore = require('../Stores/CurrentUserStore');
-var GeoLocationStore = require('../Stores/GeoLocationStore');
-var RideActions = require('../Actions/RideActions');
-var RideStore = require('../Stores/RideStore');
 var NavIcon = require('../Components/NavIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
 import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
 
+import events from "../Constants/Events";
+import DriverStore from '../Stores/DriverStore';
+import { loadDriverList } from '../Actions/DriverActions';
+
+
+
 var RequestRidePage = React.createClass({
 
     componentWillMount: function (props) {
+        this.refreshLocation();
     },
+
 
     getInitialState: function () {
         return {
@@ -99,10 +103,6 @@ var RequestRidePage = React.createClass({
         this.setState({pickupSearch: false})
     },
 
-    componentDidMount: function (props) {
-        this.refreshLocation();
-    },
-
     nextStep: function () {
         console.log("Ride requested");
         RideStore.addListener((ride) => {
@@ -121,7 +121,7 @@ var RequestRidePage = React.createClass({
             }
 
         });
-        RideActions.create(this.state);
+        //RideActions.create(this.state);
     },
 
     fuzzyDistance: function () {

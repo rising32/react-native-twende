@@ -11,6 +11,9 @@ export default {
     errorLoadingDrivers: 'ERROR_LOADING_DRIVERS',
 
     // Rides
+    errorLoadingCurrentRide: 'ERROR_LOADING_CURRENT_RIDE',
+    currentRideLoaded: 'CURRENT_RIDE_LOADED',
+    currentRideUpdated: 'CURRENT_RIDE_UPDATED'
 
 
 };

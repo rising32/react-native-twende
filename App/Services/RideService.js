@@ -1,11 +1,10 @@
 var config = require('../../config');
 var TokenStore = require('../Stores/TokenStore');
-var RideStore = require('../Stores/RideStore');
+var DriverStore = require('../Stores/DriverStore');
 var ApiClient = require('../Services/ApiClient');
 
 
 var RideService = {
-
     _headers: function(){
         var token = TokenStore.get();
         return {
@@ -14,11 +13,7 @@ var RideService = {
         };
     },
 
-    create: function (ride) {
-        if (!ride.driver) {
-            ride.driver = 0;
-        }
-
+    create: function (ride, resolve, reject) {
         return fetch(config.api.rides, {
             method: 'POST',
             headers: this._headers(),
@@ -27,20 +22,33 @@ var RideService = {
 
         }).then((response) => {
             if (response.status !== 201) {
-                alert('ServerError: ' + JSON.stringify(response));
+                reject(response);
             }
             return response.json();
         }).then((ride) => {
-            RideStore.setCurrent(ride);
-            return ride
+            return resolve(ride);
         }).catch((error) => {
-            alert('Error: ' + JSON.stringify(response));
-            throw error
+            //reject(error);
         })
     },
 
-    getCurrent: function(){
+    update: function (ride, resolve, reject) {
+        return fetch(config.api.rides, {
+            method: 'PATCH',
+            headers: this._headers(),
+            body: JSON.stringify(ride),
+            timeout: 3000
 
+        }).then((response) => {
+            if (response.status !== 200) {
+                reject(response);
+            }
+            return response.json();
+        }).then((ride) => {
+            return resolve(ride);
+        }).catch((error) => {
+            //reject(error);
+        })
     }
 };
 

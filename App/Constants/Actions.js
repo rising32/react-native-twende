@@ -1,13 +1,30 @@
 export default {
     // Auth & User
-    logoutCurrentUser: 'LOGOUT_CURRENT_USER',
-
-    fetchCurrentUser:  'FETCH_CURRENT_USER',
-    errorFetchCurrentUser: 'ERROR_FETCH_CURRENT_USER',
-    receiveCurrentUser: 'RECEIVE_CURRENT_USER',
-
-    updateCurrentUser: 'UPDATE_CURRENT_USER',
+    receiveToken:              'REVCEIVE_TOKEN',
+    logoutCurrentUser:         'LOGOUT_CURRENT_USER',
+    fetchCurrentUser:          'FETCH_CURRENT_USER',
+    errorFetchCurrentUser:     'ERROR_FETCH_CURRENT_USER',
+    receiveCurrentUser:        'RECEIVE_CURRENT_USER',
+    updateCurrentUser:         'UPDATE_CURRENT_USER',
     receiveUpdatedCurrentUser: 'RECEIVE_UPDATED_CURRENT_USER',
-    errorUpdateCurrentUser: 'ERROR_UPDATE_CURRENT_USER',
+    errorUpdateCurrentUser:    'ERROR_UPDATE_CURRENT_USER',
+
+    // Drivers
+    fetchDriverList:      'FETCH_DRIVER_LIST',
+    receiveDriverList:    'REVEICE_DRIVER_LIST',
+    errorFetchDriverList: 'ERROR_FETCH_DRIVER_LIST',
+
+
+    // Current Ride
+    createCurrentRide:      'CREATE_CURRENT_RIDE',
+    errorCreateCurrentRide: 'ERROR_CREATE_CURRENT_RIDE',
+
+    updateCurrentRide:      'UPDATE_CURRENT_RIDE',
+    errorUpdateCurrentRide: 'ERROR_UPDATE_CURRENT_RIDE',
+
+    fetchCurrentRide:       'FETCH_CURRENT_RIDE',
+    errorFetchCurrentRide:  'ERROR_FETCH_CURRENT_RIDE',
+    receiveCurrentRide:     'RECEIVE_CURRENT_RIDE',
+
 
 };

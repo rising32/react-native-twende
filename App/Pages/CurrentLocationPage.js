@@ -12,13 +12,15 @@ var {
 
 var MapView = require('react-native-maps');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
-var RideActions = require('../Actions/RideActions');
-var RideStore = require('../Stores/RideStore');
+var CurrentRideActions = require('../Actions/CurrentRideActions');
 var NavIcon = require('../Components/NavIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
 import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
 import CurrentUserStore from '../Stores/CurrentUserStore';
+import CurrentRideStore from '../Stores/CurrentRideStore';
+import { createCurrentRide } from '../Actions/CurrentRideActions';
+import events from "../Constants/Events";
 
 
 var CurrentLocationPage = React.createClass({
@@ -41,26 +43,31 @@ var CurrentLocationPage = React.createClass({
         }
     },
 
-    componentWidMount: function (props) {
+    componentWillMount: function (props) {
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         this.refreshLocation();
+    },
+
+    componentWillUnmount: function (props) {
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
     },
 
     dragOrigin: function (loc) {
         var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
-        //this.setState({
-        //    origin: loc,
-        //    region: {
-        //        latitude: loc.latitude,
-        //        longitude: loc.longitude,
-        //        latitudeDelta: this.state.region.latitudeDelta,
-        //        longitudeDelta: this.state.region.longitudeDelta
-        //    },
-        //    origin_text: myLoc
-        //})
+        this.setState({
+            origin: loc,
+            region: {
+                latitude: loc.latitude,
+                longitude: loc.longitude,
+                latitudeDelta: this.state.region.latitudeDelta,
+                longitudeDelta: this.state.region.longitudeDelta
+            },
+            origin_text: myLoc
+        });
     },
 
     onRegionChange: function (region) {
-        //this.setState({region: region});
+        this.setState({region: region});
     },
 
     refreshLocation: function () {
@@ -84,14 +91,21 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    nextStep: function () {
-        var navigator = this.props.navigator;
+    nextStep: function (currentRide) {
+        try {
+            this.props.navigator.push({id: 'DriverListPage', currentRide: currentRide});
+
+        } catch(err) {
+            alert(err)
+        }
+    },
+
+    createRide: function() {
         var ride = {
             origin:      this.state.origin,
             origin_text: this.state.origin_text
         };
-        RideActions.create(ride);
-        navigator.replace({id: 'DriverListPage'});
+        createCurrentRide(ride);
     },
 
     render: function () {
@@ -115,7 +129,7 @@ var CurrentLocationPage = React.createClass({
                         region={this.state.region}
                         showsUserLocation={true}
                         onRegionChange={this.onRegionChange}
-                        //showUserLocation={true}
+                        showUserLocation={true}
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
@@ -157,7 +171,7 @@ var CurrentLocationPage = React.createClass({
                 <View style={[styles.sheet, {flex: 1}]}>
                     <SheetIcon
                         icon={'done'}
-                        action={this.nextStep}
+                        action={this.createRide}
                     />
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>

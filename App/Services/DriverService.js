@@ -6,33 +6,34 @@ var ApiClient = require('../Services/ApiClient');
 
 var DriverService = {
 
-    getList: function (pos) {
+    _headers: function(){
         var token = TokenStore.get();
-        console.log('Using token ' + token);
-        var headers = {
-            //'Authorization': 'JWT ' + token,
+        return {
+            'Authorization': 'JWT ' + token,
             'Content-Type': 'application/json'
         };
-        var url = config.api.drivers;
-        if (pos) {
-            url += "?latitude=" + pos.latitude + "&longitude=" + pos.longitude;
-        }
-        return fetch(url, {
-            method: 'GET',
-            headers: headers,
-            timeout: 3000
+    },
 
+    loadDriverList: function (position, resolve, reject) {
+        var url = config.api.drivers;
+        if (position) {
+            url += "?latitude=" + position.latitude + "&longitude=" + position.longitude;
+        } else {
+            return reject('Need position to fetch driver list');
+        }
+        fetch(url, {
+            method: 'GET',
+            headers: this._headers(),
+            timeout: 3000
         }).then((response) => {
             if (response.status !== 200) {
-                console.log('Error ' + JSON.stringify(response));
-                throw new Error(JSON.stringify(response));
+                reject(response);
             }
             return response.json();
-        }).then((drivers) => {
-            DriverStore.setList(drivers);
-            return drivers
+        }).then((driverList) => {
+            return resolve(driverList);
         }).catch((error) => {
-            console.log('ServerError ' + JSON.stringify(error));
+            reject(error);
         })
     }
 

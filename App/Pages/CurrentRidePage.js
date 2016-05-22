@@ -9,79 +9,42 @@ var {
     Image,
     TouchableOpacity,
     } = ReactNative;
-import MapView from 'react-native-maps';
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
-var CurrentUserStore = require('../Stores/CurrentUserStore');
-var GeoLocationStore = require('../Stores/GeoLocationStore');
-var RideStore = require('../Stores/RideStore');
-var RideActions = require('../Actions/RideActions');
 var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
 var NavIcon = require('../Components/NavIcon');
 var NotifyAction = require('../Actions/NotifyActions');
 
+
 var RequestRidePage = React.createClass({
+
+    getInitialState: function() {
+        return {
+            currentUser: this.props.currentUser,
+            currentRide: this.props.currentRide,
+            driver: this.props.driver
+        }
+
+    },
 
     cancelRide: function() {
         alert('Ride Cancelled.');
         this.props.navigator.replace({id: 'DriverListPage'});
     },
 
-    componentWillMount: function(props) {
-        this.state = {
-            origin: null,
-            origin_text: '',
-            destination: null,
-            destination_text: '',
-            driver: this.props.driver.id
-        };
-    },
-
-    refreshLocation: function() {
-        this.setState({'origin_text': '- refreshing -'});
-        GeoLocationStore.refresh((loc) => {
-            var myLoc = Math.round(10000 * loc.latitude)/10000 + ' x ' + Math.round(10000 * loc.longitude)/10000;
-            this.setState({
-                'origin': {
-                    latitude: loc.latitude,
-                    logitude: loc.longitude
-                },
-                'origin_text': myLoc
-            });
-        });
-    },
-
-    togglePickupSearch: function(){
-        if (this.state.pickupSearch) {
-            this.setState({pickupSearch: false});
-        } else {
-            this.setState({pickupSearch: true});
-
-        }
-    },
-
-    setPickupLocation: function(){
-        this.setState({pickupSearch: false})
-    },
-
-    componentDidMount: function (props) {
-        this.refreshLocation();
-
+    componentWillMount: function (props) {
         var title = "Driver has accepted";
-        var message = `${this.props.driver.name}: I'm on my way...`;
+        var message = `${this.state.driver.name}: I'm on my way...`;
         window.setTimeout(() => {
             NotifyAction.local(title, message);
         }, 5000)
     },
 
-    requestRide: function () {
-        RideActions.create(this.state);
-    },
 
     fuzzyDistance: function() {
-        let dist = this.props.driver.distance;
+        let dist = this.state.driver.distance;
         if (dist > 1000) {
             return Math.round(dist / 100) / 10 + 'km';
         }
@@ -109,19 +72,19 @@ var RequestRidePage = React.createClass({
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Avatar image={this.props.currentUser.avatar} />
                         <Text style={{width: 90, textAlign: 'center', marginLeft: 20, marginRight: 20}}>
-                            We're connecting you with {this.props.driver.name}
+                            We're connecting you with {this.state.driver.name}
                         </Text>
-                        <Avatar image={this.props.driver.avatar} />
+                        <Avatar image={this.state.driver.avatar} />
                     </View>
 
                     <View style={{padding: 30}}>
                         <Link style={{margin: 10}}
-                              url={"tel:+31654631419"}
+                              url={"tel: " + this.state.driver.phone}
                               icon={"phone"}
                               size={16}
                               iconSize={24}
                               color={colors.action}
-                              text={"CALL " + this.props.driver.name.toUpperCase()}
+                              text={"CALL " + this.state.driver.name.toUpperCase()}
                         />
                         <Link style={{margin: 10}}
                               action={this.cancelRide}

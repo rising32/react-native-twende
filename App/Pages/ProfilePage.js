@@ -20,7 +20,6 @@ var SheetIcon = require('../Components/SheetIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CurrentUserActions = require('../Actions/CurrentUserActions');
-import Camera from 'react-native-camera';
 
 import { saveCurrentUser }  from '../Actions/CurrentUserActions';
 

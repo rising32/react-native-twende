@@ -8,11 +8,9 @@ var {
     ListView,
     ScrollView,
     Platform,
-    TouchableOpacity,
     } = React;
 
 var DriverActions = require('../Actions/DriverActions');
-var DriverStore = require('../Stores/DriverStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 var DriverItem = require('../Components/DriverItem');
 import {colors, styles} from "../Styles";
@@ -21,51 +19,57 @@ var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
 var Link = require('../Components/Link');
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+import events from "../Constants/Events";
+import DriverStore from '../Stores/DriverStore';
+import CurrentRideStore from '../Stores/CurrentRideStore';
+import { loadDriverList } from '../Actions/DriverActions';
+import { updateCurrentRide } from '../Actions/CurrentRideActions';
 
 
 var DriverListPage = React.createClass({
 
-    _listeners: [],
-
     getInitialState: function () {
         return {
+            currentUser: this.props.currentUser,
+            currentRide: CurrentRideStore.get(),
+            driver: {},
             items: [],
             isLoading: true
         };
     },
 
-    selectDriver: function (driver) {
-        if (Platform.OS === 'ios') {
-            this.props.navigator.push({
-                id: 'RequestRidePage',
-                passProps: {driver}
-            });
-        } else {
-            this.props.navigator.push({
-                id: 'RequestRidePage',
-                driver: driver
-            });
-        }
-    },
-
-    refreshList: function () {
-        DriverActions.loadList();
-    },
-
-    componentDidMount: function () {
-        this.listener = DriverStore.addListener((drivers) => {
-            console.log('Found drivers..');
-            this.setState({
-                items: drivers,
-                isLoading: false
-            });
+    setItems: function(items) {
+        this.setState({
+            items: items,
+            isLoading: false
         });
-        this.refreshList();
+    },
+
+    selectDriver: function (driver) {
+        var currentRide = this.state.currentRide;
+        currentRide.driver = driver.id;
+        this.setState({currentRide: currentRide});
+        this.setState({driver: driver});
+        //updateCurrentRide(ride);
+        this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, driver: driver});
+    },
+
+    nextStep: function(currentRide) {
+        this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide});
+    },
+
+    componentWillMount: function () {
+        DriverStore.on(events.driverListLoaded, this.setItems);
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
+        loadDriverList(this.state.currentRide.origin);
     },
 
     componentWillUnmount: function () {
-        DriverStore.clearListeners();
+        DriverStore.removeListener(events.driverListLoaded, this.setItems);
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
+
     },
+
     getDataSource: function (items:Array<any>):ListView.DataSource {
         return this.state.items.cloneWithRows(items);
     },
@@ -171,10 +175,10 @@ var DriverListPage = React.createClass({
 
 var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
-        return (
+         return (
             <NavIcon
-                icon={"menu"}
-                action={() => navigator.parentNavigator.props.drawer.openDrawer()}
+                icon={"arrow-back"}
+                action={() => {navigator.parentNavigator.pop()}}
             />
         );
     },

@@ -10,26 +10,31 @@ var CurrentUserStore = require('../Stores/CurrentUserStore');
 var CurrentUserService = require('../Services/CurrentUserService');
 import dispatcher from "../Dispatcher";
 import actions from "../Constants/Actions";
+import {dispatch} from '../Dispatcher';
 
 
 export function reloadCurrentUser() {
 
-    dispatcher.dispatch({
+    dispatch({
         type: actions.fetchCurrentUser
     });
 
     AsyncStorage.getItem('token').then((token) => {
+        dispatch({
+            type: actions.receiveToken,
+            token: token
+        });
         CurrentUserService.reloadCurrentUser(
             token,
             (currentUser) => {
-                dispatcher.dispatch({
+                dispatch({
                     type: actions.receiveCurrentUser,
                     currentUser: currentUser
                 })
 
             },
             (error) => {
-                dispatcher.dispatch({
+                dispatch({
                     type: actions.errorFetchCurrentUser
                 })
             }
@@ -38,27 +43,27 @@ export function reloadCurrentUser() {
 }
 
 export function logoutCurrentUser() {
-    dispatcher.dispatch({
+    dispatch({
         type: actions.logoutCurrentUser
     });
 }
 
 export function saveCurrentUser(currentUser) {
-    dispatcher.dispatch({
+    dispatch({
         type: actions.updateCurrentUser,
         currentUser: currentUser
     });
     CurrentUserService.updateCurrentUser(
         currentUser,
         (currentUser) => {
-            dispatcher.dispatch({
+            dispatch({
                 type: actions.receiveCurrentUser,
                 currentUser: currentUser
             })
 
         },
         (error) => {
-            dispatcher.dispatch({
+            dispatch({
                 type: actions.errorUpdatingCurrentUser
             })
         }
@@ -67,7 +72,7 @@ export function saveCurrentUser(currentUser) {
 
 
 export function loginCurrentUser(username, password) {
-    dispatcher.dispatch({
+    dispatch({
         type: actions.loginCurrentUser,
         username: username
     });
@@ -76,15 +81,19 @@ export function loginCurrentUser(username, password) {
             username: username,
             password: password
         },
-        (currentUser) => {
-            dispatcher.dispatch({
+        (currentUser, token) => {
+            dispatch({
+                type: actions.receiveToken,
+                token: token
+            });
+            dispatch({
                 type: actions.receiveCurrentUser,
                 currentUser: currentUser
             })
 
         },
         (error) => {
-            dispatcher.dispatch({
+            dispatch({
                 type: actions.errorFetchCurrentUser
             })
         }

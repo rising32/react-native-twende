@@ -10,10 +10,30 @@ var GeoLocationStore = require('../Stores/GeoLocationStore');
 
 import dispatcher from "../Dispatcher";
 import actions from "../Constants/Actions";
+import {dispatch} from '../Dispatcher';
 
 
-export function loadDriverList() {
+export function loadDriverList(position) {
+
+
+    dispatch({
+        type: actions.fetchDriverList
+    });
+
     GeoLocationStore.refresh((position) => {
-        DriverService.getList(position);
+        DriverService.loadDriverList(
+            position,
+            (driverList) => {
+                dispatch({
+                    type: actions.receiveDriverList,
+                    driverList: driverList
+                })
+            },
+            (error) => {
+                dispatch({
+                    type: actions.errorFetchDriverList
+                })
+            }
+        );
     });
 }

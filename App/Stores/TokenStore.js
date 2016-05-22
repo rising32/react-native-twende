@@ -30,9 +30,7 @@ class TokenStore extends EventEmitter {
 
     set(token, callback) {
         this._token = token;
-        AsyncStorage.setItem('token', token, () => {
-            callback(token);
-        });
+        AsyncStorage.setItem('token', token);
     };
 
     clear() {
@@ -42,6 +40,9 @@ class TokenStore extends EventEmitter {
 
     handleActions(action) {
         switch(action.type) {
+            case actions.receiveToken:
+                this.set(action.token);
+                break;
             case actions.logoutCurrentUser:
                 this.clear();
                 break;

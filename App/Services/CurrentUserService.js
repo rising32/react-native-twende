@@ -25,7 +25,7 @@ var CurrentUserService = {
             }
             return response.json();
         }).then((currentUser) => {
-            resolve(currentUser);
+            resolve(currentUser, token);
         }).catch((error) => {
             reject(error)
         });

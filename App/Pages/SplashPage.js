@@ -16,6 +16,12 @@ import { reloadCurrentUser }  from '../Actions/CurrentUserActions';
 
 var SplashPage = React.createClass({
 
+    getInitialState: function(){
+        return {
+            currentUser: {}
+        }
+    },
+
     componentWillMount: function() {
         var navigator = this.props.navigator;
         CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
@@ -24,6 +30,10 @@ var SplashPage = React.createClass({
             } else {
                 this.props.goToPage('CurrentLocationPage');
             }
+        });
+        CurrentUserStore.on(events.noCurrentUser, (error) => {
+            //this.setState({currentUser: {}});
+            this.props.goToPage('LoginPage');
         });
         reloadCurrentUser();
     },

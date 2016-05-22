@@ -55,17 +55,14 @@ var TwendeApp = React.createClass({
 
     getInitialState: function (props) {
         return {
-            currentUser: {}
+            currentUser: {},
+            currentRide: {}
         };
     },
 
     componentWillMount: function() {
         CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
             this.setState({currentUser: currentUser});
-        });
-        CurrentUserStore.on(events.noCurrentUser, (error) => {
-            this.setState({currentUser: {}});
-            this.goToPage('LoginPage');
         });
         CurrentUserStore.on(events.userLoggedOut, (error) => {
             this.setState({currentUser: {}});
