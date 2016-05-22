@@ -31,7 +31,7 @@ var RequestRidePage = React.createClass({
 
     cancelRide: function() {
         alert('Ride Cancelled.');
-        this.props.navigator.replace({id: 'DriverListPage'});
+        this.props.navigator.pop();
     },
 
     componentWillMount: function (props) {
@@ -106,8 +106,8 @@ var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
         return (
             <NavIcon
-                icon={"menu"}
-                action={() => navigator.parentNavigator.props.drawer.openDrawer()}
+                icon={"arrow-back"}
+                action={() => {navigator.parentNavigator.pop()}}
             />
         );
     },

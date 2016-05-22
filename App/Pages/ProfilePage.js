@@ -60,7 +60,7 @@ var ProfilePage = React.createClass({
     },
 
     takePicture: function () {
-        ImagePickerManager.launchCamera(config.camera_options, (response) => {
+        ImagePickerManager.showImagePicker(config.camera_options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             }

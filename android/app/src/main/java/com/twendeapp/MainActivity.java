@@ -9,7 +9,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 import com.facebook.react.ReactActivity;
-import com.lwansbrough.RCTCamera.*;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -56,7 +55,6 @@ public class MainActivity extends ReactActivity {
 
         ReactPackage packages[] = new ReactPackage[]{
             new MainReactPackage(),
-            new RCTCameraPackage(),
             new ImagePickerPackage(),
             new AirPackage(),
             new FBSDKPackage(mCallbackManager),
