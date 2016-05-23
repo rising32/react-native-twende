@@ -35,21 +35,29 @@ var LoginPage = React.createClass({
         };
     },
 
-    componentDidMount: function (props) {
-        CurrentUserStore.on(events.loginFailed, (error) => {
-            this.setState({
-                currentUser: {},
-                error: true
-            });
+    componentWillMount: function () {
+        CurrentUserStore.on(events.loginFailed, this.setLoginError);
+        CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
+    },
+
+    componentWillUnmount: function () {
+        CurrentUserStore.removeListener(events.loginFailed, this.setLoginError);
+        CurrentUserStore.removeListener(events.currentUserLoaded, this.goToHome);
+    },
+
+    setLoginError: function () {
+        this.setState({
+            currentUser: {},
+            error: true
         });
-        CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
-            var currentUser = CurrentUserStore.get();
-            if (currentUser.is_driver) {
-                this.props.goToPage('DriverHomePage');
-            } else {
-                this.props.goToPage('CurrentLocationPage');
-            }
-        });
+    },
+
+    goToHome: function(currentUser) {
+        if (currentUser.is_driver) {
+            this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
+        } else {
+            this.props.navigator.replace({id: 'CurrentLocationPage', currentUser: currentUser});
+        }
     },
 
     login: function () {
@@ -75,11 +83,6 @@ var LoginPage = React.createClass({
         );
     },
 
-    nextField: function (field) {
-        console.log(this.refs);
-        //this.refs.password.focus();
-    },
-
     renderScene: function (route, navigator) {
         var error = this.state.error ? <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
         return (
@@ -92,7 +95,6 @@ var LoginPage = React.createClass({
                     onChangeText={(text) => this.setState({username: text})}
                     style={styles.text_input}
                     value={this.state.username}
-                    onSubmitEditing={() => this.nextField()}
                 />
                 <TextInput
                     placeholder={"Password"}

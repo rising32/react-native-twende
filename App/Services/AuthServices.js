@@ -46,7 +46,6 @@ var AuthService = {
 
         }).then(function (response) {
             if (response.status != 201) {
-                alert('Error: ' + JSON.stringify(response));
                 throw new Error(response)
             }
             return viewModel.login({

@@ -58,20 +58,22 @@ var CurrentUserService = {
         fetch(config.api.token, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
+                //'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(credentials)
         }).then((response) => {
             if (response.status !== 200) {
                 reject(response)
+            } else {
+                return response.json();
             }
-            return response.json()
         }).then((data) => {
-            var token = data.token;
-            TokenStore.set(token, () => {
+            if (data) {
+                var token = data.token;
+                TokenStore.set(token);
                 this.reloadCurrentUser(token, resolve, reject);
-            });
+            }
         }).catch((error) => {
             reject(error);
         });

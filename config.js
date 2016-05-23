@@ -18,20 +18,17 @@ exports.api = {
 };
 
 exports.camera_options = {
-    title: 'Select Avatar', // specify null or empty string to remove the title
+    title: 'Select avatar', // specify null or empty string to remove the title
     cancelButtonTitle: 'Cancel',
-    takePhotoButtonTitle: 'Take Photo...', // specify null or empty string to remove this button
-    chooseFromLibraryButtonTitle: 'Choose from Library...', // specify null or empty string to remove this button
-    customButtons: {
-        'Choose Photo from Facebook': 'fb', // [Button Text] : [String returned upon selection]
-    },
+    takePhotoButtonTitle: 'Take picture', // specify null or empty string to remove this button
+    chooseFromLibraryButtonTitle: 'Choose from library', // specify null or empty string to remove this button
     cameraType: 'back', // 'front' or 'back'
     mediaType: 'photo', // 'photo' or 'video'
     videoQuality: 'high', // 'low', 'medium', or 'high'
     durationLimit: 10, // video recording max time in seconds
     maxWidth: 200, // photos only
     maxHeight: 200, // photos only
-    aspectX: 2, // android only - aspectX:aspectY, the cropping image's ratio of width to height
+    aspectX: 1, // android only - aspectX:aspectY, the cropping image's ratio of width to height
     aspectY: 1, // android only - aspectX:aspectY, the cropping image's ratio of width to height
     quality: 0.8, // 0 to 1, photos only
     angle: 0, // android only, photos only

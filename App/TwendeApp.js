@@ -13,6 +13,7 @@ var {
     TouchableOpacity,
     DrawerLayoutAndroid,
     TouchableHighlight,
+    DeviceEventEmitter
     } = React;
 
 var SplashPage = require('./Pages/SplashPage');
@@ -60,7 +61,7 @@ var TwendeApp = React.createClass({
         };
     },
 
-    componentWillMount: function() {
+    componentWillMount: function () {
         CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
             this.setState({currentUser: currentUser});
         });

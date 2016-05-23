@@ -28,7 +28,7 @@ class TokenStore extends EventEmitter {
         });
     };
 
-    set(token, callback) {
+    set(token) {
         this._token = token;
         AsyncStorage.setItem('token', token);
     };

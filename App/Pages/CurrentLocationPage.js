@@ -92,12 +92,7 @@ var CurrentLocationPage = React.createClass({
     },
 
     nextStep: function (currentRide) {
-        try {
-            this.props.navigator.push({id: 'DriverListPage', currentRide: currentRide});
-
-        } catch(err) {
-            alert(err)
-        }
+        this.props.navigator.push({id: 'DriverListPage', currentRide: currentRide});
     },
 
     createRide: function() {
@@ -175,7 +170,7 @@ var CurrentLocationPage = React.createClass({
                     />
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
-                            {this.state.currentUser.name}
+                            {this.state.currentUser.first_name} {this.state.currentUser.last_name}
                         </Text>
                         <Text>
                             Set your pickup location...

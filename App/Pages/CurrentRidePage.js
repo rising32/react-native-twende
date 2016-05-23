@@ -16,6 +16,7 @@ var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
 var NavIcon = require('../Components/NavIcon');
 var NotifyAction = require('../Actions/NotifyActions');
+import CurrentRideStore from '../Stores/CurrentRideStore';
 
 
 var RequestRidePage = React.createClass({
@@ -23,7 +24,7 @@ var RequestRidePage = React.createClass({
     getInitialState: function() {
         return {
             currentUser: this.props.currentUser,
-            currentRide: this.props.currentRide,
+            currentRide: CurrentRideStore.get(),
             driver: this.props.driver
         }
 
@@ -39,7 +40,7 @@ var RequestRidePage = React.createClass({
         var message = `${this.state.driver.name}: I'm on my way...`;
         window.setTimeout(() => {
             NotifyAction.local(title, message);
-        }, 5000)
+        }, 1000)
     },
 
 
@@ -67,6 +68,7 @@ var RequestRidePage = React.createClass({
     renderScene: function (route, navigator) {
         return (
             <View style={styles.page}>
+                <Text>{this.state.currentRide.status}</Text>
                 <StepBar />
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

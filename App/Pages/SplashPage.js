@@ -24,18 +24,27 @@ var SplashPage = React.createClass({
 
     componentWillMount: function() {
         var navigator = this.props.navigator;
-        CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
-            if (currentUser.is_driver) {
-                this.props.goToPage('DriverHomePage');
-            } else {
-                this.props.goToPage('CurrentLocationPage');
-            }
-        });
-        CurrentUserStore.on(events.noCurrentUser, (error) => {
-            //this.setState({currentUser: {}});
-            this.props.goToPage('LoginPage');
-        });
+        CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
+        CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
         reloadCurrentUser();
+    },
+
+    goToLogin: function () {
+        this.setState({currentUser: {}});
+        this.props.goToPage('LoginPage');
+    },
+
+    goToHome: function (currentUser) {
+        if (currentUser.is_driver) {
+            this.props.goToPage('DriverHomePage');
+        } else {
+            this.props.goToPage('CurrentLocationPage');
+        }
+    },
+
+    componentWillUnmount: function() {
+        CurrentUserStore.removeListener(events.currentUserLoaded, this.goToHome);
+        CurrentUserStore.removeListener(events.noCurrentUser, this.goToLogin);
     },
 
     render: function() {

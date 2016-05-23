@@ -50,7 +50,7 @@ var DriverListPage = React.createClass({
         currentRide.driver = driver.id;
         this.setState({currentRide: currentRide});
         this.setState({driver: driver});
-        //updateCurrentRide(ride);
+        updateCurrentRide(currentRide);
         this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, driver: driver});
     },
 

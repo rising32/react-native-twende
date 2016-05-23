@@ -118,8 +118,14 @@ export var styles = StyleSheet.create({
     },
 
     sheet_icon: {
-        alignItems: 'flex-end',
-        marginTop: -40
+        borderRadius: 25,
+        backgroundColor: colors.action,
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+        paddingTop: 10,
+        marginBottom: 6,
+        elevation: 4
     },
 
     // Map

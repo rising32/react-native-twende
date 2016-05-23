@@ -20,7 +20,8 @@ export function loadDriverList(position) {
         type: actions.fetchDriverList
     });
 
-    GeoLocationStore.refresh((position) => {
+
+    GeoLocationStore.refresh((pos) => {
         DriverService.loadDriverList(
             position,
             (driverList) => {

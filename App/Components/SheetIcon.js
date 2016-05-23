@@ -16,7 +16,7 @@ var SheetIcon = React.createClass({
         return (
             <View style={{alignItems: 'flex-end', marginTop: -45, elevation: 5}}>
                 <TouchableOpacity onPress={this.props.action}>
-                    <View style={{borderRadius: 25, backgroundColor: colors.action, width: 50, height: 50, alignItems: 'center', paddingTop: 10}}>
+                    <View style={styles.sheet_icon}>
                         <Icon
                             name={this.props.icon}
                             size={30}
