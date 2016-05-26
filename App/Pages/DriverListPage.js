@@ -38,11 +38,27 @@ var DriverListPage = React.createClass({
         };
     },
 
+    componentWillMount: function () {
+        DriverStore.on(events.driverListLoaded, this.setItems);
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
+        this.refreshItems();
+    },
+
+    componentWillUnmount: function () {
+        DriverStore.removeListener(events.driverListLoaded, this.setItems);
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
+
+    },
+
     setItems: function(items) {
         this.setState({
             items: items,
             isLoading: false
         });
+    },
+
+    refreshItems: function() {
+        loadDriverList(this.state.currentRide.origin);
     },
 
     selectDriver: function (driver) {
@@ -56,18 +72,6 @@ var DriverListPage = React.createClass({
 
     nextStep: function(currentRide) {
         this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide});
-    },
-
-    componentWillMount: function () {
-        DriverStore.on(events.driverListLoaded, this.setItems);
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        loadDriverList(this.state.currentRide.origin);
-    },
-
-    componentWillUnmount: function () {
-        DriverStore.removeListener(events.driverListLoaded, this.setItems);
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
-
     },
 
     getDataSource: function (items:Array<any>):ListView.DataSource {
@@ -145,7 +149,7 @@ var DriverListPage = React.createClass({
         var content;
         var footer = (
             <Link
-                action={this.refreshList}
+                action={this.refreshItems}
                 color={colors.action_secondary}
                 text={"refresh list"}
                 icon={"update"}

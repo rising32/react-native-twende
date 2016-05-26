@@ -13,7 +13,10 @@ export default {
     // Rides
     errorLoadingCurrentRide: 'ERROR_LOADING_CURRENT_RIDE',
     currentRideLoaded: 'CURRENT_RIDE_LOADED',
-    currentRideUpdated: 'CURRENT_RIDE_UPDATED'
+    currentRideUpdated: 'CURRENT_RIDE_UPDATED',
+
+    // Customers
+    customerListLoaded: 'REQUEST_LIST_LOADED',
 
 
 };

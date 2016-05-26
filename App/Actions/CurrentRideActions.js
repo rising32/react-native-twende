@@ -28,6 +28,27 @@ export function createCurrentRide(ride) {
 }
 
 
+export function refreshCurrentRide(ride) {
+
+    dispatch({
+        type: actions.fetchCurrentRide
+    });
+    RideService.refresh(
+        ride,
+        (currentRide) => {
+            dispatch({
+                type: actions.receiveCurrentRide,
+                ride: currentRide
+            });
+        },
+        (error) => {
+            dispatch({
+                type: actions.errorUpdaCurrentRide
+            })
+        }
+    );
+}
+
 export function updateCurrentRide(ride) {
 
     dispatch({

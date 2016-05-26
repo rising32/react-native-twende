@@ -20,21 +20,26 @@ export function loadDriverList(position) {
         type: actions.fetchDriverList
     });
 
-
-    GeoLocationStore.refresh((pos) => {
-        DriverService.loadDriverList(
-            position,
-            (driverList) => {
-                dispatch({
-                    type: actions.receiveDriverList,
-                    driverList: driverList
-                })
-            },
-            (error) => {
-                dispatch({
-                    type: actions.errorFetchDriverList
-                })
-            }
-        );
-    });
+    if (!position) {
+        dispatch({
+            type: actions.errorFetchDriverList,
+            error: 'Need a position to get a list of drivers.'
+        });
+        return
+    }
+    DriverService.loadDriverList(
+        position,
+        (driverList) => {
+            dispatch({
+                type: actions.receiveDriverList,
+                driverList: driverList
+            })
+        },
+        (error) => {
+            dispatch({
+                type: actions.errorFetchDriverList,
+                error: error
+            })
+        }
+    );
 }

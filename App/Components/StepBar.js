@@ -5,9 +5,11 @@ var ReactNative = require('react-native');
 var {
     Text,
     View,
+    ListView
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 
 var Circle = React.createClass({
@@ -51,29 +53,26 @@ var Circle = React.createClass({
 
 var StepBar = React.createClass({
 
+    renderStep: function (item, sectionId, rowId) {
+        return (
+            <View style={styles.step}>
+                <Circle on={item.on}/>
+                <Text style={styles.step_title}>
+                    {item.title}
+                </Text>
+            </View>
+        )
+    },
+
     render: function () {
         return (
-            <View style={styles.step_bar}>
-                <View style={styles.step}>
-                    <Circle on={true}/>
-                    <Text style={styles.step_title}>
-                        Ride requested
-                    </Text>
-                </View>
-                <View style={styles.step}>
-                    <Circle on={false}/>
-                    <Text style={styles.step_title}>
-                        Driver on his way
-                    </Text>
-                </View>
-                <View style={styles.step}>
-                    <Circle on={false}/>
-                    <Text style={styles.step_title}>
-                        En route
-                    </Text>
-                </View>
-            </View>
-        );
+            <ListView
+                contentContainerStyle={styles.step_bar}
+                ref="listview"
+                dataSource={ds.cloneWithRows(this.props.steps)}
+                renderRow={this.renderStep}
+            />
+        )
     }
 });
 

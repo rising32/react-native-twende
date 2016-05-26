@@ -16,41 +16,44 @@ import {
 
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
-var RequestStore = require('../Stores/RequestStore');
-var RequestService = require('../Services/RequestService');
+import CustomerStore from '../Stores/CustomerStore';
+
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
 var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
 import {colors, styles} from "../Styles";
-import MapView from 'react-native-maps';
+import events from "../Constants/Events";
+import {loadCustomerList} from "../Actions/CustomerActions"
 
 
 var DriverHomePage = React.createClass({
 
     getInitialState: function(props) {
         return {
+            currentUser: this.props.currentUser,
             position: {},
             items: []
         }
     },
 
     refreshItems: function(){
-        RequestService.getItems();
+        loadCustomerList();
+    },
+
+    setItems: function(items) {
+        this.setState({items: items});
     },
 
     componentWillMount: function() {
         GeoLocationStore.startWatching();
-        RequestStore.addListener((items) => {
-            this.setState({items: items});
-        });
-        this.setState({currentUser: this.props.state.currentUser});
+        CustomerStore.on(events.customerListLoaded, this.setItems);
         this.refreshItems();
 
     },
 
     componentWillUnmount: function() {
-        //GeoLocationStore.stopWatching();
+        GeoLocationStore.stopWatching();
     },
 
     render: function() {
@@ -89,7 +92,7 @@ var DriverHomePage = React.createClass({
                 </Text>
                 <IconText
                     icon={"motorcycle"}
-                    text={ride.destination_text}
+                    text={ride.origin_text}
                     color={colors.action_secondary}
                     style={{margin: 10}}
                 />
@@ -116,7 +119,7 @@ var DriverHomePage = React.createClass({
                     </Text>
                     <MKSwitch
                         color={colors.action}
-                        checked={this.state.props.currentUser.is_available}
+                        checked={this.state.currentUser.is_available}
                     />
                     <Text>
                         Available
@@ -140,7 +143,6 @@ var NavigationBarRouteMapper = {
         );
     },
     RightButton(route, navigator, index, nextState) {
-        return null;
     },
     Title(route, navigator, index, nextState) {
         return (

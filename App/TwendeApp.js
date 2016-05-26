@@ -12,6 +12,7 @@ var {
     Navigator,
     TouchableOpacity,
     DrawerLayoutAndroid,
+    BackAndroid,
     TouchableHighlight,
     DeviceEventEmitter
     } = React;
@@ -61,7 +62,12 @@ var TwendeApp = React.createClass({
         };
     },
 
+    goBack: function () {
+        this.navigator.pop();
+    },
+
     componentWillMount: function () {
+        BackAndroid.addEventListener('hardwareBackPress', this.goBack);
         CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
             this.setState({currentUser: currentUser});
         });
@@ -71,7 +77,7 @@ var TwendeApp = React.createClass({
         });
     },
 
-    drawerView: function () {
+    customerDrawerView: function () {
         return (
             <View>
                 <View style={{padding:10}}>
@@ -135,14 +141,75 @@ var TwendeApp = React.createClass({
         );
     },
 
+    driverDrawerView: function () {
+        return (
+            <View>
+                <View style={{padding:10}}>
+                    <Avatar image={this.state.currentUser.avatar}/>
+                </View>
+                <View style={{padding:10}}>
+                    <Text>
+                        {this.state.currentUser.name}
+                    </Text>
+                </View>
+                <View style={{backgroundColor: '#555555', padding: 8, flex: 1}}>
+                    <Link
+                        style={{padding: 8}}
+                        action={() => this.goToPage('DriverHomePage')}
+                        size={14}
+                        color={'#DDDDDD'}
+                        icon={'motorcycle'}
+                        text={'Home'}
+                    />
+                    <Link
+                        style={{padding: 8}}
+                        action={() => this.goToPage('ProfilePage')}
+                        size={14}
+                        color={'#DDDDDD'}
+                        icon={'account-circle'}
+                        text={'My Profile'}
+                    />
+                    <IconText
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#666666'}
+                        icon={'history'}
+                        text={'My Ride History'}
+                    />
+                    <IconText
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#666666'}
+                        icon={'people'}
+                        text={'Invite Friends'}
+                    />
+                    <Link
+                        action={this.logout}
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#DDDDDD'}
+                        icon={'power-settings-new'}
+                        text={'Logout'}
+                    />
+
+                </View>
+
+            </View>
+        );
+    },
+
     render: function (route, navigator) {
+        var drawer = this.customerDrawerView;
+        if (this.state.currentUser.is_driver) {
+            drawer = this.driverDrawerView;
+        }
 
         return (
             <DrawerLayoutAndroid
                 drawerWidth={200}
                 ref={'DRAWER'}
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
-                renderNavigationView={this.drawerView}>
+                renderNavigationView={drawer}>
                 <Navigator
                     initialRoute={{id: 'SplashPage', name: 'Splash'}}
                     renderScene={this.renderScene}

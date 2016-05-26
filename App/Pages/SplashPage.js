@@ -36,7 +36,7 @@ var SplashPage = React.createClass({
 
     goToHome: function (currentUser) {
         if (currentUser.is_driver) {
-            this.props.goToPage('DriverHomePage');
+            this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {
             this.props.goToPage('CurrentLocationPage');
         }

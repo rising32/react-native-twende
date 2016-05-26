@@ -26,5 +26,11 @@ export default {
     errorFetchCurrentRide:  'ERROR_FETCH_CURRENT_RIDE',
     receiveCurrentRide:     'RECEIVE_CURRENT_RIDE',
 
+    // Customer
+    loadCustomerList:       'LOAD_CUSTOMER_LIST',
+    errorFetchCustomerList: 'ERROR_FETCH_CUSTOMER_LIST',
+    receiveCustomerList:    'RECEIVE_CUSTOMER_LIST'
+
+
 
 };

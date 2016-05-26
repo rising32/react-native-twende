@@ -97,6 +97,27 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.box
     },
 
+    card_mid: {
+        padding: 20,
+        paddingTop: 10,
+        marginTop: 0,
+        backgroundColor: colors.box,
+        alignItems: 'center',
+        flex: 1,
+        alignSelf: 'stretch'
+    },
+
+    card_mid_spacer: {
+        backgroundColor: colors.box,
+        padding: 20,
+        marginTop: 40,
+        height: 40,
+        alignSelf: 'stretch'
+     },
+
+    card_mid_avatar: {
+        marginTop: -80
+    },
 
     // Sheet (persistent bottom sheet)
     sheet: {
@@ -106,7 +127,9 @@ export var styles = StyleSheet.create({
         paddingRight: 40
     },
 
-    sheet_content: {},
+    sheet_content: {
+
+    },
 
     sheet_dark: {
         paddingBottom: 20,
@@ -251,7 +274,7 @@ export var styles = StyleSheet.create({
         padding: 20,
         flexDirection: 'row',
         justifyContent: "space-between",
-        margin: 0
+        margin: 0,
     },
     step: {
         width: 100,

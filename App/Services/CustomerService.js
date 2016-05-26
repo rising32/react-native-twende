@@ -1,12 +1,10 @@
 var config = require('../../config');
 var TokenStore = require('../Stores/TokenStore');
-var RequestStore = require('../Stores/RequestStore');
-var ApiClient = require('../Services/ApiClient');
 
 
-var RequestService = {
+var CustomerService = {
 
-    _headers: function () {
+    _headers: function(){
         var token = TokenStore.get();
         return {
             'Authorization': 'JWT ' + token,
@@ -14,29 +12,25 @@ var RequestService = {
         };
     },
 
-    getItems: function (pos) {
+    loadCustomerList: function (position, resolve, reject) {
         var url = config.api.rides;
-        return fetch(url, {
+        fetch(url, {
             method: 'GET',
             headers: this._headers(),
             timeout: 3000
-
         }).then((response) => {
             if (response.status !== 200) {
-                console.log('Error ' + JSON.stringify(response));
-                throw new Error(JSON.stringify(response));
+                reject(response);
             }
             return response.json();
         }).then((items) => {
-            RequestStore.setItems(items);
-            return drivers
+            return resolve(items);
         }).catch((error) => {
-            console.log('ServerError ' + JSON.stringify(error));
+            reject(error);
         })
     }
-
 
 };
 
 
-module.exports = RequestService;
+module.exports = CustomerService;

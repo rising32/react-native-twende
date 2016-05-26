@@ -49,7 +49,26 @@ var RideService = {
         }).catch((error) => {
             //reject(error);
         })
+    },
+
+    refresh: function (ride, resolve, reject) {
+        return fetch(config.api.rides + ride.id, {
+            method: 'GET',
+            headers: this._headers(),
+            timeout: 3000
+
+        }).then((response) => {
+            if (response.status !== 200) {
+                reject(response);
+            }
+            return response.json();
+        }).then((ride) => {
+            return resolve(ride);
+        }).catch((error) => {
+            //reject(error);
+        })
     }
+
 };
 
 
