@@ -41,6 +41,13 @@ var DriverHomePage = React.createClass({
         loadCustomerList();
     },
 
+    toggleAvailability: function(available) {
+        var currentUser = this.state.currentUser;
+        currentUser.is_available = available.checked;
+        this.setState({currentUser: currentUser});
+    },
+
+
     setItems: function(items) {
         this.setState({items: items});
     },
@@ -81,6 +88,19 @@ var DriverHomePage = React.createClass({
         );
 
     },
+    renderUnavailable: function() {
+        return  (
+            <View style={{alignItems: 'center'}}>
+                <IconText
+                    icon={"not-interested"}
+                    text={"You're unavailable and won't get any request."}
+                    color={colors.action_secondary}
+                    style={{margin: 10}}
+                />
+            </View>
+        );
+
+    },
 
     renderRequest: function() {
         var ride = this.state.items[0];
@@ -104,11 +124,14 @@ var DriverHomePage = React.createClass({
 
     renderScene: function(route, navigator) {
         var content;
-        if (this.state.items.length == 0) {
-            content = this.renderEmpty();
+        if (this.state.currentUser.is_available) {
+            if (this.state.items.length == 0) {
+                content = this.renderEmpty();
+            } else {
+                content = this.renderRequest();
+            }
         } else {
-            content = this.renderRequest();
-
+            content = this.renderUnavailable();
         }
 
         return (
@@ -119,6 +142,7 @@ var DriverHomePage = React.createClass({
                     </Text>
                     <MKSwitch
                         color={colors.action}
+                        onCheckedChange={this.toggleAvailability}
                         checked={this.state.currentUser.is_available}
                     />
                     <Text>

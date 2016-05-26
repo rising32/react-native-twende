@@ -38,6 +38,13 @@ import { logoutCurrentUser } from './Actions/CurrentUserActions';
 
 var TwendeApp = React.createClass({
 
+    getInitialState: function (props) {
+        return {
+            currentUser: {},
+            currentRide: {}
+        };
+    },
+
     openDrawer: function () {
         this.refs['DRAWER'].openDrawer()
     },
@@ -53,13 +60,6 @@ var TwendeApp = React.createClass({
     goToPage: function (pageId) {
         this.closeDrawer();
         this.navigator.replace({id: pageId});
-    },
-
-    getInitialState: function (props) {
-        return {
-            currentUser: {},
-            currentRide: {}
-        };
     },
 
     goBack: function () {
