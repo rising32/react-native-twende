@@ -10,11 +10,46 @@ var {
 
 import {colors, styles} from "../Styles";
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+import * as Progress from 'react-native-progress';
 
 
 var Circle = React.createClass({
     render: function () {
-        var color = this.props.on ? colors.action : '#eeeeee';
+        var dot;
+
+        if (this.props.done) {
+            dot = (
+                <View
+                    style={{
+                        borderRadius: 25,
+                        backgroundColor: colors.action,
+                        width: 26,
+                        height: 26,
+                        marginTop: 8
+                    }}
+                />
+            )
+        } else if (this.props.in_progress) {
+            dot = (
+                <Progress.CircleSnail
+                    size={42}
+                    thickness={8}
+                    color={colors.action}
+                />
+            )
+        } else  {
+            dot = (
+                <View
+                    style={{
+                        borderRadius: 25,
+                        backgroundColor: '#cccccc',
+                        width: 12,
+                        height: 12,
+                        marginTop: 15
+                    }}
+                />
+            )
+        }
 
         return (
 
@@ -24,28 +59,12 @@ var Circle = React.createClass({
                         width: 50,
                         height: 50,
                         margin: 1,
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        padding: 4
 
                 }}
             >
-                <View
-                    style={{borderRadius: 15,
-                            backgroundColor: color,
-                            width: 24,
-                            height: 24,
-                            alignItems: 'center',
-                            marginTop: 13
-                    }}
-                >
-                    <View
-                        style={{borderRadius: 5,
-                                backgroundColor: '#cccccc',
-                                width: 10,
-                                height: 10,
-                                marginTop: 7
-                        }}
-                    />
-                </View>
+                {dot}
             </View>
         );
     }
@@ -56,7 +75,7 @@ var StepBar = React.createClass({
     renderStep: function (item, sectionId, rowId) {
         return (
             <View style={styles.step}>
-                <Circle on={item.on}/>
+                <Circle in_progress={item.in_progress} done={item.done} />
                 <Text style={styles.step_title}>
                     {item.title}
                 </Text>

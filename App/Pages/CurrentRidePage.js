@@ -28,7 +28,7 @@ var CurrentRidePage = React.createClass({
     getInitialState: function () {
         return {
             currentUser: this.props.currentUser,
-            currentRide: CurrentRideStore.get(),
+            currentRide: this.props.currentRide,
             driver: this.props.driver
         }
 
@@ -36,7 +36,7 @@ var CurrentRidePage = React.createClass({
     componentWillMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
-        this.refreshRide();
+        refreshCurrentRide(this.state.currentRide);
         //var title = "Driver has accepted";
         //var message = `${this.state.driver.name}: I'm on my way...`;
         //window.setTimeout(() => {
@@ -102,9 +102,9 @@ var CurrentRidePage = React.createClass({
 
     renderConnecting: function () {
         var steps = [
-            {on: false, title: 'Ride requested'},
-            {on: false, title: 'Driver on his way'},
-            {on: false, title: 'En route'}
+            {in_progress: true, done: false, title: 'Ride requested'},
+            {in_progress: false, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'En route'}
         ];
         return (
             <View style={{flex: 1}}>
@@ -143,9 +143,9 @@ var CurrentRidePage = React.createClass({
 
     renderAccepted: function () {
         var steps = [
-            {on: true, title: 'Ride accepted'},
-            {on: false, title: 'Driver on his way'},
-            {on: false, title: 'En route'}
+            {in_progress: true, done: true, title: 'Ride accepted'},
+            {in_progress: true, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'En route'}
         ];
         return (
             <View style={{flex: 1}}>
@@ -173,9 +173,9 @@ var CurrentRidePage = React.createClass({
 
     renderDriving: function () {
         var steps = [
-            {on: true, title: 'Ride accepted'},
-            {on: true, title: 'Driver arrived'},
-            {on: false, title: 'En route'}
+            {in_progress: true, done: true, title: 'Ride accepted'},
+            {in_progress: true, done: true, title: 'Driver arrived'},
+            {in_progress: true, done: false, title: 'En route'}
         ];
         return (
             <View style={{flex: 1}}>
@@ -201,9 +201,9 @@ var CurrentRidePage = React.createClass({
 
     renderDropoff: function () {
         var steps = [
-            {on: true, title: 'Ride accepted'},
-            {on: true, title: 'Driver arrived'},
-            {on: true, title: 'Finished'}
+            {in_progress: true, done: true, title: 'Ride accepted'},
+            {in_progress: true, done: true, title: 'Driver arrived'},
+            {in_progress: true, done: true, title: 'Finished'}
         ];
         return (
             <View style={{flex: 1}}>

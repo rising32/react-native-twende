@@ -286,6 +286,7 @@ var TwendeApp = React.createClass({
                 <CurrentRidePage
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
+                    currentRide={route.currentRide}
                     currentUser={this.state.currentUser}
                     navigator={navigator}
                     driver={route.driver}/>
@@ -296,6 +297,7 @@ var TwendeApp = React.createClass({
                 <DriverListPage
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
+                    currentRide={route.currentRide}
                     currentUser={this.state.currentUser}
                     navigator={navigator}/>
             );

@@ -52,7 +52,7 @@ var LoginPage = React.createClass({
         });
     },
 
-    goToHome: function(currentUser) {
+    goToHome: function (currentUser) {
         if (currentUser.is_driver) {
             this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {
@@ -87,6 +87,25 @@ var LoginPage = React.createClass({
         var error = this.state.error ? <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
         return (
             <View style={[styles.page, styles.page_full, styles.card]}>
+
+                <LoginButton
+                    publishPermissions={["publish_actions"]}
+                    onLoginFinished={
+                        (error, result) => {
+                          if (error) {
+                            alert("login has error: " + result.error);
+                          } else if (result.isCancelled) {
+                            alert("login is cancelled.");
+                          } else {
+                            AccessToken.getCurrentAccessToken().then(
+                              (data) => {
+                                alert(data.accessToken.toString())
+                              }
+                            )
+                          }
+                        }
+                      }
+                    onLogoutFinished={() => alert("logout.")}/>
                 {error}
                 <TextInput
                     scrollRef={"username"}

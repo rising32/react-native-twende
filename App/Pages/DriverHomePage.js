@@ -49,6 +49,7 @@ var DriverHomePage = React.createClass({
 
 
     setItems: function(items) {
+        alert('got items')
         this.setState({items: items});
     },
 
@@ -61,6 +62,7 @@ var DriverHomePage = React.createClass({
 
     componentWillUnmount: function() {
         GeoLocationStore.stopWatching();
+        CustomerStore.removeListener(events.customerListLoaded, this.setItems);
     },
 
     render: function() {

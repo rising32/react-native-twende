@@ -31,7 +31,7 @@ var DriverListPage = React.createClass({
     getInitialState: function () {
         return {
             currentUser: this.props.currentUser,
-            currentRide: CurrentRideStore.get(),
+            currentRide: this.props.currentRide,
             driver: {},
             items: [],
             isLoading: true
@@ -71,7 +71,7 @@ var DriverListPage = React.createClass({
     },
 
     nextStep: function(currentRide) {
-        this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide});
+        this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, test: 'testies'});
     },
 
     getDataSource: function (items:Array<any>):ListView.DataSource {
