@@ -5,6 +5,7 @@ export default {
     noCurrentUser: 'NO_CURRENT_USER',
     loginFailed: 'LOGIN_FAILED',
     userLoggedOut: 'USER_LOGGED_OUT',
+    gcmTokenLoaded: 'GCM_TOKEN_LOADED',
 
     // Drivers
     driverListLoaded: 'DRIVER_LIST_LOADED',
@@ -16,7 +17,6 @@ export default {
     currentRideUpdated: 'CURRENT_RIDE_UPDATED',
 
     // Customers
-    customerListLoaded: 'REQUEST_LIST_LOADED',
-
+    customerListLoaded: 'REQUEST_LIST_LOADED'
 
 };

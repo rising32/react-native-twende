@@ -29,8 +29,6 @@ var CustomerService = {
             reject(error);
         })
     }
-
 };
-
 
 module.exports = CustomerService;

@@ -17,6 +17,7 @@ import {
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 import CustomerStore from '../Stores/CustomerStore';
+var MapView = require('react-native-maps');
 
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
@@ -25,6 +26,7 @@ var Link = require('../Components/Link');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
 import {loadCustomerList} from "../Actions/CustomerActions"
+import { updateCurrentRide } from "../Actions/CurrentRideActions"
 
 
 var DriverHomePage = React.createClass({
@@ -33,6 +35,12 @@ var DriverHomePage = React.createClass({
         return {
             currentUser: this.props.currentUser,
             position: {},
+            region: {
+                latitude: 52.1668,
+                longitude: 4.491,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01
+            },
             items: []
         }
     },
@@ -47,9 +55,17 @@ var DriverHomePage = React.createClass({
         this.setState({currentUser: currentUser});
     },
 
+    acceptRide: function(ride) {
+        ride.state = 'accepted';
+        updateCurrentRide(ride);
+    },
+
+    declineRide: function(ride) {
+        ride.state = 'declined';
+        updateCurrentRide(ride);
+    },
 
     setItems: function(items) {
-        alert('got items')
         this.setState({items: items});
     },
 
@@ -106,18 +122,36 @@ var DriverHomePage = React.createClass({
 
     renderRequest: function() {
         var ride = this.state.items[0];
+        this.setState({
+            currentRide: ride
+        });
         return  (
-            <View style={{alignItems: 'center'}}>
-                <Avatar image={ride.created_by.avatar} />
-                <Text>
-                    {ride.created_by.name}
-                </Text>
-                <IconText
-                    icon={"motorcycle"}
-                    text={ride.origin_text}
-                    color={colors.action_secondary}
-                    style={{margin: 10}}
-                />
+            <View style={{flex: 1}}>
+                <View style={{alignItems: 'center'}}>
+                    <Avatar image={ride.created_by.avatar} />
+                    <Text>
+                        {ride.created_by.name}
+                    </Text>
+                    <Link
+                        icon={"motorcycle"}
+                        url={"geo:" + ride.latitude + ","  + ride.longitude}
+                        text={ride.origin_text}
+                        color={colors.action}
+                        style={{margin: 10}}
+                    />
+                </View>
+                <View styl={{justifyItems: 'space-around'}}>
+                    <Link
+                        action={() => this.declineRide(ride)}
+                        text={"Decline"}
+                        color={colors.action_secondary}
+                        />
+                    <Link
+                        action={() => this.acceptRide(ride)}
+                        text={"Accept"}
+                        color={colors.action}
+                        />
+                </View>
             </View>
         );
 

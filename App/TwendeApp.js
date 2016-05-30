@@ -34,7 +34,14 @@ var Link = require('./Components/Link');
 import { colors, styles } from "./Styles";
 import events from "./Constants/Events";
 import CurrentUserStore from './Stores/CurrentUserStore';
-import { logoutCurrentUser } from './Actions/CurrentUserActions';
+import CurrentRideStore from './Stores/CurrentRideStore';
+import {
+    logoutCurrentUser,
+    setGcmToken,
+    saveCurrentUser } from './Actions/CurrentUserActions';
+var PushNotification = require('react-native-push-notification');
+import { notify } from "./Actions/NotifyActions"
+import { refreshCurrentRide } from "./Actions/CurrentRideActions";
 
 var TwendeApp = React.createClass({
 
@@ -66,11 +73,66 @@ var TwendeApp = React.createClass({
         this.navigator.pop();
     },
 
+
+    registerPushNotification: function () {
+
+        PushNotification.configure({
+            onRegister: function (token) {
+                setGcmToken(token.token);
+            },
+            onNotification: function (notification) {
+                notify(notification.title, notification.message);
+                refreshCurrentRide(notification.ride);
+
+            },
+            senderID: "1055251321691",
+            permissions: {
+                alert: true,
+                badge: true,
+                sound: true
+            },
+            popInitialNotification: true,
+            requestPermissions: true
+        });
+
+    },
+
     componentWillMount: function () {
+        CurrentRideStore.on(events.currentRideLoaded, (currentRide) => {
+            if (currentRide.state != 'new') {
+                this.setState({currentRide: currentRide});
+                if (this.state.currentUser.is_driver) {
+                    this.navigator.push({
+                        id: 'CurrentRidePage',
+                        currentUser: currentUser,
+                        currentRide: currentRide
+                    });
+
+                } else {
+                    this.navigator.push({
+                        id: 'CurrentRidePage',
+                        driver: currentRide.driver,
+                        currentUser: currentUser,
+                        currentRide: currentRide
+                    });
+                }
+            }
+        });
+
+        CurrentUserStore.on(events.gcmTokenLoaded, (gcmToken) => {
+            var currentUser = this.state.currentUser;
+            currentUser.gcm_token = gcmToken;
+            this.setState({currentUser: currentUser});
+            saveCurrentUser(currentUser);
+        });
+
         BackAndroid.addEventListener('hardwareBackPress', this.goBack);
+
         CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
             this.setState({currentUser: currentUser});
+            this.registerPushNotification();
         });
+
         CurrentUserStore.on(events.userLoggedOut, (error) => {
             this.setState({currentUser: {}});
             this.goToPage('LoginPage');
@@ -320,3 +382,4 @@ var TwendeApp = React.createClass({
 });
 
 module.exports = TwendeApp;
+

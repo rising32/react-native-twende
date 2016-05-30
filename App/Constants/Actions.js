@@ -8,6 +8,7 @@ export default {
     updateCurrentUser:         'UPDATE_CURRENT_USER',
     receiveUpdatedCurrentUser: 'RECEIVE_UPDATED_CURRENT_USER',
     errorUpdateCurrentUser:    'ERROR_UPDATE_CURRENT_USER',
+    setGcmToken:               'SET_GCM_TOKEN',
 
     // Drivers
     fetchDriverList:      'FETCH_DRIVER_LIST',

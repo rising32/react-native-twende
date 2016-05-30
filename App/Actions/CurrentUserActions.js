@@ -99,3 +99,12 @@ export function loginCurrentUser(username, password) {
         }
     );
 }
+
+export function setGcmToken(gcmToken) {
+
+    dispatch({
+        type: actions.setGcmToken,
+        gcmToken: gcmToken
+    });
+
+}

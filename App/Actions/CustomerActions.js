@@ -15,7 +15,6 @@ import {dispatch} from '../Dispatcher';
 
 export function loadCustomerList(position) {
 
-
     dispatch({
         type: actions.fetchCustomerList
     });
@@ -23,7 +22,7 @@ export function loadCustomerList(position) {
 
     CustomerService.loadCustomerList(
         position,
-        (CustomerList) => {
+        (customerList) => {
             dispatch({
                 type: actions.receiveCustomerList,
                 customerList: customerList

@@ -1,5 +1,5 @@
 //var apiUrl = 'http://192.168.43.171:7000/api/';
-//var apiUrl = 'http://192.168.35.29:7000/api/';
+//var apiUrl = 'http://192.168.35.14:8000/api/';
 //var apiUrl = 'http://192.168.3.102:7000/api/';
 var apiUrl = 'http://twende.loekvan.gent/api/';
 var mediaUrl = 'http://twende.loekvan.gent/';

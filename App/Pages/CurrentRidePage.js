@@ -16,7 +16,6 @@ import { Icon } from 'react-native-material-design';
 var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
 var NavIcon = require('../Components/NavIcon');
-var NotifyAction = require('../Actions/NotifyActions');
 import CurrentRideStore from '../Stores/CurrentRideStore';
 import {refreshCurrentRide} from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
@@ -36,12 +35,7 @@ var CurrentRidePage = React.createClass({
     componentWillMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
-        refreshCurrentRide(this.state.currentRide);
-        //var title = "Driver has accepted";
-        //var message = `${this.state.driver.name}: I'm on my way...`;
-        //window.setTimeout(() => {
-        //    NotifyAction.local(title, message);
-        //}, 1000)
+        //refreshCurrentRide(this.state.currentRide.id);
     },
 
     componentWillUnmount: function (props) {

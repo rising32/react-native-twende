@@ -137,5 +137,4 @@ dependencies {
     compile project(":react-native-fbsdk")
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile project(':react-native-push-notification')
-    compile "com.google.android.gms:play-services-gcm:9.0.0"
  }

@@ -49,13 +49,13 @@ export function refreshCurrentRide(ride) {
     );
 }
 
-export function updateCurrentRide(ride) {
+export function updateCurrentRide(currentRide) {
 
     dispatch({
         type: actions.updateCurrentRide
     });
     RideService.update(
-        ride,
+        currentRide,
         (currentRide) => {
             dispatch({
                 type: actions.receiveCurrentRide,

@@ -33,7 +33,9 @@ var RideService = {
     },
 
     update: function (ride, resolve, reject) {
-        return fetch(config.api.rides, {
+        // User primary key for driver
+        ride.driver = ride.driver.id;
+        return fetch(config.api.rides + ride.id + '/', {
             method: 'PATCH',
             headers: this._headers(),
             body: JSON.stringify(ride),
@@ -51,8 +53,8 @@ var RideService = {
         })
     },
 
-    refresh: function (ride, resolve, reject) {
-        return fetch(config.api.rides + ride.id, {
+    refresh: function (ride_id, resolve, reject) {
+        return fetch(config.api.rides + ride_id, {
             method: 'GET',
             headers: this._headers(),
             timeout: 3000

@@ -1,8 +1,9 @@
 package com.twendeapp;
 
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -14,8 +15,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.AirMaps.AirPackage;
 
-
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,6 +60,13 @@ public class MainActivity extends ReactActivity {
             mReactNativePushNotificationPackage
         };
         return Arrays.<ReactPackage>asList(packages);
+    }
+
+    @Override
+    protected void onNewIntent (Intent intent) {
+      super.onNewIntent(intent);
+
+      mReactNativePushNotificationPackage.newIntent(intent);
     }
 
     @Override

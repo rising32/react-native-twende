@@ -30,8 +30,8 @@ var LoginPage = React.createClass({
             error: false,
             loading: false,
             currentUser: {},
-            username: 'test',
-            password: 'test'
+            username: '',
+            password: ''
         };
     },
 

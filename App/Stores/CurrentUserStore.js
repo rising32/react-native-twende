@@ -18,7 +18,7 @@ class CurrentUserStore extends EventEmitter {
     constructor() {
         super();
         this._currentUser = {};
-
+        this._gcmToken = '';
     };
 
     get() {
@@ -28,6 +28,11 @@ class CurrentUserStore extends EventEmitter {
     set(currentUser){
         this._currentUser = currentUser;
         this.emit(events.currentUserLoaded, currentUser);
+    };
+
+    setGcmToken(gcmToken) {
+        this._gcmToken = gcmToken;
+        this.emit(events.gcmTokenLoaded, gcmToken);
     };
 
     clear() {
@@ -44,6 +49,9 @@ class CurrentUserStore extends EventEmitter {
         switch(action.type) {
             case actions.receiveCurrentUser:
                 this.set(action.currentUser);
+                break;
+            case actions.setGcmToken:
+                this.setGcmToken(action.gcmToken);
                 break;
             case actions.logoutCurrentUser:
                 this.clear();

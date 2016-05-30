@@ -63,7 +63,8 @@ var DriverListPage = React.createClass({
 
     selectDriver: function (driver) {
         var currentRide = this.state.currentRide;
-        currentRide.driver = driver.id;
+        currentRide.driver = driver;
+        currentRide.destination = currentRide.origin
         this.setState({currentRide: currentRide});
         this.setState({driver: driver});
         updateCurrentRide(currentRide);
