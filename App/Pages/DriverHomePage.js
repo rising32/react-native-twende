@@ -25,8 +25,10 @@ var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
-import {loadCustomerList} from "../Actions/CustomerActions"
-import { updateCurrentRide } from "../Actions/CurrentRideActions"
+import {loadCustomerList} from "../Actions/CustomerActions";
+import { updateCurrentRide } from "../Actions/CurrentRideActions";
+import { startWatchingGeoLocation,
+         stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
 
 
 var DriverHomePage = React.createClass({
@@ -34,6 +36,7 @@ var DriverHomePage = React.createClass({
     getInitialState: function(props) {
         return {
             currentUser: this.props.currentUser,
+            currentRide: this.props.currentRide,
             position: {},
             region: {
                 latitude: 52.1668,
@@ -70,14 +73,14 @@ var DriverHomePage = React.createClass({
     },
 
     componentWillMount: function() {
-        GeoLocationStore.startWatching();
+        startWatchingGeoLocation();
         CustomerStore.on(events.customerListLoaded, this.setItems);
         this.refreshItems();
 
     },
 
     componentWillUnmount: function() {
-        GeoLocationStore.stopWatching();
+        stopWatchingGeoLocation();
         CustomerStore.removeListener(events.customerListLoaded, this.setItems);
     },
 
@@ -122,39 +125,45 @@ var DriverHomePage = React.createClass({
 
     renderRequest: function() {
         var ride = this.state.items[0];
-        this.setState({
-            currentRide: ride
-        });
         return  (
-            <View style={{flex: 1}}>
+            <View>
+
                 <View style={{alignItems: 'center'}}>
+                    <View style={styles.card_mid_spacer} />
+                    <View style={styles.card_mid_avatar}>
                     <Avatar image={ride.created_by.avatar} />
-                    <Text>
-                        {ride.created_by.name}
-                    </Text>
-                    <Link
-                        icon={"motorcycle"}
-                        url={"geo:" + ride.latitude + ","  + ride.longitude}
-                        text={ride.origin_text}
-                        color={colors.action}
-                        style={{margin: 10}}
-                    />
-                </View>
-                <View styl={{justifyItems: 'space-around'}}>
-                    <Link
-                        action={() => this.declineRide(ride)}
-                        text={"Decline"}
-                        color={colors.action_secondary}
+                    </View>
+                    <View style={styles.card_mid}>
+                        <Text>
+                            {ride.created_by.name}
+                        </Text>
+                        <Link
+                            icon={"motorcycle"}
+                            url={"geo:" + ride.latitude + ","  + ride.longitude}
+                            text={ride.origin_text}
+                            color={colors.action}
+                            style={{margin: 10}}
                         />
-                    <Link
-                        action={() => this.acceptRide(ride)}
-                        text={"Accept"}
-                        color={colors.action}
-                        />
+                        <View style={styles.card_mid_actions}>
+                            <Link
+                                action={() => this.declineRide(ride)}
+                                style={styles.button_simple}
+                                text={"DECLINE"}
+                                textStyle={{fontWeight: 'bold'}}
+                                color={colors.action_secondary}
+                                />
+                            <Link
+                                action={() => this.acceptRide(ride)}
+                                style={styles.button_simple}
+                                text={"ACCEPT"}
+                                textStyle={{fontWeight: 'bold'}}
+                                color={colors.action}
+                                />
+                        </View>
+                    </View>
                 </View>
             </View>
         );
-
     },
 
 

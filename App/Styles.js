@@ -103,8 +103,8 @@ export var styles = StyleSheet.create({
         marginTop: 0,
         backgroundColor: colors.box,
         alignItems: 'center',
-        flex: 1,
-        alignSelf: 'stretch'
+        alignSelf: 'stretch',
+        flex: 1
     },
 
     card_mid_spacer: {
@@ -117,6 +117,13 @@ export var styles = StyleSheet.create({
 
     card_mid_avatar: {
         marginTop: -80
+    },
+
+    card_mid_actions: {
+        justifyContent: 'space-between',
+        marginTop: 20,
+        alignSelf: 'stretch',
+        flexDirection: 'row'
     },
 
     // Sheet (persistent bottom sheet)

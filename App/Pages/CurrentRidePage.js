@@ -193,7 +193,7 @@ var CurrentRidePage = React.createClass({
     },
 
 
-    renderDropoff: function () {
+    renderDropOff: function () {
         var steps = [
             {in_progress: true, done: true, title: 'Ride accepted'},
             {in_progress: true, done: true, title: 'Driver arrived'},
@@ -235,7 +235,7 @@ var CurrentRidePage = React.createClass({
                 content = this.renderDriving();
                 break;
             case 'dropoff':
-                content = this.renderDropoff();
+                content = this.renderDropOff();
                 break;
             default:
                 content = this.renderConnecting();

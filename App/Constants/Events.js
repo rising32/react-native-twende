@@ -7,6 +7,9 @@ export default {
     userLoggedOut: 'USER_LOGGED_OUT',
     gcmTokenLoaded: 'GCM_TOKEN_LOADED',
 
+    // Geo
+    geoPositionLoaded: 'GEO_POSITION_LOADED',
+
     // Drivers
     driverListLoaded: 'DRIVER_LIST_LOADED',
     errorLoadingDrivers: 'ERROR_LOADING_DRIVERS',

@@ -39,3 +39,6 @@ exports.camera_options = {
         path: 'images' // ios only - will save image at /Documents/images rather than the root
     }
 };
+
+// Time between two position polls (driver location)
+exports.geoPositionMaxAge = 60;

@@ -10,6 +10,10 @@ export default {
     errorUpdateCurrentUser:    'ERROR_UPDATE_CURRENT_USER',
     setGcmToken:               'SET_GCM_TOKEN',
 
+    // Geo
+    loadGeoPosition:    'LOAD_GEO_POSITION',
+    receiveGeoPosition: 'RECEIVE_GEO_POSITION',
+
     // Drivers
     fetchDriverList:      'FETCH_DRIVER_LIST',
     receiveDriverList:    'REVEICE_DRIVER_LIST',

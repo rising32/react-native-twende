@@ -11,12 +11,13 @@ var {
     } = ReactNative;
 
 var MapView = require('react-native-maps');
-var GeoLocationStore = require('../Stores/GeoLocationStore');
+import { loadGeoLocation } from "../Actions/GeoLocationActions";
 var CurrentRideActions = require('../Actions/CurrentRideActions');
 var NavIcon = require('../Components/NavIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
 import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
+import GeoLocationStore from '../Stores/GeoLocationStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
 import { createCurrentRide } from '../Actions/CurrentRideActions';
@@ -45,7 +46,23 @@ var CurrentLocationPage = React.createClass({
 
     componentWillMount: function (props) {
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        this.refreshLocation();
+        GeoLocationStore.on(events.geoPositionLoaded, (loc) => {
+            var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
+            this.setState({
+                origin: {
+                    latitude: loc.latitude,
+                    longitude: loc.longitude
+                },
+                region: {
+                    latitude: loc.latitude,
+                    longitude: loc.longitude,
+                    latitudeDelta: this.state.region.latitudeDelta,
+                    longitudeDelta: this.state.region.longitudeDelta
+                },
+                origin_text: myLoc
+            });
+        });
+        loadGeoLocation();
     },
 
     componentWillUnmount: function (props) {
@@ -68,27 +85,6 @@ var CurrentLocationPage = React.createClass({
 
     onRegionChange: function (region) {
         this.setState({region: region});
-    },
-
-    refreshLocation: function () {
-        this.setState({'origin_text': '- refreshing -'});
-        console.log('Refresh location');
-        GeoLocationStore.refresh((loc) => {
-            var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
-            this.setState({
-                origin: {
-                    latitude: loc.latitude,
-                    longitude: loc.longitude
-                },
-                region: {
-                    latitude: loc.latitude,
-                    longitude: loc.longitude,
-                    latitudeDelta: this.state.region.latitudeDelta,
-                    longitudeDelta: this.state.region.longitudeDelta
-                },
-                origin_text: myLoc
-            });
-        });
     },
 
     nextStep: function (currentRide) {
@@ -192,12 +188,7 @@ var NavigationBarRouteMapper = {
         );
     },
     RightButton(route, navigator, index, nextState) {
-        return (
-            <NavIcon
-                icon={"motorcycle"}
-                action={() => navigator.parentNavigator.props.goToPage('HomePage')}
-            />
-        );
+        return null;
     },
     Title(route, navigator, index, nextState) {
         this.currentUser = CurrentUserStore.get();

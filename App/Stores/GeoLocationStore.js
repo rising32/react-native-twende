@@ -5,54 +5,45 @@ var {
     AsyncStorage
     } = React;
 
-var Geolocation = require('Geolocation');
 import { EventEmitter } from "events";
-import {events} from "../Constants/Events";
+import events from "../Constants/Events";
+import actions from "../Constants/Actions";
+import dispatcher from "../Dispatcher";
 
 
-var GeoLocationStore = {
-    _listeners: [],
-    _geoLocation: {},
+class GeoLocationStore extends EventEmitter {
 
-    get: function (callback) {
+    constructor() {
+        super();
+        this._geoLocation = {};
+
+    };
+
+    get() {
         return this._geoLocation;
-        // return LocalKeyStore.getKey('currentUser', callback);
-    },
+    };
 
-    refresh: function (callback) {
-        Geolocation.getCurrentPosition((geoPosition) => {
-            if (callback) {
-                callback(geoPosition.coords);
-            }
-            this.set(geoPosition.coords);
-        });
-    },
-
-    startWatching: function () {
-        Geolocation.watchPosition((geoPosition) => {
-            this.set(geoPosition.coords);
-        });
-    },
-
-    stopWatching: function () {
-        Geolocation.stopObserving();
-    },
-
-    set: function (geoPosition) {
+    set(geoPosition) {
         this._geoLocation = geoPosition;
-        this.notifyListeners(geoPosition);
-        //return LocalKeyStore.setKey('geoPosition', geoPosition);
-    },
+        this.emit(events.geoPositionLoaded, geoPosition)
+    };
 
-    notifyListeners: function (geoPosition) {
-        for (var t = 0; t < this._listeners.length; t++) {
-            this._listeners[t](geoPosition);
+    handleActions(action) {
+        switch(action.type) {
+            case actions.seLocation:
+                this.set(action.location);
+                break;
+            case actions.refreshLocation:
+                this.error();
+                break;
         }
-    },
+    };
+}
 
-    addListener: function (listener) {
-        this._listeners.push(listener);
-    }
-};
 
-module.exports = GeoLocationStore;
+const geoLocationStore = new GeoLocationStore;
+
+dispatcher.register(geoLocationStore.handleActions.bind(geoLocationStore));
+
+export default geoLocationStore;
+
