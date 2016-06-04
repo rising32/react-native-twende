@@ -13,7 +13,7 @@ import actions from "../Constants/Actions";
 import {dispatch} from '../Dispatcher';
 
 
-export function loadCustomerList(position) {
+export function loadCustomerList(location) {
 
     dispatch({
         type: actions.fetchCustomerList
@@ -21,7 +21,7 @@ export function loadCustomerList(position) {
 
 
     CustomerService.loadCustomerList(
-        position,
+        location,
         (customerList) => {
             dispatch({
                 type: actions.receiveCustomerList,

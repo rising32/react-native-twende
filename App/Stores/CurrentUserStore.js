@@ -31,8 +31,10 @@ class CurrentUserStore extends EventEmitter {
     };
 
     setGcmToken(gcmToken) {
-        this._gcmToken = gcmToken;
-        this.emit(events.gcmTokenLoaded, gcmToken);
+        if (this._gcmToken != gcmToken) {
+            this._gcmToken = gcmToken;
+            this.emit(events.gcmTokenLoaded, gcmToken);
+        }
     };
 
     clear() {

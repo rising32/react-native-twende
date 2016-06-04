@@ -20,6 +20,7 @@ import CurrentRideStore from '../Stores/CurrentRideStore';
 import {refreshCurrentRide} from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
 var SheetIcon = require('../Components/SheetIcon');
+import StarRating from 'react-native-starrating';
 
 
 var CurrentRidePage = React.createClass({
@@ -192,6 +193,12 @@ var CurrentRidePage = React.createClass({
         )
     },
 
+    rate: function(value) {
+        var ride = this.state.currentRide;
+        //ride.rating = value;
+        alert(value);
+        //this.setState({currentRide: ride});
+    },
 
     renderDropOff: function () {
         var steps = [
@@ -216,6 +223,13 @@ var CurrentRidePage = React.createClass({
                             <Text style={{textAlign: 'center'}}>
                                 How was your ride with {this.props.driver.name}
                             </Text>
+                            <StarRating
+                                maxStars={5}
+                                rating={3}
+                                disabled={false}
+                                starSize={30}
+                                onStarChange={(value) => this.rate(value)}
+                            />
                         </View>
                     </View>
                 </View>

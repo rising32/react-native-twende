@@ -1,13 +1,14 @@
 //var apiUrl = 'http://192.168.43.171:7000/api/';
-//var apiUrl = 'http://192.168.35.14:8000/api/';
+var apiUrl = 'http://192.168.35.14:8000/api/';
 //var apiUrl = 'http://192.168.3.102:7000/api/';
-var apiUrl = 'http://twende.loekvan.gent/api/';
+//var apiUrl = 'http://twende.loekvan.gent/api/';
 var mediaUrl = 'http://twende.loekvan.gent/';
 
 exports.apiUrl = apiUrl;
 exports.mediaUrl = mediaUrl;
 
 exports.api = {
+    socialLogin: apiUrl + 'auth/convert-token/',
     rides: apiUrl + 'rides/',
     requensts: apiUrl + 'requensts/',
     drivers: apiUrl + 'drivers/',
@@ -42,3 +43,9 @@ exports.camera_options = {
 
 // Time between two position polls (driver location)
 exports.geoPositionMaxAge = 60;
+
+
+exports.socialClient = {
+    id: "fYi1Hb7AOUpoby55Olp10V8Ory4O8yw858kgMfPF",
+    secret: "s7XEVnQfjkxLeP5pWkCNUnROA5O7Sy2Y7PdZEDIxpEkQjCx8EyHkgGwRp5QsmGDo9o3GpqYoY9LMkxNesKDlXUVudePyoM1jzw2g4ohkX3c2NN8k209ZuLOuhZR8plwV",
+};

@@ -13,14 +13,14 @@ import actions from "../Constants/Actions";
 import {dispatch} from '../Dispatcher';
 
 
-export function loadDriverList(position) {
+export function loadDriverList(location) {
 
 
     dispatch({
         type: actions.fetchDriverList
     });
 
-    if (!position) {
+    if (!location) {
         dispatch({
             type: actions.errorFetchDriverList,
             error: 'Need a position to get a list of drivers.'
@@ -28,7 +28,7 @@ export function loadDriverList(position) {
         return
     }
     DriverService.loadDriverList(
-        position,
+        location,
         (driverList) => {
             dispatch({
                 type: actions.receiveDriverList,

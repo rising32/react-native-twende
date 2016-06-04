@@ -4,20 +4,21 @@ import actions from "../Constants/Actions";
 import config from "../../config"
 
 export function loadGeoLocation() {
-    Geolocation.getCurrentPosition((position) => {
+    Geolocation.getCurrentPosition((location) => {
+        alert('Got location')
         dispatch({
-            type: actions.receiveGeoPosition,
-            position: position.coords
+            type: actions.receiveGeoLocation,
+            location: location.coords
         });
     });
 }
 
 export function startWatchingGeoLocation() {
     Geolocation.watchPosition(
-        (position) => {
+        (location) => {
             dispatch({
-                type: actions.receiveGeoPosition,
-                position: position.coords
+                type: actions.receiveGeoLocation,
+                location: location.coords
             });
         },
         (error) => {},

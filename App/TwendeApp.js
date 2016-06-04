@@ -124,6 +124,7 @@ var TwendeApp = React.createClass({
                 var currentUser = this.state.currentUser;
                 currentUser.gcm_token = gcmToken;
                 this.setState({currentUser: currentUser});
+                alert('gcm');
                 saveCurrentUser(currentUser);
             });
 
@@ -272,7 +273,7 @@ var TwendeApp = React.createClass({
                             text={'About Twende'}
                         />
                         <Link
-                            action={() => this.goToPage({id: 'LoginPage'})}
+                            action={() => this.goToPage('LoginPage')}
                             style={{padding: 8}}
                             size={14}
                             color={'#DDDDDD'}

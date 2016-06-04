@@ -8,7 +8,7 @@ export default {
     gcmTokenLoaded: 'GCM_TOKEN_LOADED',
 
     // Geo
-    geoPositionLoaded: 'GEO_POSITION_LOADED',
+    geoLocationLoaded: 'GEO_LOCATION_LOADED',
 
     // Drivers
     driverListLoaded: 'DRIVER_LIST_LOADED',

@@ -8,7 +8,8 @@ var RideService = {
     _headers: function(){
         var token = TokenStore.get();
         return {
-            'Authorization': 'JWT ' + token,
+            //'Authorization': 'JWT ' + token,
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         };
     },

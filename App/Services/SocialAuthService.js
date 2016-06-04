@@ -1,10 +1,9 @@
-var config = require('../../config');
 var ApiClient = require('../Services/ApiClient');
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var TokenStore = require('../Stores/TokenStore');
 
 
-var CurrentUserService = {
+var SocialAuthService = {
 
     _headers: function (token) {
         var token = token ? token : TokenStore.get();
@@ -82,4 +81,4 @@ var CurrentUserService = {
 };
 
 
-module.exports = CurrentUserService;
+module.exports = SocialAuthService;

@@ -37,7 +37,7 @@ var DriverHomePage = React.createClass({
         return {
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
-            position: {},
+            location: {},
             region: {
                 latitude: 52.1668,
                 longitude: 4.491,

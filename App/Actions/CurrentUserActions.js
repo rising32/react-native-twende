@@ -63,6 +63,7 @@ export function saveCurrentUser(currentUser) {
 
         },
         (error) => {
+            alert(JSON.stringify(error));
             dispatch({
                 type: actions.errorUpdatingCurrentUser
             })

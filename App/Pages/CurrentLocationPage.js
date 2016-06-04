@@ -46,7 +46,7 @@ var CurrentLocationPage = React.createClass({
 
     componentWillMount: function (props) {
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        GeoLocationStore.on(events.geoPositionLoaded, (loc) => {
+        GeoLocationStore.on(events.geoLocationLoaded, (loc) => {
             var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
             this.setState({
                 origin: {

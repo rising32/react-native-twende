@@ -1,6 +1,6 @@
 {
   "name": "TwendeApp",
-  "version": "0.0.1",
+  "version": "0.0.35",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
@@ -13,7 +13,7 @@
     "react": "^0.14.8",
     "react-native": "^0.23.1",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
-    "react-native-fbsdk": "^0.1.0",
+    "react-native-fbsdk": "git+ssh://git@github.com/facebook/react-native-fbsdk.git#0.2.0",
     "react-native-form": "^2.0.5",
     "react-native-gmaps": "^1.0.9",
     "react-native-image-picker": "^0.18.17",

@@ -16,11 +16,13 @@ var IconText = require('../Components/IconText');
 const FBSDK = require('react-native-fbsdk');
 const {
     LoginButton,
+    AccessToken
     } = FBSDK;
 import events from "../Constants/Events";
 import Dispatcher from "../Dispatcher";
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import { loginCurrentUser }  from '../Actions/CurrentUserActions';
+import { loadFacebookUser }  from '../Actions/SocialActions';
 
 
 var LoginPage = React.createClass({
@@ -83,33 +85,36 @@ var LoginPage = React.createClass({
         );
     },
 
-    renderScene: function (route, navigator) {
-        var error = this.state.error ? <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
 
-                //<LoginButton
-                //    publishPermissxions={["publish_actions"]}
-                //    onLoginFinished={
-                //        (error, result) => {
-                //          if (error) {
-                //            alert("login has error: " + result.error);
-                //          } else if (result.isCancelled) {
-                //            alert("login is cancelled.");
-                //          } else {
-                //            AccessToken.getCurrentAccessToken().then(
-                //              (data) => {
-                //                alert(data.accessToken.toString())
-                //              }
-                //            )
-                //          }
-                //        }
-                //      }
-                //    onLogoutFinished={() => alert("logout.")}/>
-
-
+    renderSocialLogin: function () {
+        var fbToken;
         return (
-            <View style={[styles.page, styles.page_full, styles.card]}>
+            <LoginButton
+                readPermissions={["email"]}
+                onLoginFinished={
+                    (error, result) => {
+                        if (error) {
+                            alert("Login has error: " + result.error);
+                        } else if (result.isCancelled) {
+                            alert("Login is cancelled.");
+                        } else {
+                            if (!fbToken) {
+                                fbToken = result;
+                                loadFacebookUser();
+                            }
+                        }
+                    }
+                }
+                onLogoutFinished={() => {
+                    fbToken = null;
+                }}/>
 
-                {error}
+        )
+    },
+
+    renderUsernameLogin: function () {
+        return (
+            <View>
                 <TextInput
                     scrollRef={"username"}
                     placeholder={"Username"}
@@ -136,6 +141,23 @@ var LoginPage = React.createClass({
                 >
                     <Text style={styles.primary_button_text}>LOGIN</Text>
                 </TouchableHighlight>
+            </View>
+        )
+    },
+
+    renderScene: function (route, navigator) {
+        var error = this.state.error ?
+            <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
+
+        var content = this.renderSocialLogin();
+
+
+        return (
+            <View style={[styles.page, styles.page_full, styles.card]}>
+
+                {error}
+                {content}
+
             </View>
         );
     }

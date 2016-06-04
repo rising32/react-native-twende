@@ -9,15 +9,16 @@ var DriverService = {
     _headers: function(){
         var token = TokenStore.get();
         return {
-            'Authorization': 'JWT ' + token,
+            //'Authorization': 'JWT ' + token,
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         };
     },
 
-    loadDriverList: function (position, resolve, reject) {
+    loadDriverList: function (location, resolve, reject) {
         var url = config.api.drivers;
-        if (position) {
-            url += "?latitude=" + position.latitude + "&longitude=" + position.longitude;
+        if (location) {
+            url += "?latitude=" + location.latitude + "&longitude=" + location.longitude;
         } else {
             return reject('Need position to fetch driver list');
         }

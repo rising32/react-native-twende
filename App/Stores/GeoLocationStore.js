@@ -23,18 +23,15 @@ class GeoLocationStore extends EventEmitter {
         return this._geoLocation;
     };
 
-    set(geoPosition) {
-        this._geoLocation = geoPosition;
-        this.emit(events.geoPositionLoaded, geoPosition)
+    set(location) {
+        this._geoLocation = location;
+        this.emit(events.geoLocationLoaded, location)
     };
 
     handleActions(action) {
         switch(action.type) {
-            case actions.seLocation:
+            case actions.receiveGeoLocation:
                 this.set(action.location);
-                break;
-            case actions.refreshLocation:
-                this.error();
                 break;
         }
     };

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 import com.facebook.react.ReactActivity;
@@ -54,6 +53,7 @@ public class MainActivity extends ReactActivity {
 
         ReactPackage packages[] = new ReactPackage[]{
             new MainReactPackage(),
+            new FBSDKPackage(),
             new ImagePickerPackage(),
             new AirPackage(),
             new FBSDKPackage(mCallbackManager),

@@ -10,9 +10,13 @@ export default {
     errorUpdateCurrentUser:    'ERROR_UPDATE_CURRENT_USER',
     setGcmToken:               'SET_GCM_TOKEN',
 
+    // Social
+    receiveFacebookToken:      'RECEIVE_FACEBOOK_TOKEN',
+
+
     // Geo
-    loadGeoPosition:    'LOAD_GEO_POSITION',
-    receiveGeoPosition: 'RECEIVE_GEO_POSITION',
+    loadGeoLocation:    'LOAD_GEO_LOCATION',
+    receiveGeoLocation: 'RECEIVE_GEO_LOCATION',
 
     // Drivers
     fetchDriverList:      'FETCH_DRIVER_LIST',

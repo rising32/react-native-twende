@@ -7,12 +7,13 @@ var CustomerService = {
     _headers: function(){
         var token = TokenStore.get();
         return {
-            'Authorization': 'JWT ' + token,
+            //'Authorization': 'JWT ' + token,
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         };
     },
 
-    loadCustomerList: function (position, resolve, reject) {
+    loadCustomerList: function (location, resolve, reject) {
         var url = config.api.rides;
         fetch(url, {
             method: 'GET',
