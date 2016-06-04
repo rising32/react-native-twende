@@ -124,7 +124,6 @@ var TwendeApp = React.createClass({
                 var currentUser = this.state.currentUser;
                 currentUser.gcm_token = gcmToken;
                 this.setState({currentUser: currentUser});
-                alert('gcm');
                 saveCurrentUser(currentUser);
             });
 

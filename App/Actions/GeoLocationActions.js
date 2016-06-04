@@ -5,7 +5,6 @@ import config from "../../config"
 
 export function loadGeoLocation() {
     Geolocation.getCurrentPosition((location) => {
-        alert('Got location')
         dispatch({
             type: actions.receiveGeoLocation,
             location: location.coords

@@ -7,6 +7,7 @@ var {
     Text,
     Navigator,
     Image,
+    ToastAndroid,
     TouchableOpacity,
     TouchableHighlight,
     } = ReactNative;
@@ -17,10 +18,12 @@ var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
 var NavIcon = require('../Components/NavIcon');
 import CurrentRideStore from '../Stores/CurrentRideStore';
-import {refreshCurrentRide} from "../Actions/CurrentRideActions";
+import {
+    refreshCurrentRide,
+    updateCurrentRide } from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
 var SheetIcon = require('../Components/SheetIcon');
-import StarRating from 'react-native-starrating';
+import StarRating from 'react-native-rating-star';
 
 
 var CurrentRidePage = React.createClass({
@@ -44,7 +47,10 @@ var CurrentRidePage = React.createClass({
     },
 
     cancelRide: function () {
-        alert('Ride Cancelled.');
+        ToastAndroid.show('Ride canceled.', ToastAndroid.LONG);
+        var currentRide = this.state.currentRide;
+        currentRide.state = 'canceled';
+        updateCurrentRide(currentRide);
         this.props.navigator.pop();
     },
 
@@ -103,7 +109,7 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps} />
+                <StepBar steps={steps}/>
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Avatar image={this.props.currentUser.avatar}/>
@@ -136,6 +142,45 @@ var CurrentRidePage = React.createClass({
         )
     },
 
+    renderDeclined: function () {
+        var steps = [
+            {in_progress: false, done: false, title: 'Request declined'},
+            {in_progress: false, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'En route'}
+        ];
+        return (
+            <View style={{flex: 1}}>
+                <StepBar steps={steps}/>
+
+                <View style={styles.sheet_dark}>
+                    <View style={{alignItems: 'center'}}>
+                        <View style={styles.card_mid_spacer}/>
+                        <View style={styles.card_mid_avatar}>
+                            <Avatar
+                                image={this.state.driver.avatar}/>
+                        </View>
+                        <View style={styles.card_mid}>
+                            <Text style={{textAlign: 'center'}}>
+                                Sorry {this.state.currentUser.first_name},
+                            </Text>
+                            <Text style={{textAlign: 'center'}}>
+                                I declined your request.
+                            </Text>
+                        </View>
+                    </View>
+                    <Link style={{margin: 10}}
+                          action={this.navigator.pop()}
+                          icon={"motorcycle"}
+                          size={16}
+                          iconSize={24}
+                          color={colors.action_secondary}
+                          text={"FIND ANOTHER DRIVER"}
+                    />
+
+                </View>
+            </View>
+        )
+    },
     renderAccepted: function () {
         var steps = [
             {in_progress: true, done: true, title: 'Ride accepted'},
@@ -144,10 +189,10 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps} />
+                <StepBar steps={steps}/>
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer} />
+                        <View style={styles.card_mid_spacer}/>
                         <View style={styles.card_mid_avatar}>
                             <Avatar
                                 image={this.state.driver.avatar}/>
@@ -174,10 +219,10 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps} />
+                <StepBar steps={steps}/>
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer} />
+                        <View style={styles.card_mid_spacer}/>
                         <View style={styles.card_mid_avatar}>
                             <Avatar
                                 image={this.state.driver.avatar}/>
@@ -193,11 +238,10 @@ var CurrentRidePage = React.createClass({
         )
     },
 
-    rate: function(value) {
+    rate: function (value) {
         var ride = this.state.currentRide;
-        //ride.rating = value;
-        alert(value);
-        //this.setState({currentRide: ride});
+        ride.rating = value;
+        this.setState({currentRide: ride});
     },
 
     renderDropOff: function () {
@@ -208,10 +252,10 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps} />
+                <StepBar steps={steps}/>
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer} />
+                        <View style={styles.card_mid_spacer}/>
                         <View style={styles.card_mid_avatar}>
                             <Avatar
                                 image={this.state.driver.avatar}/>
@@ -225,10 +269,12 @@ var CurrentRidePage = React.createClass({
                             </Text>
                             <StarRating
                                 maxStars={5}
-                                rating={3}
-                                disabled={false}
+                                rating={0}
+                                selectStar={require('../assets/star-on.png')}
+                                unSelectStar={require('../assets/star-off.png')}
+                                valueChanged={this.rate}
                                 starSize={30}
-                                onStarChange={(value) => this.rate(value)}
+                                interitemSpacing={10}
                             />
                         </View>
                     </View>
@@ -236,7 +282,6 @@ var CurrentRidePage = React.createClass({
             </View>
         )
     },
-
 
 
     renderScene: function (route, navigator) {
