@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 import com.facebook.react.ReactActivity;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class MainActivity extends ReactActivity {
     CallbackManager mCallbackManager;
+
     private ReactNativePushNotificationPackage mReactNativePushNotificationPackage;
 
 
@@ -53,9 +55,9 @@ public class MainActivity extends ReactActivity {
 
         ReactPackage packages[] = new ReactPackage[]{
             new MainReactPackage(),
+            new FBSDKPackage(mCallbackManager),
             new ImagePickerPackage(),
             new AirPackage(),
-            new FBSDKPackage(mCallbackManager),
             mReactNativePushNotificationPackage
         };
         return Arrays.<ReactPackage>asList(packages);
@@ -71,12 +73,14 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
 
 
