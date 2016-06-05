@@ -53,7 +53,6 @@ public class MainActivity extends ReactActivity {
 
         ReactPackage packages[] = new ReactPackage[]{
             new MainReactPackage(),
-            new FBSDKPackage(),
             new ImagePickerPackage(),
             new AirPackage(),
             new FBSDKPackage(mCallbackManager),
@@ -72,7 +71,6 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
     @Override

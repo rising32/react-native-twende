@@ -44,29 +44,32 @@ var CurrentLocationPage = React.createClass({
         }
     },
 
+    updateLocation: function(loc) {
+        var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
+        this.setState({
+            origin: {
+                latitude: loc.latitude,
+                longitude: loc.longitude
+            },
+            region: {
+                latitude: loc.latitude,
+                longitude: loc.longitude,
+                latitudeDelta: this.state.region.latitudeDelta,
+                longitudeDelta: this.state.region.longitudeDelta
+            },
+            origin_text: myLoc
+        });
+    },
+
     componentWillMount: function (props) {
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        GeoLocationStore.on(events.geoLocationLoaded, (loc) => {
-            var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
-            this.setState({
-                origin: {
-                    latitude: loc.latitude,
-                    longitude: loc.longitude
-                },
-                region: {
-                    latitude: loc.latitude,
-                    longitude: loc.longitude,
-                    latitudeDelta: this.state.region.latitudeDelta,
-                    longitudeDelta: this.state.region.longitudeDelta
-                },
-                origin_text: myLoc
-            });
-        });
+        GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadGeoLocation();
     },
 
     componentWillUnmount: function (props) {
         CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
+        GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
     },
 
     dragOrigin: function (loc) {
