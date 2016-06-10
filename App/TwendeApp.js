@@ -10,6 +10,7 @@ var {
     Text,
     View,
     Navigator,
+    ToastAndroid,
     TouchableOpacity,
     DrawerLayoutAndroid,
     BackAndroid,
@@ -38,7 +39,7 @@ import CurrentRideStore from './Stores/CurrentRideStore';
 import {
     logoutCurrentUser,
     setGcmToken,
-    saveCurrentUser } from './Actions/CurrentUserActions';
+    updateCurrentUser } from './Actions/CurrentUserActions';
 var PushNotification = require('react-native-push-notification');
 import { notify } from "./Actions/NotifyActions"
 import { refreshCurrentRide } from "./Actions/CurrentRideActions";
@@ -75,15 +76,19 @@ var TwendeApp = React.createClass({
 
 
         registerPushNotification: function () {
-
             PushNotification.configure({
                 onRegister: function (token) {
                     setGcmToken(token.token);
                 },
                 onNotification: function (notification) {
-                    notify(notification.title, notification.message);
-                    refreshCurrentRide(notification.ride);
-
+                    if (notification.title) {
+                        ToastAndroid.show("Got message", ToastAndroid.SHORT)
+                        notify(notification.title, notification.message);
+                    }
+                    if (notification.ride) {
+                        refreshCurrentRide(notification.ride);
+                    }
+                    notification = null;
                 },
                 senderID: "1055251321691",
                 permissions: {
@@ -91,7 +96,7 @@ var TwendeApp = React.createClass({
                     badge: true,
                     sound: true
                 },
-                popInitialNotification: true,
+                popInitialNotification: false,
                 requestPermissions: true
             });
 
@@ -101,11 +106,11 @@ var TwendeApp = React.createClass({
             CurrentRideStore.on(events.currentRideLoaded, (currentRide) => {
                 this.setState({currentRide: currentRide});
                 if (this.state.currentUser.is_driver) {
-                    //this.navigator.push({
-                    //    id: 'DriverHomePage',
-                    //    currentUser: currentUser,
-                    //    currentRide: currentRide
-                    //});
+                    this.navigator.push({
+                        id: 'DriverHomePage',
+                        currentUser: currentUser,
+                        currentRide: currentRide
+                    });
 
                 } else {
                     if (currentRide.state != 'new') {
@@ -124,7 +129,7 @@ var TwendeApp = React.createClass({
                 var currentUser = this.state.currentUser;
                 currentUser.gcm_token = gcmToken;
                 this.setState({currentUser: currentUser});
-                saveCurrentUser(currentUser);
+                updateCurrentUser(currentUser);
             });
 
             BackAndroid.addEventListener('hardwareBackPress', this.goBack);

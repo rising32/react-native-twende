@@ -5,7 +5,7 @@ var React = require('react-native');
 var {
     View,
     Text,
-    Form,
+    ToastAndroid,
     TextInput,
     Navigator,
     TouchableHighlight,
@@ -55,6 +55,7 @@ var LoginPage = React.createClass({
     },
 
     goToHome: function (currentUser) {
+        ToastAndroid.show(`Logged in as ${currentUser.first_name}.`, ToastAndroid.SHORT);
         if (currentUser.is_driver) {
             this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {

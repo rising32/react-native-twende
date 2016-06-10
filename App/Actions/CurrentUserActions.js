@@ -48,7 +48,7 @@ export function logoutCurrentUser() {
     });
 }
 
-export function saveCurrentUser(currentUser) {
+export function updateCurrentUser(currentUser) {
     dispatch({
         type: actions.updateCurrentUser,
         currentUser: currentUser

@@ -35,6 +35,8 @@ var SplashPage = React.createClass({
     },
 
     goToHome: function (currentUser) {
+        ToastAndroid.show(`Hey I remember you, you're ${currentUser.first_name}.`, ToastAndroid.SHORT);
+        this.setState({currentUser: currentUser});
         if (currentUser.is_driver) {
             this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {

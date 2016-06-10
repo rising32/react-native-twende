@@ -21,7 +21,7 @@ import { Avatar, Button, Icon } from 'react-native-material-design';
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CurrentUserActions = require('../Actions/CurrentUserActions');
 
-import { saveCurrentUser }  from '../Actions/CurrentUserActions';
+import { updateCurrentUser }  from '../Actions/CurrentUserActions';
 
 var config = require('../../config');
 
@@ -56,7 +56,7 @@ var ProfilePage = React.createClass({
         if (this.state.picture) {
             currentUser.picture = this.state.picture;
         }
-        saveCurrentUser(currentUser);
+        updateCurrentUser(currentUser);
     },
 
     takePicture: function () {

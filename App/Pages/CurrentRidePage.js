@@ -16,14 +16,15 @@ import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
 var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
+var StarRating = require('../Components/StarRating');
 var NavIcon = require('../Components/NavIcon');
 import CurrentRideStore from '../Stores/CurrentRideStore';
 import {
     refreshCurrentRide,
     updateCurrentRide } from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
+
 var SheetIcon = require('../Components/SheetIcon');
-import StarRating from 'react-native-rating-star';
 
 
 var CurrentRidePage = React.createClass({
@@ -39,7 +40,7 @@ var CurrentRidePage = React.createClass({
     componentWillMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
-        //refreshCurrentRide(this.state.currentRide.id);
+        refreshCurrentRide(this.state.currentRide.id);
     },
 
     componentWillUnmount: function (props) {
@@ -99,7 +100,6 @@ var CurrentRidePage = React.createClass({
           }/>
         );
     },
-
 
     renderConnecting: function () {
         var steps = [
@@ -238,7 +238,8 @@ var CurrentRidePage = React.createClass({
         )
     },
 
-    rate: function (value) {
+    rateRide: function (value) {
+        ToastAndroid.show(`You rated this ride with ${value} stars.`, ToastAndroid.SHORT);
         var ride = this.state.currentRide;
         ride.rating = value;
         this.setState({currentRide: ride});
@@ -268,16 +269,33 @@ var CurrentRidePage = React.createClass({
                                 How was your ride with {this.props.driver.name}
                             </Text>
                             <StarRating
+                                onChange={this.rateRide}
                                 maxStars={5}
-                                rating={0}
-                                selectStar={require('../assets/star-on.png')}
-                                unSelectStar={require('../assets/star-off.png')}
-                                valueChanged={this.rate}
-                                starSize={30}
-                                interitemSpacing={10}
+                                rating={3}
+                                colorOn={colors.action}
+                                colorOff={colors.action_disabled}
                             />
+
+                            <View style={styles.card_mid_actions}>
+                                <Link
+                                    action={() => this.finishRide()}
+                                    style={styles.button_simple}
+                                    text={"DON'T RATE"}
+                                    textStyle={{fontWeight: 'bold'}}
+                                    color={colors.action_secondary}
+                                    />
+                                <Link
+                                    action={() => this.finishRide()}
+                                    style={styles.button_simple}
+                                    text={"SAVE RATING"}
+                                    textStyle={{fontWeight: 'bold'}}
+                                    color={colors.action}
+                                    />
+                            </View>
+
                         </View>
                     </View>
+
                 </View>
             </View>
         )
@@ -295,6 +313,9 @@ var CurrentRidePage = React.createClass({
                 break;
             case 'dropoff':
                 content = this.renderDropOff();
+                break;
+            case 'declined':
+                content = this.renderDeclined();
                 break;
             default:
                 content = this.renderConnecting();

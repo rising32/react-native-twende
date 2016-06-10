@@ -11,6 +11,7 @@ export var colors = {
     secondary: '#2BA59A',
     action: '#5B6ABF',
     action_secondary: '#555555',
+    action_disabled: '#E0E0E0',
     text: '#333333',
     title: '#555555',
     border: '#777777',

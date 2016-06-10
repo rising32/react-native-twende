@@ -27,66 +27,31 @@ import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
 import {loadCustomerList} from "../Actions/CustomerActions";
 import { updateCurrentRide } from "../Actions/CurrentRideActions";
-import { updateCurrentUser } from"../Actions/CurrentUserActions";
 import { startWatchingGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
-var BackgroundGeolocation = require('react-native-mauron85-background-geolocation');
 
 
+var DriverRidePage = React.createClass({
 
-var DriverHomePage = React.createClass({
-
-
-    configureBgGeoLocation: function() {
-
-        BackgroundGeolocation.configure({
-          desiredAccuracy: 10,
-          stationaryRadius: 50,
-          distanceFilter: 50,
-          locationTimeout: 30,
-          notificationTitle: 'Background tracking',
-          notificationText: 'enabled',
-          debug: true,
-          startOnBoot: false,
-          stopOnTerminate: false,
-          locationProvider: 1, // 0 => ANDROID_DISTANCE_FILTER_PROVIDER | 1 => ANDROID_ACTIVITY_PROVIDER
-          interval: 10000,
-          fastestInterval: 5000,
-          activitiesInterval: 10000,
-          stopOnStillActivity: false,
-          url: 'http://192.168.81.15:3000/location',
-          httpHeaders: {
-            'X-FOO': 'bar'
-          }
-        });
-
-        BackgroundGeolocation.on('location', (location) => {
-          //handle your locations here
-          alert(location);
-        });
-
-        BackgroundGeolocation.on('error', (error) => {
-          console.log('[ERROR] BackgroundGeolocation error:', error);
-        });
-
-        BackgroundGeolocation.start(() => {
-          console.log('[DEBUG] BackgroundGeolocation started successfully');
-        });
-     },
-
-    getInitialState: function(props) {
+    getInitialState: function () {
         return {
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
-            location: {},
-            region: {
-                latitude: 52.1668,
-                longitude: 4.491,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01
-            },
-            items: []
+            driver: this.props.driver
         }
+
+    },
+
+    componentWillMount: function() {
+        startWatchingGeoLocation();
+        CustomerStore.on(events.customerListLoaded, this.setItems);
+        this.refreshItems();
+
+    },
+
+    componentWillUnmount: function() {
+        stopWatchingGeoLocation();
+        CustomerStore.removeListener(events.customerListLoaded, this.setItems);
     },
 
     refreshItems: function(){
@@ -97,7 +62,6 @@ var DriverHomePage = React.createClass({
         var currentUser = this.state.currentUser;
         currentUser.is_available = available.checked;
         this.setState({currentUser: currentUser});
-        updateCurrentUser(currentUser);
     },
 
     acceptRide: function(ride) {
@@ -114,18 +78,6 @@ var DriverHomePage = React.createClass({
         this.setState({items: items});
     },
 
-    componentWillMount: function() {
-        //this.configureBgGeoLocation();
-        startWatchingGeoLocation();
-        CustomerStore.on(events.customerListLoaded, this.setItems);
-        this.refreshItems();
-
-    },
-
-    componentWillUnmount: function() {
-        stopWatchingGeoLocation();
-        CustomerStore.removeListener(events.customerListLoaded, this.setItems);
-    },
 
     render: function() {
         return (
@@ -265,4 +217,4 @@ var NavigationBarRouteMapper = {
     }
 };
 
-module.exports = DriverHomePage;
+module.exports = DriverRidePage;
