@@ -82,13 +82,11 @@ var TwendeApp = React.createClass({
                 },
                 onNotification: function (notification) {
                     if (notification.title) {
-                        ToastAndroid.show("Got message", ToastAndroid.SHORT)
                         notify(notification.title, notification.message);
                     }
                     if (notification.ride) {
                         refreshCurrentRide(notification.ride);
                     }
-                    notification = null;
                 },
                 senderID: "1055251321691",
                 permissions: {
@@ -96,7 +94,7 @@ var TwendeApp = React.createClass({
                     badge: true,
                     sound: true
                 },
-                popInitialNotification: false,
+                popInitialNotification: true,
                 requestPermissions: true
             });
 

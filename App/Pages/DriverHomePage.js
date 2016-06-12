@@ -30,49 +30,9 @@ import { updateCurrentRide } from "../Actions/CurrentRideActions";
 import { updateCurrentUser } from"../Actions/CurrentUserActions";
 import { startWatchingGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
-var BackgroundGeolocation = require('react-native-mauron85-background-geolocation');
-
 
 
 var DriverHomePage = React.createClass({
-
-
-    configureBgGeoLocation: function() {
-
-        BackgroundGeolocation.configure({
-          desiredAccuracy: 10,
-          stationaryRadius: 50,
-          distanceFilter: 50,
-          locationTimeout: 30,
-          notificationTitle: 'Background tracking',
-          notificationText: 'enabled',
-          debug: true,
-          startOnBoot: false,
-          stopOnTerminate: false,
-          locationProvider: 1, // 0 => ANDROID_DISTANCE_FILTER_PROVIDER | 1 => ANDROID_ACTIVITY_PROVIDER
-          interval: 10000,
-          fastestInterval: 5000,
-          activitiesInterval: 10000,
-          stopOnStillActivity: false,
-          url: 'http://192.168.81.15:3000/location',
-          httpHeaders: {
-            'X-FOO': 'bar'
-          }
-        });
-
-        BackgroundGeolocation.on('location', (location) => {
-          //handle your locations here
-          alert(location);
-        });
-
-        BackgroundGeolocation.on('error', (error) => {
-          console.log('[ERROR] BackgroundGeolocation error:', error);
-        });
-
-        BackgroundGeolocation.start(() => {
-          console.log('[DEBUG] BackgroundGeolocation started successfully');
-        });
-     },
 
     getInitialState: function(props) {
         return {
@@ -115,7 +75,6 @@ var DriverHomePage = React.createClass({
     },
 
     componentWillMount: function() {
-        //this.configureBgGeoLocation();
         startWatchingGeoLocation();
         CustomerStore.on(events.customerListLoaded, this.setItems);
         this.refreshItems();
@@ -123,7 +82,7 @@ var DriverHomePage = React.createClass({
     },
 
     componentWillUnmount: function() {
-        stopWatchingGeoLocation();
+        //stopWatchingGeoLocation();
         CustomerStore.removeListener(events.customerListLoaded, this.setItems);
     },
 

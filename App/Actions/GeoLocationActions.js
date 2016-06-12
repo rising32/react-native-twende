@@ -2,27 +2,67 @@ var Geolocation = require('Geolocation');
 import {dispatch} from '../Dispatcher';
 import actions from "../Constants/Actions";
 import config from "../../config"
+var LocationService = require('../Services/LocationService');
+var React = require('react-native');
+var {
+    ToastAndroid,
+    } = React;
+
 
 export function loadGeoLocation() {
-    Geolocation.getCurrentPosition((location) => {
+    Geolocation.getCurrentPosition((geoLocation) => {
+        var location = {
+            latitude: geoLocation.coords.latitude,
+            longitude: geoLocation.coords.longitude
+        };
+        // Dispatch it for application
         dispatch({
             type: actions.receiveGeoLocation,
-            location: location.coords
+            location: location
         });
+        //Send the location to the api
+        LocationService.storeLocation(
+            location,
+            (location) => {
+                alert(location)
+            },
+            (error) => {
+                console.log(JSON.stringify(error));
+            }
+        );
     });
 }
 
 export function startWatchingGeoLocation() {
+    ToastAndroid.show('watching your location', ToastAndroid.SHORT);
     Geolocation.watchPosition(
-        (location) => {
+        (geoLocation) => {
+            ToastAndroid.show('updating location', ToastAndroid.SHORT);
+            var location = {
+                latitude: geoLocation.coords.latitude,
+                longitude: geoLocation.coords.longitude
+            };
+            // Dispatch it for the application
             dispatch({
                 type: actions.receiveGeoLocation,
-                location: location.coords
+                location: location
             });
+            //Send the location to the api
+            LocationService.storeLocation(
+                location,
+                (location) => {
+                },
+                (error) => {
+                    console.log(JSON.stringify(error));
+                }
+            );
         },
         (error) => {
         },
-        {maximumAge: config.geoPositionMaxAge * 1000} // 60 seconds
+        {
+            timeOut: (5 * 60 * 1000),
+            maximumAge: (config.geoPositionMaxAge * 1000)
+        }
     );
 }
 

@@ -8,6 +8,7 @@ exports.mediaUrl = mediaUrl;
 exports.api = {
     socialLogin: apiUrl + 'auth/convert-token/',
     rides: apiUrl + 'rides/',
+    location: apiUrl + 'location/',
     requensts: apiUrl + 'requensts/',
     drivers: apiUrl + 'drivers/',
     users: apiUrl + 'users/',
@@ -39,7 +40,7 @@ exports.camera_options = {
     }
 };
 
-// Time between two position polls (driver location)
+// Time between two position polls (driver location) in seconds.
 exports.geoPositionMaxAge = 60;
 
 
