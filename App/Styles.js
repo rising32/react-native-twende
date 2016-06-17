@@ -136,7 +136,7 @@ export var styles = StyleSheet.create({
     },
 
     sheet_content: {
-
+        paddingTop: 20
     },
 
     sheet_dark: {
@@ -150,7 +150,6 @@ export var styles = StyleSheet.create({
 
     sheet_icon: {
         borderRadius: 25,
-        backgroundColor: colors.action,
         width: 50,
         height: 50,
         alignItems: 'center',

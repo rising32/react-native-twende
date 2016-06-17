@@ -34,8 +34,8 @@ var RideService = {
     },
 
     update: function (ride, resolve, reject) {
-        // User primary key for driver
-        ride.driver = ride.driver.id;
+        // Use primary key for driver
+        if (ride.driver) ride.driver = ride.driver.id;
         return fetch(config.api.rides + ride.id + '/', {
             method: 'PATCH',
             headers: this._headers(),
