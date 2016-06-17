@@ -19,7 +19,6 @@ export function loadCustomerList(location) {
         type: actions.fetchCustomerList
     });
 
-
     CustomerService.loadCustomerList(
         location,
         (customerList) => {

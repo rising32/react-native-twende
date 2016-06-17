@@ -129,18 +129,15 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-mauron85-background-geolocation')
-    compile project(':react-native-fbsdk')
-    compile project(':react-native-image-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:+'
     compile 'com.facebook.react:react-native:+'
-    compile project(":react-native-maps")
-    compile project(":react-native-fbsdk")
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile project(':react-native-push-notification')
-    compile project(':react-native-mauron85-background-geolocation')
+    compile 'com.facebook.android:facebook-android-sdk:+'
     compile 'com.google.android.gms:play-services-location:+'
-
+    compile "com.google.android.gms:play-services-gcm:+"
+    compile project(':react-native-image-picker')
+    compile project(':react-native-fbsdk')
+    compile project(":react-native-maps")
+    compile project(':react-native-push-notification')
 }

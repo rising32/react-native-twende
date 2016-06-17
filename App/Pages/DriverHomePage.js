@@ -14,15 +14,16 @@ import {
 } from 'react-native-material-kit';
 
 
-var CurrentUserStore = require('../Stores/CurrentUserStore');
-var GeoLocationStore = require('../Stores/GeoLocationStore');
 import CustomerStore from '../Stores/CustomerStore';
+import CurrentRideStore from '../Stores/CurrentRideStore';
 var MapView = require('react-native-maps');
-
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
+import { Icon } from 'react-native-material-design';
 var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
+var SheetIcon = require('../Components/SheetIcon');
+var SheetAvatar = require('../Components/SheetAvatar');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
 import {loadCustomerList} from "../Actions/CustomerActions";
@@ -60,23 +61,61 @@ var DriverHomePage = React.createClass({
         updateCurrentUser(currentUser);
     },
 
-    acceptRide: function(ride) {
+    acceptRide: function() {
+        var ride = this.state.currentRide;
         ride.state = 'accepted';
         updateCurrentRide(ride);
     },
 
+    startRide: function() {
+        var ride = this.state.currentRide;
+        ride.state = 'driving';
+        updateCurrentRide(ride);
+    },
+
+    finishRide: function() {
+        var ride = this.state.currentRide;
+        ride.state = 'dropoff';
+        updateCurrentRide(ride);
+    },
+
+    rateRide: function() {
+        var ride = this.state.currentRide;
+        // TODO set rating and driver_price here
+        ride.state = 'finalized';
+        updateCurrentRide(ride);
+    },
+
     declineRide: function(ride) {
+        var answer = alert("Are you sure you want to cancel this ride?");
         ride.state = 'declined';
         updateCurrentRide(ride);
     },
 
     setItems: function(items) {
-        this.setState({items: items});
+        if (items.length) {
+            this.setState({currentRide: items[0]});
+
+            this.setState({region: {
+                latitude: items[0].origin.latitude,
+                longitude: items[0].origin.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01
+            }})
+        }
+    },
+
+    nextStep: function(currentRide) {
+        if (currentRide.state == 'declined') {
+            this.setState({currentRide: {}});
+        }
+        this.setState({currentRide: currentRide});
     },
 
     componentWillMount: function() {
         startWatchingGeoLocation();
         CustomerStore.on(events.customerListLoaded, this.setItems);
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep)
         this.refreshItems();
 
     },
@@ -84,6 +123,7 @@ var DriverHomePage = React.createClass({
     componentWillUnmount: function() {
         //stopWatchingGeoLocation();
         CustomerStore.removeListener(events.customerListLoaded, this.setItems);
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep)
     },
 
     render: function() {
@@ -98,91 +138,36 @@ var DriverHomePage = React.createClass({
         );
     },
 
+    renderSheetTop: function (nextAction, nextIcon) {
+        var ride = this.state.currentRide;
+        return (
+            <View style={{justifyContent: 'space-between', alignSelf: 'stretch', flexDirection: 'row', marginTop: -50, marginBottom: -15, elevation: 5}}>
+                <TouchableOpacity onPress={() => this.declineRide(ride)}>
+                    <View style={[styles.sheet_icon, {backgroundColor: colors.action_disabled}]}>
+                        <Icon
+                            name={'clear'}
+                            size={30}
+                            color={'#ffffff'}
+                        />
+                    </View>
+                </TouchableOpacity>
+                <Avatar image={ride.customer.avatar} />
+                <TouchableOpacity onPress={() => nextAction(ride)}>
+                    <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
+                        <Icon
+                            name={nextIcon}
+                            size={30}
+                            color={'#ffffff'}
+                        />
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    },
+
     renderEmpty: function() {
         return  (
             <View style={{alignItems: 'center'}}>
-                <IconText
-                    icon={"schedule"}
-                    text={"Waiting for a ride"}
-                    color={colors.action_secondary}
-                    style={{margin: 10}}
-                />
-            </View>
-        );
-
-    },
-    renderUnavailable: function() {
-        return  (
-            <View style={{alignItems: 'center'}}>
-                <IconText
-                    icon={"not-interested"}
-                    text={"You're unavailable and won't get any request."}
-                    color={colors.action_secondary}
-                    style={{margin: 10}}
-                />
-            </View>
-        );
-
-    },
-
-    renderRequest: function() {
-        var ride = this.state.items[0];
-        return  (
-            <View>
-
-                <View style={{alignItems: 'center'}}>
-                    <View style={styles.card_mid_spacer} />
-                    <View style={styles.card_mid_avatar}>
-                    <Avatar image={ride.customer.avatar} />
-                    </View>
-                    <View style={styles.card_mid}>
-                        <Text>
-                            {ride.customer.name}
-                        </Text>
-                        <Link
-                            icon={"motorcycle"}
-                            url={"geo:" + ride.latitude + ","  + ride.longitude}
-                            text={ride.origin_text}
-                            color={colors.action}
-                            style={{margin: 10}}
-                        />
-                        <View style={styles.card_mid_actions}>
-                            <Link
-                                action={() => this.declineRide(ride)}
-                                style={styles.button_simple}
-                                text={"DECLINE"}
-                                textStyle={{fontWeight: 'bold'}}
-                                color={colors.action_secondary}
-                                />
-                            <Link
-                                action={() => this.acceptRide(ride)}
-                                style={styles.button_simple}
-                                text={"ACCEPT"}
-                                textStyle={{fontWeight: 'bold'}}
-                                color={colors.action}
-                                />
-                        </View>
-                    </View>
-                </View>
-            </View>
-        );
-    },
-
-
-    renderScene: function(route, navigator) {
-        var content;
-        if (this.state.currentUser.is_available) {
-            if (this.state.items.length == 0) {
-                content = this.renderEmpty();
-            } else {
-                content = this.renderRequest();
-            }
-        } else {
-            content = this.renderUnavailable();
-        }
-
-        return (
-            <View style={styles.page}>
                 <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
                     <Text>
                         Not available
@@ -196,9 +181,216 @@ var DriverHomePage = React.createClass({
                         Available
                     </Text>
                 </View>
-                <View style={styles.sheet_dark}>
-                    {content}
+                <IconText
+                    icon={"schedule"}
+                    text={"Waiting for a ride"}
+                    color={colors.action_secondary}
+                    style={{margin: 10}}
+                />
+            </View>
+        );
+
+    },
+    renderUnavailable: function() {
+        return  (
+            <View style={{alignItems: 'center'}}>
+                <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <Text>
+                        Not available
+                    </Text>
+                    <MKSwitch
+                        color={colors.action}
+                        onCheckedChange={this.toggleAvailability}
+                        checked={this.state.currentUser.is_available}
+                    />
+                    <Text>
+                        Available
+                    </Text>
                 </View>
+                <IconText
+                    icon={"not-interested"}
+                    text={"You're unavailable and won't get any request."}
+                    color={colors.action_secondary}
+                    style={{margin: 10}}
+                />
+            </View>
+        );
+
+    },
+
+    renderRequest: function() {
+        var ride = this.state.currentRide;
+        var top = this.renderSheetTop(this.acceptRide, 'check');
+        return  (
+            <View>
+                <View style={styles.map}>
+                    <MapView
+                        region={this.state.region}
+                        showsUserLocation={true}
+                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
+                    >
+                        <MapView.Marker
+                            draggable
+                            coordinate={this.state.currentRide.origin}
+                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
+                        />
+                    </MapView>
+                </View>
+                <View style={[styles.sheet, {flex: 1}]}>
+                    {top}
+                    <View style={styles.sheet_content}>
+                        <Text style={styles.item_title}>
+                            {ride.customer.name}
+                        </Text>
+                        <Link
+                            icon={"pin-drop"}
+                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
+                            color={colors.action}
+                            style={{margin: 10}}
+                        />
+                    </View>
+                </View>
+            </View>
+        );
+    },
+
+    renderAccepted: function() {
+        var ride = this.state.currentRide;
+        var top = this.renderSheetTop(this.startRide, 'group');
+        return  (
+            <View>
+                <View style={styles.map}>
+                    <MapView
+                        region={this.state.region}
+                        showsUserLocation={true}
+                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
+                    >
+                        <MapView.Marker
+                            draggable
+                            coordinate={this.state.currentRide.origin}
+                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
+                        />
+                    </MapView>
+                </View>
+                <View style={[styles.sheet, {flex: 1}]}>
+                    {top}
+                    <View style={styles.sheet_content}>
+                        <Text style={styles.item_title}>
+                            You've accepted the ride. {ride.customer.name} is waiting.
+                        </Text>
+                        <Text>
+                            If you arrived at the customer hit the next button and you are on your way!
+                        </Text>
+                        <Link
+                            icon={"pin-drop"}
+                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
+                            color={colors.action}
+                            style={{margin: 10}}
+                        />
+                    </View>
+                </View>
+            </View>
+        );
+
+    },
+
+    renderDriving: function() {
+        var ride = this.state.currentRide;
+        var top = this.renderSheetTop(this.finishRide, 'beenhere');
+        return  (
+            <View>
+                <View style={styles.map}>
+                    <MapView
+                        region={this.state.region}
+                        showsUserLocation={true}
+                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
+                    >
+                        <MapView.Marker
+                            draggable
+                            coordinate={this.state.currentRide.origin}
+                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
+                        />
+                    </MapView>
+                </View>
+                <View style={[styles.sheet, {flex: 1}]}>
+                    {top}
+                    <View style={styles.sheet_content}>
+                        <Text style={styles.item_title}>
+                            Ok, you're on you way.
+                        </Text>
+                        <Text>
+                            If you arrived at the destination the next button to complete the ride!
+                        </Text>
+                        <Link
+                            icon={"pin-drop"}
+                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
+                            color={colors.action}
+                            style={{margin: 10}}
+                        />
+                    </View>
+                </View>
+            </View>
+        );
+
+    },
+
+    renderDropoff: function() {
+        var ride = this.state.currentRide;
+        var top = this.renderSheetTop(this.rateRide, 'tag-faces');
+        return  (
+            <View>
+                <View style={[styles.sheet, {flex: 1}]}>
+                    {top}
+                    <View style={styles.sheet_content}>
+                        <Text style={styles.item_title}>
+                            Ok, you're on you way.
+                        </Text>
+                        <Text>
+                            If you arrived at the destination the next button to complete the ride!
+                        </Text>
+                        <Link
+                            icon={"pin-drop"}
+                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
+                            color={colors.action}
+                            style={{margin: 10}}
+                        />
+                    </View>
+                </View>
+            </View>
+        );
+
+    },
+
+    renderScene: function(route, navigator) {
+        var content = this.renderEmpty();
+        if (this.state.currentUser.is_available) {
+            if (this.state.currentRide) {
+                switch (this.state.currentRide.state) {
+                    case 'new' :
+                        content = this.renderRequest();
+                        break;
+                    case 'accepted' :
+                        content = this.renderAccepted();
+                        break;
+                    case 'driving' :
+                        content = this.renderDriving();
+                        break;
+                    case 'dropoff' :
+                        content = this.renderDropoff();
+                        break;
+                }
+            }
+        } else {
+            content = this.renderUnavailable();
+        }
+
+        return (
+            <View style={styles.page}>
+                {content}
             </View>
         );
     }

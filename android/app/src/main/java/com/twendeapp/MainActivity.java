@@ -8,10 +8,8 @@ import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.marianhello.react.BackgroundGeolocationPackage;
 
 import com.facebook.react.ReactActivity;
-import com.marianhello.react.BackgroundGeolocationPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -57,11 +55,9 @@ public class MainActivity extends ReactActivity {
 
         ReactPackage packages[] = new ReactPackage[]{
             new MainReactPackage(),
-            new BackgroundGeolocationPackage(),
             new FBSDKPackage(mCallbackManager),
             new ImagePickerPackage(),
             new AirPackage(),
-            new BackgroundGeolocationPackage(),
             mReactNativePushNotificationPackage
         };
         return Arrays.<ReactPackage>asList(packages);

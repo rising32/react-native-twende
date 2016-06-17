@@ -24,7 +24,6 @@ export function loadGeoLocation() {
         LocationService.storeLocation(
             location,
             (location) => {
-                alert(location)
             },
             (error) => {
                 console.log(JSON.stringify(error));

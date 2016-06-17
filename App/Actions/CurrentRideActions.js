@@ -63,7 +63,7 @@ export function updateCurrentRide(currentRide) {
             });
         },
         (error) => {
-            alert(JSON.stringify(error))
+            alert(JSON.stringify(error));
             dispatch({
                 type: actions.errorUpdaCurrentRide
             })
