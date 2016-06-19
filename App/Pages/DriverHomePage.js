@@ -73,6 +73,12 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
+    dropoffRide: function() {
+        var ride = this.state.currentRide;
+        ride.state = 'dropoff';
+        updateCurrentRide(ride);
+    },
+
     finishRide: function() {
         var ride = this.state.currentRide;
         ride.state = 'finalized';
@@ -297,7 +303,7 @@ var DriverHomePage = React.createClass({
 
     renderDriving: function() {
         var ride = this.state.currentRide;
-        var top = this.renderSheetTop(this.finishRide, 'beenhere');
+        var top = this.renderSheetTop(this.dropoffRide, 'beenhere');
         return  (
             <View>
                 <View style={styles.map}>
@@ -336,7 +342,7 @@ var DriverHomePage = React.createClass({
 
     renderDropoff: function() {
         var ride = this.state.currentRide;
-        var top = this.renderSheetTop(this.rateRide, 'tag-faces');
+        var top = this.renderSheetTop(this.finishRide, 'tag-faces');
         return  (
             <View>
                 <View style={styles.map}>
