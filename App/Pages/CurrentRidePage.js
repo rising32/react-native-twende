@@ -224,8 +224,9 @@ var CurrentRidePage = React.createClass({
     rateRide: function (value) {
         ToastAndroid.show(`You rated this ride with ${value} stars.`, ToastAndroid.SHORT);
         var ride = this.state.currentRide;
-        ride.rating = value;
+        ride.customer_rating = value;
         this.setState({currentRide: ride});
+        updateCurrentRide(ride);
     },
 
     renderDropOff: function () {
@@ -249,7 +250,7 @@ var CurrentRidePage = React.createClass({
                                 Rate this ride.
                             </Text>
                             <Text style={{textAlign: 'center'}}>
-                                How was your ride with {this.props.driver.name}
+                                How was your ride with {this.props.driver.name}?
                             </Text>
                             <StarRating
                                 onChange={this.rateRide}
@@ -307,15 +308,6 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={styles.page}>
                 {content}
-                <View style={{alignItems: 'center'}}>
-                    <Link
-                        action={this.refreshRide}
-                        color={colors.action_secondary}
-                        text={"refresh"}
-                        icon={"update"}
-                        style={{margin: 10}}
-                    />
-                </View>
             </View>
         );
     }

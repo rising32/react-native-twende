@@ -76,30 +76,32 @@ var TwendeApp = React.createClass({
 
 
         registerPushNotification: function () {
-            PushNotification.configure({
-                onRegister: function (token) {
-                    ToastAndroid.show('Checking messages...', ToastAndroid.SHORT)
-                    setGcmToken(token.token);
-                },
-                onNotification: function (notification) {
-                    ToastAndroid.show('Got message...', ToastAndroid.SHORT)
-                    if (notification.title) {
-                        notify(notification.title, notification.message);
+            if (!PushNotification.senderID) {
+                PushNotification.configure({
+                    onRegister: function (token) {
+                        ToastAndroid.show('Checking messages...', ToastAndroid.SHORT)
+                        setGcmToken(token.token);
+                    },
+                    onNotification: function (notification) {
+                        ToastAndroid.show('Got message...', ToastAndroid.SHORT)
+                        if (notification.title) {
+                            notify(notification.title, notification.message);
+                        }
+                        if (notification.ride) {
+                            refreshCurrentRide(notification.ride);
+                        }
+                    },
+                    onError: function(error) {
+                        console.log(error);
+                    },
+                    senderID: "1055251321691",
+                    permissions: {
+                        alert: true,
+                        badge: true,
+                        sound: true
                     }
-                    if (notification.ride) {
-                        refreshCurrentRide(notification.ride);
-                    }
-                },
-                onError: function(error) {
-                    console.log(error);
-                },
-                senderID: "1055251321691",
-                permissions: {
-                    alert: true,
-                    badge: true,
-                    sound: true
-                }
-            });
+                });
+            }
         },
 
         componentWillMount: function () {

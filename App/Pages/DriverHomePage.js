@@ -75,14 +75,15 @@ var DriverHomePage = React.createClass({
 
     finishRide: function() {
         var ride = this.state.currentRide;
-        ride.state = 'dropoff';
+        ride.state = 'finalized';
         updateCurrentRide(ride);
     },
 
-    rateRide: function() {
+    rateRide: function (value) {
+        ToastAndroid.show(`You rated this ride with ${value} stars.`, ToastAndroid.SHORT);
         var ride = this.state.currentRide;
-        // TODO set rating and driver_price here
-        ride.state = 'finalized';
+        ride.customer_rating = value;
+        this.setState({currentRide: ride});
         updateCurrentRide(ride);
     },
 
@@ -93,12 +94,14 @@ var DriverHomePage = React.createClass({
     },
 
     setItems: function(items) {
+
         if (items.length) {
-            this.setState({currentRide: items[0]});
+            var currentRide = items[0];
+            this.setState({currentRide: currentRide});
 
             this.setState({region: {
-                latitude: items[0].origin.latitude,
-                longitude: items[0].origin.longitude,
+                latitude: currentRide.origin.latitude,
+                longitude: currentRide.origin.longitude,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }})
@@ -230,9 +233,7 @@ var DriverHomePage = React.createClass({
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
-                            draggable
                             coordinate={this.state.currentRide.origin}
-                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
                         />
                     </MapView>
                 </View>
@@ -267,9 +268,7 @@ var DriverHomePage = React.createClass({
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
-                            draggable
                             coordinate={this.state.currentRide.origin}
-                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
                         />
                     </MapView>
                 </View>
@@ -280,7 +279,7 @@ var DriverHomePage = React.createClass({
                             You've accepted the ride. {ride.customer.name} is waiting.
                         </Text>
                         <Text>
-                            If you arrived at the customer hit the next button and you are on your way!
+                            If you arrived at the customer click the next button and you are on your way!
                         </Text>
                         <Link
                             icon={"pin-drop"}
@@ -308,9 +307,7 @@ var DriverHomePage = React.createClass({
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
-                            draggable
                             coordinate={this.state.currentRide.origin}
-                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
                         />
                     </MapView>
                 </View>
@@ -318,10 +315,10 @@ var DriverHomePage = React.createClass({
                     {top}
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
-                            Ok, you're on you way.
+                            Ok, you're on your way.
                         </Text>
                         <Text>
-                            If you arrived at the destination the next button to complete the ride!
+                            If you arrive at the destination, hit the next button to complete this ride!
                         </Text>
                         <Link
                             icon={"pin-drop"}
@@ -342,22 +339,54 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTop(this.rateRide, 'tag-faces');
         return  (
             <View>
+                <View style={styles.map}>
+                    <MapView
+                        region={this.state.region}
+                        showsUserLocation={true}
+                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
+                    >
+                        <MapView.Marker
+                            coordinate={this.state.currentRide.origin}
+                        />
+                    </MapView>
+                </View>
                 <View style={[styles.sheet, {flex: 1}]}>
                     {top}
                     <View style={styles.sheet_content}>
-                        <Text style={styles.item_title}>
-                            Ok, you're on you way.
-                        </Text>
-                        <Text>
-                            If you arrived at the destination the next button to complete the ride!
-                        </Text>
-                        <Link
-                            icon={"pin-drop"}
-                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
-                            color={colors.action}
-                            style={{margin: 10}}
-                        />
+                        <View style={styles.card_mid}>
+                            <Text style={{textAlign: 'center'}}>
+                                Rate this ride.
+                            </Text>
+                            <Text style={{textAlign: 'center'}}>
+                                How was your ride with {this.props.customer.name}?
+                            </Text>
+                            <StarRating
+                                onChange={this.rateRide}
+                                maxStars={5}
+                                rating={3}
+                                colorOn={colors.action}
+                                colorOff={colors.action_disabled}
+                            />
+
+                            <View style={styles.card_mid_actions}>
+                                <Link
+                                    action={() => this.finishRide()}
+                                    style={styles.button_simple}
+                                    text={"DON'T RATE"}
+                                    textStyle={{fontWeight: 'bold'}}
+                                    color={colors.action_secondary}
+                                    />
+                                <Link
+                                    action={() => this.finishRide()}
+                                    style={styles.button_simple}
+                                    text={"SAVE RATING"}
+                                    textStyle={{fontWeight: 'bold'}}
+                                    color={colors.action}
+                                    />
+                            </View>
+
+                        </View>
+
                     </View>
                 </View>
             </View>
