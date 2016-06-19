@@ -26,7 +26,7 @@ var NavIcon = React.createClass({
                     <Icon
                         name={this.props.icon}
                         color={colors.nav_text}
-                        size={20}
+                        size={30}
                     />
                 </TouchableOpacity>
             </View>

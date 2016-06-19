@@ -60,7 +60,7 @@ export var styles = StyleSheet.create({
         elevation: 4,
     },
     nav_icon: {
-        margin: 20
+        margin: 15
     },
 
     nav_title: {
