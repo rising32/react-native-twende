@@ -37,7 +37,7 @@ var CurrentRidePage = React.createClass({
         }
 
     },
-    componentWillMount: function (props) {
+    componentDidMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
         refreshCurrentRide(this.state.currentRide.id);
@@ -56,24 +56,7 @@ var CurrentRidePage = React.createClass({
     },
 
     refreshRide: function () {
-        var currentRide = this.state.currentRide;
-        switch (currentRide.state) {
-            case 'new':
-                currentRide.state = 'accepted';
-                break;
-            case 'accepted':
-                currentRide.state = 'driving';
-                break;
-            case 'driving':
-                currentRide.state = 'dropoff';
-                break;
-            case 'dropoff':
-                currentRide.state = 'new';
-                break;
-
-        }
-        this.setState({currentRide: currentRide});
-        //refreshCurrentRide(this.state.currentRide);
+        refreshCurrentRide(this.state.currentRide);
     },
 
     rideLoaded: function (currentRide) {
@@ -328,7 +311,7 @@ var CurrentRidePage = React.createClass({
                     <Link
                         action={this.refreshRide}
                         color={colors.action_secondary}
-                        text={"refresh status [" +  this.state.currentRide.state + "]"}
+                        text={"refresh"}
                         icon={"update"}
                         style={{margin: 10}}
                     />

@@ -90,16 +90,16 @@ var TwendeApp = React.createClass({
                         refreshCurrentRide(notification.ride);
                     }
                 },
+                onError: function(error) {
+                    console.log(error);
+                },
                 senderID: "1055251321691",
                 permissions: {
                     alert: true,
                     badge: true,
                     sound: true
-                },
-                popInitialNotification: true,
-                requestPermissions: true
+                }
             });
-
         },
 
         componentWillMount: function () {
