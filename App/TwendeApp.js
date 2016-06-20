@@ -110,7 +110,7 @@ var TwendeApp = React.createClass({
                 if (this.state.currentUser.is_driver) {
                     this.navigator.push({
                         id: 'DriverHomePage',
-                        currentUser: currentUser,
+                        currentUser: this.state.currentUser,
                         currentRide: currentRide
                     });
 

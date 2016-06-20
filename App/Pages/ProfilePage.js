@@ -33,13 +33,13 @@ var ProfilePage = React.createClass({
             first_name: this.props.currentUser.first_name,
             last_name: this.props.currentUser.last_name,
             email: this.props.currentUser.email,
-            phone: this.props.currentUser.phone
-
+            phone: this.props.currentUser.phone,
+            currentUser: this.props.currentUser
         }
     },
 
 
-    componenWillMount: function () {
+    componentWillMount: function () {
     },
 
     componentWillUnmount: function () {
@@ -77,16 +77,18 @@ var ProfilePage = React.createClass({
     },
 
     render: function () {
-        var homePage = this.state.currentUser.is_driver ? 'DriverHomePage' : 'CurrentLocationPage';
+        var homePage = this.props.currentUser.is_driver ? 'DriverHomePage' : 'CurrentLocationPage';
         return (
             <Navigator
                 renderScene={this.renderScene}
                 navigator={this.props.navigator}
                 homePage={homePage}
                 navigationBar={
-            <Navigator.NavigationBar style={styles.nav_bar}
-                routeMapper={NavigationBarRouteMapper} />
-          }/>
+                    <Navigator.NavigationBar
+                        style={styles.nav_bar}
+                        routeMapper={NavigationBarRouteMapper} />
+                }
+            />
         );
     },
 
@@ -160,19 +162,18 @@ var ProfilePage = React.createClass({
 
 var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
-
         return (
             <NavIcon
                 icon={"arrow-back"}
-                action={() => {navigator.parentNavigator.replace({id: this.props.homePage})}}
+                action={() => {navigator.parentNavigator.replace({id: navigator.props.homePage})}}
             />
         );
     },
     RightButton(route, navigator, index, nextState) {
         return (
             <NavIcon
-                icon={"motorbike"}
-                action={() => {navigator.parentNavigator.replace({id: this.props.homePage})}}
+                icon={"motorcycle"}
+                action={() => {navigator.parentNavigator.replace({id: navigator.props.homePage})}}
             />
 
         );

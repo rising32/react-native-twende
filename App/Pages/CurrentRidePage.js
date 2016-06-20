@@ -286,6 +286,14 @@ var CurrentRidePage = React.createClass({
     },
 
 
+    renderDone: function () {
+        return (
+            <View style={{flex: 1}}>
+            </View>
+        )
+    },
+
+
     renderScene: function (route, navigator) {
         var content;
         switch (this.state.currentRide.state) {
