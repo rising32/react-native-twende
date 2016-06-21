@@ -79,11 +79,9 @@ var TwendeApp = React.createClass({
             if (!PushNotification.senderID) {
                 PushNotification.configure({
                     onRegister: function (token) {
-                        ToastAndroid.show('Checking messages...', ToastAndroid.SHORT)
                         setGcmToken(token.token);
                     },
                     onNotification: function (notification) {
-                        ToastAndroid.show('Got message...', ToastAndroid.SHORT)
                         if (notification.title) {
                             notify(notification.title, notification.message);
                         }

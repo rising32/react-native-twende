@@ -70,7 +70,26 @@ var RideService = {
         }).catch((error) => {
             //reject(error);
         })
+    },
+
+    loadList: function (resolve, reject) {
+        return fetch(config.api.rides + '?active=true', {
+            method: 'GET',
+            headers: this._headers(),
+            timeout: 3000
+
+        }).then((response) => {
+            if (response.status !== 200) {
+                reject(response);
+            }
+            return response.json();
+        }).then((rides) => {
+            return resolve(rides);
+        }).catch((error) => {
+            //reject(error);
+        })
     }
+
 
 };
 

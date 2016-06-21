@@ -28,6 +28,9 @@ export default {
     createCurrentRide:      'CREATE_CURRENT_RIDE',
     errorCreateCurrentRide: 'ERROR_CREATE_CURRENT_RIDE',
 
+    receiveRideList:        'RECEIVE_RIDE_LIST',
+    errorLoadRideList:      'ERROR_LOAD_RIDE_LIST',
+
     updateCurrentRide:      'UPDATE_CURRENT_RIDE',
     errorUpdateCurrentRide: 'ERROR_UPDATE_CURRENT_RIDE',
 

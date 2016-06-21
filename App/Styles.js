@@ -141,7 +141,7 @@ export var styles = StyleSheet.create({
 
     sheet_dark: {
         paddingBottom: 20,
-        paddingTop: 20,
+        paddingTop: 10,
         paddingLeft: 40,
         paddingRight: 40,
         backgroundColor: colors.box_dark,
@@ -281,7 +281,7 @@ export var styles = StyleSheet.create({
         padding: 20,
         flexDirection: 'row',
         justifyContent: "space-between",
-        margin: 0,
+        margin: 0
     },
     step: {
         width: 100,

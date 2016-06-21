@@ -1,10 +1,6 @@
 'use strict';
 
 var React = require('react-native');
-var {
-  AsyncStorage
-} = React;
-
 import { EventEmitter } from "events";
 import events from "../Constants/Events";
 import actions from "../Constants/Actions";
@@ -39,6 +35,12 @@ class CurrentRideStore extends EventEmitter {
                 this.set(action.ride);
                 break;
             case actions.errorCreateCurrentRide:
+                this.error(actions.error);
+                break;
+            case actions.receiveRideList:
+                this.set(action.rides[0]);
+                break;
+            case actions.errorLoadRideList:
                 this.error(actions.error);
                 break;
         }

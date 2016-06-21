@@ -84,10 +84,12 @@ var StepBar = React.createClass({
     },
 
     render: function () {
+
         return (
             <ListView
                 contentContainerStyle={styles.step_bar}
                 ref="listview"
+                style={{flex: 0}}
                 dataSource={ds.cloneWithRows(this.props.steps)}
                 renderRow={this.renderStep}
             />

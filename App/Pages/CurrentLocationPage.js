@@ -20,7 +20,9 @@ var SheetIcon = require('../Components/SheetIcon');
 import GeoLocationStore from '../Stores/GeoLocationStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
-import { createCurrentRide } from '../Actions/CurrentRideActions';
+import {
+    createCurrentRide,
+    loadRideList } from '../Actions/CurrentRideActions';
 import events from "../Constants/Events";
 
 
@@ -65,6 +67,7 @@ var CurrentLocationPage = React.createClass({
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadGeoLocation();
+        loadRideList();
     },
 
     componentWillUnmount: function (props) {
@@ -91,7 +94,15 @@ var CurrentLocationPage = React.createClass({
     },
 
     nextStep: function (currentRide) {
-        this.props.navigator.push({id: 'DriverListPage', currentRide: currentRide});
+        if (currentRide.driver) {
+            if (currentRide.state != 'finalized') {
+                // There was already an active ride... got to that one
+                this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, driver: currentRide.driver});
+            }
+        } else {
+            // New ride. Go to driver list
+            this.props.navigator.push({id: 'DriverListPage', currentRide: currentRide});
+        }
     },
 
     createRide: function() {

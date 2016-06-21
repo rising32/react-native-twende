@@ -5,15 +5,14 @@ var ReactNative = require('react-native');
 var {
     View,
     Text,
+    TextInput,
     Navigator,
-    Image,
     ToastAndroid,
-    TouchableOpacity,
-    TouchableHighlight,
     } = ReactNative;
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
+var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
 var StarRating = require('../Components/StarRating');
@@ -33,7 +32,9 @@ var CurrentRidePage = React.createClass({
         return {
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
-            driver: this.props.driver
+            driver: this.props.driver,
+            price: 0,
+            rating: 0
         }
 
     },
@@ -56,7 +57,7 @@ var CurrentRidePage = React.createClass({
     },
 
     refreshRide: function () {
-        refreshCurrentRide(this.state.currentRide);
+        refreshCurrentRide(this.state.currentRide.id);
     },
 
     rideLoaded: function (currentRide) {
@@ -69,6 +70,25 @@ var CurrentRidePage = React.createClass({
             return Math.round(dist / 100) / 10 + 'km';
         }
         return Math.round(dist) + 'm';
+    },
+
+    rateRide: function (rating) {
+        this.setState({rating: rating});
+    },
+
+    finishRide: function() {
+        alert("Thanks for using Twende! We hope to see you again.");
+        var ride = this.state.currentRide;
+        ride.customer_price = this.state.price;
+        ride.customer_rating = this.state.rating;
+        ride.state = 'finalized';
+        this.setState({currentRide: ride});
+        updateCurrentRide(ride);
+        this.props.navigator.push({id: 'CurrentLocationPage'});
+    },
+
+    moreInfoRating: function() {
+        alert("We'll keep your rating anonymous. It's only so users can see which drivers have the best rating.")
     },
 
     render: function () {
@@ -181,10 +201,10 @@ var CurrentRidePage = React.createClass({
                                 image={this.state.driver.avatar}/>
                         </View>
                         <View style={styles.card_mid}>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={styles.item_title}>
                                 Hi {this.state.currentUser.first_name},
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text>
                                 I accepted your request.
                             </Text>
                         </View>
@@ -211,22 +231,17 @@ var CurrentRidePage = React.createClass({
                                 image={this.state.driver.avatar}/>
                         </View>
                         <View style={styles.card_mid}>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={styles.item_title}>
                                 Let's go!
+                            </Text>
+                            <Text>
+                                Driver has arrived and you are on your way now.
                             </Text>
                         </View>
                     </View>
                 </View>
             </View>
         )
-    },
-
-    rateRide: function (value) {
-        ToastAndroid.show(`You rated this ride with ${value} stars.`, ToastAndroid.SHORT);
-        var ride = this.state.currentRide;
-        ride.customer_rating = value;
-        this.setState({currentRide: ride});
-        updateCurrentRide(ride);
     },
 
     renderDropOff: function () {
@@ -237,7 +252,7 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps}/>
+                <StepBar steps={steps} />
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid_spacer}/>
@@ -246,37 +261,33 @@ var CurrentRidePage = React.createClass({
                                 image={this.state.driver.avatar}/>
                         </View>
                         <View style={styles.card_mid}>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={styles.item_title}>
                                 Rate this ride.
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text>
                                 How was your ride with {this.props.driver.name}?
                             </Text>
                             <StarRating
                                 onChange={this.rateRide}
                                 maxStars={5}
-                                rating={3}
+                                rating={0}
                                 colorOn={colors.action}
                                 colorOff={colors.action_disabled}
                             />
-
-                            <View style={styles.card_mid_actions}>
-                                <Link
-                                    action={() => this.finishRide()}
-                                    style={styles.button_simple}
-                                    text={"DON'T RATE"}
-                                    textStyle={{fontWeight: 'bold'}}
-                                    color={colors.action_secondary}
-                                    />
-                                <Link
-                                    action={() => this.finishRide()}
-                                    style={styles.button_simple}
-                                    text={"SAVE RATING"}
-                                    textStyle={{fontWeight: 'bold'}}
-                                    color={colors.action}
-                                    />
-                            </View>
-
+                            <Text style={{marginTop: 10}}>How much did you pay for this ride?</Text>
+                            <TextInput
+                                placeholder={"0"}
+                                autoCorrect={false}
+                                onChangeText={(price) => this.setState({price: price})}
+                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                            />
+                            <Link
+                                action={() => this.finishRide()}
+                                style={styles.button_simple}
+                                text={"FINISH"}
+                                textStyle={{fontWeight: 'bold'}}
+                                color={colors.action}
+                                />
                         </View>
                     </View>
 
@@ -288,7 +299,7 @@ var CurrentRidePage = React.createClass({
 
     renderDone: function () {
         return (
-            <View style={{flex: 1}}>
+            <View>
             </View>
         )
     },
@@ -303,11 +314,11 @@ var CurrentRidePage = React.createClass({
             case 'driving':
                 content = this.renderDriving();
                 break;
-            case 'dropoff':
-                content = this.renderDropOff();
-                break;
             case 'declined':
                 content = this.renderDeclined();
+                break;
+            case 'dropoff':
+                content = this.renderDropOff();
                 break;
             default:
                 content = this.renderConnecting();
@@ -316,6 +327,15 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={styles.page}>
                 {content}
+                <View style={{alignItems: 'center'}}>
+                    <Link
+                        action={this.refreshRide}
+                        color={colors.action_secondary}
+                        text={"refresh"}
+                        icon={"update"}
+                        style={{margin: 10}}
+                    />
+                </View>
             </View>
         );
     }

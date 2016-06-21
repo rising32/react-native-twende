@@ -33,10 +33,8 @@ export function loadGeoLocation() {
 }
 
 export function startWatchingGeoLocation() {
-    ToastAndroid.show('watching your location', ToastAndroid.SHORT);
     Geolocation.watchPosition(
         (geoLocation) => {
-            ToastAndroid.show('updating location', ToastAndroid.SHORT);
             var location = {
                 latitude: geoLocation.coords.latitude,
                 longitude: geoLocation.coords.longitude

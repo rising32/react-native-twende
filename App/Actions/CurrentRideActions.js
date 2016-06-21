@@ -49,6 +49,46 @@ export function refreshCurrentRide(ride) {
     );
 }
 
+export function loadRideList(ride) {
+
+    RideService.loadList(
+        (rides) => {
+            dispatch({
+                type: actions.receiveRideList,
+                rides: rides
+            });
+        },
+        (error) => {
+            dispatch({
+                type: actions.errorLoadRideList
+            })
+        }
+    );
+}
+
+
+export function loadCurrentRide(ride) {
+
+    dispatch({
+        type: actions.fetchCurrentRide
+    });
+    RideService.refresh(
+        ride,
+        (currentRide) => {
+            dispatch({
+                type: actions.receiveCurrentRide,
+                ride: currentRide
+            });
+        },
+        (error) => {
+            dispatch({
+                type: actions.errorUpdaCurrentRide
+            })
+        }
+    );
+}
+
+
 export function updateCurrentRide(currentRide) {
 
     dispatch({

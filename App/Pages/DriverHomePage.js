@@ -5,6 +5,7 @@ var {
     Component,
     View,
     Text,
+    TextInput,
     Navigator,
     TouchableOpacity,
     } = React;
@@ -24,9 +25,10 @@ var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
 var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
+var StarRating = require('../Components/StarRating');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
-import {loadCustomerList} from "../Actions/CustomerActions";
+import { loadCustomerList } from "../Actions/CustomerActions";
 import { updateCurrentRide } from "../Actions/CurrentRideActions";
 import { updateCurrentUser } from"../Actions/CurrentUserActions";
 import { startWatchingGeoLocation,
@@ -40,6 +42,8 @@ var DriverHomePage = React.createClass({
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
             location: {},
+            rating: 0,
+            price: 0,
             region: {
                 latitude: 52.1668,
                 longitude: 4.491,
@@ -79,22 +83,24 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
-    finishRide: function() {
-        var ride = this.state.currentRide;
-        ride.state = 'finalized';
-        updateCurrentRide(ride);
+
+    rateRide: function (rating) {
+        this.setState({rating: rating});
     },
 
-    rateRide: function (value) {
-        ToastAndroid.show(`You rated this ride with ${value} stars.`, ToastAndroid.SHORT);
+    finishRide: function() {
+        alert("Thanks for using Twende! We hope to see you again.");
         var ride = this.state.currentRide;
-        ride.customer_rating = value;
+        ride.driver_price = this.state.price;
+        ride.driver_rating = this.state.rating;
+        ride.state = 'finalized';
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
+        this.props.navigator.push({id: 'DriverHomePage'});
     },
 
     declineRide: function(ride) {
-        var answer = alert("Are you sure you want to cancel this ride?");
+        var answer = alert("Ride will be cancelled.");
         ride.state = 'declined';
         updateCurrentRide(ride);
     },
@@ -115,7 +121,7 @@ var DriverHomePage = React.createClass({
     },
 
     nextStep: function(currentRide) {
-        if (currentRide.state == 'declined') {
+        if (currentRide.state in ['declined', 'finalized']) {
             this.setState({currentRide: {}});
         }
         this.setState({currentRide: currentRide});
@@ -252,7 +258,7 @@ var DriverHomePage = React.createClass({
                         <Link
                             icon={"pin-drop"}
                             url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
+                            text={ride.origin_text ? ride.origin_text : 'pick up location'}
                             color={colors.action}
                             style={{margin: 10}}
                         />
@@ -290,7 +296,7 @@ var DriverHomePage = React.createClass({
                         <Link
                             icon={"pin-drop"}
                             url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
+                            text={ride.origin_text ? ride.origin_text : 'pick up location'}
                             color={colors.action}
                             style={{margin: 10}}
                         />
@@ -326,13 +332,6 @@ var DriverHomePage = React.createClass({
                         <Text>
                             If you arrive at the destination, hit the next button to complete this ride!
                         </Text>
-                        <Link
-                            icon={"pin-drop"}
-                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={ride.origin.latitude + "x"  + ride.origin.longitude}
-                            color={colors.action}
-                            style={{margin: 10}}
-                        />
                     </View>
                 </View>
             </View>
@@ -345,54 +344,40 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTop(this.finishRide, 'tag-faces');
         return  (
             <View>
-                <View style={styles.map}>
-                    <MapView
-                        region={this.state.region}
-                        showsUserLocation={true}
-                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
-                    >
-                        <MapView.Marker
-                            coordinate={this.state.currentRide.origin}
-                        />
-                    </MapView>
+                <View style={{height: 100, backgroundColor: '#888888'}}>
                 </View>
                 <View style={[styles.sheet, {flex: 1}]}>
                     {top}
                     <View style={styles.sheet_content}>
                         <View style={styles.card_mid}>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={styles.item_title}>
                                 Rate this ride.
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
-                                How was your ride with {this.props.customer.name}?
+                            <Text>
+                                How was your ride with {ride.customer.name}?
                             </Text>
                             <StarRating
                                 onChange={this.rateRide}
                                 maxStars={5}
-                                rating={3}
+                                rating={0}
                                 colorOn={colors.action}
                                 colorOff={colors.action_disabled}
                             />
-
-                            <View style={styles.card_mid_actions}>
-                                <Link
-                                    action={() => this.finishRide()}
-                                    style={styles.button_simple}
-                                    text={"DON'T RATE"}
-                                    textStyle={{fontWeight: 'bold'}}
-                                    color={colors.action_secondary}
-                                    />
-                                <Link
-                                    action={() => this.finishRide()}
-                                    style={styles.button_simple}
-                                    text={"SAVE RATING"}
-                                    textStyle={{fontWeight: 'bold'}}
-                                    color={colors.action}
-                                    />
-                            </View>
-
+                            <Text style={{marginTop: 10}}>How much did you get paid for this ride?</Text>
+                            <TextInput
+                                placeholder={"0"}
+                                autoCorrect={false}
+                                onChangeText={(price) => this.setState({price: price})}
+                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                            />
+                            <Link
+                                action={() => this.finishRide()}
+                                style={styles.button_simple}
+                                text={"FINISH"}
+                                textStyle={{fontWeight: 'bold'}}
+                                color={colors.action}
+                                />
                         </View>
-
                     </View>
                 </View>
             </View>
