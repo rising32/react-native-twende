@@ -1,7 +1,6 @@
 const FBSDK = require('react-native-fbsdk');
 const {
-    GraphRequest,
-    GraphRequestManager,
+    LoginManager,
     AccessToken
     } = FBSDK;
 import { receive } from "../Constants/Actions"
@@ -10,6 +9,10 @@ var CurrentUserService = require('../Services/CurrentUserService');
 import actions from "../Constants/Actions";
 import {dispatch} from '../Dispatcher';
 
+
+export function logoutFacebookUser() {
+    LoginManager.logOut();
+}
 
 export function loadFacebookUser() {
     AccessToken.getCurrentAccessToken().then(

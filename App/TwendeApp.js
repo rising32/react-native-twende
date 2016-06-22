@@ -40,6 +40,7 @@ import {
     logoutCurrentUser,
     setGcmToken,
     updateCurrentUser } from './Actions/CurrentUserActions';
+import { logoutFacebookUser }  from './Actions/SocialActions';
 var PushNotification = require('react-native-push-notification');
 import { notify } from "./Actions/NotifyActions"
 import { refreshCurrentRide } from "./Actions/CurrentRideActions";
@@ -63,6 +64,7 @@ var TwendeApp = React.createClass({
         logout: function () {
             this.closeDrawer();
             logoutCurrentUser();
+            logoutFacebookUser();
         },
 
         goToPage: function (pageId) {
@@ -97,7 +99,9 @@ var TwendeApp = React.createClass({
                         alert: true,
                         badge: true,
                         sound: true
-                    }
+                    },
+                    popInitialNotification: true,
+                    requestPermissions: true,
                 });
             }
         },

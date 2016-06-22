@@ -320,7 +320,7 @@ var CurrentRidePage = React.createClass({
             case 'dropoff':
                 content = this.renderDropOff();
                 break;
-            default:
+            case 'new':
                 content = this.renderConnecting();
                 break;
         }

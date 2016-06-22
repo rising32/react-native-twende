@@ -10,6 +10,7 @@ var {
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
+var Rating = require('../Components/Rating');
 var IconText = require('../Components/IconText');
 var config = require('../../config');
 
@@ -44,6 +45,14 @@ var DriverItem = React.createClass({
                                       size={16}
                                       color={colors.secondary}
                                       text={this.fuzzyDistance()} />
+                            <View style={{width: 100}}>
+                                <Rating
+                                    maxStars={5}
+                                    rating={this.props.driver.rating}
+                                    colorOn={colors.secondary}
+                                    colorOff={colors.action_disabled}
+                                />
+                            </View>
                             <Text style={styles.item_action}>
                                 Request a ride
                             </Text>
