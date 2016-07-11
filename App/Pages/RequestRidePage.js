@@ -70,7 +70,7 @@ var RequestRidePage = React.createClass({
 
     refreshLocation: function () {
         this.setState({'origin_text': '- refreshing -'});
-        console.log('Refresh location');
+        ToastAndroid.show('Updating your location', ToastAndroid.SHORT);
         GeoLocationStore.refresh((loc) => {
             var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
             this.setState({
@@ -220,7 +220,7 @@ var RequestRidePage = React.createClass({
                             style={styles.map_info_action}
                         >
                             <View>
-                                <Icon name="gps-fixed" size={16} color={colors.action_secondary}/>
+                                <Icon name="gps-fixed" size={30} color={colors.action_secondary}/>
                             </View>
                         </TouchableHighlight>
 

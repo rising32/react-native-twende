@@ -7,6 +7,7 @@ var {
     TextInput,
     Navigator,
     Image,
+    ScrollView,
     TouchableOpacity,
 
     } = React;
@@ -108,7 +109,7 @@ var ProfilePage = React.createClass({
         }
 
         return (
-            <View style={styles.page}>
+            <ScrollView style={styles.page}>
                 <View style={{height: 200, backgroundColor: '#e0e0e0', alignItems: 'center'}}>
                     {image}
                 </View>
@@ -154,7 +155,7 @@ var ProfilePage = React.createClass({
                         </Iconed>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 });

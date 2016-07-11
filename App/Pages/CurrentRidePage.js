@@ -122,7 +122,7 @@ var CurrentRidePage = React.createClass({
                         <Avatar image={this.state.driver.avatar}/>
                     </View>
 
-                    <View style={{padding: 30}}>
+                    <View style={{padding: 10, paddingTop: 30}}>
                         <Link style={{margin: 10}}
                               url={"tel: " + this.state.driver.phone}
                               icon={"phone"}

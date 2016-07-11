@@ -100,7 +100,7 @@ export var styles = StyleSheet.create({
 
     card_mid: {
         padding: 20,
-        paddingTop: 10,
+        paddingTop: 0,
         marginTop: 0,
         backgroundColor: colors.box,
         alignItems: 'center',
@@ -111,8 +111,8 @@ export var styles = StyleSheet.create({
     card_mid_spacer: {
         backgroundColor: colors.box,
         padding: 20,
-        marginTop: 40,
-        height: 40,
+        marginTop: 35,
+        height: 30,
         alignSelf: 'stretch'
      },
 
@@ -278,7 +278,7 @@ export var styles = StyleSheet.create({
     // Step bar
 
     step_bar: {
-        padding: 20,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: "space-between",
         margin: 0

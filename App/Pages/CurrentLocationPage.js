@@ -6,6 +6,7 @@ var {
     View,
     Text,
     TextInput,
+    ToastAndroid,
     Navigator,
     TouchableHighlight
     } = ReactNative;
@@ -36,6 +37,7 @@ var CurrentLocationPage = React.createClass({
                 latitude: -1.23825,
                 longitude: 35.8724
             },
+            ready: false,
             status: 'new',
             region: {
                 latitude: -1.23825,
@@ -63,7 +65,7 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    componentWillMount: function (props) {
+    componentDidMount: function (props) {
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadGeoLocation();
@@ -94,14 +96,22 @@ var CurrentLocationPage = React.createClass({
     },
 
     nextStep: function (currentRide) {
+        if (currentRide.state == 'finalized') {
+            return;
+        }
         if (currentRide.driver) {
-            if (currentRide.state != 'finalized') {
-                // There was already an active ride... got to that one
-                this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, driver: currentRide.driver});
-            }
-        } else {
+            // There was already an active ride... got to that one
+            this.props.navigator.push({
+                id: 'CurrentRidePage',
+                currentRide: currentRide,
+                driver: currentRide.driver
+            });
+        } else if (this.state.ready) {
             // New ride. Go to driver list
-            this.props.navigator.push({id: 'DriverListPage', currentRide: currentRide});
+            this.props.navigator.push({
+                id: 'DriverListPage',
+                currentRide: currentRide
+            });
         }
     },
 
@@ -110,6 +120,7 @@ var CurrentLocationPage = React.createClass({
             origin:      this.state.origin,
             origin_text: this.state.origin_text
         };
+        this.setState({ready: true});
         createCurrentRide(ride);
     },
 
@@ -144,15 +155,7 @@ var CurrentLocationPage = React.createClass({
                         />
                     </MapView>
                     <View style={[styles.map_info, {marginTop: -290}]}>
-                        <TouchableHighlight
-                            onPress={this.togglePickupSearch}
-                            style={styles.map_info_action}
-                        >
-                            <View>
-                                <Icon name="search" size={16} color={colors.action_secondary}/>
-                            </View>
-                        </TouchableHighlight>
-
+                        <Text />
                         <View style={styles.map_info_container}>
                             <Text style={styles.map_text}>
                                 Pick-up Location
@@ -163,11 +166,11 @@ var CurrentLocationPage = React.createClass({
                         </View>
 
                         <TouchableHighlight
-                            onPress={this.refreshLocation}
+                            onPress={this.updateLocation}
                             style={styles.map_info_action}
                         >
                             <View>
-                                <Icon name="gps-fixed" size={16} color={colors.action_secondary}/>
+                                <Icon name="gps-fixed" size={24} color={colors.action_secondary}/>
                             </View>
                         </TouchableHighlight>
 

@@ -15,10 +15,10 @@ import {colors, styles} from "../Styles";
 var IconText = require('../Components/IconText');
 const FBSDK = require('react-native-fbsdk');
 const {
-    LoginButton,
-    AccessToken
+    LoginButton
     } = FBSDK;
 import events from "../Constants/Events";
+var Link = require('../Components/Link');
 import Dispatcher from "../Dispatcher";
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import { loginCurrentUser }  from '../Actions/CurrentUserActions';
@@ -156,9 +156,18 @@ var LoginPage = React.createClass({
         return (
             <View style={[styles.page, styles.page_full, styles.card]}>
 
-                {error}
-                {content}
-
+                <View style={[styles.page, styles.page_full, styles.card]}>
+                    {error}
+                    {content}
+                </View>
+                <Text>
+                    By signing up you agree to Twende's
+                </Text>
+                <Link
+                    action={() => this.props.navigator.push({id: 'TermsPage'})}
+                    text={'Terms of Service'}
+                    color={colors.action}
+                />
             </View>
         );
     }

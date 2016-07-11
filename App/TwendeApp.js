@@ -27,6 +27,7 @@ var CurrentLocationPage = require('./Pages/CurrentLocationPage');
 var DriverListPage = require('./Pages/DriverListPage');
 var DriverHomePage = require('./Pages/DriverHomePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
+var TermsPage = require('./Pages/TermsPage');
 
 var Drawer = require('./Components/Drawer');
 var Avatar = require('./Components/Avatar');
@@ -69,7 +70,7 @@ var TwendeApp = React.createClass({
 
         goToPage: function (pageId) {
             this.closeDrawer();
-            this.navigator.replace({id: pageId});
+            this.navigator.push({id: pageId});
         },
 
         goBack: function () {
@@ -312,7 +313,9 @@ var TwendeApp = React.createClass({
                         initialRoute={{id: 'SplashPage', name: 'Splash'}}
                         renderScene={this.renderScene}
                         drawer={this.refs['DRAWER']}
+                        navigator={navigator}
                         goToPage={this.goToPage}
+                        goBack={this.goBack}
                         state={this.state}
                         configureScene={(route) => {
                       return Navigator.SceneConfigs.FadeAndroid;
@@ -337,6 +340,13 @@ var TwendeApp = React.createClass({
             if (routeId === 'LoginPage') {
                 return (
                     <LoginPage
+                        goToPage={this.goToPage}
+                        navigator={navigator}/>
+                );
+            }
+            if (routeId === 'TermsPage') {
+                return (
+                    <TermsPage
                         goToPage={this.goToPage}
                         navigator={navigator}/>
                 );

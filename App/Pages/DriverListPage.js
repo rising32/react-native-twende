@@ -6,6 +6,7 @@ var {
     Text,
     Navigator,
     ListView,
+    ToastAndroid,
     ScrollView,
     Platform,
     } = React;
@@ -58,6 +59,7 @@ var DriverListPage = React.createClass({
     },
 
     refreshItems: function() {
+        ToastAndroid.show("Refreshing list", ToastAndroid.SHORT)
         loadDriverList(this.state.currentRide.origin);
     },
 
@@ -112,10 +114,10 @@ var DriverListPage = React.createClass({
                 style={styles.list}
                 ref="listview"
                 minDisplayTime={2}
-                minPulldownDistance={50}
+                minPulldownDistance={20}
                 dataSource={ds.cloneWithRows(this.state.items)}
                 renderRow={this.renderItem}
-                loadData={this.refreshList}
+                loadData={this.refreshItems}
                 refreshDescription="Refreshing drivers"
             />
 

@@ -7,12 +7,13 @@ var {
     StyleSheet,
     View,
     Text,
+    ToastAndroid
     } = React
 
 // must be less than ~50px due to ScrollView bug (event only fires once)
 // https://github.com/facebook/react-native/pull/452
 // TODO: expose as a prop when onScroll works properly
-var PULLDOWN_DISTANCE = 40 // pixels
+var PULLDOWN_DISTANCE = 10
 
 var RefreshableListView = React.createClass({
     getInitialState() {
@@ -21,7 +22,8 @@ var RefreshableListView = React.createClass({
         }
     },
     handleScroll(e) {
-        if (e.nativeEvent.contentOffset.y < -PULLDOWN_DISTANCE) {
+        //ToastAndroid.show('dusss ' + e.nativeEvent.contentOffset.y , ToastAndroid.SHORT)
+        if (e.nativeEvent.contentOffset.y < PULLDOWN_DISTANCE) {
             this.reloadData()
         }
         this.props.onScroll && this.props.onScroll(e)
