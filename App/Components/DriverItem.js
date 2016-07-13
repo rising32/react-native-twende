@@ -10,6 +10,7 @@ var {
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
+var SheetIcon = require('../Components/SheetIcon');
 var Rating = require('../Components/Rating');
 var IconText = require('../Components/IconText');
 var config = require('../../config');
@@ -34,7 +35,7 @@ var DriverItem = React.createClass({
                         style={styles.item_image}
                     />
                     <View style={{flex: 1}}>
-                        <TouchableOpacity
+                        <View
                             style={styles.item_details}
                             onPress={this.props.onSelect}
                         >
@@ -53,10 +54,12 @@ var DriverItem = React.createClass({
                                     colorOff={colors.action_disabled}
                                 />
                             </View>
-                            <Text style={styles.item_action}>
-                                Request a ride
-                            </Text>
-                        </TouchableOpacity>
+                            <SheetIcon
+                                icon={'done'}
+                                style={{marginTop: -55}}
+                                action={this.props.onSelect}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>

@@ -1,6 +1,5 @@
 var apiUrl = 'https://twende.co.ke/api/';
-//var apiUrl = 'http://192.168.43.171:8000/api/'
-//var apiUrl = 'http://192.168.35.12:8000/api/';
+//var apiUrl = 'http://192.168.35.13:8000/api/';
 var mediaUrl = 'https://twende.co.ke/';
 
 exports.apiUrl = apiUrl;
@@ -43,6 +42,7 @@ exports.camera_options = {
 
 // Time between two position polls (driver location) in seconds.
 exports.geoPositionMaxAge = 60;
+exports.geoPositionTimeOut = 60;
 
 
 exports.socialClient = {

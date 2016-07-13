@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
     Component,
+    Alert,
     View,
     Text,
     TextInput,
@@ -89,7 +90,13 @@ var DriverHomePage = React.createClass({
     },
 
     finishRide: function() {
-        alert("Thanks for using Twende! We hope to see you again.");
+        Alert.alert(
+            'Asante sana',
+            'Thanks for using Twende, we hope to see you again soon.',
+            [
+                {text: 'OK', onPress: () => {}}
+            ]
+        );
         var ride = this.state.currentRide;
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
@@ -100,9 +107,16 @@ var DriverHomePage = React.createClass({
     },
 
     declineRide: function(ride) {
-        var answer = alert("Ride will be cancelled.");
-        ride.state = 'declined';
-        updateCurrentRide(ride);
+        Alert.alert(
+            'Decline ride',
+            'Are you sure you want to decline this ride??',
+            [
+                {text: 'Yes, decline', onPress: () => {
+                    ride.state = 'declined';
+                    updateCurrentRide(ride);
+                }},
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+            ])
     },
 
     setItems: function(items) {
@@ -257,8 +271,8 @@ var DriverHomePage = React.createClass({
                         </Text>
                         <Link
                             icon={"pin-drop"}
-                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={ride.origin_text ? ride.origin_text : 'pick up location'}
+                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={"start navigation"}
                             color={colors.action}
                             style={{margin: 10}}
                         />
@@ -296,7 +310,7 @@ var DriverHomePage = React.createClass({
                         <Link
                             icon={"pin-drop"}
                             url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={ride.origin_text ? ride.origin_text : 'pick up location'}
+                            text={'start navigation'}
                             color={colors.action}
                             style={{margin: 10}}
                         />

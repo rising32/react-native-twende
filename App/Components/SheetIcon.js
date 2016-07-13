@@ -16,7 +16,7 @@ var SheetIcon = React.createClass({
         var align = this.props.align ? this.props.align : 'flex-end';
         var color = this.props.color ? this.props.color : colors.action;
         return (
-            <View style={{alignItems: align, marginTop: -45, marginBottom: -15, elevation: 5}}>
+            <View style={[{alignItems: align, marginTop: -45, marginBottom: -15, elevation: 5}, this.props.style]}>
                 <TouchableOpacity onPress={this.props.action}>
                     <View style={[styles.sheet_icon, {backgroundColor: color}]}>
                         <Icon

@@ -32,7 +32,7 @@ var CurrentLocationPage = React.createClass({
     getInitialState: function () {
         return {
             currentUser: this.props.currentUser,
-            origin_text: '',
+            origin_text: '- finding your location -',
             origin: {
                 latitude: -1.23825,
                 longitude: 35.8724
@@ -49,7 +49,8 @@ var CurrentLocationPage = React.createClass({
     },
 
     updateLocation: function(loc) {
-        var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
+        ToastAndroid.show('Found location', ToastAndroid.SHORT);
+        var myLoc = 'location found';
         this.setState({
             origin: {
                 latitude: loc.latitude,
@@ -70,6 +71,11 @@ var CurrentLocationPage = React.createClass({
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadGeoLocation();
         loadRideList();
+    },
+
+    refreshLocation: function() {
+        ToastAndroid.show('Refreshing location', ToastAndroid.SHORT);
+        loadGeoLocation();
     },
 
     componentWillUnmount: function (props) {
@@ -166,11 +172,11 @@ var CurrentLocationPage = React.createClass({
                         </View>
 
                         <TouchableHighlight
-                            onPress={this.updateLocation}
+                            onPress={this.refreshLocation}
                             style={styles.map_info_action}
                         >
                             <View>
-                                <Icon name="gps-fixed" size={24} color={colors.action_secondary}/>
+                                <Icon name="gps-fixed" size={24} color={colors.action_secondary} />
                             </View>
                         </TouchableHighlight>
 
@@ -186,7 +192,8 @@ var CurrentLocationPage = React.createClass({
                             {this.state.currentUser.first_name} {this.state.currentUser.last_name}
                         </Text>
                         <Text>
-                            Set your pickup location...
+                            Set your pickup location. Hold and then drag the
+                            red balloon to change your pick up location.
                         </Text>
                     </View>
                 </View>

@@ -10,26 +10,36 @@ var {
 
 
 export function loadGeoLocation() {
-    Geolocation.getCurrentPosition((geoLocation) => {
-        var location = {
-            latitude: geoLocation.coords.latitude,
-            longitude: geoLocation.coords.longitude
-        };
-        // Dispatch it for application
-        dispatch({
-            type: actions.receiveGeoLocation,
-            location: location
-        });
-        //Send the location to the api
-        LocationService.storeLocation(
-            location,
-            (location) => {
-            },
-            (error) => {
-                console.log(JSON.stringify(error));
-            }
-        );
-    });
+    Geolocation.getCurrentPosition(
+        (geoLocation) => {
+            var location = {
+                latitude: geoLocation.coords.latitude,
+                longitude: geoLocation.coords.longitude
+            };
+            // Dispatch it for application
+            dispatch({
+                type: actions.receiveGeoLocation,
+                location: location
+            });
+            //Send the location to the api
+            LocationService.storeLocation(
+                location,
+                (location) => {
+                },
+                (error) => {
+                    console.log(JSON.stringify(error));
+                }
+            );
+        },
+        (error) => {
+            alert(JSON.stringify(error));
+        },
+        {
+            timeout: (config.geoPositionTimeOut * 1000),
+            maximumAge: (config.geoPositionMaxAge * 1000),
+            enableHighAccuracy: true
+        }
+    );
 }
 
 export function startWatchingGeoLocation() {
@@ -57,8 +67,9 @@ export function startWatchingGeoLocation() {
         (error) => {
         },
         {
-            timeOut: (5 * 60 * 1000),
-            maximumAge: (config.geoPositionMaxAge * 1000)
+            timeout: (config.geoPositionTimeOut * 1000),
+            maximumAge: (config.geoPositionMaxAge * 1000),
+            enableHighAccuracy: false
         }
     );
 }

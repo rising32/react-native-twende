@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+    Alert,
     View,
     Text,
     TextInput,
@@ -77,7 +78,13 @@ var CurrentRidePage = React.createClass({
     },
 
     finishRide: function() {
-        alert("Thanks for using Twende! We hope to see you again.");
+        Alert.alert(
+            'Asante sana',
+            'Thanks for using Twende, we hope to see you again soon.',
+            [
+                {text: 'OK', onPress: () => {}}
+            ]
+        );
         var ride = this.state.currentRide;
         ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;

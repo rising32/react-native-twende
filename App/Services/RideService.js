@@ -36,6 +36,10 @@ var RideService = {
     update: function (ride, resolve, reject) {
         // Use primary key for driver
         if (ride.driver) ride.driver = ride.driver.id;
+        if (!ride.customer_price) delete ride.customer_price;
+        if (!ride.customer_rating) delete ride.customer_rating;
+        if (!ride.driver_price) delete ride.driver_price;
+        if (!ride.driver_rating) delete ride.driver_rating;
         return fetch(config.api.rides + ride.id + '/', {
             method: 'PATCH',
             headers: this._headers(),
