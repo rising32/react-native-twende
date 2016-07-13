@@ -309,7 +309,7 @@ var DriverHomePage = React.createClass({
                         </Text>
                         <Link
                             icon={"pin-drop"}
-                            url={"geo:" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                             text={'start navigation'}
                             color={colors.action}
                             style={{margin: 10}}
