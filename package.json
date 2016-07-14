@@ -12,6 +12,7 @@
     "object-assign": "^4.1.0",
     "react": "^0.14.8",
     "react-native": "^0.23.1",
+    "react-native-audioplayer": "^0.2.0",
     "react-native-background-geolocation": "^1.0.1",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-fbsdk": "git+ssh://git@github.com/facebook/react-native-fbsdk.git#0.2.0",
@@ -27,6 +28,7 @@
     "react-native-progress": "^3.0.0",
     "react-native-push-notification": "^1.0.6",
     "react-native-refresher": "^0.1.1",
+    "react-native-sound": "^0.8.3",
     "react-native-vector-icons": "^2.0.1"
   },
   "devDependencies": {

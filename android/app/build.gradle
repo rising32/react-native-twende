@@ -84,8 +84,8 @@ android {
         applicationId "com.twendeapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 6
-        versionName "1.1.4"
+        versionCode 7
+        versionName "1.1.5"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -140,5 +140,6 @@ dependencies {
     compile project(':react-native-fbsdk')
     compile project(":react-native-maps")
     compile project(':react-native-push-notification')
+    compile project(':RNSound')
 }
 

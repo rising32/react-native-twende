@@ -8,6 +8,7 @@ import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 
 import com.facebook.react.ReactActivity;
 import com.imagepicker.ImagePickerPackage;
@@ -58,6 +59,7 @@ public class MainActivity extends ReactActivity {
             new FBSDKPackage(mCallbackManager),
             new ImagePickerPackage(),
             new AirPackage(),
+            new RNSoundPackage(),
             mReactNativePushNotificationPackage
         };
         return Arrays.<ReactPackage>asList(packages);
@@ -82,6 +84,5 @@ public class MainActivity extends ReactActivity {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
     }
-
 
 }

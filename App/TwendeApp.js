@@ -34,6 +34,7 @@ var Avatar = require('./Components/Avatar');
 var IconText = require('./Components/IconText');
 var Link = require('./Components/Link');
 import { colors, styles } from "./Styles";
+import { sounds } from "./Sounds";
 import events from "./Constants/Events";
 import CurrentUserStore from './Stores/CurrentUserStore';
 import CurrentRideStore from './Stores/CurrentRideStore';
@@ -111,6 +112,9 @@ var TwendeApp = React.createClass({
             CurrentRideStore.on(events.currentRideLoaded, (currentRide) => {
                 this.setState({currentRide: currentRide});
                 if (this.state.currentUser.is_driver) {
+                    if (currentRide.state == 'new') {
+                        sounds.alarm1.play();
+                    }
                     this.navigator.push({
                         id: 'DriverHomePage',
                         currentUser: this.state.currentUser,

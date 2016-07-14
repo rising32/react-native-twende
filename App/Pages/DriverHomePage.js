@@ -124,7 +124,6 @@ var DriverHomePage = React.createClass({
         if (items.length) {
             var currentRide = items[0];
             this.setState({currentRide: currentRide});
-
             this.setState({region: {
                 latitude: currentRide.origin.latitude,
                 longitude: currentRide.origin.longitude,
@@ -144,9 +143,8 @@ var DriverHomePage = React.createClass({
     componentWillMount: function() {
         startWatchingGeoLocation();
         CustomerStore.on(events.customerListLoaded, this.setItems);
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep)
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         this.refreshItems();
-
     },
 
     componentWillUnmount: function() {
