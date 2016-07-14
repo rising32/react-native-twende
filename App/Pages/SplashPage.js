@@ -3,7 +3,7 @@
 var React = require('react-native');
 var {
     View,
-    Text,
+    Alert,
     Image,
     } = React;
 var TokenStore = require('../Stores/TokenStore');
@@ -36,7 +36,12 @@ var SplashPage = React.createClass({
 
     goToHome: function (currentUser) {
         this.setState({currentUser: currentUser});
-        if (currentUser.is_driver) {
+        if (!currentUser.phone) {
+            Alert.alert('Update your profile', 'Please fill out your phone number.', [
+                {text: 'OK', onPress: () => {}}
+            ]);
+            this.props.navigator.replace({id: 'ProfilePage', currentUser: currentUser});
+        } else if (currentUser.is_driver) {
             this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {
             this.props.navigator.replace({id: 'CurrentLocationPage', currentUser: currentUser});

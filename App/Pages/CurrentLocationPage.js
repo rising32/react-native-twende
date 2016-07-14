@@ -70,12 +70,13 @@ var CurrentLocationPage = React.createClass({
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadGeoLocation();
-        loadRideList();
+        loadGeoLocation(true);
     },
 
     refreshLocation: function() {
         ToastAndroid.show('Refreshing location', ToastAndroid.SHORT);
         loadGeoLocation();
+        loadGeoLocation(true);
     },
 
     componentWillUnmount: function (props) {

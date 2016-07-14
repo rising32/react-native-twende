@@ -269,13 +269,6 @@ var DriverHomePage = React.createClass({
                         <Text style={styles.item_title}>
                             {ride.customer.name}
                         </Text>
-                        <Link
-                            icon={"pin-drop"}
-                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={"start navigation"}
-                            color={colors.action}
-                            style={{margin: 10}}
-                        />
                     </View>
                 </View>
             </View>
@@ -310,10 +303,21 @@ var DriverHomePage = React.createClass({
                         <Link
                             icon={"pin-drop"}
                             url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={'start navigation'}
+                            text={'start navigation'.toUpperCase()}
                             color={colors.action}
+                            size={16}
+                            iconSize={24}
                             style={{margin: 10}}
                         />
+                        <Link style={{margin: 10}}
+                              url={"tel: " + ride.customer.phone}
+                              icon={"phone"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.action}
+                              text={"CALL " + ride.customer.name.toUpperCase()}
+                        />
+
                     </View>
                 </View>
             </View>

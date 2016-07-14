@@ -161,32 +161,22 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={{flex: 1}}>
                 <StepBar steps={steps}/>
-
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer}/>
-                        <View style={styles.card_mid_avatar}>
-                            <Avatar
-                                image={this.state.driver.avatar}/>
-                        </View>
                         <View style={styles.card_mid}>
                             <Text style={{textAlign: 'center'}}>
-                                Sorry {this.state.currentUser.first_name},
-                            </Text>
-                            <Text style={{textAlign: 'center'}}>
-                                I declined your request.
+                                Your request has been declined.
                             </Text>
                         </View>
                     </View>
                     <Link style={{margin: 10}}
-                          action={this.navigator.pop()}
+                          action={() => this.navigator.pop()}
                           icon={"motorcycle"}
                           size={16}
                           iconSize={24}
                           color={colors.action_secondary}
                           text={"FIND ANOTHER DRIVER"}
                     />
-
                 </View>
             </View>
         )
@@ -214,6 +204,14 @@ var CurrentRidePage = React.createClass({
                             <Text>
                                 I accepted your request.
                             </Text>
+                            <Link style={{margin: 10}}
+                                  url={"tel: " + this.state.driver.phone}
+                                  icon={"phone"}
+                                  size={16}
+                                  iconSize={24}
+                                  color={colors.action}
+                                  text={"CALL " + this.state.driver.name.toUpperCase()}
+                            />
                         </View>
                     </View>
                 </View>
@@ -303,14 +301,35 @@ var CurrentRidePage = React.createClass({
         )
     },
 
-
     renderDone: function () {
+        var steps = [
+            {in_progress: false, done: false, title: 'Request declined'},
+            {in_progress: false, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'En route'}
+        ];
         return (
-            <View>
+            <View style={{flex: 1}}>
+                <StepBar steps={steps}/>
+                <View style={styles.sheet_dark}>
+                    <View style={{alignItems: 'center'}}>
+                        <View style={styles.card_mid}>
+                            <Text style={{textAlign: 'center'}}>
+                                Sorry, your request has been declined.
+                            </Text>
+                        </View>
+                    </View>
+                    <Link style={{margin: 10}}
+                          action={() => this.props.navigator.pop()}
+                          icon={"motorcycle"}
+                          size={16}
+                          iconSize={24}
+                          color={colors.action_secondary}
+                          text={"FIND ANOTHER DRIVER"}
+                    />
+                </View>
             </View>
         )
     },
-
 
     renderScene: function (route, navigator) {
         var content;
@@ -321,14 +340,14 @@ var CurrentRidePage = React.createClass({
             case 'driving':
                 content = this.renderDriving();
                 break;
-            case 'declined':
-                content = this.renderDeclined();
-                break;
             case 'dropoff':
                 content = this.renderDropOff();
                 break;
             case 'new':
                 content = this.renderConnecting();
+                break;
+            default:
+                content = this.renderDone();
                 break;
         }
         return (

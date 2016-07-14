@@ -9,7 +9,8 @@ var {
     } = React;
 
 
-export function loadGeoLocation() {
+export function loadGeoLocation(enableHighAccuracy) {
+    if (undefined == enableHighAccuracy) enableHighAccuracy = false;
     Geolocation.getCurrentPosition(
         (geoLocation) => {
             var location = {
@@ -37,7 +38,7 @@ export function loadGeoLocation() {
         {
             timeout: (config.geoPositionTimeOut * 1000),
             maximumAge: (config.geoPositionMaxAge * 1000),
-            enableHighAccuracy: true
+            enableHighAccuracy: enableHighAccuracy
         }
     );
 }

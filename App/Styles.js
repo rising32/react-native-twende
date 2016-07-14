@@ -161,7 +161,7 @@ export var styles = StyleSheet.create({
     // Map
     map: {
         //flex: 1,
-        height: 300,
+        height: 250,
         backgroundColor: '#999999',
         borderWidth: 1,
         borderColor: colors.border
