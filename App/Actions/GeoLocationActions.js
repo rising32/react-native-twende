@@ -33,11 +33,13 @@ export function loadGeoLocation(enableHighAccuracy) {
             );
         },
         (error) => {
-            alert(JSON.stringify(error));
+            ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT);
+            // Give it another try
+            loadGeoLocation(enableHighAccuracy)
         },
         {
-            timeout: (config.geoPositionTimeOut * 1000),
-            maximumAge: (config.geoPositionMaxAge * 1000),
+            timeout: (config.geoPositionTimeOut * 3000),
+            maximumAge: (config.geoPositionMaxAge * 3000),
             enableHighAccuracy: enableHighAccuracy
         }
     );
