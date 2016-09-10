@@ -267,6 +267,9 @@ var DriverHomePage = React.createClass({
                         <Text style={styles.item_title}>
                             {ride.customer.name}
                         </Text>
+                        <Text>
+                            You got a new request! Push confirm button and you're ready to pick up {ride.customer.name}.
+                        </Text>
                     </View>
                 </View>
             </View>

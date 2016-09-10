@@ -95,6 +95,7 @@ var ProfilePage = React.createClass({
 
     renderScene: function (route, navigator) {
         var image;
+        var homePage = this.props.currentUser.is_driver ? 'DriverHomePage' : 'CurrentLocationPage';
         if (this.state.preview) {
             image = <Image
                 style={{height: 200, width: 200}}
@@ -114,10 +115,28 @@ var ProfilePage = React.createClass({
                     {image}
                 </View>
                 <View style={styles.sheet}>
-                    <SheetIcon
-                        icon={'camera-alt'}
-                        action={this.takePicture}
-                    />
+
+                    <View style={{justifyContent: 'space-between', alignSelf: 'stretch', flexDirection: 'row', marginTop: -45, marginBottom: -15, elevation: 5}}>
+                        <TouchableOpacity onPress={this.takePicture}>
+                            <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
+                                <Icon
+                                    name={'camera-alt'}
+                                    size={30}
+                                    color={'#ffffff'}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigator.replace({id: homePage})}>
+                            <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
+                                <Icon
+                                    name={'done'}
+                                    size={30}
+                                    color={'#ffffff'}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
                     <View style={styles.sheet_content}>
                         <Iconed icon="person" size={24} color={colors.action_secondary}>
                             <TextInput
@@ -173,7 +192,7 @@ var NavigationBarRouteMapper = {
     RightButton(route, navigator, index, nextState) {
         return (
             <NavIcon
-                icon={"motorcycle"}
+                icon={"done"}
                 action={() => {navigator.parentNavigator.replace({id: navigator.props.homePage})}}
             />
 

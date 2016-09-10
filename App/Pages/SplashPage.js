@@ -3,7 +3,6 @@
 var React = require('react-native');
 var {
     View,
-    Alert,
     Image,
     } = React;
 var TokenStore = require('../Stores/TokenStore');
@@ -18,7 +17,8 @@ var SplashPage = React.createClass({
 
     getInitialState: function(){
         return {
-            currentUser: {}
+            currentUser: {},
+
         }
     },
 

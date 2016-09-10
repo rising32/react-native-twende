@@ -3,6 +3,7 @@
 var React = require('react-native');
 
 var {
+    Alert,
     View,
     Text,
     ToastAndroid,
@@ -56,7 +57,13 @@ var LoginPage = React.createClass({
 
     goToHome: function (currentUser) {
         ToastAndroid.show(`Logged in as ${currentUser.first_name}.`, ToastAndroid.SHORT);
-        if (currentUser.is_driver) {
+        if (!currentUser.phone) {
+            Alert.alert('Update your profile', 'Please fill out your phone number.', [
+                {text: 'OK', onPress: () => {
+                    this.props.navigator.replace({id: 'ProfilePage', currentUser: currentUser});
+                }}
+            ]);
+        } else if (currentUser.is_driver) {
             this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {
             this.props.navigator.replace({id: 'CurrentLocationPage', currentUser: currentUser});
