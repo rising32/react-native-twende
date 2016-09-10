@@ -28,12 +28,12 @@ export function loadGeoLocation(enableHighAccuracy) {
                 (location) => {
                 },
                 (error) => {
-                    console.log(JSON.stringify(error));
+                    console.log(error);
                 }
             );
         },
         (error) => {
-            ToastAndroid.show(JSON.stringify(error), ToastAndroid.SHORT);
+            ToastAndroid.show(error, ToastAndroid.SHORT);
             // Give it another try
             loadGeoLocation(enableHighAccuracy)
         },

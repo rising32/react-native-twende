@@ -204,6 +204,14 @@ var TwendeApp = React.createClass({
                             text={'Invite Friends'}
                         />
                         <Link
+                            action={() => this.goToPage('TermsPage')}
+                            style={{padding: 8}}
+                            size={14}
+                            color={'#DDDDDD'}
+                            icon={'power-settings-new'}
+                            text={'Terms'}
+                        />
+                        <Link
                             action={this.logout}
                             style={{padding: 8}}
                             size={14}
