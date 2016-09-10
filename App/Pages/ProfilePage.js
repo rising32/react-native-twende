@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var {
+    Alert,
     View,
     Text,
     TextInput,
@@ -59,6 +60,17 @@ var ProfilePage = React.createClass({
         updateCurrentUser(currentUser);
     },
 
+    goHome: function() {
+        var homePage = this.props.currentUser.is_driver ? 'DriverHomePage' : 'CurrentLocationPage';
+        if (this.state.phone) {
+            this.props.navigator.replace({id: homePage});
+        } else {
+            Alert.alert('Update your profile', 'Please fill out your phone number.', [
+                {text: 'OK'}
+            ]);
+        }
+    },
+
     takePicture: function () {
         ImagePickerManager.showImagePicker(config.camera_options, (response) => {
             if (response.didCancel) {
@@ -82,8 +94,7 @@ var ProfilePage = React.createClass({
         return (
             <Navigator
                 renderScene={this.renderScene}
-                navigator={this.props.navigator}
-                homePage={homePage}
+                goHome={this.goHome}
                 navigationBar={
                     <Navigator.NavigationBar
                         style={styles.nav_bar}
@@ -95,7 +106,6 @@ var ProfilePage = React.createClass({
 
     renderScene: function (route, navigator) {
         var image;
-        var homePage = this.props.currentUser.is_driver ? 'DriverHomePage' : 'CurrentLocationPage';
         if (this.state.preview) {
             image = <Image
                 style={{height: 200, width: 200}}
@@ -126,7 +136,7 @@ var ProfilePage = React.createClass({
                                 />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigator.replace({id: homePage})}>
+                        <TouchableOpacity onPress={this.goHome}>
                             <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
                                 <Icon
                                     name={'done'}
@@ -185,18 +195,12 @@ var NavigationBarRouteMapper = {
         return (
             <NavIcon
                 icon={"arrow-back"}
-                action={() => {navigator.parentNavigator.replace({id: navigator.props.homePage})}}
+                action={navigator.props.goHome}
             />
         );
     },
     RightButton(route, navigator, index, nextState) {
-        return (
-            <NavIcon
-                icon={"done"}
-                action={() => {navigator.parentNavigator.replace({id: navigator.props.homePage})}}
-            />
-
-        );
+        return null
     },
     Title(route, navigator, index, nextState) {
         return (
