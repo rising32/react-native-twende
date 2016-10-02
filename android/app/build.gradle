@@ -82,10 +82,10 @@ android {
 
     defaultConfig {
         applicationId "com.twendeapp"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 22
         versionCode 8
-        versionName "1.1.6"
+        versionName "1.1.7"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"

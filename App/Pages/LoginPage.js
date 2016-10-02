@@ -16,6 +16,7 @@ import {colors, styles} from "../Styles";
 var IconText = require('../Components/IconText');
 const FBSDK = require('react-native-fbsdk');
 const {
+    LoginManager,
     LoginButton
     } = FBSDK;
 import events from "../Constants/Events";
@@ -24,6 +25,7 @@ import Dispatcher from "../Dispatcher";
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import { loginCurrentUser }  from '../Actions/CurrentUserActions';
 import { loadFacebookUser }  from '../Actions/SocialActions';
+
 
 
 var LoginPage = React.createClass({

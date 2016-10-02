@@ -47,6 +47,7 @@ var PushNotification = require('react-native-push-notification');
 import { notify } from "./Actions/NotifyActions"
 import { refreshCurrentRide } from "./Actions/CurrentRideActions";
 
+
 var TwendeApp = React.createClass({
 
         getInitialState: function (props) {
@@ -208,7 +209,7 @@ var TwendeApp = React.createClass({
                             style={{padding: 8}}
                             size={14}
                             color={'#DDDDDD'}
-                            icon={'power-settings-new'}
+                            icon={'assignment'}
                             text={'Terms'}
                         />
                         <Link
@@ -269,6 +270,14 @@ var TwendeApp = React.createClass({
                             text={'Invite Friends'}
                         />
                         <Link
+                            action={() => this.goToPage('TermsPage')}
+                            style={{padding: 8}}
+                            size={14}
+                            color={'#DDDDDD'}
+                            icon={'assignment'}
+                            text={'Terms'}
+                        />
+                        <Link
                             action={this.logout}
                             style={{padding: 8}}
                             size={14}
@@ -292,6 +301,14 @@ var TwendeApp = React.createClass({
                             color={'#666666'}
                             icon={'people'}
                             text={'About Twende'}
+                        />
+                        <Link
+                            action={() => this.goToPage('TermsPage')}
+                            style={{padding: 8}}
+                            size={14}
+                            color={'#DDDDDD'}
+                            icon={'assignment'}
+                            text={'Terms'}
                         />
                         <Link
                             action={() => this.goToPage('LoginPage')}

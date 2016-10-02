@@ -8,7 +8,7 @@ var SocialAuthService = {
     _headers: function (token) {
         var token = token ? token : TokenStore.get();
         return {
-            'Authorization': 'Bearer ' + token,
+            'Authorization': 'JWT ' + token,
             'Content-Type': 'application/json'
         };
     },
@@ -57,7 +57,6 @@ var SocialAuthService = {
         fetch(config.api.token, {
             method: 'POST',
             headers: {
-                //'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(credentials)

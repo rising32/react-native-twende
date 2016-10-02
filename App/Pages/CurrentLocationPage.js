@@ -103,7 +103,8 @@ var CurrentLocationPage = React.createClass({
     },
 
     nextStep: function (currentRide) {
-        if (currentRide.state == 'finalized') {
+        var finalStates = ['finalized', 'cancelled', 'declined'];
+        if (finalStates.indexOf(currentRide.state) > -1) {
             return;
         }
         if (currentRide.driver) {

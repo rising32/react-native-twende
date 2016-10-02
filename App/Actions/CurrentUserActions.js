@@ -27,11 +27,12 @@ export function reloadCurrentUser() {
         CurrentUserService.reloadCurrentUser(
             token,
             (currentUser) => {
-                dispatch({
-                    type: actions.receiveCurrentUser,
-                    currentUser: currentUser
-                })
-
+                if (currentUser) {
+                    dispatch({
+                        type: actions.receiveCurrentUser,
+                        currentUser: currentUser
+                    })
+                }
             },
             (error) => {
                 dispatch({

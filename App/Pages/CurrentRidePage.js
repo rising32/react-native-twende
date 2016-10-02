@@ -20,6 +20,7 @@ var StarRating = require('../Components/StarRating');
 var NavIcon = require('../Components/NavIcon');
 import CurrentRideStore from '../Stores/CurrentRideStore';
 import {
+    createCurrentRide,
     refreshCurrentRide,
     updateCurrentRide } from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
@@ -54,7 +55,23 @@ var CurrentRidePage = React.createClass({
         var currentRide = this.state.currentRide;
         currentRide.state = 'canceled';
         updateCurrentRide(currentRide);
-        this.props.navigator.pop();
+    },
+
+    createNewRide: function() {
+        var endedRide = this.state.currentRide;
+        if (endedRide) {
+            this.props.navigator.push({id: 'CurrentLocationPage'});
+        } else {
+            var ride = {
+                origin:      endedRide.origin,
+                origin_text: endedRide.origin_text
+            };
+            createCurrentRide(ride);
+        }
+    },
+
+    findNewDriver: function() {
+        this.createNewRide();
     },
 
     refreshRide: function () {
@@ -62,6 +79,22 @@ var CurrentRidePage = React.createClass({
     },
 
     rideLoaded: function (currentRide) {
+        if (currentRide.state == 'declined') {
+            Alert.alert(
+                'Rider busy',
+                'So sorry, but ' + currentRide.driver.first_name + ' declined your request.\n' +
+                    'Please try one of the other riders.'
+                ,
+                [
+                    {text: 'OK', onPress: () => {
+                        this.props.navigator.push({id: 'CurrentLocationPage'});
+                    }}
+                ]
+            );
+        }
+        if (currentRide.state == undefined || currentRide.state == 'canceled') {
+            this.props.navigator.push({id: 'CurrentLocationPage'});
+        }
         this.setState({currentRide: currentRide});
     },
 
@@ -167,10 +200,11 @@ var CurrentRidePage = React.createClass({
                             <Text style={{textAlign: 'center'}}>
                                 Your request has been declined.
                             </Text>
+
                         </View>
                     </View>
                     <Link style={{margin: 10}}
-                          action={() => this.navigator.pop()}
+                          action={this.findNewDriver}
                           icon={"motorcycle"}
                           size={16}
                           iconSize={24}
@@ -319,7 +353,7 @@ var CurrentRidePage = React.createClass({
                         </View>
                     </View>
                     <Link style={{margin: 10}}
-                          action={() => this.props.navigator.pop()}
+                          action={this.findNewDriver}
                           icon={"motorcycle"}
                           size={16}
                           iconSize={24}
@@ -343,7 +377,7 @@ var CurrentRidePage = React.createClass({
             case 'dropoff':
                 content = this.renderDropOff();
                 break;
-            case 'new':
+            case 'requested':
                 content = this.renderConnecting();
                 break;
             default:
