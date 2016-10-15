@@ -248,6 +248,7 @@ var DriverHomePage = React.createClass({
     renderRequest: function() {
         var ride = this.state.currentRide;
         var top = this.renderSheetTop(this.acceptRide, 'check');
+        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return  (
             <View>
                 <View style={styles.map}>
@@ -270,6 +271,12 @@ var DriverHomePage = React.createClass({
                         <Text>
                             You got a new request! Push confirm button and you're ready to pick up {ride.customer.name}.
                         </Text>
+                        <IconText
+                            icon={"motorcycle"}
+                            text={away}
+                            color={colors.action_secondary}
+                            style={{margin: 10}}
+                        />
                     </View>
                 </View>
             </View>
@@ -409,7 +416,7 @@ var DriverHomePage = React.createClass({
         if (this.state.currentUser.is_available) {
             if (this.state.currentRide) {
                 switch (this.state.currentRide.state) {
-                    case 'new' :
+                    case 'requested' :
                         content = this.renderRequest();
                         break;
                     case 'accepted' :
