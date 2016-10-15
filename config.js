@@ -1,5 +1,4 @@
 var apiUrl = 'https://twende.co.ke/api/';
-//var apiUrl = 'http://192.168.35.13:8000/api/';
 var mediaUrl = 'https://twende.co.ke/';
 
 exports.apiUrl = apiUrl;
