@@ -13,6 +13,7 @@ var {
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
+var IconText = require('../Components/IconText');
 var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
 var Link = require('../Components/Link');
@@ -221,6 +222,8 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: false, title: 'Driver on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
+        var ride = this.state.currentRide;
+        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
             <View style={{flex: 1}}>
                 <StepBar steps={steps}/>
@@ -247,6 +250,13 @@ var CurrentRidePage = React.createClass({
                                   text={"CALL " + this.state.driver.name.toUpperCase()}
                             />
                         </View>
+                        <IconText
+                            icon={"motorcycle"}
+                            text={away}
+                            color={colors.action_secondary}
+                            style={{margin: 10}}
+                        />
+
                     </View>
                 </View>
             </View>
