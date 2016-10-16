@@ -158,6 +158,8 @@ var CurrentLocationPage = React.createClass({
                     >
                         <MapView.Marker
                             draggable
+                            pinColor="purple"
+                            image={require('../assets/map-customer.png')}
                             coordinate={this.state.origin}
                             onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
                         />

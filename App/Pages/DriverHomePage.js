@@ -258,7 +258,12 @@ var DriverHomePage = React.createClass({
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
+                            image={require('../assets/map-customer.png')}
                             coordinate={this.state.currentRide.origin}
+                        />
+                        <MapView.Marker
+                            image={require('../assets/map-motor1.png')}
+                            coordinate={this.state.currentRide.driver.position}
                         />
                     </MapView>
                 </View>
@@ -295,7 +300,12 @@ var DriverHomePage = React.createClass({
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
+                            image={require('../assets/map-customer.png')}
                             coordinate={this.state.currentRide.origin}
+                        />
+                        <MapView.Marker
+                            image={require('../assets/map-motor1.png')}
+                            coordinate={this.state.currentRide.driver.position}
                         />
                     </MapView>
                 </View>
@@ -345,7 +355,8 @@ var DriverHomePage = React.createClass({
                         style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
                     >
                         <MapView.Marker
-                            coordinate={this.state.currentRide.origin}
+                            image={require('../assets/map-motor2.png')}
+                            coordinate={this.state.currentRide.driver.position}
                         />
                     </MapView>
                 </View>
