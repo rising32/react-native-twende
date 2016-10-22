@@ -37,7 +37,7 @@ var CurrentLocationPage = React.createClass({
                 latitude: -1.23825,
                 longitude: 35.8724
             },
-            ready: false,
+            isLoading: false,
             status: 'new',
             region: {
                 latitude: -1.23825,
@@ -128,7 +128,9 @@ var CurrentLocationPage = React.createClass({
             origin:      this.state.origin,
             origin_text: this.state.origin_text
         };
-        this.setState({ready: true});
+        this.setState({
+            ready: true
+        });
         createCurrentRide(ride);
     },
 
@@ -146,6 +148,14 @@ var CurrentLocationPage = React.createClass({
 
     renderScene: function (route, navigator) {
         var locationInput = null;
+        var spinner;
+        if (this.state.ready) {
+            spinner = (
+                <View style={styles.spinner}>
+                    <Text>Loading riders...</Text>
+                </View>
+            );
+        }
         return (
             <View style={styles.page}>
                 <View style={styles.map}>
@@ -201,6 +211,7 @@ var CurrentLocationPage = React.createClass({
                         </Text>
                     </View>
                 </View>
+                {spinner}
             </View>
         );
     }

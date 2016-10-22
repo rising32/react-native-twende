@@ -52,6 +52,25 @@ export var styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+    // Spinner
+    spinner: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+        borderColor: '#999999',
+        borderRadius: 10,
+        borderWidth: 1,
+        margin: 40,
+        bottom: 200,
+        elevation: 10,
+        backgroundColor: 'white'
+    },
+
+    spinner_text: {
+        color: '#999999',
+        fontSize: 18
+    },
+
     // Navigation
 
     nav_bar: {

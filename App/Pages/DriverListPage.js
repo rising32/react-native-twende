@@ -35,7 +35,8 @@ var DriverListPage = React.createClass({
             currentRide: this.props.currentRide,
             driver: {},
             items: [],
-            isLoading: true
+            isLoading: true,
+            isConnecting: false
         };
     },
 
@@ -67,8 +68,11 @@ var DriverListPage = React.createClass({
         var currentRide = this.state.currentRide;
         currentRide.driver = driver;
         currentRide.destination = currentRide.origin;
-        this.setState({currentRide: currentRide});
-        this.setState({driver: driver});
+        this.setState({
+            currentRide: currentRide,
+            driver: driver,
+            isConnecting: true
+        });
         updateCurrentRide(currentRide);
         this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, driver: driver});
     },
@@ -150,6 +154,14 @@ var DriverListPage = React.createClass({
 
     renderScene: function (route, navigator) {
         var content;
+        var spinner;
+        if (this.state.isConnecting) {
+            spinner = (
+                <View style={styles.spinner}>
+                    <Text>Connecting...</Text>
+                </View>
+            );
+        }
         var footer = (
             <Link
                 action={this.refreshItems}
@@ -171,6 +183,7 @@ var DriverListPage = React.createClass({
         return (
             <View style={styles.page}>
                 {content}
+                {spinner}
                 <View style={{alignItems: 'center'}}>
                     {footer}
                 </View>
@@ -185,7 +198,7 @@ var NavigationBarRouteMapper = {
          return (
             <NavIcon
                 icon={"arrow-back"}
-                action={() => {navigator.parentNavigator.pop()}}
+                action={() => {navigator.parentNavigator.push({id: 'CurrentLocationPage'})}}
             />
         );
     },

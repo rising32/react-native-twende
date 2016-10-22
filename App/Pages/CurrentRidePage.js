@@ -36,11 +36,13 @@ var CurrentRidePage = React.createClass({
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
             driver: this.props.driver,
+            isLoading: false,
             price: 0,
             rating: 0
         }
 
     },
+
     componentDidMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
@@ -129,7 +131,7 @@ var CurrentRidePage = React.createClass({
     },
 
     moreInfoRating: function() {
-        alert("We'll keep your rating anonymous. It's only so users can see which drivers have the best rating.")
+        alert("We'll keep your rating anonymous. It's only so users can see which riders have the best rating.")
     },
 
     render: function () {
@@ -148,7 +150,7 @@ var CurrentRidePage = React.createClass({
     renderConnecting: function () {
         var steps = [
             {in_progress: true, done: false, title: 'Ride requested'},
-            {in_progress: false, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
         return (
@@ -189,7 +191,7 @@ var CurrentRidePage = React.createClass({
     renderDeclined: function () {
         var steps = [
             {in_progress: false, done: false, title: 'Request declined'},
-            {in_progress: false, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
         return (
@@ -210,7 +212,7 @@ var CurrentRidePage = React.createClass({
                           size={16}
                           iconSize={24}
                           color={colors.action_secondary}
-                          text={"FIND ANOTHER DRIVER"}
+                          text={"FIND ANOTHER RIDER"}
                     />
                 </View>
             </View>
@@ -219,7 +221,7 @@ var CurrentRidePage = React.createClass({
     renderAccepted: function () {
         var steps = [
             {in_progress: true, done: true, title: 'Ride accepted'},
-            {in_progress: true, done: false, title: 'Driver on his way'},
+            {in_progress: true, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
         var ride = this.state.currentRide;
@@ -266,7 +268,7 @@ var CurrentRidePage = React.createClass({
     renderDriving: function () {
         var steps = [
             {in_progress: true, done: true, title: 'Ride accepted'},
-            {in_progress: true, done: true, title: 'Driver arrived'},
+            {in_progress: true, done: true, title: 'Rider arrived'},
             {in_progress: true, done: false, title: 'En route'}
         ];
         return (
@@ -296,7 +298,7 @@ var CurrentRidePage = React.createClass({
     renderDropOff: function () {
         var steps = [
             {in_progress: true, done: true, title: 'Ride accepted'},
-            {in_progress: true, done: true, title: 'Driver arrived'},
+            {in_progress: true, done: true, title: 'Rider arrived'},
             {in_progress: true, done: true, title: 'Finished'}
         ];
         return (
@@ -348,7 +350,7 @@ var CurrentRidePage = React.createClass({
     renderDone: function () {
         var steps = [
             {in_progress: false, done: false, title: 'Request declined'},
-            {in_progress: false, done: false, title: 'Driver on his way'},
+            {in_progress: false, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
         return (
@@ -368,7 +370,7 @@ var CurrentRidePage = React.createClass({
                           size={16}
                           iconSize={24}
                           color={colors.action_secondary}
-                          text={"FIND ANOTHER DRIVER"}
+                          text={"FIND ANOTHER RIDER"}
                     />
                 </View>
             </View>
