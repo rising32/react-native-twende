@@ -43,6 +43,18 @@ var CurrentRidePage = React.createClass({
 
     },
 
+    startPolling: function() {
+        var self = this;
+        setTimeout(function() {
+            if (!self.isMounted()) {
+                return;
+            }
+            self.refreshRide();
+            self._timer = setInterval(self.refreshRide, 30000);
+        }, 30000);
+    },
+
+
     componentDidMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
@@ -51,6 +63,10 @@ var CurrentRidePage = React.createClass({
 
     componentWillUnmount: function (props) {
         CurrentRideStore.removeListener(events.currentRideLoaded, this.rideLoaded);
+        if (this._timer) {
+          clearInterval(this._timer);
+          this._timer = null;
+        }
     },
 
     cancelRide: function () {
@@ -79,6 +95,7 @@ var CurrentRidePage = React.createClass({
 
     refreshRide: function () {
         refreshCurrentRide(this.state.currentRide.id);
+        ToastAndroid.show('Refreshing...', ToastAndroid.SHORT)
     },
 
     rideLoaded: function (currentRide) {
@@ -224,6 +241,7 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
+        this.startPolling();
         var ride = this.state.currentRide;
         var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
