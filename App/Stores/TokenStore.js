@@ -33,6 +33,21 @@ class TokenStore extends EventEmitter {
         AsyncStorage.setItem('token', token);
     };
 
+    setFbToken(token) {
+        this._fbToken = token;
+        AsyncStorage.setItem('fbToken', token);
+    };
+
+    getFbToken(token) {
+        if (this._fbToken) {
+            return this._fbToken;
+        }
+        AsyncStorage.getItem('fbToken').then((token) => {
+            this._fbToken = token;
+            return token;
+        });
+    };
+
     clear() {
         AsyncStorage.removeItem('token');
         this._token = null;
@@ -42,6 +57,9 @@ class TokenStore extends EventEmitter {
         switch(action.type) {
             case actions.receiveToken:
                 this.set(action.token);
+                break;
+            case actions.receiveFacebookToken:
+                this.setFbToken(action.token);
                 break;
             case actions.logoutCurrentUser:
                 this.clear();
