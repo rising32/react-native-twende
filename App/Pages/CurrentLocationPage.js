@@ -70,6 +70,7 @@ var CurrentLocationPage = React.createClass({
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
     },
+
     componentDidMount: function (props) {
         loadRideList();
         loadGeoLocation();
@@ -106,6 +107,7 @@ var CurrentLocationPage = React.createClass({
     },
 
     nextStep: function (currentRide) {
+        ToastAndroid.show('Current ride loaded', ToastAndroid.SHORT);
         var finalStates = ['finalized', 'cancelled', 'declined'];
         if (finalStates.indexOf(currentRide.state) > -1) {
             return;

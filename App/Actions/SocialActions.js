@@ -35,7 +35,7 @@ export function loadFacebookUser() {
                 }
             }).then((response) => {
                 if (response.status !== 200) {
-                    alert(JSON.stringify(response))
+                    //
                 } else {
                     return response.json();
                 }

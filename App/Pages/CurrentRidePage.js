@@ -49,8 +49,10 @@ var CurrentRidePage = React.createClass({
             if (!self.isMounted()) {
                 return;
             }
-            self.refreshRide();
-            self._timer = setInterval(self.refreshRide, 30000);
+            if (['accepted', 'driving'].indexOf(this.state.currentRide.state) > -1) {
+                self.refreshRide();
+                self._timer = setInterval(self.refreshRide, 30000);
+            }
         }, 30000);
     },
 

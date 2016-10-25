@@ -61,7 +61,7 @@ var DriverHomePage = React.createClass({
 
     toggleAvailability: function(available) {
         var currentUser = this.state.currentUser;
-        currentUser.is_available = available.checked;
+        currentUser.state = available.checked ? 'available' : 'unavailable';
         this.setState({currentUser: currentUser});
         updateCurrentUser(currentUser);
     },
@@ -193,6 +193,10 @@ var DriverHomePage = React.createClass({
     },
 
     renderEmpty: function() {
+        var is_available = false;
+        if (this.state.currentUser.state == 'available') {
+            is_available = true;
+        }
         return  (
             <View style={{alignItems: 'center'}}>
                 <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
@@ -202,7 +206,7 @@ var DriverHomePage = React.createClass({
                     <MKSwitch
                         color={colors.action}
                         onCheckedChange={this.toggleAvailability}
-                        checked={this.state.currentUser.is_available}
+                        checked={is_available}
                     />
                     <Text>
                         Available
@@ -424,7 +428,7 @@ var DriverHomePage = React.createClass({
 
     renderScene: function(route, navigator) {
         var content = this.renderEmpty();
-        if (this.state.currentUser.is_available) {
+        if (this.state.currentUser.state == 'available') {
             if (this.state.currentRide) {
                 switch (this.state.currentRide.state) {
                     case 'requested' :
