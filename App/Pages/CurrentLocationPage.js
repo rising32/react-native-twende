@@ -71,6 +71,7 @@ var CurrentLocationPage = React.createClass({
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadGeoLocation();
         loadGeoLocation(true);
+        loadRideList();
     },
 
     refreshLocation: function() {
@@ -79,9 +80,13 @@ var CurrentLocationPage = React.createClass({
         loadGeoLocation(true);
     },
 
-    componentWillUnmount: function (props) {
+    stopListening: function() {
         CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
+    },
+
+    componentWillUnmount: function (props) {
+        this.stopListening();
     },
 
     dragOrigin: function (loc) {
@@ -102,12 +107,18 @@ var CurrentLocationPage = React.createClass({
         this.setState({region: region});
     },
 
+    rideLoaded: function(currentUser) {
+
+    },
+
     nextStep: function (currentRide) {
         var finalStates = ['finalized', 'cancelled', 'declined'];
         if (finalStates.indexOf(currentRide.state) > -1) {
             return;
         }
+
         if (currentRide.driver) {
+            this.stopListening();
             // There was already an active ride... got to that one
             this.props.navigator.push({
                 id: 'CurrentRidePage',
@@ -115,6 +126,7 @@ var CurrentLocationPage = React.createClass({
                 driver: currentRide.driver
             });
         } else if (this.state.ready) {
+            this.stopListening();
             // New ride. Go to driver list
             this.props.navigator.push({
                 id: 'DriverListPage',

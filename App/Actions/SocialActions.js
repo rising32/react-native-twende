@@ -17,6 +17,9 @@ export function logoutFacebookUser() {
 export function loadFacebookUser() {
     AccessToken.getCurrentAccessToken().then(
         (token) => {
+            if (!token) {
+                return
+            }
             var accessToken = token.accessToken.toString();
 
             var data = {
@@ -66,6 +69,9 @@ export function loadFacebookUser() {
             }).catch((error) => {
                 //alert(error);
             });
+        },
+        (error) => {
+
         }
     );
 
