@@ -109,11 +109,11 @@ var TwendeApp = React.createClass({
             }
         },
 
-        componentWillMount: function () {
+        componentDidMount: function () {
             CurrentRideStore.on(events.currentRideLoaded, (currentRide) => {
                 this.setState({currentRide: currentRide});
                 if (this.state.currentUser.is_driver) {
-                    if (currentRide.state == 'new') {
+                    if (currentRide.state == 'requested') {
                         sounds.alarm1.play();
                     }
                     this.navigator.push({

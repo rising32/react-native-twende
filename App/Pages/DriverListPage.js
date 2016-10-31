@@ -40,7 +40,7 @@ var DriverListPage = React.createClass({
         };
     },
 
-    componentWillMount: function () {
+    componentDidMount: function () {
         DriverStore.on(events.driverListLoaded, this.setItems);
         CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         this.refreshItems();
@@ -133,7 +133,7 @@ var DriverListPage = React.createClass({
         return (
             <View>
                 <Text>
-                    No drivers found
+                    No riders found
                 </Text>
             </View>
         );
@@ -208,7 +208,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                CLOSEST DRIVERS
+                CLOSEST RIDERS
             </Text>
         );
     }

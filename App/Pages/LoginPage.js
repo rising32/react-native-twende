@@ -36,13 +36,15 @@ var LoginPage = React.createClass({
             loading: false,
             currentUser: {},
             username: '',
-            password: ''
+            password: '',
+            ready: false
         };
     },
 
     componentWillMount: function () {
         CurrentUserStore.on(events.loginFailed, this.setLoginError);
         CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
+        loadFacebookUser();
     },
 
     componentWillUnmount: function () {
@@ -108,10 +110,9 @@ var LoginPage = React.createClass({
                         } else if (result.isCancelled) {
                             alert("Login is cancelled.");
                         } else {
-                            if (!fbToken) {
-                                fbToken = result;
-                                loadFacebookUser();
-                            }
+                            this.setState({ready: true})
+                            fbToken = result;
+                            loadFacebookUser();
                         }
                     }
                 }
@@ -159,6 +160,15 @@ var LoginPage = React.createClass({
         var error = this.state.error ?
             <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
 
+        var spinner;
+        if (this.state.ready) {
+            spinner = (
+                <View style={styles.spinner}>
+                    <Text>Login successful...</Text>
+                </View>
+            );
+        }
+
         var content = this.renderSocialLogin();
 
 
@@ -177,6 +187,7 @@ var LoginPage = React.createClass({
                     text={'Terms of Service'}
                     color={colors.action}
                 />
+                {spinner}
             </View>
         );
     }

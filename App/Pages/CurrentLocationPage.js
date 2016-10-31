@@ -66,12 +66,9 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    componentWillMount: function (props) {
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
-    },
-
     componentDidMount: function (props) {
+        CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
+        GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadRideList();
         loadGeoLocation();
         loadGeoLocation(true);
@@ -83,9 +80,13 @@ var CurrentLocationPage = React.createClass({
         loadGeoLocation(true);
     },
 
-    componentWillUnmount: function (props) {
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
+    stopListening: function() {
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.rideLoaded);
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
+    },
+
+    componentWillUnmount: function (props) {
+        this.stopListening();
     },
 
     dragOrigin: function (loc) {
