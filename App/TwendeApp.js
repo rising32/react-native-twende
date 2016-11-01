@@ -72,7 +72,10 @@ var TwendeApp = React.createClass({
 
         goToPage: function (pageId) {
             this.closeDrawer();
-            this.navigator.push({id: pageId});
+            this.navigator.replace({
+                id: pageId,
+                currentUser: this.state.currentUser
+            });
         },
 
         goBack: function () {
@@ -95,15 +98,14 @@ var TwendeApp = React.createClass({
                         }
                     },
                     onError: function(error) {
-                        console.log(error);
+                        //
                     },
-                    senderID: "1055251321691",
                     permissions: {
-                        alert: true,
+                        //alert: true,
                         badge: true,
                         sound: true
                     },
-                    popInitialNotification: true,
+                    popInitialNotification: false,
                     requestPermissions: true
                 });
             }
@@ -145,8 +147,10 @@ var TwendeApp = React.createClass({
             BackAndroid.addEventListener('hardwareBackPress', this.goBack);
 
             CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
-                this.setState({currentUser: currentUser});
-                this.registerPushNotification();
+                if (currentUser) {
+                    this.setState({currentUser: currentUser});
+                    this.registerPushNotification();
+                }
             });
 
             CurrentUserStore.on(events.userLoggedOut, (error) => {

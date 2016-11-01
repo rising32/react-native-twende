@@ -107,16 +107,11 @@ var CurrentLocationPage = React.createClass({
         this.setState({region: region});
     },
 
-    rideLoaded: function(currentUser) {
-
-    },
-
     nextStep: function (currentRide) {
         var finalStates = ['finalized', 'cancelled', 'declined'];
         if (finalStates.indexOf(currentRide.state) > -1) {
             return;
         }
-
         if (currentRide.driver) {
             this.stopListening();
             // There was already an active ride... got to that one

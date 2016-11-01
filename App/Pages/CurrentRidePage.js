@@ -252,6 +252,14 @@ var CurrentRidePage = React.createClass({
                                   color={colors.action}
                                   text={"CALL " + this.state.driver.name.toUpperCase()}
                             />
+                            <Link style={{margin: 10}}
+                                  action={this.cancelRide}
+                                  icon={"clear"}
+                                  size={16}
+                                  iconSize={24}
+                                  color={colors.action_secondary}
+                                  text={"CANCEL RIDE"}
+                            />
                         </View>
                         <IconText
                             icon={"motorcycle"}

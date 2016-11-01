@@ -26,7 +26,7 @@
     "react-native-material-ui": "^0.4.2",
     "react-native-mauron85-background-geolocation": "0.0.1",
     "react-native-progress": "^3.0.0",
-    "react-native-push-notification": "^1.0.6",
+    "react-native-push-notification": "1.0.7",
     "react-native-refresher": "^0.1.1",
     "react-native-sound": "^0.8.3",
     "react-native-vector-icons": "^2.0.1"
