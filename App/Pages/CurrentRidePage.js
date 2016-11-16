@@ -46,7 +46,7 @@ var CurrentRidePage = React.createClass({
     componentWillMount: function (props) {
         CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
-        //refreshCurrentRide(this.state.currentRide.id);
+        refreshCurrentRide(this.state.currentRide.id);
     },
 
     componentWillUnmount: function (props) {
@@ -225,8 +225,8 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'En route'}
         ];
         var ride = this.state.currentRide;
-        var away = '';
-        //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        //var away = '';
+        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
             <View style={{flex: 1}}>
                 <StepBar steps={steps}/>

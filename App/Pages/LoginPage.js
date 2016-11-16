@@ -42,7 +42,7 @@ var LoginPage = React.createClass({
     componentWillMount: function () {
         CurrentUserStore.on(events.loginFailed, this.setLoginError);
         CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
-        loadFacebookUser();
+        //loadFacebookUser();
     },
 
     componentWillUnmount: function () {
