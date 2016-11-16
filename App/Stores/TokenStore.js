@@ -1,9 +1,9 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
 var {
     AsyncStorage,
-    } = React;
+    } = ReactNative;
 import { EventEmitter } from "events";
 import events from "../Constants/Events";
 import actions from "../Constants/Actions";

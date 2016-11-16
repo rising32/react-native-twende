@@ -1,7 +1,7 @@
 var Geolocation = require('Geolocation');
 import {dispatch} from '../Dispatcher';
 import actions from "../Constants/Actions";
-import config from "../../config"
+import config from "../config"
 var LocationService = require('../Services/LocationService');
 var React = require('react-native');
 var {

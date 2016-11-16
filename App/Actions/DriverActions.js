@@ -1,10 +1,5 @@
 'use strict';
 
-var React = require('react-native');
-var {
-    AsyncStorage
-} = React;
-
 var DriverService = require('../Services/DriverService');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 

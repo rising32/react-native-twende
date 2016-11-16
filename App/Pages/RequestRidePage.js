@@ -8,9 +8,9 @@ var {
     Text,
     TextInput,
     Navigator,
-    TouchableOpacity,
     TouchableHighlight
     } = ReactNative;
+
 var MapView = require('react-native-maps');
 var NavIcon = require('../Components/NavIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
@@ -19,8 +19,8 @@ var SheetIcon = require('../Components/SheetIcon');
 
 import events from "../Constants/Events";
 import DriverStore from '../Stores/DriverStore';
-import { loadDriverList } from '../Actions/DriverActions';
 
+import { loadDriverList } from '../Actions/DriverActions';
 
 
 var RequestRidePage = React.createClass({

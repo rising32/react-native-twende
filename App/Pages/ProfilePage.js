@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
     Alert,
     View,
@@ -11,7 +12,7 @@ var {
     ScrollView,
     TouchableOpacity,
 
-    } = React;
+    } = ReactNative;
 
 import {colors, styles} from "../Styles";
 var NavIcon = require('../Components/NavIcon');
@@ -25,7 +26,7 @@ var CurrentUserActions = require('../Actions/CurrentUserActions');
 
 import { updateCurrentUser }  from '../Actions/CurrentUserActions';
 
-var config = require('../../config');
+var config = require('../config');
 
 
 var ProfilePage = React.createClass({

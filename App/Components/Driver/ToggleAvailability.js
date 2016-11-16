@@ -1,10 +1,11 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
     View,
     Text,
-    } = React;
+    } = ReactNative;
 
 import {
     MKSwitch,

@@ -1,4 +1,4 @@
-var config = require('../../config');
+var config = require('../config');
 var TokenStore = require('../Stores/TokenStore');
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var CurrentUserService = require('../Services/CurrentUserService');

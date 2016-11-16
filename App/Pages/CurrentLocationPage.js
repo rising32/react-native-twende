@@ -5,7 +5,6 @@ var ReactNative = require('react-native');
 var {
     View,
     Text,
-    TextInput,
     ToastAndroid,
     Navigator,
     TouchableHighlight

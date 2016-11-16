@@ -1,12 +1,15 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
 var {
-  StyleSheet,
-  Component,
   View,
   Text,
   TouchableOpacity,
+} = ReactNative;
+
+var React = require('react');
+var {
+  Component,
 } = React;
 
 class NoNavigatorPage extends Component {

@@ -4,19 +4,16 @@
  */
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
-    Image,
     Text,
     View,
     Navigator,
-    ToastAndroid,
     TouchableOpacity,
     DrawerLayoutAndroid,
     BackAndroid,
-    TouchableHighlight,
-    DeviceEventEmitter
-    } = React;
+    } = ReactNative;
 
 var SplashPage = require('./Pages/SplashPage');
 var LoginPage = require('./Pages/LoginPage');
@@ -170,7 +167,8 @@ var TwendeApp = React.createClass({
                             {this.state.currentUser.first_name} {this.state.currentUser.last_name}
                         </Text>
                     </View>
-                    <View style={{backgroundColor: '#555555', padding: 8, flex: 1}}>
+
+                    <View style={{backgroundColor: '#555555', padding: 8}}>
                         <Link
                             style={{padding: 8}}
                             action={() => this.goToPage('CurrentLocationPage')}
@@ -224,7 +222,6 @@ var TwendeApp = React.createClass({
                             icon={'power-settings-new'}
                             text={'Logout'}
                         />
-
                     </View>
 
                 </View>
@@ -335,7 +332,6 @@ var TwendeApp = React.createClass({
             } else if (this.state.currentUser.username) {
                 drawer = this.customerDrawerView;
             }
-
             return (
                 <DrawerLayoutAndroid
                     drawerWidth={200}
@@ -464,4 +460,3 @@ var TwendeApp = React.createClass({
     ;
 
 module.exports = TwendeApp;
-

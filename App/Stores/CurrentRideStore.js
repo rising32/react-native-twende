@@ -1,6 +1,5 @@
 'use strict';
 
-var React = require('react-native');
 import { EventEmitter } from "events";
 import events from "../Constants/Events";
 import actions from "../Constants/Actions";

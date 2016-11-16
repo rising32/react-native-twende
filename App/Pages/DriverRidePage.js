@@ -1,13 +1,12 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
-    Component,
     View,
     Text,
     Navigator,
-    TouchableOpacity,
-    } = React;
+    } = ReactNative;
 
 import {
     MKSwitch,
@@ -17,7 +16,6 @@ import {
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 import CustomerStore from '../Stores/CustomerStore';
-var MapView = require('react-native-maps');
 
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
