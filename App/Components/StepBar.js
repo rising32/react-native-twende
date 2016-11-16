@@ -87,6 +87,7 @@ var StepBar = React.createClass({
 
         return (
             <ListView
+                automaticallyAdjustContentInsets={false}
                 contentContainerStyle={styles.step_bar}
                 ref="listview"
                 style={{flex: 0}}
