@@ -8,11 +8,6 @@ var {
     Navigator,
     } = ReactNative;
 
-import {
-    MKSwitch,
-} from 'react-native-material-kit';
-
-
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 import CustomerStore from '../Stores/CustomerStore';
@@ -178,11 +173,6 @@ var DriverRidePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
-                    <MKSwitch
-                        color={colors.action}
-                        onCheckedChange={this.toggleAvailability}
-                        checked={this.state.currentUser.is_available}
-                    />
                     <Text>
                         Available
                     </Text>

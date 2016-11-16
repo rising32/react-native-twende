@@ -1,6 +1,7 @@
 package com.twendeapp;
 
 import com.facebook.react.ReactActivity;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.magus.fblogin.FacebookLoginPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 

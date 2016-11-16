@@ -11,11 +11,6 @@ var {
     TouchableOpacity,
     } = ReactNative;
 
-import {
-    MKSwitch,
-} from 'react-native-material-kit';
-
-
 import CustomerStore from '../Stores/CustomerStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
 var MapView = require('react-native-maps');
@@ -203,11 +198,6 @@ var DriverHomePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
-                    <MKSwitch
-                        color={colors.action}
-                        onCheckedChange={this.toggleAvailability}
-                        checked={is_available}
-                    />
                     <Text>
                         Available
                     </Text>
@@ -229,11 +219,6 @@ var DriverHomePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
-                    <MKSwitch
-                        color={colors.action}
-                        onCheckedChange={this.toggleAvailability}
-                        checked={this.state.currentUser.is_available}
-                    />
                     <Text>
                         Available
                     </Text>
