@@ -164,14 +164,13 @@ var CurrentLocationPage = React.createClass({
         }
         return (
             <View style={styles.page}>
-                <View style={styles.map}>
+                <View style={styles.map_container}>
                     <MapView
                         region={this.state.region}
                         showsUserLocation={true}
                         onRegionChange={this.onRegionChange}
                         showUserLocation={true}
-                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
-                    >
+                        style={styles.map}>
                         <MapView.Marker
                             draggable
                             pinColor="purple"

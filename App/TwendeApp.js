@@ -12,6 +12,7 @@ var {
     Navigator,
     TouchableOpacity,
     DrawerLayoutAndroid,
+    PermissionsAndroid,
     BackAndroid,
     } = ReactNative;
 
@@ -109,6 +110,9 @@ var TwendeApp = React.createClass({
         },
 
         componentDidMount: function () {
+            PermissionsAndroid.requestPermission(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
             CurrentRideStore.on(events.currentRideLoaded, (currentRide) => {
                 this.setState({currentRide: currentRide});
                 if (this.state.currentUser.is_driver) {

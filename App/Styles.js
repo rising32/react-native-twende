@@ -178,14 +178,21 @@ export var styles = StyleSheet.create({
     },
 
     // Map
-    map: {
-        //flex: 1,
+    map_container: {
+        flex: 1,
         height: 250,
         backgroundColor: '#999999',
         borderWidth: 1,
         borderColor: colors.border
     },
-
+    map: {
+        position: 'absolute',
+        flex: 1,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
     map_info: {
         flexDirection: 'row',
         justifyContent: 'space-between',

@@ -22,7 +22,7 @@ var Link = require('../Components/Link');
 import Dispatcher from "../Dispatcher";
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import { loginCurrentUser }  from '../Actions/CurrentUserActions';
-import { loadFacebookUser }  from '../Actions/SocialActions';
+import { loadFacebookUser, reloadFacebookUser }  from '../Actions/SocialActions';
 
 
 
@@ -42,7 +42,7 @@ var LoginPage = React.createClass({
     componentWillMount: function () {
         CurrentUserStore.on(events.loginFailed, this.setLoginError);
         CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
-        //loadFacebookUser();
+        reloadFacebookUser();
     },
 
     componentWillUnmount: function () {
@@ -113,9 +113,10 @@ var LoginPage = React.createClass({
                   this.setState({ user : null });
                 }}
                 onLoginFound={(data) => {
-                  console.log("Existing login found.");
-                  console.log(data);
-                  this.setState({ user : data.credentials });
+                    (data) => {
+                        this.setState({ready: true});
+                        loadFacebookUser(data);
+                    }
                 }}
                 onLoginNotFound={() => {
                   console.log("No user logged in.");

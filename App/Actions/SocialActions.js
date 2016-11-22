@@ -1,7 +1,6 @@
 const FacebookLogin = require('react-native-facebook-login');
 const {
-    LoginManager,
-    AccessToken
+    FBLoginManager
     } = FacebookLogin;
 import { receive } from "../Constants/Actions"
 const config = require("../config");
@@ -12,6 +11,16 @@ import {dispatch} from '../Dispatcher';
 
 export function logoutFacebookUser() {
     LoginManager.logOut();
+}
+
+export function reloadFacebookUser() {
+    FBLoginManager.loginWithPermissions(["email"], function(error, data){
+      if (!error) {
+        loadFacebookUser(data);
+      } else {
+        console.log("Error: ", error);
+      }
+    })
 }
 
 export function loadFacebookUser(fbdata) {

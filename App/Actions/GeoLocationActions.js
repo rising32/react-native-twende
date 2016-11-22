@@ -33,7 +33,7 @@ export function loadGeoLocation(enableHighAccuracy) {
             );
         },
         (error) => {
-            ToastAndroid.show(error, ToastAndroid.SHORT);
+            ToastAndroid.show('Could not find location', ToastAndroid.SHORT);
             // Give it another try
             loadGeoLocation(enableHighAccuracy)
         },
