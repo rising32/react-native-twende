@@ -58,7 +58,6 @@ var CurrentUserService = {
         fetch(config.api.token, {
             method: 'POST',
             headers: {
-                //'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(credentials)

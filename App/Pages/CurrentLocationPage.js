@@ -66,11 +66,11 @@ var CurrentLocationPage = React.createClass({
     },
 
     componentDidMount: function (props) {
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
+        CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
+        loadRideList();
         loadGeoLocation();
         loadGeoLocation(true);
-        loadRideList();
     },
 
     refreshLocation: function() {
@@ -146,9 +146,9 @@ var CurrentLocationPage = React.createClass({
                 renderScene={this.renderScene}
                 navigator={this.props.navigator}
                 navigationBar={
-            <Navigator.NavigationBar style={styles.nav_bar}
-                routeMapper={NavigationBarRouteMapper} />
-          }/>
+                <Navigator.NavigationBar style={styles.nav_bar}
+                    routeMapper={NavigationBarRouteMapper} />
+              }/>
         );
     },
 

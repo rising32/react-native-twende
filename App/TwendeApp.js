@@ -226,6 +226,7 @@ var TwendeApp = React.createClass({
                             icon={'power-settings-new'}
                             text={'Logout'}
                         />
+
                     </View>
 
                 </View>
@@ -464,3 +465,4 @@ var TwendeApp = React.createClass({
     ;
 
 module.exports = TwendeApp;
+

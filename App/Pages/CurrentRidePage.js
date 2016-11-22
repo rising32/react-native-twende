@@ -79,6 +79,7 @@ var CurrentRidePage = React.createClass({
 
     refreshRide: function () {
         refreshCurrentRide(this.state.currentRide.id);
+        ToastAndroid.show('Refreshing...', ToastAndroid.SHORT)
     },
 
     rideLoaded: function (currentRide) {
@@ -225,7 +226,6 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'En route'}
         ];
         var ride = this.state.currentRide;
-        //var away = '';
         var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
             <View style={{flex: 1}}>
