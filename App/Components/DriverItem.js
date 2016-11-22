@@ -13,7 +13,7 @@ import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
 var Rating = require('../Components/Rating');
 var IconText = require('../Components/IconText');
-var config = require('../../config');
+var config = require('../config');
 
 
 var DriverItem = React.createClass({

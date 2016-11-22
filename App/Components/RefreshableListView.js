@@ -1,28 +1,24 @@
 // for an updated version see https://github.com/jsdf/react-native-refreshable-listview
 
-var React = require('react-native')
+var React = require('react');
+var ReactNative = require('react-native');
 var {
     ListView,
     ActivityIndicatorIOS,
     StyleSheet,
     View,
-    Text,
-    ToastAndroid
-    } = React
+    Text
+    } = ReactNative;
 
-// must be less than ~50px due to ScrollView bug (event only fires once)
-// https://github.com/facebook/react-native/pull/452
-// TODO: expose as a prop when onScroll works properly
-var PULLDOWN_DISTANCE = 10
+var PULLDOWN_DISTANCE = 10;
 
 var RefreshableListView = React.createClass({
     getInitialState() {
         return {
-            reloading: false,
+            reloading: false
         }
     },
     handleScroll(e) {
-        //ToastAndroid.show('dusss ' + e.nativeEvent.contentOffset.y , ToastAndroid.SHORT)
         if (e.nativeEvent.contentOffset.y < PULLDOWN_DISTANCE) {
             this.reloadData()
         }
@@ -31,13 +27,13 @@ var RefreshableListView = React.createClass({
     reloadData() {
         if (this.willReload || this.state.reloading) return
 
-        this.willReload = true
+        this.willReload = true;
         Promise.all([
             this.props.loadData(),
             new Promise((resolve) => this.setState({reloading: true}, resolve)),
             new Promise((resolve) => setTimeout(resolve, 300)),
         ]).then(([data]) => {
-            this.willReload = false
+            this.willReload = false;
             this.setState({reloading: false})
         })
     },
@@ -59,6 +55,7 @@ var RefreshableListView = React.createClass({
         return (
             <ListView
                 {...this.props}
+                automaticallyAdjustContentInsets={false}
                 onScroll={this.handleScroll}
                 renderHeader={this.renderHeader}
             />

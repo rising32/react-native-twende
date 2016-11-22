@@ -1,20 +1,15 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
-    Component,
     Alert,
     View,
     Text,
     TextInput,
     Navigator,
     TouchableOpacity,
-    } = React;
-
-import {
-    MKSwitch,
-} from 'react-native-material-kit';
-
+    } = ReactNative;
 
 import CustomerStore from '../Stores/CustomerStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
@@ -203,11 +198,6 @@ var DriverHomePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
-                    <MKSwitch
-                        color={colors.action}
-                        onCheckedChange={this.toggleAvailability}
-                        checked={is_available}
-                    />
                     <Text>
                         Available
                     </Text>
@@ -229,11 +219,6 @@ var DriverHomePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
-                    <MKSwitch
-                        color={colors.action}
-                        onCheckedChange={this.toggleAvailability}
-                        checked={this.state.currentUser.is_available}
-                    />
                     <Text>
                         Available
                     </Text>

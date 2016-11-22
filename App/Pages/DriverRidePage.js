@@ -1,23 +1,16 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
-    Component,
     View,
     Text,
     Navigator,
-    TouchableOpacity,
-    } = React;
-
-import {
-    MKSwitch,
-} from 'react-native-material-kit';
-
+    } = ReactNative;
 
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var GeoLocationStore = require('../Stores/GeoLocationStore');
 import CustomerStore from '../Stores/CustomerStore';
-var MapView = require('react-native-maps');
 
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
@@ -180,11 +173,6 @@ var DriverRidePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
-                    <MKSwitch
-                        color={colors.action}
-                        onCheckedChange={this.toggleAvailability}
-                        checked={this.state.currentUser.is_available}
-                    />
                     <Text>
                         Available
                     </Text>

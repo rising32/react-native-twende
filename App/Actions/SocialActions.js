@@ -1,10 +1,9 @@
-const FBSDK = require('react-native-fbsdk');
+const FacebookLogin = require('react-native-facebook-login');
 const {
-    LoginManager,
-    AccessToken
-    } = FBSDK;
+    FBLoginManager
+    } = FacebookLogin;
 import { receive } from "../Constants/Actions"
-const config = require("../../config");
+const config = require("../config");
 var CurrentUserService = require('../Services/CurrentUserService');
 import actions from "../Constants/Actions";
 import {dispatch} from '../Dispatcher';
@@ -14,66 +13,66 @@ export function logoutFacebookUser() {
     LoginManager.logOut();
 }
 
-export function loadFacebookUser() {
-    AccessToken.getCurrentAccessToken().then(
-        (token) => {
-            if (!token) {
-                return
-            }
-            var accessToken = token.accessToken.toString();
+export function reloadFacebookUser() {
+    FBLoginManager.loginWithPermissions(["email"], function(error, data){
+      if (!error) {
+        loadFacebookUser(data);
+      } else {
+        console.log("Error: ", error);
+      }
+    })
+}
 
-            var data = {
-                grant_type: "convert_token",
-                client_id: config.socialClient.id,
-                client_secret: config.socialClient.secret,
-                backend: "facebook",
-                token: accessToken
-            };
+export function loadFacebookUser(fbdata) {
+    var accessToken = fbdata.credentials.token.toString();
 
-            fetch(config.api.socialLogin, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
-                if (response.status !== 200) {
-                    //
-                } else {
-                    return response.json();
-                }
-            }).then((data) => {
-                if (data) {
-                    var token = data.access_token;
-                    dispatch({
-                        type: actions.receiveToken,
-                        token: token
-                    });
-                    CurrentUserService.reloadCurrentUser(
-                        token,
-                        (currentUser) => {
-                            dispatch({
-                                type: actions.receiveCurrentUser,
-                                currentUser: currentUser
-                            })
+    var data = {
+        grant_type: "convert_token",
+        client_id: config.socialClient.id,
+        client_secret: config.socialClient.secret,
+        backend: "facebook",
+        token: accessToken
+    };
 
-                        },
-                        (error) => {
-                            alert(JSON.stringify(error));
-                            dispatch({
-                                type: actions.errorFetchCurrentUser
-                            })
-                        }
-                    )
-                }
-            }).catch((error) => {
-                //alert(error);
-            });
-        },
-        (error) => {
-
+    fetch(config.api.socialLogin, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
         }
-    );
+    }).then((response) => {
+        if (response.status !== 200) {
+            alert(JSON.stringify(response))
+        } else {
+            return response.json();
+        }
+    }).then((data) => {
+        if (data) {
+            var token = data.access_token;
+            dispatch({
+                type: actions.receiveToken,
+                token: token
+            });
+            CurrentUserService.reloadCurrentUser(
+                token,
+                (currentUser) => {
+                    dispatch({
+                        type: actions.receiveCurrentUser,
+                        currentUser: currentUser
+                    })
+
+                },
+                (error) => {
+                    alert(JSON.stringify(error));
+                    dispatch({
+                        type: actions.errorFetchCurrentUser
+                    })
+                }
+            )
+        }
+    }).catch((error) => {
+        //alert(error);
+    });
 
     //const infoRequest = new GraphRequest(
     //    '/me',

@@ -7,7 +7,7 @@ var {
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
-var config = require('../../config');
+var config = require('../config');
 
 var Avatar = React.createClass({
 

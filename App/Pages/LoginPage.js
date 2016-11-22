@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 
 var {
     Alert,
@@ -10,21 +11,18 @@ var {
     TextInput,
     Navigator,
     TouchableHighlight,
-    } = React;
+    } = ReactNative;
 
 import {colors, styles} from "../Styles";
 var IconText = require('../Components/IconText');
-const FBSDK = require('react-native-fbsdk');
-const {
-    LoginManager,
-    LoginButton
-    } = FBSDK;
+const FacebookLogin = require('react-native-facebook-login');
+var { FBLogin, FBLoginManager } = FacebookLogin;
 import events from "../Constants/Events";
 var Link = require('../Components/Link');
 import Dispatcher from "../Dispatcher";
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import { loginCurrentUser }  from '../Actions/CurrentUserActions';
-import { loadFacebookUser }  from '../Actions/SocialActions';
+import { loadFacebookUser, reloadFacebookUser }  from '../Actions/SocialActions';
 
 
 
@@ -44,7 +42,7 @@ var LoginPage = React.createClass({
     componentWillMount: function () {
         CurrentUserStore.on(events.loginFailed, this.setLoginError);
         CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
-        loadFacebookUser();
+        reloadFacebookUser();
     },
 
     componentWillUnmount: function () {
@@ -101,23 +99,35 @@ var LoginPage = React.createClass({
     renderSocialLogin: function () {
         var fbToken;
         return (
-            <LoginButton
-                readPermissions={["email"]}
-                onLoginFinished={
-                    (error, result) => {
-                        if (error) {
-                            alert("Login has error: " + result.error);
-                        } else if (result.isCancelled) {
-                            alert("Login is cancelled.");
-                        } else {
-                            this.setState({ready: true})
-                            fbToken = result;
-                            loadFacebookUser();
-                        }
+            <FBLogin
+                permissions={["email"]}
+                loginBehavior={FBLoginManager.LoginBehaviors.Native}
+                onLogin={
+                    (data) => {
+                        this.setState({ready: true});
+                        loadFacebookUser(data);
                     }
                 }
-                onLogoutFinished={() => {
-                    fbToken = null;
+                onLogout={() => {
+                  console.log("Logged out.");
+                  this.setState({ user : null });
+                }}
+                onLoginFound={(data) => {
+                    (data) => {
+                        this.setState({ready: true});
+                        loadFacebookUser(data);
+                    }
+                }}
+                onLoginNotFound={() => {
+                  console.log("No user logged in.");
+                  this.setState({ user : null });
+                }}
+                onError={(data) =>{
+                  console.log("ERROR");
+                  console.log(data);
+                }}
+                onCancel={() => {
+                  console.log("User cancelled.");
                 }}/>
 
         )

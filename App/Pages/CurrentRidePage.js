@@ -43,33 +43,14 @@ var CurrentRidePage = React.createClass({
 
     },
 
-    startPolling: function() {
-        var self = this;
-        setTimeout(function() {
-            if (!self.isMounted()) {
-                return;
-            }
-            if (self.state.currentRide.state == 'accepted' ||
-                self.state.currentRide.state == 'driving') {
-                self.refreshRide();
-                self._timer = setInterval(self.refreshRide, 30000);
-            }
-        }, 30000);
-    },
-
-
-    componentDidMount: function (props) {
+    componentWillMount: function (props) {
+        CurrentRideStore.removeAllListeners();
         CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
         refreshCurrentRide(this.state.currentRide.id);
     },
 
     componentWillUnmount: function (props) {
         CurrentRideStore.removeListener(events.currentRideLoaded, this.rideLoaded);
-        this.setState({ready: false});
-        if (this._timer) {
-          clearInterval(this._timer);
-          this._timer = null;
-        }
     },
 
     cancelRide: function () {
@@ -244,7 +225,6 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
-        //this.startPolling();
         var ride = this.state.currentRide;
         var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
@@ -271,6 +251,14 @@ var CurrentRidePage = React.createClass({
                                   iconSize={24}
                                   color={colors.action}
                                   text={"CALL " + this.state.driver.name.toUpperCase()}
+                            />
+                            <Link style={{margin: 10}}
+                                  action={this.cancelRide}
+                                  icon={"clear"}
+                                  size={16}
+                                  iconSize={24}
+                                  color={colors.action_secondary}
+                                  text={"CANCEL RIDE"}
                             />
                         </View>
                         <IconText
@@ -411,6 +399,9 @@ var CurrentRidePage = React.createClass({
                 content = this.renderDropOff();
                 break;
             case 'requested':
+                content = this.renderConnecting();
+                break;
+            case 'new':
                 content = this.renderConnecting();
                 break;
             default:

@@ -4,19 +4,17 @@
  */
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
-    Image,
     Text,
     View,
     Navigator,
-    ToastAndroid,
     TouchableOpacity,
     DrawerLayoutAndroid,
+    PermissionsAndroid,
     BackAndroid,
-    TouchableHighlight,
-    DeviceEventEmitter
-    } = React;
+    } = ReactNative;
 
 var SplashPage = require('./Pages/SplashPage');
 var LoginPage = require('./Pages/LoginPage');
@@ -72,7 +70,10 @@ var TwendeApp = React.createClass({
 
         goToPage: function (pageId) {
             this.closeDrawer();
-            this.navigator.push({id: pageId});
+            this.navigator.replace({
+                id: pageId,
+                currentUser: this.state.currentUser
+            });
         },
 
         goBack: function () {
@@ -95,21 +96,23 @@ var TwendeApp = React.createClass({
                         }
                     },
                     onError: function(error) {
-                        console.log(error);
+                        //
                     },
-                    senderID: "1055251321691",
                     permissions: {
-                        alert: true,
+                        //alert: true,
                         badge: true,
                         sound: true
                     },
-                    popInitialNotification: true,
-                    requestPermissions: true,
+                    popInitialNotification: false,
+                    requestPermissions: true
                 });
             }
         },
 
         componentDidMount: function () {
+            PermissionsAndroid.requestPermission(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
             CurrentRideStore.on(events.currentRideLoaded, (currentRide) => {
                 this.setState({currentRide: currentRide});
                 if (this.state.currentUser.is_driver) {
@@ -145,8 +148,10 @@ var TwendeApp = React.createClass({
             BackAndroid.addEventListener('hardwareBackPress', this.goBack);
 
             CurrentUserStore.on(events.currentUserLoaded, (currentUser) => {
-                this.setState({currentUser: currentUser});
-                this.registerPushNotification();
+                if (currentUser) {
+                    this.setState({currentUser: currentUser});
+                    this.registerPushNotification();
+                }
             });
 
             CurrentUserStore.on(events.userLoggedOut, (error) => {
@@ -166,7 +171,8 @@ var TwendeApp = React.createClass({
                             {this.state.currentUser.first_name} {this.state.currentUser.last_name}
                         </Text>
                     </View>
-                    <View style={{backgroundColor: '#555555', padding: 8, flex: 1}}>
+
+                    <View style={{backgroundColor: '#555555', padding: 8}}>
                         <Link
                             style={{padding: 8}}
                             action={() => this.goToPage('CurrentLocationPage')}
@@ -331,7 +337,6 @@ var TwendeApp = React.createClass({
             } else if (this.state.currentUser.username) {
                 drawer = this.customerDrawerView;
             }
-
             return (
                 <DrawerLayoutAndroid
                     drawerWidth={200}

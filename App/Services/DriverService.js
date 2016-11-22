@@ -1,4 +1,4 @@
-var config = require('../../config');
+var config = require('../config');
 var TokenStore = require('../Stores/TokenStore');
 var DriverStore = require('../Stores/DriverStore');
 var ApiClient = require('../Services/ApiClient');

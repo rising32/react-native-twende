@@ -1,15 +1,14 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
     View,
     Text,
     Navigator,
     ListView,
     ToastAndroid,
-    ScrollView,
-    Platform,
-    } = React;
+    } = ReactNative;
 
 var DriverActions = require('../Actions/DriverActions');
 var GeoLocationStore = require('../Stores/GeoLocationStore');

@@ -2,7 +2,9 @@ var TokenStore = require('../Stores/TokenStore');
 
 var ApiClient = {
     _headers: function (token) {
-        var token = token ? token : TokenStore.get();
+        if (!token) {
+            token = TokenStore.get();
+        }
         return {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'

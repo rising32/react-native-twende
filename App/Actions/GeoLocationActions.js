@@ -1,7 +1,7 @@
 var Geolocation = require('Geolocation');
 import {dispatch} from '../Dispatcher';
 import actions from "../Constants/Actions";
-import config from "../../config"
+import config from "../config"
 var LocationService = require('../Services/LocationService');
 var React = require('react-native');
 var {
@@ -33,7 +33,7 @@ export function loadGeoLocation(enableHighAccuracy) {
             );
         },
         (error) => {
-            ToastAndroid.show(error, ToastAndroid.SHORT);
+            ToastAndroid.show('Could not find location', ToastAndroid.SHORT);
             // Give it another try
             loadGeoLocation(enableHighAccuracy)
         },

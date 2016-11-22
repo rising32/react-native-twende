@@ -1,13 +1,14 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
     ScrollView,
     View,
     Text,
     Navigator,
     StyleSheet
-    } = React;
+    } = ReactNative;
 
 import {colors, styles} from "../Styles";
 var IconText = require('../Components/IconText');

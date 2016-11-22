@@ -5,7 +5,6 @@ var ReactNative = require('react-native');
 var {
     View,
     Text,
-    TextInput,
     ToastAndroid,
     Navigator,
     TouchableHighlight
@@ -81,7 +80,7 @@ var CurrentLocationPage = React.createClass({
     },
 
     stopListening: function() {
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.rideLoaded);
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
     },
 
@@ -108,12 +107,12 @@ var CurrentLocationPage = React.createClass({
     },
 
     nextStep: function (currentRide) {
-        ToastAndroid.show('Current ride loaded', ToastAndroid.SHORT);
         var finalStates = ['finalized', 'cancelled', 'declined'];
         if (finalStates.indexOf(currentRide.state) > -1) {
             return;
         }
         if (currentRide.driver) {
+            this.stopListening();
             // There was already an active ride... got to that one
             this.props.navigator.push({
                 id: 'CurrentRidePage',
@@ -121,6 +120,7 @@ var CurrentLocationPage = React.createClass({
                 driver: currentRide.driver
             });
         } else if (this.state.ready) {
+            this.stopListening();
             // New ride. Go to driver list
             this.props.navigator.push({
                 id: 'DriverListPage',
@@ -146,9 +146,9 @@ var CurrentLocationPage = React.createClass({
                 renderScene={this.renderScene}
                 navigator={this.props.navigator}
                 navigationBar={
-            <Navigator.NavigationBar style={styles.nav_bar}
-                routeMapper={NavigationBarRouteMapper} />
-          }/>
+                <Navigator.NavigationBar style={styles.nav_bar}
+                    routeMapper={NavigationBarRouteMapper} />
+              }/>
         );
     },
 
@@ -164,14 +164,13 @@ var CurrentLocationPage = React.createClass({
         }
         return (
             <View style={styles.page}>
-                <View style={styles.map}>
+                <View style={styles.map_container}>
                     <MapView
                         region={this.state.region}
                         showsUserLocation={true}
                         onRegionChange={this.onRegionChange}
                         showUserLocation={true}
-                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
-                    >
+                        style={styles.map}>
                         <MapView.Marker
                             draggable
                             pinColor="purple"

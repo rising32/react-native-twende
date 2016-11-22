@@ -1,37 +1,34 @@
 {
-  "name": "TwendeApp",
-  "version": "0.0.35",
+  "name": "Twende",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
   "dependencies": {
-    "events": "^1.1.0",
-    "flux": "^2.1.1",
-    "flux-queue-dispatcher": "^0.1.3",
-    "object-assign": "^4.1.0",
-    "react": "^0.14.8",
-    "react-native": "^0.23.1",
-    "react-native-audioplayer": "^0.2.0",
-    "react-native-background-geolocation": "^1.0.1",
-    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
-    "react-native-fbsdk": "git+ssh://git@github.com/facebook/react-native-fbsdk.git#0.2.0",
-    "react-native-form": "^2.0.5",
-    "react-native-gmaps": "^1.0.9",
-    "react-native-htmlview": "^0.5.0",
-    "react-native-image-picker": "^0.18.17",
-    "react-native-maps": "^0.3.2",
-    "react-native-material-design": "^0.3.5",
-    "react-native-material-kit": "^0.3.1",
-    "react-native-material-ui": "^0.4.2",
-    "react-native-mauron85-background-geolocation": "0.0.1",
-    "react-native-progress": "^3.0.0",
-    "react-native-push-notification": "^1.0.6",
-    "react-native-refresher": "^0.1.1",
+    "events": "1.1.1",
+    "flux-queue-dispatcher": "0.1.3",
+    "react": "15.3.2",
+    "react-native": "^0.36.0",
+    "react-native-facebook-login": "^1.4.0",
+    "react-native-maps": "^0.11.0",
+    "react-native-material-design": "0.3.7",
+    "react-native-material-kit": "^0.3.3",
+    "react-native-progress": "3.1.0",
+    "react-native-push-notification": "2.2.0",
     "react-native-sound": "^0.8.3",
-    "react-native-vector-icons": "^2.0.1"
+    "react-native-vector-icons": "^3.0.0"
+  },
+  "jest": {
+    "preset": "jest-react-native"
   },
   "devDependencies": {
-    "react-native-simple-auth": "^0.3.0"
+    "babel-jest": "17.0.0",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "17.0.0",
+    "jest-react-native": "17.0.0",
+    "react-test-renderer": "15.3.2",
+    "whatwg-fetch": "1.0.0"
   }
 }

@@ -1,14 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="1.1"
-          package="com.twendeapp">
+          package="com.twendeapp"
+          android:versionCode="1"
+          android:versionName="1.0">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <permission
-            android:name="com.twendeapp.permission.C2D_MESSAGE"
-            android:protectionLevel="signature"/>
-    <uses-permission android:name="com.twendeapp.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.twendeapp.permission.C2D_MESSAGE"
+                     android:protectionLevel="signature"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -16,45 +17,42 @@
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
 
+    <uses-sdk
+            android:minSdkVersion="16"
+            android:targetSdkVersion="22"/>
 
     <application
+            android:name=".MainApplication"
             android:allowBackup="true"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
             android:theme="@style/AppTheme">
         <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyD3k9EH48TgsXtVeucgEdHP-wvu3ixV6Zs"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBYOoG_RD04lJGuYdBIGAr8mwogD0V3LoA"/>
+        <!--add FacebookActivity-->
+        <activity
+                android:name="com.facebook.FacebookActivity"
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="@string/app_name"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <!--add CustomTabActivity-->
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
+        <!--reference your fb_app_id-->
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id"/>
-
-
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
-        <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
-        <service
-            android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-
-        <service android:name="com.twendeapp.InstanceId" android:exported="false">
-          <intent-filter>
-                 <action android:name="com.google.android.gms.iid.InstanceID"/>
-          </intent-filter>
-        </service>
+                android:value="@string/fb_app_id"/>
 
         <activity
                 android:name=".MainActivity"

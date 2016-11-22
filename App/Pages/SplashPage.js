@@ -1,10 +1,11 @@
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var {
     View,
     Image,
-    } = React;
+    } = ReactNative;
 var TokenStore = require('../Stores/TokenStore');
 import {colors, styles} from "../Styles";
 
@@ -17,8 +18,7 @@ var SplashPage = React.createClass({
 
     getInitialState: function(){
         return {
-            currentUser: {},
-
+            currentUser: {}
         }
     },
 
