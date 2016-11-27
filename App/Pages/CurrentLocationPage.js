@@ -66,7 +66,7 @@ var CurrentLocationPage = React.createClass({
     },
 
     componentDidMount: function (props) {
-        CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadRideList();
         loadGeoLocation();
@@ -173,13 +173,13 @@ var CurrentLocationPage = React.createClass({
                         style={styles.map}>
                         <MapView.Marker
                             draggable
-                            pinColor="purple"
+                            pinColor="yellow"
                             image={require('../assets/map-customer.png')}
                             coordinate={this.state.origin}
                             onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
                         />
                     </MapView>
-                    <View style={[styles.map_info, {marginTop: -290}]}>
+                    <View style={styles.map_info}>
                         <Text />
                         <View style={styles.map_info_container}>
                             <Text style={styles.map_text}>

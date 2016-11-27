@@ -244,7 +244,7 @@ var TwendeApp = React.createClass({
                             {this.state.currentUser.first_name} {this.state.currentUser.last_name}
                         </Text>
                     </View>
-                    <View style={{backgroundColor: '#555555', padding: 8, flex: 1}}>
+                    <View style={{backgroundColor: '#555555', padding: 8}}>
                         <Link
                             style={{padding: 8}}
                             action={() => this.goToPage('DriverHomePage')}
@@ -300,7 +300,7 @@ var TwendeApp = React.createClass({
         anonymousDrawerView: function () {
             return (
                 <View>
-                    <View style={{backgroundColor: '#555555', padding: 8, flex: 1}}>
+                    <View style={{backgroundColor: '#555555', padding: 8}}>
                         <IconText
                             style={{padding: 8}}
                             size={14}
@@ -324,7 +324,6 @@ var TwendeApp = React.createClass({
                             icon={'power-settings-new'}
                             text={'Log in'}
                         />
-
                     </View>
                 </View>
             );
@@ -357,9 +356,7 @@ var TwendeApp = React.createClass({
                     />
                 </DrawerLayoutAndroid>
             );
-        }
-        ,
-
+        },
 
         renderScene: function (route, navigator) {
             var routeId = route.id;

@@ -154,14 +154,14 @@ var ProfilePage = React.createClass({
                                 placeholder={"First name"}
                                 autoCorrect={false}
                                 onChangeText={(text) => this.setState({first_name: text})}
-                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                                style={{borderColor: 'gray', flex: 1, color: colors.action_secondary}}
                                 value={this.state.first_name}
                             />
                             <TextInput
                                 placeholder={"First name"}
                                 autoCorrect={false}
                                 onChangeText={(text) => this.setState({last_name: text})}
-                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                                style={{borderColor: 'gray', flex: 1, color: colors.action_secondary}}
                                 value={this.state.last_name}
                             />
                         </Iconed>
@@ -170,7 +170,7 @@ var ProfilePage = React.createClass({
                                 placeholder={"Phone number"}
                                 autoCorrect={false}
                                 onChangeText={(text) => this.setState({phone: text})}
-                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                                style={{borderColor: 'gray', flex: 1, color: colors.action_secondary}}
                                 value={this.state.phone}
                             />
                         </Iconed>
@@ -179,7 +179,7 @@ var ProfilePage = React.createClass({
                                 placeholder={"E-mail address"}
                                 autoCorrect={false}
                                 onChangeText={(text) => this.setState({email: text})}
-                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                                style={{borderColor: 'gray', flex: 1, color: colors.action_secondary}}
                                 value={this.state.email}
                             />
                         </Iconed>

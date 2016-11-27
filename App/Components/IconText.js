@@ -24,6 +24,7 @@ var IconText = React.createClass({
                          size={iconSize}
                          style={{marginRight: iconSize/2}} />
         }
+
         return (
             <View
                 style={[this.props.style, {flexDirection: 'row', alignItems: 'center'}]}
