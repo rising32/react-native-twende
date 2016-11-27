@@ -82,10 +82,11 @@ var TwendeApp = React.createClass({
 
 
         registerPushNotification: function () {
-            if (!PushNotification.senderID) {
+            if (!PushNotification.senderID || PushNotification.senderID == undefined) {
                 PushNotification.configure({
                     onRegister: function (token) {
                         setGcmToken(token.token);
+                        //alert('yeah')
                     },
                     onNotification: function (notification) {
                         if (notification.title) {
@@ -96,10 +97,13 @@ var TwendeApp = React.createClass({
                         }
                     },
                     onError: function(error) {
+                        alert(error);
                         //
                     },
+                    senderID: "924493480566",
+                    //senderID: "1055251321691",
                     permissions: {
-                        //alert: true,
+                        alert: true,
                         badge: true,
                         sound: true
                     },
