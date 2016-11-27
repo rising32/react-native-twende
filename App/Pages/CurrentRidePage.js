@@ -226,7 +226,8 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'En route'}
         ];
         var ride = this.state.currentRide;
-        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        var away = "Rider is on his way..."
+        //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
             <View style={{flex: 1}}>
                 <StepBar steps={steps}/>
