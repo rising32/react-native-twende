@@ -256,7 +256,8 @@ var DriverHomePage = React.createClass({
     renderRequest: function() {
         var ride = this.state.currentRide;
         var top = this.renderSheetTop(this.acceptRide, 'check');
-        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        var away = 'Customer has requested';
         return  (
             <View>
                 <Map
@@ -295,7 +296,7 @@ var DriverHomePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={[styles.sheet, {flex: 1}]}>
+                <View style={styles.sheet}>
                     {top}
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
@@ -334,19 +335,12 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTop(this.dropoffRide, 'beenhere');
         return  (
             <View>
-                <View style={styles.map}>
-                    <MapView
-                        region={this.state.region}
-                        showsUserLocation={true}
-                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
-                    >
-                        <MapView.Marker
-                            image={require('../assets/map-motor2.png')}
-                            coordinate={this.state.currentRide.driver.position}
-                        />
-                    </MapView>
-                </View>
-                <View style={[styles.sheet, {flex: 1}]}>
+                <Map
+                    title={"request"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
+                <View style={styles.sheet}>
                     {top}
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
@@ -369,7 +363,7 @@ var DriverHomePage = React.createClass({
             <View>
                 <View style={{height: 100, backgroundColor: '#888888'}}>
                 </View>
-                <View style={[styles.sheet, {flex: 1}]}>
+                <View style={styles.sheet}>
                     {top}
                     <View style={styles.sheet_content}>
                         <View style={styles.card_mid}>
@@ -391,7 +385,7 @@ var DriverHomePage = React.createClass({
                                 placeholder={"0"}
                                 autoCorrect={false}
                                 onChangeText={(price) => this.setState({price: price})}
-                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                                style={styles.card_input}
                             />
                             <Link
                                 action={() => this.finishRide()}
