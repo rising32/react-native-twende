@@ -123,8 +123,7 @@ export var styles = StyleSheet.create({
         marginTop: 0,
         backgroundColor: colors.box,
         alignItems: 'center',
-        alignSelf: 'stretch',
-        flex: 1
+        alignSelf: 'stretch'
     },
 
     card_mid_spacer: {
@@ -146,6 +145,11 @@ export var styles = StyleSheet.create({
         flexDirection: 'row'
     },
 
+    card_input: {
+        alignSelf: 'stretch',
+        color: colors.action_secondary
+    },
+
     // Sheet (persistent bottom sheet)
     sheet: {
         paddingBottom: 20,
@@ -163,8 +167,7 @@ export var styles = StyleSheet.create({
         paddingTop: 10,
         paddingLeft: 40,
         paddingRight: 40,
-        backgroundColor: colors.box_dark,
-        flex: 1
+        backgroundColor: colors.box_dark
     },
 
     sheet_icon: {

@@ -5,7 +5,6 @@ var ReactNative = require('react-native');
 var {
     StyleSheet,
     View,
-    Text,
     TouchableOpacity,
     } = ReactNative;
 

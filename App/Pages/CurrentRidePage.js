@@ -16,6 +16,7 @@ import { Icon } from 'react-native-material-design';
 var IconText = require('../Components/IconText');
 var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
+var Map = require('../Components/Map');
 var Link = require('../Components/Link');
 var StarRating = require('../Components/StarRating');
 var NavIcon = require('../Components/NavIcon');
@@ -154,9 +155,14 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
+        var ride = this.state.currentRide;
+
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps}/>
+                <Map
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Avatar image={this.props.currentUser.avatar}/>
@@ -197,7 +203,6 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps}/>
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid}>
@@ -230,7 +235,11 @@ var CurrentRidePage = React.createClass({
         //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps}/>
+                <Map
+                    title={"rider on his way"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid_spacer}/>
@@ -281,9 +290,14 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: true, title: 'Rider arrived'},
             {in_progress: true, done: false, title: 'En route'}
         ];
+        var ride = this.state.currentRide;
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps}/>
+                <Map
+                    style={{flex: 1}}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid_spacer}/>
@@ -311,9 +325,16 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: true, title: 'Rider arrived'},
             {in_progress: true, done: true, title: 'Finished'}
         ];
+        var ride = this.state.currentRide;
+
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps} />
+                <Map
+                    style={{height: 200}}
+                    title={"Arrived"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid_spacer}/>
@@ -340,7 +361,7 @@ var CurrentRidePage = React.createClass({
                                 placeholder={"0"}
                                 autoCorrect={false}
                                 onChangeText={(price) => this.setState({price: price})}
-                                style={{borderColor: 'gray', borderWidth: 1, flex: 1, color: colors.action_secondary}}
+                                style={styles.card_input}
                             />
                             <Link
                                 action={() => this.finishRide()}
@@ -365,7 +386,6 @@ var CurrentRidePage = React.createClass({
         ];
         return (
             <View style={{flex: 1}}>
-                <StepBar steps={steps}/>
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid}>
@@ -412,15 +432,6 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={styles.page}>
                 {content}
-                <View style={{alignItems: 'center'}}>
-                    <Link
-                        action={this.refreshRide}
-                        color={colors.action_secondary}
-                        text={"refresh"}
-                        icon={"update"}
-                        style={{margin: 10}}
-                    />
-                </View>
             </View>
         );
     }

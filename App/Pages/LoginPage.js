@@ -100,6 +100,7 @@ var LoginPage = React.createClass({
         var fbToken;
         return (
             <FBLogin
+                style={{flex: 0}}
                 permissions={["email"]}
                 loginBehavior={FBLoginManager.LoginBehaviors.Native}
                 onLogin={
@@ -129,7 +130,6 @@ var LoginPage = React.createClass({
                 onCancel={() => {
                   console.log("User cancelled.");
                 }}/>
-
         )
     },
 
@@ -180,7 +180,6 @@ var LoginPage = React.createClass({
         }
 
         var content = this.renderSocialLogin();
-
 
         return (
             <View style={[styles.page, styles.page_full, styles.card]}>

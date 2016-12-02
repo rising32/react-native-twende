@@ -11,9 +11,10 @@ var {
     TouchableOpacity,
     } = ReactNative;
 
+import { Switch } from 'react-native-switch';
 import CustomerStore from '../Stores/CustomerStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
-var MapView = require('react-native-maps');
+var Map = require('../Components/Map');
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
 import { Icon } from 'react-native-material-design';
@@ -56,7 +57,7 @@ var DriverHomePage = React.createClass({
 
     toggleAvailability: function(available) {
         var currentUser = this.state.currentUser;
-        currentUser.state = available.checked ? 'available' : 'unavailable';
+        currentUser.state = available ? 'available' : 'unavailable';
         this.setState({currentUser: currentUser});
         updateCurrentUser(currentUser);
     },
@@ -198,6 +199,15 @@ var DriverHomePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
+                    <Switch
+                        color={colors.action}
+                        onValueChange={(val) => this.toggleAvailability(val)}
+                        checked={this.state.currentUser.is_available}
+                        activeText={'On'}
+                        inActiveText={'Off'}
+                        backgroundActive={colors.action}
+                        backgroundInactive={'gray'}
+                    />
                     <Text>
                         Available
                     </Text>
@@ -219,6 +229,15 @@ var DriverHomePage = React.createClass({
                     <Text>
                         Not available
                     </Text>
+                    <Switch
+                        color={colors.action}
+                        onValueChange={(val) => this.toggleAvailability(val)}
+                        checked={this.state.currentUser.is_available}
+                        activeText={'On'}
+                        inActiveText={'Off'}
+                        backgroundActive={colors.action}
+                        backgroundInactive={'gray'}
+                    />
                     <Text>
                         Available
                     </Text>
@@ -240,23 +259,12 @@ var DriverHomePage = React.createClass({
         var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return  (
             <View>
-                <View style={styles.map}>
-                    <MapView
-                        region={this.state.region}
-                        showsUserLocation={true}
-                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
-                    >
-                        <MapView.Marker
-                            image={require('../assets/map-customer.png')}
-                            coordinate={this.state.currentRide.origin}
-                        />
-                        <MapView.Marker
-                            image={require('../assets/map-motor1.png')}
-                            coordinate={this.state.currentRide.driver.position}
-                        />
-                    </MapView>
-                </View>
-                <View style={[styles.sheet, {flex: 1}]}>
+                <Map
+                    title={"request"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
+                <View style={styles.sheet}>
                     {top}
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
@@ -282,22 +290,11 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTop(this.startRide, 'group');
         return  (
             <View>
-                <View style={styles.map}>
-                    <MapView
-                        region={this.state.region}
-                        showsUserLocation={true}
-                        style={{height:300, borderWidth:4, borderColor:'#FFFF00'}}
-                    >
-                        <MapView.Marker
-                            image={require('../assets/map-customer.png')}
-                            coordinate={this.state.currentRide.origin}
-                        />
-                        <MapView.Marker
-                            image={require('../assets/map-motor1.png')}
-                            coordinate={this.state.currentRide.driver.position}
-                        />
-                    </MapView>
-                </View>
+                <Map
+                    title={"request"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
                 <View style={[styles.sheet, {flex: 1}]}>
                     {top}
                     <View style={styles.sheet_content}>
