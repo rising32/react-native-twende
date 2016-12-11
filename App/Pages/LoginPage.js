@@ -45,9 +45,13 @@ var LoginPage = React.createClass({
         reloadFacebookUser();
     },
 
-    componentWillUnmount: function () {
+    removeListeners: function () {
         CurrentUserStore.removeListener(events.loginFailed, this.setLoginError);
         CurrentUserStore.removeListener(events.currentUserLoaded, this.goToHome);
+    },
+
+    componentWillUnmount: function () {
+        this.removeListeners();
     },
 
     setLoginError: function () {
@@ -62,12 +66,15 @@ var LoginPage = React.createClass({
         if (!currentUser.phone) {
             Alert.alert('Update your profile', 'Please fill out your phone number.', [
                 {text: 'OK', onPress: () => {
+                    this.removeListeners();
                     this.props.navigator.replace({id: 'ProfilePage', currentUser: currentUser});
                 }}
             ]);
         } else if (currentUser.is_driver) {
+            this.removeListeners();
             this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
         } else {
+            this.removeListeners();
             this.props.navigator.replace({id: 'CurrentLocationPage', currentUser: currentUser});
         }
     },

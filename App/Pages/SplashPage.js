@@ -29,6 +29,16 @@ var SplashPage = React.createClass({
         reloadCurrentUser();
     },
 
+    removeListeners: function() {
+        CurrentUserStore.removeListener(events.currentUserLoaded, this.goToHome);
+        CurrentUserStore.removeListener(events.noCurrentUser, this.goToLogin);
+
+    },
+
+    componentWillUnmount: function() {
+      this.removeListeners();
+    },
+
     goToLogin: function () {
         this.setState({currentUser: {}});
         this.props.goToPage('LoginPage');
@@ -37,16 +47,14 @@ var SplashPage = React.createClass({
     goToHome: function (currentUser) {
         this.setState({currentUser: currentUser});
         if (currentUser.is_driver) {
-            this.props.navigator.replace({id: 'DriverHomePage', currentUser: currentUser});
+            this.removeListeners();
+            this.props.navigator.push({id: 'DriverHomePage', currentUser: currentUser});
         } else {
-            this.props.navigator.replace({id: 'CurrentLocationPage', currentUser: currentUser});
+            this.removeListeners();
+            this.props.navigator.push({id: 'CurrentLocationPage', currentUser: currentUser});
         }
     },
 
-    componentWillUnmount: function() {
-        CurrentUserStore.removeListener(events.currentUserLoaded, this.goToHome);
-        CurrentUserStore.removeListener(events.noCurrentUser, this.goToLogin);
-    },
 
     render: function() {
         return (

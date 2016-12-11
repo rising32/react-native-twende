@@ -160,6 +160,7 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={{flex: 1}}>
                 <Map
+                    title= {"Connecting..."}
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />

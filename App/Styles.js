@@ -8,6 +8,7 @@ var {
 
 export var colors = {
     primary: '#FFEF80',
+    primary_dark: '#DDCF70',
     secondary: '#2BA59A',
     action: '#5B6ABF',
     action_secondary: '#555555',
@@ -33,6 +34,14 @@ export var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#DDCC60'
+    },
+
+    toggle: {
+        marginTop: 20,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+
     },
 
     // Splash

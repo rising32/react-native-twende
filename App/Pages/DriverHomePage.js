@@ -7,13 +7,14 @@ var {
     View,
     Text,
     TextInput,
+    Switch,
     Navigator,
     TouchableOpacity,
     } = ReactNative;
 
-import { Switch } from 'react-native-switch';
 import CustomerStore from '../Stores/CustomerStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
+import CurrentUserStore from '../Stores/CurrentUserStore';
 var Map = require('../Components/Map');
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
@@ -34,7 +35,12 @@ import { startWatchingGeoLocation,
 
 var DriverHomePage = React.createClass({
 
-    getInitialState: function(props) {
+  state: {
+    trueSwitchIsOn: true,
+    falseSwitchIsOn: false,
+  },
+
+  getInitialState: function(props) {
         return {
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
@@ -51,14 +57,34 @@ var DriverHomePage = React.createClass({
         }
     },
 
+    componentWillMount: function() {
+        startWatchingGeoLocation();
+        CustomerStore.on(events.customerListLoaded, this.setItems);
+        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
+        //CurrentUserStore.on(events.currentUserLoaded, this.userLoaded);
+        this.refreshItems();
+    },
+
+    componentWillUnmount: function() {
+        stopWatchingGeoLocation();
+        CustomerStore.removeListener(events.customerListLoaded, this.setItems);
+        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
+        //CurrentUserStore.removeListener(events.currentUserLoaded, this.userLoaded);
+    },
+
     refreshItems: function(){
         loadCustomerList();
+    },
+
+    userLoaded: function(currentUser){
+        alert(JSON.stringify(currentUser));
+        this.setState('currentUser', currentUser);
     },
 
     toggleAvailability: function(available) {
         var currentUser = this.state.currentUser;
         currentUser.state = available ? 'available' : 'unavailable';
-        this.setState({currentUser: currentUser});
+        //this.setState({currentUser: currentUser});
         updateCurrentUser(currentUser);
     },
 
@@ -99,7 +125,7 @@ var DriverHomePage = React.createClass({
         ride.state = 'finalized';
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
-        this.props.navigator.push({id: 'DriverHomePage'});
+        //this.props.navigator.push({id: 'DriverHomePage'});
     },
 
     declineRide: function(ride) {
@@ -134,19 +160,6 @@ var DriverHomePage = React.createClass({
             this.setState({currentRide: {}});
         }
         this.setState({currentRide: currentRide});
-    },
-
-    componentWillMount: function() {
-        startWatchingGeoLocation();
-        CustomerStore.on(events.customerListLoaded, this.setItems);
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        this.refreshItems();
-    },
-
-    componentWillUnmount: function() {
-        //stopWatchingGeoLocation();
-        CustomerStore.removeListener(events.customerListLoaded, this.setItems);
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep)
     },
 
     render: function() {
@@ -188,70 +201,49 @@ var DriverHomePage = React.createClass({
         )
     },
 
-    renderEmpty: function() {
-        var is_available = false;
-        if (this.state.currentUser.state == 'available') {
-            is_available = true;
+    renderHome: function() {
+        var is_available = this.state.currentUser.state == 'available';
+        var statusText = "You're unavailable and won't get any request.";
+        var statusIcon = "not-interested";
+        if (is_available) {
+            statusText = "Waiting for the next customer.";
+            statusIcon = "alarm";
         }
         return  (
-            <View style={{alignItems: 'center'}}>
-                <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <Text>
-                        Not available
-                    </Text>
+            <View style={{flex: 1, marginTop: 20}}>
+                <View style={styles.toggle}>
+                    <Link
+                        action={() => this.toggleAvailability(false)}
+                        style={styles.button_simple}
+                        text={"Not available"}
+                        color={colors.action}
+                        />
                     <Switch
                         color={colors.action}
+                        onTintColor={colors.action}
                         onValueChange={(val) => this.toggleAvailability(val)}
-                        checked={this.state.currentUser.is_available}
-                        activeText={'On'}
-                        inActiveText={'Off'}
-                        backgroundActive={colors.action}
-                        backgroundInactive={'gray'}
+                        value={is_available}
                     />
-                    <Text>
-                        Available
-                    </Text>
+                    <Link
+                        action={() => this.toggleAvailability(true)}
+                        style={styles.button_simple}
+                        text={"Available"}
+                        color={colors.action}
+                        />
                 </View>
-                <IconText
-                    icon={"schedule"}
-                    text={"Waiting for a ride"}
-                    color={colors.action_secondary}
-                    style={{margin: 10}}
-                />
+                <View style={{alignItems: 'center'}}>
+                    <IconText
+                        icon={statusIcon}
+                        text={statusText}
+                        color={colors.action_secondary}
+                        style={{margin: 10}}
+                    />
+                </View>
             </View>
         );
 
     },
-    renderUnavailable: function() {
-        return  (
-            <View style={{alignItems: 'center'}}>
-                <View style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <Text>
-                        Not available
-                    </Text>
-                    <Switch
-                        color={colors.action}
-                        onValueChange={(val) => this.toggleAvailability(val)}
-                        checked={this.state.currentUser.is_available}
-                        activeText={'On'}
-                        inActiveText={'Off'}
-                        backgroundActive={colors.action}
-                        backgroundInactive={'gray'}
-                    />
-                    <Text>
-                        Available
-                    </Text>
-                </View>
-                <IconText
-                    icon={"not-interested"}
-                    text={"You're unavailable and won't get any request."}
-                    color={colors.action_secondary}
-                    style={{margin: 10}}
-                />
-            </View>
-        );
 
-    },
 
     renderRequest: function() {
         var ride = this.state.currentRide;
@@ -403,7 +395,7 @@ var DriverHomePage = React.createClass({
     },
 
     renderScene: function(route, navigator) {
-        var content = this.renderEmpty();
+        var content = this.renderHome();
         if (this.state.currentUser.state == 'available') {
             if (this.state.currentRide) {
                 switch (this.state.currentRide.state) {
@@ -421,8 +413,6 @@ var DriverHomePage = React.createClass({
                         break;
                 }
             }
-        } else {
-            content = this.renderUnavailable();
         }
 
         return (

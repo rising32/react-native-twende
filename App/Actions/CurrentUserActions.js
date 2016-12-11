@@ -64,7 +64,7 @@ export function updateCurrentUser(currentUser) {
 
         },
         (error) => {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
             dispatch({
                 type: actions.errorUpdatingCurrentUser
             })

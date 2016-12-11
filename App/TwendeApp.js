@@ -14,6 +14,7 @@ var {
     DrawerLayoutAndroid,
     PermissionsAndroid,
     BackAndroid,
+    StatusBar,
     } = ReactNative;
 
 var SplashPage = require('./Pages/SplashPage');
@@ -97,8 +98,7 @@ var TwendeApp = React.createClass({
                         }
                     },
                     onError: function(error) {
-                        alert(error);
-                        //
+                        //alert(error);
                     },
                     senderID: "924493480566",
                     //senderID: "1055251321691",
@@ -358,6 +358,10 @@ var TwendeApp = React.createClass({
                       return Navigator.SceneConfigs.FadeAndroid;
                     }}
                     />
+                <StatusBar
+                     backgroundColor={colors.primary_dark}
+                     barStyle="dark-content"
+                   />
                 </DrawerLayoutAndroid>
             );
         },

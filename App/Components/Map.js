@@ -15,14 +15,12 @@ import { Icon } from 'react-native-material-design';
 var Map = React.createClass({
 
     getInitialState: function () {
+        var lat = this.props.customer.latitude || this.props.driver.latitude || -1.23825
+        var long = this.props.customer.longitude || this.props.driver.longitude || 35.89125;
         return {
-            origin: {
-                latitude: -1.23825,
-                longitude: 35.8724
-            },
             region: {
-                latitude: -1.23825,
-                longitude: 35.8724,
+                latitude: lat,
+                longitude: long,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }
