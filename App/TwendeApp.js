@@ -15,6 +15,7 @@ var {
     PermissionsAndroid,
     BackAndroid,
     StatusBar,
+    ToastAndroid
     } = ReactNative;
 
 var SplashPage = require('./Pages/SplashPage');
@@ -87,7 +88,6 @@ var TwendeApp = React.createClass({
                 PushNotification.configure({
                     onRegister: function (token) {
                         setGcmToken(token.token);
-                        //alert('yeah')
                     },
                     onNotification: function (notification) {
                         if (notification.title) {
@@ -98,10 +98,9 @@ var TwendeApp = React.createClass({
                         }
                     },
                     onError: function(error) {
-                        //alert(error);
+                        alert(error);
                     },
                     senderID: "924493480566",
-                    //senderID: "1055251321691",
                     permissions: {
                         alert: true,
                         badge: true,

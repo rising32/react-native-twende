@@ -10,6 +10,7 @@ var {
     Switch,
     Navigator,
     TouchableOpacity,
+    ToastAndroid
     } = ReactNative;
 
 import CustomerStore from '../Stores/CustomerStore';
@@ -73,6 +74,7 @@ var DriverHomePage = React.createClass({
     },
 
     refreshItems: function(){
+        ToastAndroid.show('Checking for requests.', ToastAndroid.SHORT);
         loadCustomerList();
     },
 
@@ -159,6 +161,7 @@ var DriverHomePage = React.createClass({
         if (currentRide.state in ['declined', 'finalized']) {
             this.setState({currentRide: {}});
         }
+        ToastAndroid.show('Found a ride.', ToastAndroid.SHORT);
         this.setState({currentRide: currentRide});
     },
 
@@ -396,7 +399,7 @@ var DriverHomePage = React.createClass({
 
     renderScene: function(route, navigator) {
         var content = this.renderHome();
-        if (this.state.currentUser.state == 'available') {
+        if (this.state.currentUser.state != 'unavailable') {
             if (this.state.currentRide) {
                 switch (this.state.currentRide.state) {
                     case 'requested' :
