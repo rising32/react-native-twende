@@ -10,7 +10,7 @@ import {dispatch} from '../Dispatcher';
 
 
 export function logoutFacebookUser() {
-    LoginManager.logOut();
+    FBLoginManager.logout(() => {});
 }
 
 export function reloadFacebookUser() {

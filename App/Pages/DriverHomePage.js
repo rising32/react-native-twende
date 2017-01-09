@@ -161,7 +161,6 @@ var DriverHomePage = React.createClass({
         if (currentRide.state in ['declined', 'finalized']) {
             this.setState({currentRide: {}});
         }
-        ToastAndroid.show('Found a ride.', ToastAndroid.SHORT);
         this.setState({currentRide: currentRide});
     },
 
@@ -222,7 +221,7 @@ var DriverHomePage = React.createClass({
                         color={colors.action}
                         />
                     <Switch
-                        color={colors.action}
+                        style={{borderColor: colors.action}}
                         onTintColor={colors.action}
                         onValueChange={(val) => this.toggleAvailability(val)}
                         value={is_available}
