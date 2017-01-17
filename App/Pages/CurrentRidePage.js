@@ -139,7 +139,7 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'En route'}
         ];
         var ride = this.props.currentRide;
-        var user = this.props.currentRide;
+        var user = this.props.currentUser;
 
         return (
             <View style={{flex: 1}}>
@@ -216,7 +216,7 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'En route'}
         ];
         var ride = this.props.currentRide;
-        var user = this.props.currentUser
+        var user = this.props.currentUser;
         var away = "Rider is on his way..."
         //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
