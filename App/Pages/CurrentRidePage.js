@@ -36,7 +36,6 @@ var CurrentRidePage = React.createClass({
         return {
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
-            driver: this.props.driver,
             isLoading: false,
             price: 0,
             rating: 0
@@ -44,42 +43,26 @@ var CurrentRidePage = React.createClass({
 
     },
 
-    componentWillMount: function (props) {
-        CurrentRideStore.removeAllListeners();
-        CurrentRideStore.on(events.currentRideLoaded, this.rideLoaded);
-        refreshCurrentRide(this.state.currentRide.id);
-    },
-
-    componentWillUnmount: function (props) {
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.rideLoaded);
-    },
-
     cancelRide: function () {
         ToastAndroid.show('Ride canceled.', ToastAndroid.LONG);
-        var currentRide = this.state.currentRide;
+        var currentRide = this.props.currentRide;
         currentRide.state = 'canceled';
         updateCurrentRide(currentRide);
     },
 
-    createNewRide: function() {
-        var endedRide = this.state.currentRide;
-        if (endedRide) {
-            this.props.navigator.push({id: 'CurrentLocationPage'});
-        } else {
-            var ride = {
-                origin:      endedRide.origin,
-                origin_text: endedRide.origin_text
-            };
-            createCurrentRide(ride);
-        }
-    },
-
     findNewDriver: function() {
-        this.createNewRide();
+        // This ride is rejected so create a new one.
+        var rejectedRide = this.props.currentRide;
+        var ride = {
+            origin:      rejectedRide.origin,
+            origin_text: rejectedRide.origin_text,
+            status: 'new'
+        };
+        createCurrentRide(ride);
     },
 
     refreshRide: function () {
-        refreshCurrentRide(this.state.currentRide.id);
+        refreshCurrentRide(this.props.currentRide.id);
         ToastAndroid.show('Refreshing...', ToastAndroid.SHORT)
     },
 
@@ -104,7 +87,7 @@ var CurrentRidePage = React.createClass({
     },
 
     fuzzyDistance: function () {
-        let dist = this.state.driver.distance;
+        let dist = this.props.currentRide.driver.distance;
         if (dist > 1000) {
             return Math.round(dist / 100) / 10 + 'km';
         }
@@ -123,7 +106,7 @@ var CurrentRidePage = React.createClass({
                 {text: 'OK', onPress: () => {}}
             ]
         );
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;
         ride.state = 'finalized';
@@ -155,7 +138,8 @@ var CurrentRidePage = React.createClass({
             {in_progress: false, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
+        var user = this.props.currentRide;
 
         return (
             <View style={{flex: 1}}>
@@ -166,21 +150,21 @@ var CurrentRidePage = React.createClass({
                 />
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Avatar image={this.props.currentUser.avatar}/>
+                        <Avatar image={user.avatar}/>
                         <Text style={{width: 90, textAlign: 'center', marginLeft: 20, marginRight: 20}}>
-                            We're connecting you with {this.state.driver.name}
+                            We're connecting you with {rider.driver.name}
                         </Text>
-                        <Avatar image={this.state.driver.avatar}/>
+                        <Avatar image={ride.driver.avatar} />
                     </View>
 
                     <View style={{padding: 10, paddingTop: 30}}>
                         <Link style={{margin: 10}}
-                              url={"tel: " + this.state.driver.phone}
+                              url={"tel: " + ride.driver.phone}
                               icon={"phone"}
                               size={16}
                               iconSize={24}
                               color={colors.action}
-                              text={"CALL " + this.state.driver.name.toUpperCase()}
+                              text={"CALL " + ride.driver.name.toUpperCase()}
                         />
                         <Link style={{margin: 10}}
                               action={this.cancelRide}
@@ -231,7 +215,8 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: false, title: 'Rider on his way'},
             {in_progress: false, done: false, title: 'En route'}
         ];
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
+        var user = this.props.currentUser
         var away = "Rider is on his way..."
         //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
@@ -246,22 +231,22 @@ var CurrentRidePage = React.createClass({
                         <View style={styles.card_mid_spacer}/>
                         <View style={styles.card_mid_avatar}>
                             <Avatar
-                                image={this.state.driver.avatar}/>
+                                image={ride.driver.avatar}/>
                         </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
-                                Hi {this.state.currentUser.first_name},
+                                Hi {user.first_name},
                             </Text>
                             <Text>
                                 I accepted your request.
                             </Text>
                             <Link style={{margin: 10}}
-                                  url={"tel: " + this.state.driver.phone}
+                                  url={"tel: " + ride.driver.phone}
                                   icon={"phone"}
                                   size={16}
                                   iconSize={24}
                                   color={colors.action}
-                                  text={"CALL " + this.state.driver.name.toUpperCase()}
+                                  text={"CALL " + ride.driver.name.toUpperCase()}
                             />
                             <Link style={{margin: 10}}
                                   action={this.cancelRide}
@@ -291,7 +276,8 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: true, title: 'Rider arrived'},
             {in_progress: true, done: false, title: 'En route'}
         ];
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
+        var user = this.props.user
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -304,7 +290,7 @@ var CurrentRidePage = React.createClass({
                         <View style={styles.card_mid_spacer}/>
                         <View style={styles.card_mid_avatar}>
                             <Avatar
-                                image={this.state.driver.avatar}/>
+                                image={ride.driver.avatar}/>
                         </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
@@ -326,29 +312,24 @@ var CurrentRidePage = React.createClass({
             {in_progress: true, done: true, title: 'Rider arrived'},
             {in_progress: true, done: true, title: 'Finished'}
         ];
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
+        var user = this.props.currentUser
 
         return (
             <View style={{flex: 1}}>
-                <Map
-                    style={{height: 200}}
-                    title={"Arrived"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid_spacer}/>
                         <View style={styles.card_mid_avatar}>
                             <Avatar
-                                image={this.state.driver.avatar}/>
+                                image={ride.driver.avatar}/>
                         </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
                                 Rate this ride.
                             </Text>
                             <Text>
-                                How was your ride with {this.props.driver.name}?
+                                How was your ride with {ride.driver.name}?
                             </Text>
                             <StarRating
                                 onChange={this.rateRide}
@@ -410,7 +391,7 @@ var CurrentRidePage = React.createClass({
 
     renderScene: function (route, navigator) {
         var content;
-        switch (this.state.currentRide.state) {
+        switch (this.props.currentRide.state) {
             case 'accepted':
                 content = this.renderAccepted();
                 break;

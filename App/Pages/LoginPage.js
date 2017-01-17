@@ -120,10 +120,8 @@ var LoginPage = React.createClass({
                   this.setState({ user : null });
                 }}
                 onLoginFound={(data) => {
-                    (data) => {
-                        this.setState({ready: true});
-                        loadFacebookUser(data);
-                    }
+                    this.setState({ready: true});
+                    loadFacebookUser(data);
                 }}
                 onLoginNotFound={() => {
                   console.log("No user logged in.");

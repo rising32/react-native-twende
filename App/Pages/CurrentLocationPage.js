@@ -30,7 +30,6 @@ var CurrentLocationPage = React.createClass({
 
     getInitialState: function () {
         return {
-            currentUser: this.props.currentUser,
             origin_text: '- finding your location -',
             origin: {
                 latitude: -1.23825,
@@ -65,8 +64,7 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    componentDidMount: function (props) {
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
+    componentWillMount: function (props) {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
         loadRideList();
 
@@ -80,13 +78,8 @@ var CurrentLocationPage = React.createClass({
         loadGeoLocation(true);
     },
 
-    stopListening: function() {
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
+    componentWillUnmount: function() {
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
-    },
-
-    componentWillUnmount: function (props) {
-        this.stopListening();
     },
 
     dragOrigin: function (loc) {
@@ -101,33 +94,6 @@ var CurrentLocationPage = React.createClass({
             },
             origin_text: myLoc
         });
-    },
-
-    onRegionChange: function (region) {
-        this.setState({region: region});
-    },
-
-    nextStep: function (currentRide) {
-        var finalStates = ['finalized', 'cancelled', 'declined'];
-        if (finalStates.indexOf(currentRide.state) > -1) {
-            return;
-        }
-        if (currentRide.driver) {
-            this.stopListening();
-            // There was already an active ride... got to that one
-            this.props.navigator.push({
-                id: 'CurrentRidePage',
-                currentRide: currentRide,
-                driver: currentRide.driver
-            });
-        } else if (this.state.ready) {
-            this.stopListening();
-            // New ride. Go to driver list
-            this.props.navigator.push({
-                id: 'DriverListPage',
-                currentRide: currentRide
-            });
-        }
     },
 
     createRide: function() {
@@ -171,10 +137,13 @@ var CurrentLocationPage = React.createClass({
                         showsUserLocation={true}
                         onRegionChange={this.onRegionChange}
                         showUserLocation={true}
+                        followUserLocation={true}
                         style={styles.map}>
                         <MapView.Marker
                             draggable
                             pinColor="yellow"
+                            title="You"
+                            description="Pick up location"
                             image={require('../assets/map-customer.png')}
                             coordinate={this.state.origin}
                             onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
@@ -209,7 +178,7 @@ var CurrentLocationPage = React.createClass({
                     />
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
-                            {this.state.currentUser.first_name} {this.state.currentUser.last_name}
+                            {this.props.currentUser.first_name} {this.props.currentUser.last_name}
                         </Text>
                         <Text>
                             Set your pickup location. Hold and then drag the
