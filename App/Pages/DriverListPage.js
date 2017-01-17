@@ -41,14 +41,11 @@ var DriverListPage = React.createClass({
 
     componentDidMount: function () {
         DriverStore.on(events.driverListLoaded, this.setItems);
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
         this.refreshItems();
     },
 
     componentWillUnmount: function () {
         DriverStore.removeListener(events.driverListLoaded, this.setItems);
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
-
     },
 
     setItems: function(items) {
@@ -66,18 +63,11 @@ var DriverListPage = React.createClass({
     selectDriver: function (driver) {
         var currentRide = this.state.currentRide;
         currentRide.driver = driver;
-        currentRide.destination = currentRide.origin;
         this.setState({
             currentRide: currentRide,
-            driver: driver,
             isConnecting: true
         });
         updateCurrentRide(currentRide);
-        this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, driver: driver});
-    },
-
-    nextStep: function(currentRide) {
-        this.props.navigator.push({id: 'CurrentRidePage', currentRide: currentRide, test: 'testies'});
     },
 
     getDataSource: function (items:Array<any>):ListView.DataSource {

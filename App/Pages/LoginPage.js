@@ -42,7 +42,6 @@ var LoginPage = React.createClass({
     componentWillMount: function () {
         CurrentUserStore.on(events.loginFailed, this.setLoginError);
         CurrentUserStore.on(events.currentUserLoaded, this.goToHome);
-        reloadFacebookUser();
     },
 
     removeListeners: function () {
@@ -121,10 +120,8 @@ var LoginPage = React.createClass({
                   this.setState({ user : null });
                 }}
                 onLoginFound={(data) => {
-                    (data) => {
-                        this.setState({ready: true});
-                        //loadFacebookUser(data);
-                    }
+                    this.setState({ready: true});
+                    loadFacebookUser(data);
                 }}
                 onLoginNotFound={() => {
                   console.log("No user logged in.");
