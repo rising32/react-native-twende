@@ -66,26 +66,6 @@ var CurrentRidePage = React.createClass({
         ToastAndroid.show('Refreshing...', ToastAndroid.SHORT)
     },
 
-    rideLoaded: function (currentRide) {
-        if (currentRide.state == 'declined') {
-            Alert.alert(
-                'Rider busy',
-                'So sorry, but ' + currentRide.driver.first_name + ' declined your request.\n' +
-                    'Please try one of the other riders.'
-                ,
-                [
-                    {text: 'OK', onPress: () => {
-                        this.props.navigator.push({id: 'CurrentLocationPage'});
-                    }}
-                ]
-            );
-        }
-        if (currentRide.state == undefined || currentRide.state == 'canceled') {
-            this.props.navigator.push({id: 'CurrentLocationPage'});
-        }
-        this.setState({currentRide: currentRide});
-    },
-
     fuzzyDistance: function () {
         let dist = this.props.currentRide.driver.distance;
         if (dist > 1000) {
@@ -133,14 +113,7 @@ var CurrentRidePage = React.createClass({
     },
 
     renderConnecting: function () {
-        var steps = [
-            {in_progress: true, done: false, title: 'Ride requested'},
-            {in_progress: false, done: false, title: 'Rider on his way'},
-            {in_progress: false, done: false, title: 'En route'}
-        ];
         var ride = this.props.currentRide;
-        var user = this.props.currentUser;
-
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -150,9 +123,9 @@ var CurrentRidePage = React.createClass({
                 />
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Avatar image={user.avatar}/>
+                        <Avatar image={ride.customer.avatar}/>
                         <Text style={{width: 90, textAlign: 'center', marginLeft: 20, marginRight: 20}}>
-                            We're connecting you with {rider.driver.name}
+                            We're connecting you with {ride.driver.name}
                         </Text>
                         <Avatar image={ride.driver.avatar} />
                     </View>
@@ -210,13 +183,7 @@ var CurrentRidePage = React.createClass({
         )
     },
     renderAccepted: function () {
-        var steps = [
-            {in_progress: true, done: true, title: 'Ride accepted'},
-            {in_progress: true, done: false, title: 'Rider on his way'},
-            {in_progress: false, done: false, title: 'En route'}
-        ];
         var ride = this.props.currentRide;
-        var user = this.props.currentUser;
         var away = "Rider is on his way..."
         //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         return (
@@ -235,7 +202,7 @@ var CurrentRidePage = React.createClass({
                         </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
-                                Hi {user.first_name},
+                                Hi {ride.customer.first_name},
                             </Text>
                             <Text>
                                 I accepted your request.
@@ -271,13 +238,7 @@ var CurrentRidePage = React.createClass({
     },
 
     renderDriving: function () {
-        var steps = [
-            {in_progress: true, done: true, title: 'Ride accepted'},
-            {in_progress: true, done: true, title: 'Rider arrived'},
-            {in_progress: true, done: false, title: 'En route'}
-        ];
         var ride = this.props.currentRide;
-        var user = this.props.user
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -307,13 +268,7 @@ var CurrentRidePage = React.createClass({
     },
 
     renderDropOff: function () {
-        var steps = [
-            {in_progress: true, done: true, title: 'Ride accepted'},
-            {in_progress: true, done: true, title: 'Rider arrived'},
-            {in_progress: true, done: true, title: 'Finished'}
-        ];
         var ride = this.props.currentRide;
-        var user = this.props.currentUser
 
         return (
             <View style={{flex: 1}}>
@@ -361,11 +316,6 @@ var CurrentRidePage = React.createClass({
     },
 
     renderDone: function () {
-        var steps = [
-            {in_progress: false, done: false, title: 'Request declined'},
-            {in_progress: false, done: false, title: 'Rider on his way'},
-            {in_progress: false, done: false, title: 'En route'}
-        ];
         return (
             <View style={{flex: 1}}>
                 <View style={styles.sheet_dark}>
@@ -402,9 +352,6 @@ var CurrentRidePage = React.createClass({
                 content = this.renderDropOff();
                 break;
             case 'requested':
-                content = this.renderConnecting();
-                break;
-            case 'new':
                 content = this.renderConnecting();
                 break;
             default:
