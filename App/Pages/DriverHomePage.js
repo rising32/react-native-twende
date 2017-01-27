@@ -43,7 +43,7 @@ var DriverHomePage = React.createClass({
             latitudeDelta: 0.01,
             longitudeDelta: 0.01
         };
-        if (this.props.currentRide) {
+        if (this.props.currentRide.origin) {
             region['latitude'] =  this.props.currentRide.origin.latitude;
             region['longitude']= this.props.currentRide.origin.longitude;
         }
