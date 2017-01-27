@@ -36,45 +36,38 @@ import { startWatchingGeoLocation,
 
 var DriverHomePage = React.createClass({
 
-  state: {
-    trueSwitchIsOn: true,
-    falseSwitchIsOn: false,
-  },
-
-  getInitialState: function(props) {
+    getInitialState: function () {
+        var region =  {
+            latitude: -1.2,
+            longitude: 36.7,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01
+        };
+        if (this.props.currentRide) {
+            region['latitude'] =  this.props.currentRide.origin.latitude;
+            region['longitude']= this.props.currentRide.origin.longitude;
+        }
         return {
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
-            location: {},
+            region: region,
+            trueSwitchIsOn: true,
+            falseSwitchIsOn: false,
             rating: 0,
-            price: 0,
-            region: {
-                latitude: 52.1668,
-                longitude: 4.491,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01
-            },
-            items: []
+            price: 0
         }
     },
 
     componentWillMount: function() {
         startWatchingGeoLocation();
-        CustomerStore.on(events.customerListLoaded, this.setItems);
-        CurrentRideStore.on(events.currentRideLoaded, this.nextStep);
-        //CurrentUserStore.on(events.currentUserLoaded, this.userLoaded);
-        this.refreshItems();
     },
 
     componentWillUnmount: function() {
         stopWatchingGeoLocation();
-        CustomerStore.removeListener(events.customerListLoaded, this.setItems);
-        CurrentRideStore.removeListener(events.currentRideLoaded, this.nextStep);
-        //CurrentUserStore.removeListener(events.currentUserLoaded, this.userLoaded);
     },
 
     refreshItems: function(){
-        ToastAndroid.show('Checking for requests.', ToastAndroid.SHORT);
+        ToastAndroid.show('Checking for customers.', ToastAndroid.SHORT);
         loadCustomerList();
     },
 
@@ -86,7 +79,6 @@ var DriverHomePage = React.createClass({
     toggleAvailability: function(available) {
         var currentUser = this.state.currentUser;
         currentUser.state = available ? 'available' : 'unavailable';
-        //this.setState({currentUser: currentUser});
         updateCurrentUser(currentUser);
     },
 
@@ -141,27 +133,6 @@ var DriverHomePage = React.createClass({
                 }},
                 {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
             ])
-    },
-
-    setItems: function(items) {
-
-        if (items.length) {
-            var currentRide = items[0];
-            this.setState({currentRide: currentRide});
-            this.setState({region: {
-                latitude: currentRide.origin.latitude,
-                longitude: currentRide.origin.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01
-            }})
-        }
-    },
-
-    nextStep: function(currentRide) {
-        if (currentRide.state in ['declined', 'finalized']) {
-            this.setState({currentRide: {}});
-        }
-        this.setState({currentRide: currentRide});
     },
 
     render: function() {
@@ -243,9 +214,7 @@ var DriverHomePage = React.createClass({
                 </View>
             </View>
         );
-
     },
-
 
     renderRequest: function() {
         var ride = this.state.currentRide;

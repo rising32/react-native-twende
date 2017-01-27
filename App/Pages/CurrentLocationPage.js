@@ -66,8 +66,6 @@ var CurrentLocationPage = React.createClass({
 
     componentWillMount: function (props) {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
-        loadRideList();
-
         loadGeoLocation();
         loadGeoLocation(true);
     },
