@@ -39,13 +39,16 @@ import events from "./Constants/Events";
 import CurrentUserStore from './Stores/CurrentUserStore';
 import CurrentRideStore from './Stores/CurrentRideStore';
 import {
+    reloadCurrentUser,
     logoutCurrentUser,
     setGcmToken,
     updateCurrentUser } from './Actions/CurrentUserActions';
 import { logoutFacebookUser }  from './Actions/SocialActions';
 var PushNotification = require('react-native-push-notification');
 import { notify } from "./Actions/NotifyActions"
-import { refreshCurrentRide } from "./Actions/CurrentRideActions";
+import {
+    refreshCurrentRide,
+    loadRideList } from "./Actions/CurrentRideActions";
 
 
 var TwendeApp = React.createClass({
@@ -86,25 +89,19 @@ var TwendeApp = React.createClass({
         if (this.state.currentUser.is_driver) {
             this.navigator.push({
                 id: 'DriverHomePage',
-                currentUser: this.state.currentUser
+                currentUser: this.state.currentUser,
+                currentRide: this.state.currentRide
             });
         } else {
             this.navigator.push({
                 id: 'CurrentLocationPage',
-                currentUser: this.state.currentUser
+                currentUser: this.state.currentUser,
+                currentRide: this.state.currentRide
             });
         }
-
     },
 
     currentRideLoaded: function(currentRide) {
-        ToastAndroid.show('Current Ride Loaded ' + currentRide.state, ToastAndroid.SHORT);
-
-        // Ride already finished
-        if (currentRide.state == 'finalized') {
-            return this.goHome();
-        }
-
         this.setState({currentRide: currentRide});
 
         if (this.state.currentUser.is_driver) {
@@ -129,11 +126,16 @@ var TwendeApp = React.createClass({
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
-            } else {
+            } else if (['requested', 'accepted', 'driving'].indexOf(currentRide.state) > -1) {
                 this.navigator.push({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
+                });
+            } else {
+                this.navigator.push({
+                    id: 'CurrentLocationPage',
+                    currentUser: this.state.currentUser
                 });
             }
         }
@@ -143,6 +145,7 @@ var TwendeApp = React.createClass({
         if (currentUser) {
             this.setState({currentUser: currentUser});
             this.registerPushNotification();
+            loadRideList();
         }
     },
 
@@ -175,26 +178,30 @@ var TwendeApp = React.createClass({
         }
     },
 
+    goToLogin: function() {
+        this.setState({currentUser: {}});
+        this.goToPage('LoginPage');
+    },
+
+    setGcmToken: function(gcmToken) {
+        var currentUser = this.state.currentUser;
+        currentUser.gcm_token = gcmToken;
+        this.setState({currentUser: currentUser});
+        updateCurrentUser(currentUser);
+    },
+
     componentDidMount: function () {
         PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
         BackAndroid.addEventListener('hardwareBackPress', this.goBack);
 
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
-
         CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
+        CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
+        CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
+        CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
 
-        CurrentUserStore.on(events.gcmTokenLoaded, (gcmToken) => {
-            var currentUser = this.state.currentUser;
-            currentUser.gcm_token = gcmToken;
-            this.setState({currentUser: currentUser});
-            updateCurrentUser(currentUser);
-        });
-
-        CurrentUserStore.on(events.userLoggedOut, (error) => {
-            this.setState({currentUser: {}});
-            this.goToPage('LoginPage');
-        });
+        reloadCurrentUser()
     },
 
     customerDrawerView: function () {
@@ -406,6 +413,7 @@ var TwendeApp = React.createClass({
             return (
                 <SplashPage
                     goToPage={this.goToPage}
+                    currentUser={this.state.currentUser}
                     navigator={navigator}/>
             );
         }
@@ -413,6 +421,7 @@ var TwendeApp = React.createClass({
             return (
                 <LoginPage
                     goToPage={this.goToPage}
+                    currentUser={this.state.currentUser}
                     navigator={navigator}/>
             );
         }
@@ -439,6 +448,7 @@ var TwendeApp = React.createClass({
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
                     currentUser={this.state.currentUser}
+                    currentRide={this.state.currentRide}
                     navigator={navigator}/>
             );
         }

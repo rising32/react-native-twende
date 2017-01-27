@@ -9,6 +9,8 @@ var {
     } = React;
 
 
+var watchId;
+
 export function loadGeoLocation(enableHighAccuracy) {
     if (undefined == enableHighAccuracy) enableHighAccuracy = false;
     Geolocation.getCurrentPosition(
@@ -46,7 +48,7 @@ export function loadGeoLocation(enableHighAccuracy) {
 }
 
 export function startWatchingGeoLocation() {
-    Geolocation.watchPosition(
+    watchId = Geolocation.watchPosition(
         (geoLocation) => {
             var location = {
                 latitude: geoLocation.coords.latitude,
@@ -78,7 +80,8 @@ export function startWatchingGeoLocation() {
 }
 
 export function stopWatchingGeoLocation() {
-    Geolocation.stopObserving();
+    Geolocation.clearWatch(watchId);
+    watchId = null;
 }
 
 

@@ -18,7 +18,6 @@ export function reloadCurrentUser() {
     dispatch({
         type: actions.fetchCurrentUser
     });
-
     AsyncStorage.getItem('token').then((token) => {
         dispatch({
             type: actions.receiveToken,
