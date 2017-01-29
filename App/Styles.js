@@ -117,6 +117,12 @@ export var styles = StyleSheet.create({
         fontSize: 16
     },
 
+    heavy_text: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: colors.secondary
+    },
+
     // Card
     card: {
         paddingBottom: 20,

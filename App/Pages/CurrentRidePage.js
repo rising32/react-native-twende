@@ -66,14 +66,6 @@ var CurrentRidePage = React.createClass({
         ToastAndroid.show('Refreshing...', ToastAndroid.SHORT)
     },
 
-    fuzzyDistance: function () {
-        let dist = this.props.currentRide.driver.distance;
-        if (dist > 1000) {
-            return Math.round(dist / 100) / 10 + 'km';
-        }
-        return Math.round(dist) + 'm';
-    },
-
     rateRide: function (rating) {
         this.setState({rating: rating});
     },
@@ -97,6 +89,14 @@ var CurrentRidePage = React.createClass({
 
     moreInfoRating: function() {
         alert("We'll keep your rating anonymous. It's only so users can see which riders have the best rating.")
+    },
+
+    payMpesa: function(){
+
+    },
+
+    payCash: function(){
+
     },
 
     render: function () {
@@ -184,8 +184,10 @@ var CurrentRidePage = React.createClass({
     },
     renderAccepted: function () {
         var ride = this.props.currentRide;
-        var away = "Rider is on his way..."
-        //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        var away = "Rider is on his way...";
+        if (ride.driver_distance) {
+            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        }
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -269,7 +271,51 @@ var CurrentRidePage = React.createClass({
 
     renderDropOff: function () {
         var ride = this.props.currentRide;
+        return (
+            <View style={{flex: 1}}>
+                <View style={styles.sheet_dark}>
+                    <View style={{alignItems: 'center'}}>
+                        <View style={styles.card_mid_spacer}/>
+                        <View style={styles.card_mid_avatar}>
+                            <Avatar
+                                image={ride.driver.avatar}/>
+                        </View>
+                        <View style={styles.card_mid}>
+                            <Text style={styles.item_title}>
+                                Payment
+                            </Text>
+                            <Text style={styles.heavy_text}>
+                                {ride.fare}
+                            </Text>
+                            <Text>
+                                Your trip was {ride.distance.distance}.
+                            </Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Link
+                                    action={this.payMpesa}
+                                    style={styles.primary_button, {margin: 8}}
+                                    text={"M-PESA"}
+                                    textStyle={{fontWeight: 'bold'}}
+                                    color={colors.action}
+                                    />
+                                <Link
+                                    action={this.payCash}
+                                    style={styles.primary_button, {margin: 8}}
+                                    text={"CASH"}
+                                    textStyle={{fontWeight: 'bold'}}
+                                    color={colors.action}
+                                    />
+                            </View>
+                        </View>
+                    </View>
 
+                </View>
+            </View>
+        )
+    },
+
+    renderFinalize: function () {
+        var ride = this.props.currentRide;
         return (
             <View style={{flex: 1}}>
                 <View style={styles.sheet_dark}>
@@ -293,13 +339,9 @@ var CurrentRidePage = React.createClass({
                                 colorOn={colors.action}
                                 colorOff={colors.action_disabled}
                             />
-                            <Text style={{marginTop: 10}}>How much did you pay for this ride?</Text>
-                            <TextInput
-                                placeholder={"0"}
-                                autoCorrect={false}
-                                onChangeText={(price) => this.setState({price: price})}
-                                style={styles.card_input}
-                            />
+                            <Text style={{marginTop: 10}}>
+                                {ride.fare}
+                            </Text>
                             <Link
                                 action={() => this.finishRide()}
                                 style={styles.button_simple}

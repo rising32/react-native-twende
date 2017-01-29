@@ -60,6 +60,30 @@ var TwendeApp = React.createClass({
         };
     },
 
+    componentWillMount: function () {
+        PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
+        BackAndroid.addEventListener('hardwareBackPress', this.goBack);
+
+        CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
+
+        CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
+        CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
+        CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
+        CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
+
+        reloadCurrentUser()
+    },
+
+    currentUserLoaded: function(currentUser) {
+        if (currentUser) {
+            this.setState({currentUser: currentUser});
+            this.registerPushNotification();
+            loadRideList();
+            this.goHome()
+        }
+    },
+
     openDrawer: function () {
         this.refs['DRAWER'].openDrawer()
     },
@@ -75,7 +99,7 @@ var TwendeApp = React.createClass({
 
     goToPage: function (pageId) {
         this.closeDrawer();
-        this.navigator.replace({
+        this.navigator.push({
             id: pageId,
             currentUser: this.state.currentUser
         });
@@ -103,7 +127,6 @@ var TwendeApp = React.createClass({
 
     currentRideLoaded: function(currentRide) {
         this.setState({currentRide: currentRide});
-
         if (this.state.currentUser.is_driver) {
             if (currentRide.state == 'requested') {
                 sounds.alarm1.play();
@@ -126,26 +149,19 @@ var TwendeApp = React.createClass({
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
-            } else if (['requested', 'accepted', 'driving'].indexOf(currentRide.state) > -1) {
+            } else if (['requested', 'accepted', 'driving', 'dropoff'].indexOf(currentRide.state) > -1) {
                 this.navigator.push({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
             } else {
+                ToastAndroid.show("Ride loaded " + currentRide.state, ToastAndroid.SHORT);
                 this.navigator.push({
                     id: 'CurrentLocationPage',
                     currentUser: this.state.currentUser
                 });
             }
-        }
-    },
-
-    currentUserLoaded: function(currentUser) {
-        if (currentUser) {
-            this.setState({currentUser: currentUser});
-            this.registerPushNotification();
-            loadRideList();
         }
     },
 
@@ -188,20 +204,6 @@ var TwendeApp = React.createClass({
         currentUser.gcm_token = gcmToken;
         this.setState({currentUser: currentUser});
         updateCurrentUser(currentUser);
-    },
-
-    componentDidMount: function () {
-        PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-
-        BackAndroid.addEventListener('hardwareBackPress', this.goBack);
-
-        CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
-        CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
-        CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
-        CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
-        CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
-
-        reloadCurrentUser()
     },
 
     customerDrawerView: function () {
