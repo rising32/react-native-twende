@@ -96,6 +96,7 @@ var CurrentRidePage = React.createClass({
         ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;
         ride.state = 'payment';
+        ride.payment_method = 'mpesa'
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
     },
@@ -105,8 +106,18 @@ var CurrentRidePage = React.createClass({
         ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;
         ride.state = 'payment';
+        ride.payment_method = 'cash';
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
+    },
+
+    completePayment: function(){
+        var ride = this.props.currentRide;
+        ride.customer_price = this.state.price;
+        ride.customer_rating = this.state.rating;
+        ride.state = 'rating';
+        this.setState({currentRide: ride});
+        //updateCurrentRide(ride);
     },
 
     render: function () {
@@ -320,6 +331,45 @@ var CurrentRidePage = React.createClass({
         )
     },
 
+    renderPayment: function () {
+        var ride = this.props.currentRide;
+        return (
+            <View style={{flex: 1}}>
+                <View style={styles.sheet_dark}>
+                    <View style={{alignItems: 'center'}}>
+                        <View style={styles.card_mid_spacer}/>
+                        <View style={styles.card_mid_avatar}>
+                            <Avatar
+                                image={ride.driver.avatar}/>
+                        </View>
+                        <View style={styles.card_mid}>
+                            <Text style={styles.item_title}>
+                                Payment
+                            </Text>
+                            <Text style={styles.heavy_text}>
+                                {ride.fare}
+                            </Text>
+                            <Text style={{textAlign: 'center'}}>
+                                You can send the money to:
+                            </Text>
+                            <Text style={styles.heavy_text}>
+                                {ride.driver.phone}
+                            </Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.completePayment}
+                                    text={"DONE"}
+                                    color={colors.action}
+                                    />
+                            </View>
+                        </View>
+                    </View>
+
+                </View>
+            </View>
+        )
+    },
+
     renderFinalize: function () {
         var ride = this.props.currentRide;
         return (
@@ -345,16 +395,13 @@ var CurrentRidePage = React.createClass({
                                 colorOn={colors.action}
                                 colorOff={colors.action_disabled}
                             />
-                            <Text style={{marginTop: 10}}>
-                                {ride.fare}
-                            </Text>
-                            <Link
-                                action={() => this.finishRide()}
-                                style={styles.button_simple}
-                                text={"FINISH"}
-                                textStyle={{fontWeight: 'bold'}}
-                                color={colors.action}
-                                />
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.finishRide}
+                                    text={"FINISH"}
+                                    color={colors.action}
+                                    />
+                            </View>
                         </View>
                     </View>
 
@@ -398,6 +445,12 @@ var CurrentRidePage = React.createClass({
                 break;
             case 'dropoff':
                 content = this.renderDropOff();
+                break;
+            case 'payment':
+                content = this.renderPayment();
+                break;
+            case 'rating':
+                content = this.renderFinalize();
                 break;
             case 'requested':
                 content = this.renderConnecting();

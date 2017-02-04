@@ -149,7 +149,7 @@ var TwendeApp = React.createClass({
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
-            } else if (['requested', 'accepted', 'driving', 'dropoff'].indexOf(currentRide.state) > -1) {
+            } else if (['requested', 'accepted', 'driving', 'dropoff', 'payment'].indexOf(currentRide.state) > -1) {
                 this.navigator.push({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
