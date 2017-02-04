@@ -20,12 +20,10 @@ export var colors = {
     box: '#FFFFFF',
     error: '#992200',
     box_dark: '#E0E0E0',
-    button: {
-        normal: '#2498EF',
-        over: '#228BE1',
-        clicked: '#1C79CE',
-        text: '#FFFFFF'
-    }
+    button_normal: '#2BA59A',
+    button_over: '#228BE1',
+    button_clicked: '#1C79CE',
+    button_text: '#FFFFFF'
 };
 
 export var styles = StyleSheet.create({
@@ -127,14 +125,15 @@ export var styles = StyleSheet.create({
     card: {
         paddingBottom: 20,
         paddingTop: 20,
-        paddingLeft: 40,
-        paddingRight: 40,
+        paddingLeft: 10,
+        paddingRight: 10,
         backgroundColor: colors.box
     },
 
     card_mid: {
-        padding: 20,
-        paddingTop: 0,
+        padding: 10,
+        paddingTop: 10,
+        paddingBottom: 20,
         marginTop: 0,
         backgroundColor: colors.box,
         alignItems: 'center',
@@ -304,18 +303,19 @@ export var styles = StyleSheet.create({
     // Buttons
 
     primary_button: {
-        margin: 10,
+        marginTop: 10,
+        marginRight: 4,
+        marginLeft: 4,
         padding: 10,
-        borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.button.normal,
-        shadowOpacity: 0.5,
-        shadowRadius: 3,
-        shadowOffset: {width: 2, height: 2}
+        backgroundColor: colors.button_normal,
+        elevation: 3,
+        flex: 1
+
     },
     primary_button_text: {
-        color: colors.button.text,
+        color: colors.button_text,
         fontWeight: 'bold'
     },
 

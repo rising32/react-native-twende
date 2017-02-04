@@ -18,6 +18,7 @@ var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
 var Map = require('../Components/Map');
 var Link = require('../Components/Link');
+var Button = require('../Components/Button');
 var StarRating = require('../Components/StarRating');
 var NavIcon = require('../Components/NavIcon');
 import CurrentRideStore from '../Stores/CurrentRideStore';
@@ -79,7 +80,6 @@ var CurrentRidePage = React.createClass({
             ]
         );
         var ride = this.props.currentRide;
-        ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;
         ride.state = 'finalized';
         this.setState({currentRide: ride});
@@ -92,11 +92,21 @@ var CurrentRidePage = React.createClass({
     },
 
     payMpesa: function(){
-
+        var ride = this.props.currentRide;
+        ride.customer_price = this.state.price;
+        ride.customer_rating = this.state.rating;
+        ride.state = 'payment';
+        this.setState({currentRide: ride});
+        updateCurrentRide(ride);
     },
 
     payCash: function(){
-
+        var ride = this.props.currentRide;
+        ride.customer_price = this.state.price;
+        ride.customer_rating = this.state.rating;
+        ride.state = 'payment';
+        this.setState({currentRide: ride});
+        updateCurrentRide(ride);
     },
 
     render: function () {
@@ -291,18 +301,14 @@ var CurrentRidePage = React.createClass({
                                 Your trip was {ride.distance.distance}.
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                <Link
+                                <Button
                                     action={this.payMpesa}
-                                    style={styles.primary_button, {margin: 8}}
                                     text={"M-PESA"}
-                                    textStyle={{fontWeight: 'bold'}}
                                     color={colors.action}
                                     />
-                                <Link
+                                <Button
                                     action={this.payCash}
-                                    style={styles.primary_button, {margin: 8}}
                                     text={"CASH"}
-                                    textStyle={{fontWeight: 'bold'}}
                                     color={colors.action}
                                     />
                             </View>
