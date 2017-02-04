@@ -74,15 +74,39 @@ var DriverListPage = React.createClass({
         return this.state.items.cloneWithRows(items);
     },
 
+    back: function(){
+        var ride = this.props.currentRide;
+        ride.state = 'canceled';
+        updateCurrentRide(ride);
+    },
+
     render: function () {
         return (
             <Navigator
                 renderScene={this.renderScene}
                 navigator={this.props.navigator}
+                back={this.back}
                 navigationBar={
                     <Navigator.NavigationBar
                         style={styles.nav_bar}
-                        routeMapper={NavigationBarRouteMapper}
+                        routeMapper={{
+                            LeftButton: (route, navigator, index, navState) => {
+                                return (
+                                    <NavIcon
+                                        icon={"arrow-back"}
+                                        action={this.back}
+                                    />
+                                );
+                            },
+                            RightButton: () =>{},
+                            Title: (route, navigator, index, navState) => {
+                                return (
+                                    <Text style={styles.nav_title}>
+                                        CLOSEST RIDERS
+                                    </Text>
+                                );
+                            }
+                        }}
                     />
                 }
             />
@@ -181,27 +205,6 @@ var DriverListPage = React.createClass({
     }
 });
 
-
-var NavigationBarRouteMapper = {
-    LeftButton(route, navigator, index, nextState) {
-         return (
-            <NavIcon
-                icon={"arrow-back"}
-                action={() => {navigator.parentNavigator.push({id: 'CurrentLocationPage'})}}
-            />
-        );
-    },
-    RightButton(route, navigator, index, nextState) {
-        return null;
-    },
-    Title(route, navigator, index, nextState) {
-        return (
-            <Text style={styles.nav_title}>
-                CLOSEST RIDERS
-            </Text>
-        );
-    }
-};
 
 
 module.exports = DriverListPage;
