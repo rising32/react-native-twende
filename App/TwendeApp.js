@@ -66,12 +66,10 @@ var TwendeApp = React.createClass({
         BackAndroid.addEventListener('hardwareBackPress', this.goBack);
 
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
-
         CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
         CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
         CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
         CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
-
         reloadCurrentUser()
     },
 
