@@ -58,7 +58,7 @@ var RideService = {
     },
 
     refresh: function (ride_id, resolve, reject) {
-        return fetch(config.api.rides + ride_id, {
+        return fetch(config.api.rides + ride_id + '/?' + new Date(), {
             method: 'GET',
             headers: this._headers(),
             timeout: 3000
