@@ -97,8 +97,7 @@ var CurrentLocationPage = React.createClass({
     createRide: function() {
         var ride = {
             origin:      this.state.origin,
-            origin_text: this.state.origin_text,
-            state: ''
+            origin_text: this.state.origin_text
         };
         this.setState({
             ready: true
