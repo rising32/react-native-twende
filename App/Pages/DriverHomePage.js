@@ -83,19 +83,19 @@ var DriverHomePage = React.createClass({
     },
 
     acceptRide: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         ride.state = 'accepted';
         updateCurrentRide(ride);
     },
 
     startRide: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         ride.state = 'driving';
         updateCurrentRide(ride);
     },
 
     dropoffRide: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         ride.state = 'dropoff';
         updateCurrentRide(ride);
     },
@@ -113,13 +113,11 @@ var DriverHomePage = React.createClass({
                 {text: 'OK', onPress: () => {}}
             ]
         );
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
-        ride.state = 'finalized';
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
-        //this.props.navigator.push({id: 'DriverHomePage'});
     },
 
     declineRide: function(ride) {
@@ -148,7 +146,7 @@ var DriverHomePage = React.createClass({
     },
 
     renderSheetTop: function (nextAction, nextIcon) {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         return (
             <View style={{justifyContent: 'space-between', alignSelf: 'stretch', flexDirection: 'row', marginTop: -50, marginBottom: -15, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
@@ -217,7 +215,7 @@ var DriverHomePage = React.createClass({
     },
 
     renderRequest: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.acceptRide, 'check');
         //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
         var away = 'Customer has requested';
@@ -250,7 +248,7 @@ var DriverHomePage = React.createClass({
     },
 
     renderAccepted: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.startRide, 'group');
         return  (
             <View>
@@ -294,7 +292,7 @@ var DriverHomePage = React.createClass({
     },
 
     renderDriving: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.dropoffRide, 'beenhere');
         return  (
             <View>
@@ -320,7 +318,7 @@ var DriverHomePage = React.createClass({
     },
 
     renderDropoff: function() {
-        var ride = this.state.currentRide;
+        var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.finishRide, 'tag-faces');
         return  (
             <View>
@@ -343,16 +341,8 @@ var DriverHomePage = React.createClass({
                                 colorOn={colors.action}
                                 colorOff={colors.action_disabled}
                             />
-                            <Text style={{marginTop: 10}}>How much did you get paid for this ride?</Text>
-                            <TextInput
-                                placeholder={"0"}
-                                autoCorrect={false}
-                                onChangeText={(price) => this.setState({price: price})}
-                                style={styles.card_input}
-                            />
-                            <Link
-                                action={() => this.finishRide()}
-                                style={styles.button_simple}
+                            <Button
+                                action={this.finishRide}
                                 text={"FINISH"}
                                 textStyle={{fontWeight: 'bold'}}
                                 color={colors.action}
@@ -367,9 +357,9 @@ var DriverHomePage = React.createClass({
 
     renderScene: function(route, navigator) {
         var content = this.renderHome();
-        if (this.state.currentUser.state != 'unavailable') {
-            if (this.state.currentRide) {
-                switch (this.state.currentRide.state) {
+        if (this.props.currentUser.state != 'unavailable') {
+            if (this.props.currentRide) {
+                switch (this.props.currentRide.state) {
                     case 'requested' :
                         content = this.renderRequest();
                         break;

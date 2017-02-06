@@ -96,7 +96,7 @@ var CurrentRidePage = React.createClass({
         ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;
         ride.state = 'payment';
-        ride.payment_method = 'mpesa'
+        ride.payment_method = 'mpesa';
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
     },
@@ -439,6 +439,9 @@ var CurrentRidePage = React.createClass({
         switch (this.props.currentRide.state) {
             case 'accepted':
                 content = this.renderAccepted();
+                break;
+            case 'declined':
+                content = this.renderDeclined();
                 break;
             case 'driving':
                 content = this.renderDriving();

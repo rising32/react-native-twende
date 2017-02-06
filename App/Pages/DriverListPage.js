@@ -63,6 +63,7 @@ var DriverListPage = React.createClass({
     selectDriver: function (driver) {
         var currentRide = this.state.currentRide;
         currentRide.driver = driver;
+        currentRide.state = 'requested';
         this.setState({
             currentRide: currentRide,
             isConnecting: true
