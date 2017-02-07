@@ -22,6 +22,7 @@ var IconText = require('../Components/IconText');
 import { Icon } from 'react-native-material-design';
 var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
+var Button = require('../Components/Button');
 var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
 var StarRating = require('../Components/StarRating');
@@ -116,7 +117,7 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
-        this.setState({currentRide: ride});
+        ride.state = 'finalized';
         updateCurrentRide(ride);
     },
 
@@ -329,7 +330,13 @@ var DriverHomePage = React.createClass({
                     <View style={styles.sheet_content}>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
-                                Rate this ride.
+                                Finalize
+                            </Text>
+                            <Text>
+                                Amount to be payed:
+                            </Text>
+                            <Text style={styles.heavy_text}>
+                                   {ride.fare}
                             </Text>
                             <Text>
                                 How was your ride with {ride.customer.name}?
@@ -341,12 +348,12 @@ var DriverHomePage = React.createClass({
                                 colorOn={colors.action}
                                 colorOff={colors.action_disabled}
                             />
-                            <Button
-                                action={this.finishRide}
-                                text={"FINISH"}
-                                textStyle={{fontWeight: 'bold'}}
-                                color={colors.action}
-                                />
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.finishRide}
+                                    text={"FINISH"}
+                                    />
+                           </View>
                         </View>
                     </View>
                 </View>
