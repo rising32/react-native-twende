@@ -21,5 +21,6 @@ export default {
 
     // Customers
     customerListLoaded: 'REQUEST_LIST_LOADED'
+    
 
 };
