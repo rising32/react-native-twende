@@ -28,6 +28,7 @@ var DriverListPage = require('./Pages/DriverListPage');
 var DriverHomePage = require('./Pages/DriverHomePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
 var TermsPage = require('./Pages/TermsPage');
+var CustomerSupportPage = require('./Pages/CustomerSupportPage');
 
 var Drawer = require('./Components/Drawer');
 var Avatar = require('./Components/Avatar');
@@ -233,26 +234,13 @@ var TwendeApp = React.createClass({
                         icon={'account-circle'}
                         text={'My Profile'}
                     />
-                    <IconText
+                    <Link
+                        action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#666666'}
-                        icon={'favorite'}
-                        text={'My Favourite Drivers'}
-                    />
-                    <IconText
-                        style={{padding: 8}}
-                        size={14}
-                        color={'#666666'}
-                        icon={'history'}
-                        text={'My Ride History'}
-                    />
-                    <IconText
-                        style={{padding: 8}}
-                        size={14}
-                        color={'#666666'}
-                        icon={'people'}
-                        text={'Invite Friends'}
+                        color={'#DDDDDD'}
+                        icon={'phone'}
+                        text={'Customer support'}
                     />
                     <Link
                         action={() => this.goToPage('TermsPage')}
@@ -304,6 +292,14 @@ var TwendeApp = React.createClass({
                         color={'#DDDDDD'}
                         icon={'account-circle'}
                         text={'My Profile'}
+                    />
+                    <Link
+                        action={() => this.goToPage('CustomerSupportPage')}
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#DDDDDD'}
+                        icon={'phone'}
+                        text={'Customer support'}
                     />
                     <IconText
                         style={{padding: 8}}
@@ -422,6 +418,14 @@ var TwendeApp = React.createClass({
                 <LoginPage
                     goToPage={this.goToPage}
                     currentUser={this.state.currentUser}
+                    navigator={navigator}/>
+            );
+        }
+
+        if (routeId === 'CustomerSupportPage') {
+            return (
+                <CustomerSupportPage
+                    goToPage={this.goToPage}
                     navigator={navigator}/>
             );
         }

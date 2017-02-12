@@ -36,12 +36,11 @@ export function loadGeoLocation(enableHighAccuracy) {
         },
         (error) => {
             ToastAndroid.show('Could not find location', ToastAndroid.SHORT);
-            // Give it another try
             loadGeoLocation(enableHighAccuracy)
         },
         {
             timeout: (config.geoPositionTimeOut * 3000),
-            maximumAge: (config.geoPositionMaxAge * 3000),
+            maximumAge: (config.geoPositionMaxAge * 10000),
             enableHighAccuracy: enableHighAccuracy
         }
     );

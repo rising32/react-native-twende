@@ -43,12 +43,13 @@ var htmlStyle = StyleSheet.create({
 });
 
 
-var LoginPage = React.createClass({
+var TermsPage = React.createClass({
 
     render: function () {
         return (
             <Navigator
                 renderScene={this.renderScene}
+                navigator={this.props.navigator}
                 navigationBar={
             <Navigator.NavigationBar
                 style={styles.nav_bar}
@@ -124,13 +125,12 @@ var LoginPage = React.createClass({
 
 var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
-        return null
-        //return (
-        //    <NavIcon
-        //        icon={"arrow-back"}
-        //        action={() => {this.props.goBack()}}
-        //    />
-        //);
+        return (
+            <NavIcon
+                icon={"menu"}
+                action={() => navigator.parentNavigator.props.drawer.openDrawer()}
+            />
+        );
     },
     RightButton(route, navigator, index, navState) {
         return null
@@ -144,4 +144,4 @@ var NavigationBarRouteMapper = {
     }
 };
 
-module.exports = LoginPage;
+module.exports = TermsPage;
