@@ -32,14 +32,14 @@ var CurrentLocationPage = React.createClass({
         return {
             origin_text: '- finding your location -',
             origin: {
-                latitude: -1.23825,
-                longitude: 35.8724
+                latitude: this.props.currentUser.position.latitude,
+                longitude: this.props.currentUser.position.longitude
             },
             isLoading: false,
             status: 'new',
             region: {
-                latitude: -1.23825,
-                longitude: 35.8724,
+                latitude: this.props.currentUser.position.latitude,
+                longitude: this.props.currentUser.position.longitude,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }
