@@ -66,13 +66,11 @@ var CurrentLocationPage = React.createClass({
 
     componentWillMount: function (props) {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
-        loadGeoLocation();
         loadGeoLocation(true);
     },
 
     refreshLocation: function() {
         ToastAndroid.show('Refreshing location', ToastAndroid.SHORT);
-        loadGeoLocation();
         loadGeoLocation(true);
     },
 
