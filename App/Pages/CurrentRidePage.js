@@ -145,13 +145,17 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Avatar image={ride.customer.avatar}/>
-                        <Text style={{width: 90, textAlign: 'center', marginLeft: 20, marginRight: 20}}>
-                            We're connecting you with {ride.driver.name}
+                        <Text style={{width: 90, textAlign: 'center', marginLeft: 18, marginRight: 18, fontSize: 12, color: '#1da69a'}}>
+                            {/*Wait for confirmation of {ride.driver.name}*/}
+                            Please give {ride.driver.name} a call if he doesn't respond immediately
                         </Text>
                         <Avatar image={ride.driver.avatar} />
                     </View>
+{/*                    <Text style={{textAlign: 'center'}}>
+                        Call {ride.driver.first_name} if he doesn't respond
+                    </Text>*/}
 
-                    <View style={{padding: 10, paddingTop: 30}}>
+                    <View style={{padding: 10, paddingTop: 10}}>
                         <Link style={{margin: 10}}
                               url={"tel: " + ride.driver.phone}
                               icon={"phone"}
@@ -160,7 +164,7 @@ var CurrentRidePage = React.createClass({
                               color={colors.action}
                               text={"CALL " + ride.driver.name.toUpperCase()}
                         />
-                        <Link style={{margin: 10}}
+                        <Link
                               action={this.cancelRide}
                               icon={"clear"}
                               size={16}
@@ -186,7 +190,7 @@ var CurrentRidePage = React.createClass({
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid}>
                             <Text style={{textAlign: 'center'}}>
-                                Your request has been declined.
+                                Sorry, your request has been declined.
                             </Text>
 
                         </View>
@@ -197,7 +201,7 @@ var CurrentRidePage = React.createClass({
                           size={16}
                           iconSize={24}
                           color={colors.action_secondary}
-                          text={"FIND ANOTHER RIDER"}
+                          text={"PLEASE SELECT ANOTHER RIDER"}
                     />
                 </View>
             </View>
@@ -228,9 +232,9 @@ var CurrentRidePage = React.createClass({
                                 Hi {ride.customer.first_name},
                             </Text>
                             <Text>
-                                I accepted your request.
+                                I'm on my way to pick you up!
                             </Text>
-                            <Link style={{margin: 10}}
+                            <Link style={{margin: 14, marginLeft: 18}}
                                   url={"tel: " + ride.driver.phone}
                                   icon={"phone"}
                                   size={16}
@@ -238,7 +242,7 @@ var CurrentRidePage = React.createClass({
                                   color={colors.action}
                                   text={"CALL " + ride.driver.name.toUpperCase()}
                             />
-                            <Link style={{margin: 10}}
+                            <Link style={{margin: 4, marginLeft: 18}}
                                   action={this.cancelRide}
                                   icon={"clear"}
                                   size={16}
@@ -281,7 +285,10 @@ var CurrentRidePage = React.createClass({
                                 Let's go!
                             </Text>
                             <Text>
-                                Driver has arrived and you are on your way now.
+                                Your are on your way now. 
+                            </Text>
+                            <Text>
+                                Enjoy the ride! 
                             </Text>
                         </View>
                     </View>
@@ -480,7 +487,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                MY RIDE
+                ON YOUR WAY
             </Text>
         );
     }

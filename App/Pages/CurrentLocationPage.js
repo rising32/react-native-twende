@@ -147,27 +147,27 @@ var CurrentLocationPage = React.createClass({
                             onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
                         />
                     </MapView>
-                    <View style={styles.map_info}>
+{/*                    <View style={styles.map_info}>
                         <Text />
-                        <View style={styles.map_info_container}>
-                            <Text style={styles.map_text}>
-                                Pick-up Location
-                            </Text>
-                            <Text style={styles.map_title}>
-                                {this.state.origin_text}
-                            </Text>
-                        </View>
-
-                        <TouchableHighlight
-                            onPress={this.refreshLocation}
-                            style={styles.map_info_action}
-                        >
-                            <View>
-                                <Icon name="gps-fixed" size={24} color={colors.action_secondary} />
+                            <View style={styles.map_info_container}>
+                                <Text style={styles.map_text}>
+                                    Pick-up
+                                </Text>
+                                <Text style={styles.map_title}>
+                                    {this.state.origin_text}
+                                </Text>
                             </View>
-                        </TouchableHighlight>
 
-                    </View>
+                            <TouchableHighlight
+                             onPress={this.refreshLocation}
+                                style={styles.map_info_action}
+                            >   
+                                <View>
+                                  <Icon name="gps-fixed" size={24} color={colors.action_secondary} />
+                                </View>
+                            </TouchableHighlight>
+
+                     </View>*/}
                 </View>
                 <View style={[styles.sheet, {flex: 1}]}>
                     <SheetIcon
@@ -175,15 +175,20 @@ var CurrentLocationPage = React.createClass({
                         action={this.createRide}
                     />
                     <View style={styles.sheet_content}>
-                        <Text style={styles.item_title}>
-                            Karibu {this.props.currentUser.first_name}!
-                        </Text>
-                        <Text style={styles.text_important}>
-                            Is your pick up location correct?
-                        </Text>
-                        <Text style={styles.text_important}>
-                            Please drag pin to set accurate location.
-                        </Text>
+                            <Text style={styles.item_title}>
+                              {/*  Karibu {this.props.currentUser.first_name}!*/}
+                              Karibu {this.props.currentUser.first_name}!
+                            </Text>
+                            {/*<Text style={styles.text_important}>
+                                Is your pick up location correct?
+                            </Text>*/}
+                            <Text style={styles.text_important}>
+                                If location is not correct drag pin. 
+                            </Text>
+                            <Text style={styles.text_important}>
+                                Confirm by pushing green button.
+                            </Text>
+                    
                     </View>
                 </View>
                 {spinner}
@@ -208,7 +213,7 @@ var NavigationBarRouteMapper = {
         this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
-                MY LOCATION
+                PICK UP LOCATION
             </Text>
         );
     }

@@ -8,7 +8,7 @@ var {
 
 export var colors = {
     primary: '#ffda57',
-    splash: '#fee972',
+    splash: '#ffda57',
     primary_dark: '#d1af42',
     secondary: '#273b95',
     action: '#1da69a',
@@ -42,6 +42,22 @@ export var styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around'
 
+    },
+
+    // Text
+    baseText: {
+    fontFamily: 'gothamrounded_book',
+     },
+
+    text: {
+        fontFamily: 'gothamrounded_book',
+        fontSize: 16
+    },
+
+    text_important: {
+        fontFamily: 'gothamrounded_book',
+        fontSize: 16,
+        color: colors.text_important
     },
 
     // Splash
@@ -111,16 +127,6 @@ export var styles = StyleSheet.create({
     page_full: {
         alignItems: 'center',
         justifyContent: 'center'
-    },
-
-    text: {
-        fontSize: 16
-    },
-
-    text_important: {
-        fontFamily: 'gothamrounded',
-        fontSize: 16,
-        color: colors.text_important
     },
 
     heavy_text: {
@@ -354,6 +360,5 @@ export var styles = StyleSheet.create({
         borderRadius: 40,
         borderWidth: 2,
         borderColor: '#ffffff'
-    }
-
+    },
 });

@@ -61,13 +61,13 @@ var Map = React.createClass({
                     {driver}
                     {customer}
                 </MapView>
-                <View style={styles.map_info}>
+{/*                <View style={styles.map_info}>
                     <Text />
                     <View style={styles.map_info_container}>
                         <Text style={styles.map_title}>
                             {title}
                         </Text>
-                    </View>
+                    </View>*/}
 
                     <TouchableHighlight
                         onPress={this.refreshLocation}
@@ -78,8 +78,8 @@ var Map = React.createClass({
                         </View>
                     </TouchableHighlight>
 
-                </View>
             </View>
+            /*</View>*/
         );
     }
 });
