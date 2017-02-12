@@ -29,6 +29,14 @@ import events from "../Constants/Events";
 var CurrentLocationPage = React.createClass({
 
     getInitialState: function () {
+
+        if (!this.props.currentUser.position) {
+            this.props.currentUser.position = {
+                latitude: -1.23825,
+                longitude: 35.8724
+            }
+        }
+
         return {
             origin_text: '- finding your location -',
             origin: {
@@ -49,6 +57,7 @@ var CurrentLocationPage = React.createClass({
     updateLocation: function(loc) {
         ToastAndroid.show('Found location', ToastAndroid.SHORT);
         var myLoc = 'location found';
+        this.props.currentUser.position = loc;
         this.setState({
             origin: {
                 latitude: loc.latitude,
@@ -66,11 +75,13 @@ var CurrentLocationPage = React.createClass({
 
     componentWillMount: function (props) {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
+        loadGeoLocation();
         loadGeoLocation(true);
     },
 
     refreshLocation: function() {
         ToastAndroid.show('Refreshing location', ToastAndroid.SHORT);
+        loadGeoLocation();
         loadGeoLocation(true);
     },
 
