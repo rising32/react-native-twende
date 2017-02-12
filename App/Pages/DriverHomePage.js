@@ -120,6 +120,30 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
+    // Hieronder eerste aanzet tot een berichtje bij de rider om de consument
+    // te bellen nadat hij klant heeft geaccepteerd (Kreeg 'bad gateway errors' > dus kon
+    // nog niet testen of het werkt)
+
+/*        giveCall: function() {
+        Alert.alert(
+            Please give customer a call to ask for correct directions.
+            [
+                {text: 'OK', onPress: () => {}}
+            ]
+        );
+    },*/
+
+    // Onderstaand stukje zou dan onder RenderAccepted moeten komen:
+    // sorry voor de chaos :()
+
+                      //          <Button
+                      //          action={this.giveCall}
+                      //          text={"FINISH"}
+                      //          textStyle={{fontWeight: 'bold'}}
+                      //          color={colors.action}
+                      //          />
+
+
     declineRide: function(ride) {
         Alert.alert(
             'Decline ride',
@@ -132,8 +156,6 @@ var DriverHomePage = React.createClass({
                 {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
             ])
     },
-
-
 
     render: function() {
         return (
@@ -242,6 +264,8 @@ var DriverHomePage = React.createClass({
             </View>
         );
     },
+
+
 
     renderAccepted: function() {
         var ride = this.props.currentRide;
