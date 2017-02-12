@@ -72,11 +72,6 @@ var DriverHomePage = React.createClass({
         loadCustomerList();
     },
 
-    userLoaded: function(currentUser){
-        alert(JSON.stringify(currentUser));
-        this.setState('currentUser', currentUser);
-    },
-
     toggleAvailability: function(available) {
         var currentUser = this.state.currentUser;
         currentUser.state = available ? 'available' : 'unavailable';
@@ -87,6 +82,13 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
         ride.state = 'accepted';
         updateCurrentRide(ride);
+        Alert.alert(
+            'Reminder',
+            'Remember to give ' + ride.customer.first_name + ' a call to confirm that you are coming.',
+            [
+                {text: 'OKAY!', onPress: () => {}}
+            ]
+        );
     },
 
     startRide: function() {
