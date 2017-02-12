@@ -7,16 +7,18 @@ var {
 
 
 export var colors = {
-    primary: '#FFEF80',
-    primary_dark: '#DDCF70',
-    secondary: '#2BA59A',
-    action: '#5B6ABF',
+    primary: '#ffda57',
+    splash: '#fee972',
+    primary_dark: '#d1af42',
+    secondary: '#273b95',
+    action: '#1da69a',
     action_secondary: '#555555',
     action_disabled: '#E0E0E0',
     text: '#333333',
+    text_important: '#1da69a',
     title: '#555555',
     border: '#777777',
-    nav_text: '#AA9950',
+    nav_text: '#877a42',
     box: '#FFFFFF',
     error: '#992200',
     box_dark: '#E0E0E0',
@@ -44,14 +46,14 @@ export var styles = StyleSheet.create({
 
     // Splash
     splash: {
-        backgroundColor: colors.primary,
+        backgroundColor: colors.splash,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
     splash_title: {
         fontSize: 28,
-        fontFamily: 'HelveticaNeue'
+        fontFamily: 'gothamrounded'
     },
     loading: {
         flex: 1,
@@ -113,6 +115,12 @@ export var styles = StyleSheet.create({
 
     text: {
         fontSize: 16
+    },
+
+    text_important: {
+        fontFamily: 'gothamrounded',
+        fontSize: 16,
+        color: colors.text_important
     },
 
     heavy_text: {
@@ -264,6 +272,7 @@ export var styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2}
     },
     item_title: {
+        fontFamily: 'gothamrounded_book',
         color: colors.title,
         fontWeight: 'bold',
         fontSize: 16

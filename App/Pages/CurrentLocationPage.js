@@ -176,11 +176,13 @@ var CurrentLocationPage = React.createClass({
                     />
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
-                            {this.props.currentUser.first_name} {this.props.currentUser.last_name}
+                            Karibu {this.props.currentUser.first_name}!
                         </Text>
-                        <Text>
-                            Set your pickup location. Hold and then drag the
-                            red balloon to change your pick up location.
+                        <Text style={styles.text_important}>
+                            Is your pick up location correct?
+                        </Text>
+                        <Text style={styles.text_important}>
+                            Please drag pin to set accurate location.
                         </Text>
                     </View>
                 </View>
