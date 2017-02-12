@@ -123,6 +123,30 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
+    // Hieronder eerste aanzet tot een berichtje bij de rider om de consument
+    // te bellen nadat hij klant heeft geaccepteerd (Kreeg 'bad gateway errors' > dus kon
+    // nog niet testen of het werkt)
+
+/*        giveCall: function() {
+        Alert.alert(
+            Please give customer a call to ask for correct directions.
+            [
+                {text: 'OK', onPress: () => {}}
+            ]
+        );
+    },*/
+
+    // Onderstaand stukje zou dan onder RenderAccepted moeten komen:
+    // sorry voor de chaos :()
+
+                      //          <Button
+                      //          action={this.giveCall}
+                      //          text={"FINISH"}
+                      //          textStyle={{fontWeight: 'bold'}}
+                      //          color={colors.action}
+                      //          />
+
+
     declineRide: function(ride) {
         Alert.alert(
             'Decline ride',
@@ -177,10 +201,10 @@ var DriverHomePage = React.createClass({
 
     renderHome: function() {
         var is_available = this.state.currentUser.state == 'available';
-        var statusText = "You're unavailable and won't get any request.";
+        var statusText = "Customer cannot find you.";
         var statusIcon = "not-interested";
         if (is_available) {
-            statusText = "Waiting for the next customer.";
+            statusText = "Customer can find you.";
             statusIcon = "alarm";
         }
         return  (
@@ -232,61 +256,58 @@ var DriverHomePage = React.createClass({
                 <View style={styles.sheet}>
                     {top}
                     <View style={styles.sheet_content}>
-                        <Text style={styles.item_title}>
-                            {ride.customer.name}
+                         <Text style={styles.item_title}>
+                            Request from {ride.customer.name}!
                         </Text>
-                        <Text>
-                            You got a new request! Push confirm button and you're ready to pick up {ride.customer.name}.
+                        <Text style={styles.text_important}>
+                           Confirm customer by pushing green button.
                         </Text>
-                        <IconText
-                            icon={"motorcycle"}
-                            text={away}
-                            color={colors.action_secondary}
-                            style={{margin: 10}}
-                        />
                     </View>
                 </View>
             </View>
         );
     },
 
+
+
     renderAccepted: function() {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.startRide, 'group');
         return  (
-            <View>
-                <Map
-                    title={"request"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
-                <View style={styles.sheet}>
-                    {top}
-                    <View style={styles.sheet_content}>
-                        <Text style={styles.item_title}>
-                            You've accepted the ride. {ride.customer.name} is waiting.
-                        </Text>
-                        <Text>
-                            If you arrived at the customer click the next button and you are on your way!
-                        </Text>
-                        <Link
-                            icon={"pin-drop"}
-                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={'start navigation'.toUpperCase()}
-                            color={colors.action}
-                            size={16}
-                            iconSize={24}
-                            style={{margin: 10}}
-                        />
-                        <Link style={{margin: 10}}
-                              url={"tel: " + ride.customer.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action}
-                              text={"CALL " + ride.customer.name.toUpperCase()}
-                        />
-
+            <View style={{flexDirection: 'row'}}>
+                <View>
+                    <Map
+                        title={"request"}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
+                    <View style={styles.sheet}>
+                        {top}
+                        <View style={styles.sheet_content}>
+                            <Text style={styles.item_title}>
+                                Confirm picking up {ride.customer.name}
+                            </Text>
+                            <Text style={styles.text_important}>
+                                Push green button when you have arrived at customer.
+                            </Text> 
+                            <Link style={{margin: 10}}
+                                url={"tel: " + ride.customer.phone}
+                                icon={"phone"}
+                                size={16}
+                                iconSize={24}
+                                color={colors.action}
+                                text={"CALL " + ride.customer.name.toUpperCase()}
+                            />
+                            <Link
+                                icon={"pin-drop"}
+                                url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
+                                text={'start navigation'.toUpperCase()}
+                                color={colors.action}
+                                size={16}
+                                iconSize={24}
+                                style={{margin: 10}}
+                            />
+                        </View>            
                     </View>
                 </View>
             </View>
@@ -308,10 +329,10 @@ var DriverHomePage = React.createClass({
                     {top}
                     <View style={styles.sheet_content}>
                         <Text style={styles.item_title}>
-                            Ok, you're on your way.
+                            Finish ride
                         </Text>
-                        <Text>
-                            If you arrive at the destination, hit the next button to complete this ride!
+                        <Text style={styles.text_important}>
+                            When you drop off the client; please confirm by clicking the green button.
                         </Text>
                     </View>
                 </View>
@@ -407,7 +428,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                DRIVER HOME
+                RIDER HOME
             </Text>
         );
     }

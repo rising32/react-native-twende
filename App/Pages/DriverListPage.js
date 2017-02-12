@@ -160,7 +160,7 @@ var DriverListPage = React.createClass({
                     color={colors.action_secondary}
                     size={16}
                     icon={'settings-input-antenna'}
-                    text={'Loading drivers. Hang on...'}
+                    text={'Loading riders. Hang on...'}
                 />
             </View>
         );
