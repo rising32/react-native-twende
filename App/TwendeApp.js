@@ -64,7 +64,6 @@ var TwendeApp = React.createClass({
 
     componentWillMount: function () {
         PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-
         BackAndroid.addEventListener('hardwareBackPress', this.goBack);
 
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);

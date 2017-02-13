@@ -151,10 +151,6 @@ var CurrentRidePage = React.createClass({
                         </Text>
                         <Avatar image={ride.driver.avatar} />
                     </View>
-{/*                    <Text style={{textAlign: 'center'}}>
-                        Call {ride.driver.first_name} if he doesn't respond
-                    </Text>*/}
-
                     <View style={{padding: 10, paddingTop: 10}}>
                         <Link style={{margin: 10}}
                               url={"tel: " + ride.driver.phone}

@@ -46,7 +46,7 @@ export var styles = StyleSheet.create({
 
     // Text
     baseText: {
-    fontFamily: 'gothamrounded_book',
+        fontFamily: 'gothamrounded_book',
      },
 
     text: {
@@ -69,7 +69,7 @@ export var styles = StyleSheet.create({
     },
     splash_title: {
         fontSize: 28,
-        fontFamily: 'gothamrounded'
+        fontFamily: 'gothamrounded_book'
     },
     loading: {
         flex: 1,
@@ -93,6 +93,7 @@ export var styles = StyleSheet.create({
 
     spinner_text: {
         color: '#999999',
+        fontFamily: 'gothamrounded_book',
         fontSize: 18
     },
 
@@ -131,6 +132,7 @@ export var styles = StyleSheet.create({
 
     heavy_text: {
         fontSize: 20,
+        fontFamily: 'gothamrounded_book',
         fontWeight: 'bold',
         color: colors.secondary
     },
@@ -280,12 +282,10 @@ export var styles = StyleSheet.create({
     item_title: {
         fontFamily: 'gothamrounded_book',
         color: colors.title,
-        fontWeight: 'bold',
         fontSize: 16
     },
     item_text: {
         color: colors.secondary,
-        fontWeight: 'bold'
     },
     item_image: {
         backgroundColor: '#999999',
