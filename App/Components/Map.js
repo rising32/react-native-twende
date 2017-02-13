@@ -60,26 +60,8 @@ var Map = React.createClass({
                     style={styles.map}>
                     {driver}
                     {customer}
-                </MapView>
-{/*                <View style={styles.map_info}>
-                    <Text />
-                    <View style={styles.map_info_container}>
-                        <Text style={styles.map_title}>
-                            {title}
-                        </Text>
-                    </View>*/}
-
-                    <TouchableHighlight
-                        onPress={this.refreshLocation}
-                        style={styles.map_info_action}
-                    >
-                        <View>
-                            <Icon name="gps-fixed" size={24} color={colors.action_secondary} />
-                        </View>
-                    </TouchableHighlight>
-
+                 </MapView>
             </View>
-            /*</View>*/
         );
     }
 });
