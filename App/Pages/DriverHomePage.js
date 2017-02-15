@@ -338,6 +338,36 @@ var DriverHomePage = React.createClass({
                                    {ride.fare}
                             </Text>
                             <Text>
+                                Wait for the customer to pay.
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    },
+
+    renderFinalized: function() {
+        var ride = this.props.currentRide;
+        var top = this.renderSheetTop(this.finishRide, 'tag-faces');
+        return  (
+            <View>
+                <View style={{height: 100, backgroundColor: '#888888'}}>
+                </View>
+                <View style={styles.sheet}>
+                    {top}
+                    <View style={styles.sheet_content}>
+                        <View style={styles.card_mid}>
+                            <Text style={styles.item_title}>
+                                {ride.payment_method.toUpperCase()} PAYMENT
+                            </Text>
+                            <Text>
+                                Make sure that you receive the payment by the {ride.customer.name}
+                            </Text>
+                            <Text style={styles.heavy_text}>
+                                   {ride.fare}
+                            </Text>
+                            <Text>
                                 How was your ride with {ride.customer.name}?
                             </Text>
                             <StarRating
@@ -358,28 +388,38 @@ var DriverHomePage = React.createClass({
                 </View>
             </View>
         );
-
     },
 
     renderScene: function(route, navigator) {
         var content = this.renderHome();
-        if (this.props.currentUser.state != 'unavailable') {
-            if (this.props.currentRide) {
-                switch (this.props.currentRide.state) {
-                    case 'requested' :
-                        content = this.renderRequest();
-                        break;
-                    case 'accepted' :
-                        content = this.renderAccepted();
-                        break;
-                    case 'driving' :
-                        content = this.renderDriving();
-                        break;
-                    case 'dropoff' :
-                        content = this.renderDropoff();
-                        break;
-                }
+        var ride = this.props.currentRide;
+        var currentUser = this.props.currentUser;
+        if (currentUser.state != 'unavailable' && ride) {
+            switch (ride.state) {
+                case 'requested' :
+                    content = this.renderRequest();
+                    break;
+                case 'accepted' :
+                    content = this.renderAccepted();
+                    break;
+                case 'driving' :
+                    content = this.renderDriving();
+                    break;
+                case 'dropoff' :
+                    content = this.renderDropoff();
+                    break;
+                case 'payment' :
+                    if (!ride.driver_rating) {
+                        content = this.renderFinalized();
+                    }
+                    break;
+                case 'finalized' :
+                    if (!ride.driver_rating) {
+                        content = this.renderFinalized();
+                    }
+                    break;
             }
+
         }
 
         return (

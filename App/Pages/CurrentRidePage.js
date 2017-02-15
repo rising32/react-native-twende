@@ -115,9 +115,9 @@ var CurrentRidePage = React.createClass({
         var ride = this.props.currentRide;
         ride.customer_price = this.state.price;
         ride.customer_rating = this.state.rating;
-        ride.state = 'rating';
+        ride.state = 'finalized';
         this.setState({currentRide: ride});
-        //updateCurrentRide(ride);
+        updateCurrentRide(ride);
     },
 
     render: function () {
@@ -172,9 +172,6 @@ var CurrentRidePage = React.createClass({
                               text={"CANCEL RIDE"}
                         />
                     </View>
-
-{/*                kan qua styling nog beter: afstand distance en cancel ride zou wat kleiner mogen,
-                maar lukte mij niet*/}
 
                     <IconText
                         icon={"motorcycle"}
@@ -342,6 +339,21 @@ var CurrentRidePage = React.createClass({
 
     renderPayment: function () {
         var ride = this.props.currentRide;
+        var phone;
+        if (ride.payment_method == 'mpesa') {
+            phone = (
+                <View>
+                    <Text style={{textAlign: 'center'}}>
+                        You can send the money to:
+                    </Text>
+                    <Text style={styles.heavy_text}>
+                        {ride.driver.phone}
+                    </Text>
+
+                </View>
+            );
+        }
+
         return (
             <View style={{flex: 1}}>
                 <View style={styles.sheet_dark}>
@@ -353,17 +365,12 @@ var CurrentRidePage = React.createClass({
                         </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
-                                Payment
+                            {ride.payment_method.toUpperCase()} PAYMENT
                             </Text>
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
-                                You can send the money to:
-                            </Text>
-                            <Text style={styles.heavy_text}>
-                                {ride.driver.phone}
-                            </Text>
+                            {phone}
                             <View style={{flexDirection: 'row'}}>
                                 <Button
                                     action={this.completePayment}
@@ -461,7 +468,7 @@ var CurrentRidePage = React.createClass({
             case 'payment':
                 content = this.renderPayment();
                 break;
-            case 'rating':
+            case 'finalized':
                 content = this.renderFinalize();
                 break;
             case 'requested':

@@ -152,6 +152,12 @@ var TwendeApp = React.createClass({
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
+            } else if (currentRide.state == 'finalized' && !currentRide.customer_rating) {
+                this.navigator.push({
+                    id: 'CurrentRidePage',
+                    currentUser: this.state.currentUser,
+                    currentRide: currentRide
+                });
             } else {
                 ToastAndroid.show("Ride loaded " + currentRide.state, ToastAndroid.SHORT);
                 this.navigator.push({
