@@ -45,17 +45,11 @@ export var styles = StyleSheet.create({
     },
 
     // Text
-    baseText: {
-    fontFamily: 'gothamrounded_book',
-     },
-
     text: {
-        fontFamily: 'gothamrounded_book',
         fontSize: 16
     },
 
     text_important: {
-        fontFamily: 'gothamrounded_book',
         fontSize: 16,
         color: colors.text_important
     },
@@ -278,7 +272,6 @@ export var styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2}
     },
     item_title: {
-        fontFamily: 'gothamrounded_book',
         color: colors.title,
         fontWeight: 'bold',
         fontSize: 16

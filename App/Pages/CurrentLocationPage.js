@@ -24,7 +24,7 @@ import {
     createCurrentRide,
     loadRideList } from '../Actions/CurrentRideActions';
 import events from "../Constants/Events";
-
+var toastOnce = 0;
 
 var CurrentLocationPage = React.createClass({
 
@@ -53,9 +53,12 @@ var CurrentLocationPage = React.createClass({
             }
         }
     },
-
+    
     updateLocation: function(loc) {
+       while (toastOnce < 1) {
         ToastAndroid.show('Found location', ToastAndroid.SHORT);
+        toastOnce++;
+    }
         var myLoc = 'location found';
         this.props.currentUser.position = loc;
         this.setState({
@@ -70,6 +73,7 @@ var CurrentLocationPage = React.createClass({
                 longitudeDelta: this.state.region.longitudeDelta
             },
             origin_text: myLoc
+
         });
     },
 

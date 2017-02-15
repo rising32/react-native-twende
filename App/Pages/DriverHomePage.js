@@ -123,30 +123,6 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
-    // Hieronder eerste aanzet tot een berichtje bij de rider om de consument
-    // te bellen nadat hij klant heeft geaccepteerd (Kreeg 'bad gateway errors' > dus kon
-    // nog niet testen of het werkt)
-
-/*        giveCall: function() {
-        Alert.alert(
-            Please give customer a call to ask for correct directions.
-            [
-                {text: 'OK', onPress: () => {}}
-            ]
-        );
-    },*/
-
-    // Onderstaand stukje zou dan onder RenderAccepted moeten komen:
-    // sorry voor de chaos :()
-
-                      //          <Button
-                      //          action={this.giveCall}
-                      //          text={"FINISH"}
-                      //          textStyle={{fontWeight: 'bold'}}
-                      //          color={colors.action}
-                      //          />
-
-
     declineRide: function(ride) {
         Alert.alert(
             'Decline ride',
@@ -260,7 +236,7 @@ var DriverHomePage = React.createClass({
                             Request from {ride.customer.name}!
                         </Text>
                         <Text style={styles.text_important}>
-                           Confirm customer by pushing green button.
+                           Confirm customer by pushing green button
                         </Text>
                     </View>
                 </View>
@@ -285,24 +261,24 @@ var DriverHomePage = React.createClass({
                         {top}
                         <View style={styles.sheet_content}>
                             <Text style={styles.item_title}>
-                                Confirm picking up {ride.customer.name}
+                                Start Ride
                             </Text>
                             <Text style={styles.text_important}>
-                                Push green button when you have arrived at customer.
+                                Push green button when you start ride with customer
                             </Text> 
                             <Link style={{margin: 10}}
                                 url={"tel: " + ride.customer.phone}
                                 icon={"phone"}
                                 size={16}
                                 iconSize={24}
-                                color={colors.action}
-                                text={"CALL " + ride.customer.name.toUpperCase()}
+                                color={colors.secondary}
+                                text={"CALL " + ride.customer.first_name.toUpperCase()}
                             />
                             <Link
                                 icon={"pin-drop"}
                                 url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                                 text={'start navigation'.toUpperCase()}
-                                color={colors.action}
+                                color={colors.secondary}
                                 size={16}
                                 iconSize={24}
                                 style={{margin: 10}}
@@ -332,7 +308,7 @@ var DriverHomePage = React.createClass({
                             Finish ride
                         </Text>
                         <Text style={styles.text_important}>
-                            When you drop off the client; please confirm by clicking the green button.
+                            When you have dropped off the customer; please confirm by clicking the green button
                         </Text>
                     </View>
                 </View>
