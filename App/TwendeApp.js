@@ -51,8 +51,6 @@ import {
     refreshCurrentRide,
     loadRideList } from "./Actions/CurrentRideActions";
 
-
-
 var TwendeApp = React.createClass({
 
     getInitialState: function (props) {
@@ -128,7 +126,7 @@ var TwendeApp = React.createClass({
         this.setState({currentRide: currentRide});
         if (this.state.currentUser.is_driver) {
             if (currentRide.state == 'requested') {
-                sounds.alarm1.play();
+                sounds.alarm2.play();
             }
             this.navigator.push({
                 id: 'DriverHomePage',
