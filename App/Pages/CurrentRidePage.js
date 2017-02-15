@@ -135,6 +135,10 @@ var CurrentRidePage = React.createClass({
 
     renderConnecting: function () {
         var ride = this.props.currentRide;
+                var away = "Rider is on his way...";
+        if (ride.driver_distance) {
+            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
+        }
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -146,8 +150,7 @@ var CurrentRidePage = React.createClass({
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Avatar image={ride.customer.avatar}/>
                         <Text style={{width: 90, textAlign: 'center', marginLeft: 18, marginRight: 18, fontSize: 12, color: '#1da69a'}}>
-                            {/*Wait for confirmation of {ride.driver.name}*/}
-                            Please give {ride.driver.name} a call if he doesn't respond immediately
+                            Connecting... Wait for call of {ride.driver.name} or call with button below
                         </Text>
                         <Avatar image={ride.driver.avatar} />
                     </View>
@@ -157,10 +160,10 @@ var CurrentRidePage = React.createClass({
                               icon={"phone"}
                               size={16}
                               iconSize={24}
-                              color={colors.action}
+                              color={colors.secondary}
                               text={"CALL " + ride.driver.name.toUpperCase()}
                         />
-                        <Link
+                        <Link style={{margin: 10}}
                               action={this.cancelRide}
                               icon={"clear"}
                               size={16}
@@ -169,6 +172,16 @@ var CurrentRidePage = React.createClass({
                               text={"CANCEL RIDE"}
                         />
                     </View>
+
+{/*                kan qua styling nog beter: afstand distance en cancel ride zou wat kleiner mogen,
+                maar lukte mij niet*/}
+
+                    <IconText
+                        icon={"motorcycle"}
+                        text={away}
+                        color={colors.secondary}
+                        style={{padding: 6, margin: 14, fontSize: 10}}
+                    />
                 </View>
             </View>
         )
@@ -207,7 +220,7 @@ var CurrentRidePage = React.createClass({
         var ride = this.props.currentRide;
         var away = "Rider is on his way...";
         if (ride.driver_distance) {
-            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
         }
         return (
             <View style={{flex: 1}}>
@@ -230,7 +243,7 @@ var CurrentRidePage = React.createClass({
                             <Text>
                                 I'm on my way to pick you up!
                             </Text>
-                            <Link style={{margin: 14, marginLeft: 18}}
+                            <Link style={{margin: 0, padding: 10}}
                                   url={"tel: " + ride.driver.phone}
                                   icon={"phone"}
                                   size={16}
@@ -238,7 +251,7 @@ var CurrentRidePage = React.createClass({
                                   color={colors.action}
                                   text={"CALL " + ride.driver.name.toUpperCase()}
                             />
-                            <Link style={{margin: 4, marginLeft: 18}}
+                            <Link style={{margin: 0, padding: 10}}
                                   action={this.cancelRide}
                                   icon={"clear"}
                                   size={16}
@@ -247,13 +260,6 @@ var CurrentRidePage = React.createClass({
                                   text={"CANCEL RIDE"}
                             />
                         </View>
-                        <IconText
-                            icon={"motorcycle"}
-                            text={away}
-                            color={colors.action_secondary}
-                            style={{margin: 10}}
-                        />
-
                     </View>
                 </View>
             </View>
