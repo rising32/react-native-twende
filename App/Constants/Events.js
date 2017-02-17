@@ -9,6 +9,7 @@ export default {
 
     // Geo
     geoLocationLoaded: 'GEO_LOCATION_LOADED',
+    geoLocationNotFound: 'GEO_LOCATION_NOT_FOUND',
 
     // Drivers
     driverListLoaded: 'DRIVER_LIST_LOADED',

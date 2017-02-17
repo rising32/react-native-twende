@@ -16,6 +16,7 @@ var CurrentRideActions = require('../Actions/CurrentRideActions');
 var NavIcon = require('../Components/NavIcon');
 import { Avatar, Button, Icon } from 'react-native-material-design';
 import {colors, styles} from "../Styles";
+var Link = require('../Components/Link');
 var SheetIcon = require('../Components/SheetIcon');
 import GeoLocationStore from '../Stores/GeoLocationStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
@@ -24,7 +25,6 @@ import {
     createCurrentRide,
     loadRideList } from '../Actions/CurrentRideActions';
 import events from "../Constants/Events";
-var toastOnce = 0;
 
 var CurrentLocationPage = React.createClass({
 
@@ -39,10 +39,7 @@ var CurrentLocationPage = React.createClass({
 
         return {
             origin_text: '- finding your location -',
-            origin: {
-                latitude: this.props.currentUser.position.latitude,
-                longitude: this.props.currentUser.position.longitude
-            },
+            origin: {},
             isLoading: false,
             status: 'new',
             region: {
@@ -55,10 +52,6 @@ var CurrentLocationPage = React.createClass({
     },
     
     updateLocation: function(loc) {
-       while (toastOnce < 1) {
-        ToastAndroid.show('Found location', ToastAndroid.SHORT);
-        toastOnce++;
-    }
         var myLoc = 'location found';
         this.props.currentUser.position = loc;
         this.setState({
@@ -140,6 +133,35 @@ var CurrentLocationPage = React.createClass({
                 </View>
             );
         }
+
+        var pickup;
+
+        if (this.state.origin.latitude && this.state.origin.longitude) {
+            pickup = <MapView.Marker
+                draggable
+                pinColor = "yellow"
+                title = "You"
+                description = "Pick up location"
+                image = {require('../assets/map-customer.png')}
+                coordinate = {this.state.origin}
+                onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
+        }  else {
+            spinner = (
+                <View style={styles.spinner}>
+                    <Text style={styles.heavy_text}>
+                        Loading current location
+                    </Text>
+                    <Link style={{marginLeft: 12}}
+                          action={this.refreshLocation}
+                          icon={"place"}
+                          size={14}
+                          iconSize={28}
+                          color={colors.action_secondary}
+                          text= {"Make sure you have Location enabled in your phone settings."}
+                    />
+                  </View>
+            );
+        }
         return (
             <View style={styles.page}>
                 <View style={styles.map_container}>
@@ -147,16 +169,10 @@ var CurrentLocationPage = React.createClass({
                         region={this.state.region}
                         onRegionChange={this.onRegionChange}
                         showsMyLocationButton={true}
+                        showsUserLocation={true}
+                        showUserLocation={true}
                         style={styles.map}>
-                        <MapView.Marker
-                            draggable
-                            pinColor="yellow"
-                            title="You"
-                            description="Pick up location"
-                            image={require('../assets/map-customer.png')}
-                            coordinate={this.state.origin}
-                            onDragEnd={(e) => this.dragOrigin(e.nativeEvent.coordinate)}
-                        />
+                        {pickup}
                     </MapView>
                 </View>
                 <View style={[styles.sheet, {flex: 1}]}>

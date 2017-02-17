@@ -159,7 +159,6 @@ var TwendeApp = React.createClass({
                     currentRide: currentRide
                 });
             } else {
-                ToastAndroid.show("Ride loaded " + currentRide.state, ToastAndroid.SHORT);
                 this.navigator.push({
                     id: 'CurrentLocationPage',
                     currentUser: this.state.currentUser

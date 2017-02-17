@@ -177,7 +177,7 @@ var CurrentRidePage = React.createClass({
                         icon={"motorcycle"}
                         text={away}
                         color={colors.secondary}
-                        style={{padding: 6, margin: 14, fontSize: 10}}
+                        style={{padding: 6, margin: 14}}
                     />
                 </View>
             </View>
@@ -185,11 +185,6 @@ var CurrentRidePage = React.createClass({
     },
 
     renderDeclined: function () {
-        var steps = [
-            {in_progress: false, done: false, title: 'Request declined'},
-            {in_progress: false, done: false, title: 'Rider on his way'},
-            {in_progress: false, done: false, title: 'En route'}
-        ];
         return (
             <View style={{flex: 1}}>
                 <View style={styles.sheet_dark}>

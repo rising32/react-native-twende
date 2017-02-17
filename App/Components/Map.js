@@ -55,8 +55,8 @@ var Map = React.createClass({
                 <MapView
                     region={this.state.region}
                     showsUserLocation={true}
-                    onRegionChange={this.onRegionChange}
                     showUserLocation={true}
+                    onRegionChange={this.onRegionChange}
                     style={styles.map}>
                     {driver}
                     {customer}
