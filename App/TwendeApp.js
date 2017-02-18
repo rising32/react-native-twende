@@ -21,7 +21,6 @@ var {
 var SplashPage = require('./Pages/SplashPage');
 var LoginPage = require('./Pages/LoginPage');
 var ProfilePage = require('./Pages/ProfilePage');
-var RequestRidePage = require('./Pages/RequestRidePage');
 var CurrentRidePage = require('./Pages/CurrentRidePage');
 var CurrentLocationPage = require('./Pages/CurrentLocationPage');
 var DriverListPage = require('./Pages/DriverListPage');
@@ -73,11 +72,13 @@ var TwendeApp = React.createClass({
     },
 
     currentUserLoaded: function(currentUser) {
-        if (currentUser) {
+        if (currentUser && this.state.currentUser !== currentUser) {
             this.setState({currentUser: currentUser});
             this.registerPushNotification();
             loadRideList();
-            this.goHome()
+            if (currentUser.is_driver) {
+                this.goHome()
+            }
         }
     },
 
@@ -159,10 +160,7 @@ var TwendeApp = React.createClass({
                     currentRide: currentRide
                 });
             } else {
-                this.navigator.push({
-                    id: 'CurrentLocationPage',
-                    currentUser: this.state.currentUser
-                });
+                alert('Dont know where to go now...')
             }
         }
     },
@@ -457,16 +455,6 @@ var TwendeApp = React.createClass({
                     currentUser={this.state.currentUser}
                     currentRide={this.state.currentRide}
                     navigator={navigator}/>
-            );
-        }
-        if (routeId === 'RequestRidePage') {
-            return (
-                <RequestRidePage
-                    openDrawer={this.openDrawer}
-                    goToPage={this.goToPage}
-                    currentUser={this.state.currentUser}
-                    navigator={navigator}
-                    driver={route.driver}/>
             );
         }
         if (routeId === 'CurrentLocationPage') {

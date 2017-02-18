@@ -16,6 +16,7 @@ var {
 import CustomerStore from '../Stores/CustomerStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
+import GeoLocationStore from '../Stores/GeoLocationStore';
 var Map = require('../Components/Map');
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
@@ -32,6 +33,7 @@ import { loadCustomerList } from "../Actions/CustomerActions";
 import { updateCurrentRide } from "../Actions/CurrentRideActions";
 import { updateCurrentUser } from"../Actions/CurrentUserActions";
 import { startWatchingGeoLocation,
+         loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
 
 
@@ -39,8 +41,8 @@ var DriverHomePage = React.createClass({
 
     getInitialState: function () {
         var region =  {
-            latitude: -1.2,
-            longitude: 36.7,
+            latitude: this.props.currentUser.latitude,
+            longitude: this.props.currentUser.longitude,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01
         };
@@ -60,11 +62,23 @@ var DriverHomePage = React.createClass({
     },
 
     componentWillMount: function() {
+        GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
+        loadGeoLocation();
         startWatchingGeoLocation();
     },
 
     componentWillUnmount: function() {
+        GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
         stopWatchingGeoLocation();
+    },
+
+    updateLocation: function(loc) {
+        let currentUser = this.props.currentUser;
+        currentUser.position = loc;
+        let location = {
+            user: currentUser.id,
+            location: loc
+        };
     },
 
     refreshItems: function(){
@@ -120,8 +134,17 @@ var DriverHomePage = React.createClass({
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
         ride.state = 'finalized';
-
         updateCurrentRide(ride);
+    },
+
+    askPayment: function() {
+        Alert.alert(
+            'Payment',
+            'The customer is choosing the payment method now. Please wait.',
+            [
+                {text: 'OK', onPress: () => {}}
+            ]
+        );
     },
 
     declineRide: function(ride) {
@@ -320,7 +343,7 @@ var DriverHomePage = React.createClass({
 
     renderDropoff: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTop(this.finishRide, 'tag-faces');
+        var top = this.renderSheetTop(this.askPayment, 'feedback');
         return  (
             <View>
                 <View style={{height: 100, backgroundColor: '#888888'}}>
@@ -339,7 +362,7 @@ var DriverHomePage = React.createClass({
                                    {ride.fare}
                             </Text>
                             <Text>
-                                Wait for the customer to pay.
+                                Wait for the {ride.customer.first_name} to pay.
                             </Text>
                         </View>
                     </View>
