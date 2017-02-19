@@ -65,10 +65,14 @@ export var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+
     splash_title: {
-        fontSize: 28,
-        fontFamily: 'gothamrounded_book'
+        marginTop: 95,
+        marginBottom: 65,
+        width: 225,
+        height: 92
     },
+
     loading: {
         flex: 1,
         alignItems: 'center',
@@ -357,5 +361,36 @@ export var styles = StyleSheet.create({
         borderRadius: 40,
         borderWidth: 2,
         borderColor: '#ffffff'
+    },
+
+    banner: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 0,
+        width: 360,
+        height: 200,
+        bottom: 0
+    },
+
+    menu_background: {
+        width: 300,
+        height: 200
+
+    },
+    menu_head: {
+        height: 200
+    },
+    menu_title: {
+        marginTop: -20,
+        marginLeft: 10
+    },
+    menu_list: {
+        backgroundColor: colors.action,
+        padding: 8
+    },
+    menu_close: {
+        marginTop: -190,
+        marginLeft: 270
     }
 });

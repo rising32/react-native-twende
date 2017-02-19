@@ -9,6 +9,7 @@ var ReactNative = require('react-native');
 var {
     Text,
     View,
+    Image,
     Navigator,
     TouchableOpacity,
     DrawerLayoutAndroid,
@@ -209,21 +210,32 @@ var TwendeApp = React.createClass({
     customerDrawerView: function () {
         return (
             <View>
-                <View style={{padding:10}}>
-                    <Avatar image={this.state.currentUser.avatar}/>
-                </View>
-                <View style={{padding:10}}>
-                    <Text>
-                        {this.state.currentUser.first_name} {this.state.currentUser.last_name}
-                    </Text>
-                </View>
+                <View style={styles.menu_head}>
 
-                <View style={{backgroundColor: '#555555', padding: 8}}>
+                    <Image
+                        source={require('./assets/banner.jpg')}
+                        style={styles.menu_background}
+                        />
+                    <Link
+                        style={styles.menu_close}
+                        action={this.closeDrawer}
+                        iconSize={20}
+                        icon={'close'}
+                    />
+                    <View style={styles.menu_title}>
+                        <Avatar image={this.state.currentUser.avatar}/>
+                        <Text>
+                            {this.state.currentUser.first_name} {this.state.currentUser.last_name}
+                        </Text>
+                    </View>
+
+                </View>
+                <View style={styles.menu_list}>
                     <Link
                         style={{padding: 8}}
                         action={() => this.goToPage('CurrentLocationPage')}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'motorcycle'}
                         text={'New Ride'}
                     />
@@ -231,7 +243,7 @@ var TwendeApp = React.createClass({
                         style={{padding: 8}}
                         action={() => this.goToPage('ProfilePage')}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'account-circle'}
                         text={'My Profile'}
                     />
@@ -239,7 +251,7 @@ var TwendeApp = React.createClass({
                         action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'phone'}
                         text={'Customer support'}
                     />
@@ -247,7 +259,7 @@ var TwendeApp = React.createClass({
                         action={() => this.goToPage('TermsPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'assignment'}
                         text={'Terms'}
                     />
@@ -255,7 +267,7 @@ var TwendeApp = React.createClass({
                         action={this.logout}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'power-settings-new'}
                         text={'Logout'}
                     />
@@ -269,20 +281,31 @@ var TwendeApp = React.createClass({
     driverDrawerView: function () {
         return (
             <View>
-                <View style={{padding:10}}>
-                    <Avatar image={this.state.currentUser.avatar}/>
+                <View style={styles.menu_head}>
+
+                    <Image
+                        source={require('./assets/banner.jpg')}
+                        style={styles.menu_background}
+                        />
+                    <Link
+                        style={styles.menu_close}
+                        action={this.closeDrawer}
+                        iconSize={20}
+                        icon={'close'}
+                    />
+                    <View style={styles.menu_title}>
+                        <Avatar image={this.state.currentUser.avatar}/>
+                        <Text>
+                            {this.state.currentUser.first_name} {this.state.currentUser.last_name}
+                        </Text>
+                    </View>
                 </View>
-                <View style={{padding:10}}>
-                    <Text>
-                        {this.state.currentUser.first_name} {this.state.currentUser.last_name}
-                    </Text>
-                </View>
-                <View style={{backgroundColor: '#555555', padding: 8}}>
+                <View style={styles.menu_list}>
                     <Link
                         style={{padding: 8}}
                         action={() => this.goToPage('DriverHomePage')}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'motorcycle'}
                         text={'Home'}
                     />
@@ -290,7 +313,7 @@ var TwendeApp = React.createClass({
                         style={{padding: 8}}
                         action={() => this.goToPage('ProfilePage')}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'account-circle'}
                         text={'My Profile'}
                     />
@@ -298,7 +321,7 @@ var TwendeApp = React.createClass({
                         action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'phone'}
                         text={'Customer support'}
                     />
@@ -320,7 +343,7 @@ var TwendeApp = React.createClass({
                         action={() => this.goToPage('TermsPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'assignment'}
                         text={'Terms'}
                     />
@@ -328,7 +351,7 @@ var TwendeApp = React.createClass({
                         action={this.logout}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'power-settings-new'}
                         text={'Logout'}
                     />
@@ -353,7 +376,7 @@ var TwendeApp = React.createClass({
                         action={() => this.goToPage('TermsPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'assignment'}
                         text={'Terms'}
                     />
@@ -361,7 +384,7 @@ var TwendeApp = React.createClass({
                         action={() => this.goToPage('LoginPage')}
                         style={{padding: 8}}
                         size={14}
-                        color={'#DDDDDD'}
+                        color={'#FFFFFF'}
                         icon={'power-settings-new'}
                         text={'Log in'}
                     />
@@ -379,7 +402,7 @@ var TwendeApp = React.createClass({
         }
         return (
             <DrawerLayoutAndroid
-                drawerWidth={200}
+                drawerWidth={300}
                 ref={'DRAWER'}
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
                 renderNavigationView={drawer}>
