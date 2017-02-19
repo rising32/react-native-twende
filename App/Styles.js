@@ -63,7 +63,7 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.splash,
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
 
     splash_title: {
