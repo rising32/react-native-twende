@@ -161,7 +161,10 @@ var TwendeApp = React.createClass({
                     currentRide: currentRide
                 });
             } else {
-                alert('Dont know where to go now...')
+                this.navigator.push({
+                    id: 'CurrentLocationPage',
+                    currentUser: this.state.currentUser
+                });
             }
         }
     },
