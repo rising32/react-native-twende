@@ -63,11 +63,11 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.splash,
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     splash_title: {
-        marginTop: 95,
+        marginTop: 160,
         marginBottom: 65,
         width: 225,
         height: 92
@@ -283,6 +283,7 @@ export var styles = StyleSheet.create({
     },
     item_title: {
         color: colors.title,
+        fontWeight: 'bold',
         fontSize: 16
     },
     item_text: {
