@@ -136,6 +136,7 @@ export var styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'gothamrounded_book',
         fontWeight: 'bold',
+        textAlign: 'center',
         color: colors.secondary
     },
 

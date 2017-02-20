@@ -342,7 +342,7 @@ var CurrentRidePage = React.createClass({
                         You can send the money to:
                     </Text>
                     <Text style={styles.heavy_text}>
-                        {ride.driver.phone}
+                        07 19 33 19 03
                     </Text>
 
                 </View>

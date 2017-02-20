@@ -362,7 +362,7 @@ var DriverHomePage = React.createClass({
                                    {ride.fare}
                             </Text>
                             <Text>
-                                Wait for the {ride.customer.first_name} to pay.
+                                Wait for {ride.customer.first_name} to pay.
                             </Text>
                         </View>
                     </View>

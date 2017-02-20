@@ -161,7 +161,7 @@ var TwendeApp = React.createClass({
                     currentRide: currentRide
                 });
             } else {
-                alert('Please check your internet connection, or swipe the upper left corner to request new ride')
+                alert('Please check your internet connection. Or swipe the hidden button at the upper left of your screen to the right to request new ride')
             }
         }
     },
