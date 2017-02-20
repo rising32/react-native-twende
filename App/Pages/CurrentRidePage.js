@@ -135,10 +135,10 @@ var CurrentRidePage = React.createClass({
 
     renderConnecting: function () {
         var ride = this.props.currentRide;
-                var away = "Rider is on his way...";
-        if (ride.driver_distance) {
-            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
-        }
+        //        var away = "Rider is on his way...";
+        // if (ride.driver_distance) {
+        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
+        //}
         return (
             <View style={{flex: 1}}>
                 <Map

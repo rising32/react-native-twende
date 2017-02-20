@@ -244,8 +244,8 @@ var DriverHomePage = React.createClass({
     renderRequest: function() {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.acceptRide, 'check');
-        //var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
-        var away = 'Customer has requested';
+        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
+        //var away = 'Customer has requested';
         return  (
             <View>
                 <Map
@@ -262,6 +262,7 @@ var DriverHomePage = React.createClass({
                         <Text style={styles.text_important}>
                            Confirm customer by pushing green button
                         </Text>
+                        {away}
                     </View>
                 </View>
             </View>
@@ -307,6 +308,7 @@ var DriverHomePage = React.createClass({
                                 iconSize={24}
                                 style={{margin: 10}}
                             />
+
                         </View>            
                     </View>
                 </View>
@@ -386,7 +388,7 @@ var DriverHomePage = React.createClass({
                                 {ride.payment_method.toUpperCase()} PAYMENT
                             </Text>
                             <Text>
-                                Make sure that you receive the payment by the {ride.customer.name}
+                                Request {ride.customer.name} to show M-pesa confirmation message.
                             </Text>
                             <Text style={styles.heavy_text}>
                                    {ride.fare}
