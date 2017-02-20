@@ -244,8 +244,10 @@ var DriverHomePage = React.createClass({
     renderRequest: function() {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop(this.acceptRide, 'check');
-        var away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away.';
-        //var away = 'Customer has requested';
+        var away = "Unknown distance customer";
+        if (ride.driver_distance) {
+            away = ride.customer_distance.distance + ' (' + ride.customer_distance.duration + ') away';
+        }
         return  (
             <View>
                 <Map
@@ -262,7 +264,12 @@ var DriverHomePage = React.createClass({
                         <Text style={styles.text_important}>
                            Confirm customer by pushing green button
                         </Text>
-                        {away}
+                    <IconText
+                    icon={"motorcycle"}
+                    text={away}
+                    color={colors.secondary}
+                    style={{padding: 6, margin: 14}}
+                    />
                     </View>
                 </View>
             </View>
