@@ -67,7 +67,7 @@ export var styles = StyleSheet.create({
     },
 
     splash_title: {
-        marginTop: 95,
+        marginTop: 160,
         marginBottom: 65,
         width: 225,
         height: 92
@@ -136,6 +136,7 @@ export var styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'gothamrounded_book',
         fontWeight: 'bold',
+        textAlign: 'center',
         color: colors.secondary
     },
 
@@ -283,6 +284,7 @@ export var styles = StyleSheet.create({
     },
     item_title: {
         color: colors.title,
+        fontWeight: 'bold',
         fontSize: 16
     },
     item_text: {

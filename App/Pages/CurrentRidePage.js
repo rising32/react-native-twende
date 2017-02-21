@@ -135,10 +135,6 @@ var CurrentRidePage = React.createClass({
 
     renderConnecting: function () {
         var ride = this.props.currentRide;
-                var away = "Rider is on his way...";
-        if (ride.driver_distance) {
-            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
-        }
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -149,9 +145,9 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.sheet_dark}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Avatar image={ride.customer.avatar}/>
-                        <Text style={{width: 90, textAlign: 'center', marginLeft: 18, marginRight: 18, fontSize: 12, color: '#1da69a'}}>
-                            Connecting... Wait for call of {ride.driver.name} or call with button below
-                        </Text>
+                            <Text style={{width: 90, textAlign: 'center', marginLeft: 18, marginRight: 18, fontSize: 12, color: '#1da69a'}}>
+                                Wait for call of {ride.driver.name} or call with button below
+                            </Text>
                         <Avatar image={ride.driver.avatar} />
                     </View>
                     <View style={{padding: 10, paddingTop: 10}}>
@@ -172,13 +168,6 @@ var CurrentRidePage = React.createClass({
                               text={"CANCEL RIDE"}
                         />
                     </View>
-
-                    <IconText
-                        icon={"motorcycle"}
-                        text={away}
-                        color={colors.secondary}
-                        style={{padding: 6, margin: 14}}
-                    />
                 </View>
             </View>
         )
@@ -208,12 +197,23 @@ var CurrentRidePage = React.createClass({
             </View>
         )
     },
+
     renderAccepted: function () {
         var ride = this.props.currentRide;
-        var away = "Rider is on his way...";
-        if (ride.driver_distance) {
-            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
-        }
+        // var away = "Rider is on his way...";
+        // Once the time / distance of rider to customer can be upated along the way it 
+        // would be interesting to implement this the 'away variable'
+        //
+        // if (ride.driver_distance) {
+        //    away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
+        // }
+        //                         <IconText
+        //                icon={"motorcycle"}
+        //                text={away}
+        //                color={colors.secondary}
+        //                style={{padding: 6, margin: 14}}
+        //                />
+        
         return (
             <View style={{flex: 1}}>
                 <Map
@@ -224,34 +224,34 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid_spacer}/>
-                        <View style={styles.card_mid_avatar}>
-                            <Avatar
-                                image={ride.driver.avatar}/>
-                        </View>
-                        <View style={styles.card_mid}>
-                            <Text style={styles.item_title}>
-                                Hi {ride.customer.first_name},
-                            </Text>
-                            <Text>
-                                I'm on my way to pick you up!
-                            </Text>
-                            <Link style={{margin: 0, padding: 10}}
-                                  url={"tel: " + ride.driver.phone}
-                                  icon={"phone"}
-                                  size={16}
-                                  iconSize={24}
-                                  color={colors.action}
-                                  text={"CALL " + ride.driver.name.toUpperCase()}
-                            />
-                            <Link style={{margin: 0, padding: 10}}
-                                  action={this.cancelRide}
-                                  icon={"clear"}
-                                  size={16}
-                                  iconSize={24}
-                                  color={colors.action_secondary}
-                                  text={"CANCEL RIDE"}
-                            />
-                        </View>
+                            <View style={styles.card_mid_avatar}>
+                                <Avatar
+                                    image={ride.driver.avatar}/>
+                            </View>
+                                <View style={styles.card_mid}>
+                                    <Text style={styles.item_title}>
+                                        Hi {ride.customer.first_name},
+                                    </Text>
+                                    <Text style={{margin: 10}}>
+                                        I'm on my way to pick you up!
+                                    </Text>
+                                    <Link style={{margin: 0, padding: 10}}
+                                          url={"tel: " + ride.driver.phone}
+                                          icon={"phone"}
+                                          size={16}
+                                          iconSize={24}
+                                          color={colors.action}
+                                          text={"CALL " + ride.driver.name.toUpperCase()}
+                                    />
+                                    <Link style={{margin: 0, padding: 10}}
+                                          action={this.cancelRide}
+                                          icon={"clear"}
+                                          size={16}
+                                          iconSize={24}
+                                          color={colors.action_secondary}
+                                          text={"CANCEL RIDE"}
+                                    />
+                                </View>
                     </View>
                 </View>
             </View>
@@ -282,7 +282,7 @@ var CurrentRidePage = React.createClass({
                                 Your are on your way now. 
                             </Text>
                             <Text>
-                                Enjoy the ride! 
+                                Enjoy the ride. :) 
                             </Text>
                         </View>
                     </View>
@@ -342,7 +342,7 @@ var CurrentRidePage = React.createClass({
                         You can send the money to:
                     </Text>
                     <Text style={styles.heavy_text}>
-                        {ride.driver.phone}
+                        07 19 33 19 03
                     </Text>
 
                 </View>
