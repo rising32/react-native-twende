@@ -476,6 +476,14 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={styles.page}>
                 {content}
+                <View style={{alignItems: 'center'}}>
+                    <Link
+                        style={{padding:10}}
+                        action={this.refreshRide}
+                        text={'refresh current ride'}
+                        icon={'autorenew'}
+                    />
+                </View>
             </View>
         );
     }

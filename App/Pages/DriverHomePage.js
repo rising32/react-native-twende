@@ -82,7 +82,7 @@ var DriverHomePage = React.createClass({
     },
 
     refreshItems: function(){
-        ToastAndroid.show('Checking for customers.', ToastAndroid.SHORT);
+        ToastAndroid.show('Looking for clients.', ToastAndroid.SHORT);
         loadCustomerList();
     },
 
@@ -208,34 +208,44 @@ var DriverHomePage = React.createClass({
             statusIcon = "alarm";
         }
         return  (
-            <View style={{flex: 1, marginTop: 20}}>
-                <View style={styles.toggle}>
-                    <Link
-                        action={() => this.toggleAvailability(false)}
-                        style={styles.button_simple}
-                        text={"Not available"}
-                        color={colors.action}
+            <View style={styles.page}>
+                <View style={{flex: 1, marginTop: 20}}>
+                    <View style={styles.toggle}>
+                        <Link
+                            action={() => this.toggleAvailability(false)}
+                            style={styles.button_simple}
+                            text={"Not available"}
+                            color={colors.action}
+                            />
+                        <Switch
+                            style={{borderColor: colors.action}}
+                            onTintColor={colors.action}
+                            onValueChange={(val) => this.toggleAvailability(val)}
+                            value={is_available}
                         />
-                    <Switch
-                        style={{borderColor: colors.action}}
-                        onTintColor={colors.action}
-                        onValueChange={(val) => this.toggleAvailability(val)}
-                        value={is_available}
-                    />
-                    <Link
-                        action={() => this.toggleAvailability(true)}
-                        style={styles.button_simple}
-                        text={"Available"}
-                        color={colors.action}
+                        <Link
+                            action={() => this.toggleAvailability(true)}
+                            style={styles.button_simple}
+                            text={"Available"}
+                            color={colors.action}
+                            />
+                    </View>
+                    <View style={{alignItems: 'center'}}>
+                        <IconText
+                            icon={statusIcon}
+                            text={statusText}
+                            color={colors.action_secondary}
+                            style={{margin: 10}}
                         />
-                </View>
-                <View style={{alignItems: 'center'}}>
-                    <IconText
-                        icon={statusIcon}
-                        text={statusText}
-                        color={colors.action_secondary}
-                        style={{margin: 10}}
-                    />
+                    </View>
+                    <View style={{alignItems: 'center'}}>
+                        <Link
+                            style={{padding:10}}
+                            action={this.refreshItems}
+                            text={'look for clients'}
+                            icon={'autorenew'}
+                        />
+                    </View>
                 </View>
             </View>
         );
