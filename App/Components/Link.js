@@ -32,7 +32,7 @@ var Link = React.createClass({
     render: function () {
         var text = this.props.text || '';
         var color = this.props.color || colors.action;
-        var size = this.props.size || 16;
+        var size = this.props.size || 14;
         var iconSize = this.props.iconSize ? this.props.iconSize : size;
         var icon = null;
         var action = this.props.action ? this.props.action : this.handleClick
@@ -49,7 +49,7 @@ var Link = React.createClass({
             >
                 {icon}
                 <View style={styles.link}>
-                    <Text style={[this.props.textStyle, {color: color, fontSize: size}]}>
+                    <Text style={[this.props.textStyle, {color: color, fontWeight: 'bold', fontSize: size}]}>
                         {text}
                     </Text>
                 </View>
