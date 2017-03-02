@@ -149,6 +149,22 @@ export var styles = StyleSheet.create({
         color: colors.secondary
     },
 
+    loginPage: {
+        marginTop: 20,
+        marginBottom: 20,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+
+    login_image: {
+        justifyContent: 'center',
+        flex: 1,
+        marginTop: 10,
+        width: 100,
+        height: 100
+    },
+
     // Card
     card: {
         paddingBottom: 20,

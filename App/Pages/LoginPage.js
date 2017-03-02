@@ -11,6 +11,7 @@ var {
     TextInput,
     Navigator,
     TouchableHighlight,
+    Image
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
@@ -166,21 +167,20 @@ var LoginPage = React.createClass({
         var content = this.renderSocialLogin();
 
         return (
-            <View style={[styles.page, styles.page_full, styles.card]}>
-
-                <View style={[styles.page, styles.page_full, styles.card]}>
-                    {error}
-                    {content}
+            <View style={styles.loginPage}>
+                <View style={styles.login_image}>
+                    <Image source={require('../assets/logo.png')}/>
                 </View>
-                <Text>
-                    By signing up you agree to Twende's
-                </Text>
-                <Link
-                    action={() => this.props.navigator.push({id: 'TermsPage'})}
-                    text={'Terms of Service'}
-                    color={colors.action}
-                />
-                {spinner}
+                    <View style={{marginBottom: 10}}>{error}{content}</View>
+                <View><Text>By signing up you agree to Twende's</Text></View>
+                <View>
+                    <Link
+                        action={() => this.props.navigator.push({id: 'TermsPage'})}
+                        text={'Terms of Service'}
+                        color={colors.action}
+                    />
+                </View>
+                    {spinner}
             </View>
         );
     }
