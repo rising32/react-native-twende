@@ -9,6 +9,7 @@ var {
     } = ReactNative;
 
 import { Icon } from 'react-native-material-design';
+import {colors, styles} from "../Styles";
 
 
 var StarRating = React.createClass({
@@ -82,17 +83,5 @@ var StarRating = React.createClass({
     }
 });
 
-const styles = StyleSheet.create({
-    starRatingContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    colorOn: {
-        color: '#FF4946'
-    },
-    colorOff: {
-        color: '#999999'
-    }
-});
 
 module.exports = StarRating;

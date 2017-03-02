@@ -59,10 +59,6 @@ export var styles = StyleSheet.create({
         color: colors.text_important
     },
 
-    renderSheetTopText: {
-        fontWeight: 'bold',
-    },
-
     // Splash
     splash: {
         backgroundColor: colors.splash,
@@ -81,9 +77,8 @@ export var styles = StyleSheet.create({
     banner: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 0,
         width: 360,
-        height: 200,
+        height: 180,
         bottom: 0
     },
 
@@ -164,16 +159,12 @@ export var styles = StyleSheet.create({
     },
 
     card_mid: {
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: 10,
-        marginTop: 0,
-        marginLeft: 0,
-        marginRight: 0,
-        marginBottom: -14,
+        padding: 8,
         backgroundColor: colors.box,
-        alignItems: 'center',
-        alignSelf: 'stretch'
+        alignItems: 'center'
     },
 
     card_mid_spacer: {
@@ -204,13 +195,12 @@ export var styles = StyleSheet.create({
     sheet: {
         paddingBottom: 20,
         paddingTop: 20,
-        paddingLeft: 40,
-        paddingRight: 40
+        paddingLeft: 10,
+        paddingRight: 10
     },
 
     sheetYellow: {
-        paddingBottom: 20,
-        paddingTop: 20,
+        flex: 1,
         paddingLeft: 40,
         paddingRight: 40,
         backgroundColor: colors.primary
@@ -423,5 +413,17 @@ export var styles = StyleSheet.create({
     menu_close: {
         marginTop: -190,
         marginLeft: 270
+    },
+
+    // StarRating
+    starRatingContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    colorOn: {
+        color: '#FF4946'
+    },
+    colorOff: {
+        color: '#999999'
     }
 });
