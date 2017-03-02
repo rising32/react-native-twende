@@ -168,12 +168,15 @@ var LoginPage = React.createClass({
 
         return (
             <View style={styles.loginPage}>
+              <View></View>
                 <View style={styles.login_image}>
                     <Image source={require('../assets/logo.png')}/>
                 </View>
-                    <View style={{marginBottom: 10}}>{error}{content}</View>
+                    <View>
+                        {error}{content}
+                    </View>
                 <View><Text>By signing up you agree to Twende's</Text></View>
-                <View>
+                <View >
                     <Link
                         action={() => this.props.navigator.push({id: 'TermsPage'})}
                         text={'Terms of Service'}

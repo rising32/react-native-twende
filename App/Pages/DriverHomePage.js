@@ -390,7 +390,7 @@ var DriverHomePage = React.createClass({
                                       Finalize
                                     </Text>
                                     <Text>
-                                      Your trip was {ride.distance.distance}
+
                                     </Text>
                                     <Text style={styles.heavy_text}>
                                       {ride.fare}
@@ -429,7 +429,7 @@ var DriverHomePage = React.createClass({
                             {top}
                             <View style={styles.card_mid}>
                                   <Text style={styles.item_title}>
-                                    {ride.payment_method.toUpperCase()} PAYMENT
+                                  
                                   </Text>
                                   <Text style={styles.heavy_text}>
                                        {ride.fare}

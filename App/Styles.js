@@ -150,8 +150,6 @@ export var styles = StyleSheet.create({
     },
 
     loginPage: {
-        marginTop: 20,
-        marginBottom: 20,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around'
@@ -159,10 +157,7 @@ export var styles = StyleSheet.create({
 
     login_image: {
         justifyContent: 'center',
-        flex: 1,
-        marginTop: 10,
-        width: 100,
-        height: 100
+        alignItems: 'center'
     },
 
     // Card
@@ -177,7 +172,7 @@ export var styles = StyleSheet.create({
     card_mid: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 8,
         backgroundColor: colors.box,
         alignItems: 'center'
@@ -212,7 +207,8 @@ export var styles = StyleSheet.create({
         paddingBottom: 20,
         paddingTop: 20,
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        alignItems: 'center'
     },
 
     sheetYellow: {
