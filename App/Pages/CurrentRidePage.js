@@ -133,6 +133,15 @@ var CurrentRidePage = React.createClass({
         );
     },
 
+    renderSheetTopDropoff: function () {
+        var ride = this.props.currentRide;
+        return (
+            <View style={{justifyContent: 'space-between', marginBottom: 2, alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
+                <Avatar image={ride.customer.avatar} />
+            </View>
+        )
+    },
+
     renderConnecting: function () {
         var ride = this.props.currentRide;
         return (
@@ -142,32 +151,42 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
+                <View style={{flexDirection: 'row', backgroundColor: colors.login, marginLeft: 20, marginRight: 20, justifyContent: 'space-between'}}>
+                    <Avatar image={ride.customer.avatar}/>
+                    <Link style={{margin: 6, alignSelf: 'center'}}
+                          action={this.refreshRide}
+                          text={'REFRESH'}
+                          icon={'autorenew'}
+                          size={16}
+                          iconSize={20}
+                          color={colors.action}
+                      />
+                    <Avatar image={ride.driver.avatar} />
+                </View>
                 <View style={styles.sheet_dark}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Avatar image={ride.customer.avatar}/>
-                            <Text style={{width: 90, textAlign: 'center', marginLeft: 18, marginRight: 18, fontSize: 12, color: '#1da69a'}}>
-                                Wait for call of {ride.driver.name} or call with button below
-                            </Text>
-                        <Avatar image={ride.driver.avatar} />
+                    <View>
+                        <Text style={{textAlign: 'center', margin: 2, color: colors.action_secondary}}>
+                            Wait for call of {ride.driver.name} or call with button below
+                        </Text>
                     </View>
-                    <View style={{padding: 10, paddingTop: 10}}>
-                        <Link style={{margin: 10}}
-                              url={"tel: " + ride.driver.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.secondary}
-                              text={"CALL " + ride.driver.name.toUpperCase()}
-                        />
-                        <Link style={{margin: 10}}
-                              action={this.cancelRide}
-                              icon={"clear"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action_secondary}
-                              text={"CANCEL RIDE"}
-                        />
-                    </View>
+                        <View style={{padding: 8, paddingTop: 8}}>
+                            <Link style={{margin: 8}}
+                                  url={"tel: " + ride.driver.phone}
+                                  icon={"phone"}
+                                  size={16}
+                                  iconSize={24}
+                                  color={colors.secondary}
+                                  text={"CALL " + ride.driver.name.toUpperCase()}
+                            />
+                            <Link style={{margin: 10}}
+                                  action={this.cancelRide}
+                                  icon={"clear"}
+                                  size={16}
+                                  iconSize={24}
+                                  color={colors.disable}
+                                  text={"CANCEL RIDE"}
+                            />
+                        </View>
                 </View>
             </View>
         )
@@ -201,7 +220,7 @@ var CurrentRidePage = React.createClass({
     renderAccepted: function () {
         var ride = this.props.currentRide;
         // var away = "Rider is on his way...";
-        // Once the time / distance of rider to customer can be upated along the way it 
+        // Once the time / distance of rider to customer can be upated along the way it
         // would be interesting to implement this the 'away variable'
         //
         // if (ride.driver_distance) {
@@ -213,47 +232,43 @@ var CurrentRidePage = React.createClass({
         //                color={colors.secondary}
         //                style={{padding: 6, margin: 14}}
         //                />
-        
+
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <Map
                     title={"rider on his way"}
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={styles.sheet_dark}>
-                    <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer}/>
-                            <View style={styles.card_mid_avatar}>
-                                <Avatar
-                                    image={ride.driver.avatar}/>
-                            </View>
-                                <View style={styles.card_mid}>
-                                    <Text style={styles.item_title}>
-                                        Hi {ride.customer.first_name},
-                                    </Text>
-                                    <Text style={{margin: 10}}>
-                                        I'm on my way to pick you up!
-                                    </Text>
-                                    <Link style={{margin: 0, padding: 10}}
-                                          url={"tel: " + ride.driver.phone}
-                                          icon={"phone"}
-                                          size={16}
-                                          iconSize={24}
-                                          color={colors.action}
-                                          text={"CALL " + ride.driver.name.toUpperCase()}
-                                    />
-                                    <Link style={{margin: 0, padding: 10}}
-                                          action={this.cancelRide}
-                                          icon={"clear"}
-                                          size={16}
-                                          iconSize={24}
-                                          color={colors.action_secondary}
-                                          text={"CANCEL RIDE"}
-                                    />
-                                </View>
-                    </View>
+                <View style={{flexDirection: 'row', backgroundColor: colors.login, margin: 4, justifyContent: 'center'}}>
+                    <Avatar image={ride.driver.avatar}/>
+                    <Link style={{margin: 0, padding: 10}}
+                          action={this.cancelRide}
+                          icon={"clear"}
+                          size={16}
+                          iconSize={24}
+                          color={colors.action_secondary}
+                          text={"CANCEL RIDE"}
+                    />
                 </View>
+                    <View style={styles.card_mid}>
+                        <Text style={styles.item_title}>
+                            Hi {ride.customer.first_name},
+                        </Text>
+                        <Text style={{margin: 10}}>
+                            I'm on my way to pick you up!
+                        </Text>
+                    </View>
+                    <View style={[styles.sheet_dark, {padding: 8, paddingTop: 8}]}>
+                        <Link style={{margin: 0, padding: 10}}
+                              url={"tel: " + ride.driver.phone}
+                              icon={"phone"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.action}
+                              text={"CALL " + ride.driver.name.toUpperCase()}
+                        />
+                    </View>
             </View>
         )
     },
@@ -261,72 +276,71 @@ var CurrentRidePage = React.createClass({
     renderDriving: function () {
         var ride = this.props.currentRide;
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <Map
                     style={{flex: 1}}
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={styles.sheet_dark}>
-                    <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer}/>
-                        <View style={styles.card_mid_avatar}>
-                            <Avatar
-                                image={ride.driver.avatar}/>
-                        </View>
+                <View style={{flexDirection: 'row', backgroundColor: colors.login, margin: 4, justifyContent: 'center'}}>
+                    <Avatar image={ride.driver.avatar}/>
+                </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
                                 Let's go!
                             </Text>
                             <Text>
-                                Your are on your way now. 
+                                Your are on your way now.
                             </Text>
                             <Text>
-                                Enjoy the ride. :) 
+                                Enjoy the ride. :)
                             </Text>
                         </View>
+                        <View style={{flexDirection: 'row', margin: 20, alignSelf: 'center'}}>
+                            <Button
+                                  action={this.refreshRide}
+                                  text={'PAYMENT'}
+                                  color={colors.action}
+                              />
+                        </View>
                     </View>
-                </View>
-            </View>
+
         )
     },
 
     renderDropOff: function () {
         var ride = this.props.currentRide;
         return (
-            <View style={{flex: 1}}>
-                <View style={styles.sheet_dark}>
-                    <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid_spacer}/>
-                        <View style={styles.card_mid_avatar}>
-                            <Avatar
-                                image={ride.driver.avatar}/>
-                        </View>
-                        <View style={styles.card_mid}>
-                            <Text style={styles.item_title}>
+            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
+                <View style={styles.sheetYellow}>
+                    <View
+                        style={{flex: 0.5, backgroundColor: colors.primary}}>
+                      </View>
+                      <View style={styles.card_mid}>
+                          <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', marginTop: 6, marginBottom: 6}}>
+                              <Text style={styles.item_title}>
                                 Payment
-                            </Text>
-                            <Text style={styles.heavy_text}>
+                              </Text>
+                              <Text style={styles.heavy_text}>
                                 {ride.fare}
-                            </Text>
-                            <Text>
-                                Your trip was {ride.distance.distance}.
-                            </Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Button
-                                    action={this.payMpesa}
-                                    text={"M-PESA"}
-                                    color={colors.action}
-                                    />
-                                <Button
-                                    action={this.payCash}
-                                    text={"CASH"}
-                                    color={colors.action}
-                                    />
-                            </View>
-                        </View>
-                    </View>
-
+                              </Text>
+                              <Text>
+                                  Your trip was {ride.distance.distance}.
+                              </Text>
+                              <View style={{flexDirection: 'row'}}>
+                                  <Button
+                                      action={this.payMpesa}
+                                      text={"M-PESA"}
+                                      color={colors.action}
+                                      />
+                                  <Button
+                                      action={this.payCash}
+                                      text={"CASH"}
+                                      color={colors.action}
+                                      />
+                              </View>
+                          </View>
+                      </View>
                 </View>
             </View>
         )
@@ -476,19 +490,10 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={styles.page}>
                 {content}
-                <View style={{alignItems: 'center'}}>
-                    <Link
-                        style={{padding:10}}
-                        action={this.refreshRide}
-                        text={'refresh current ride'}
-                        icon={'autorenew'}
-                    />
-                </View>
             </View>
         );
     }
 });
-
 
 var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {

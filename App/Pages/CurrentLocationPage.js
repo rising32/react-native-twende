@@ -181,9 +181,6 @@ var CurrentLocationPage = React.createClass({
                             <Text style={styles.item_title}>
                               Karibu {this.props.currentUser.first_name}!
                             </Text>
-                            {/*<Text style={styles.text_important}>
-                                Is your pick up location correct?
-                            </Text>*/}
                             <Text style={styles.text_important}>
                                 If location is not correct please drag pin.
                             </Text>

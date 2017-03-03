@@ -20,6 +20,7 @@ export var colors = {
     border: '#777777',
     nav_text: '#877a42',
     box: '#FFFFFF',
+    login: '#f4f4f4',
     error: '#992200', // Dark Red
     box_dark: '#E0E0E0',
     button_normal: '#2BA59A',
@@ -151,7 +152,7 @@ export var styles = StyleSheet.create({
 
     loginPage: {
         flex: 1,
-        backgroundColor: colors.box_dark,
+        backgroundColor: colors.login,
         alignItems: 'center',
         justifyContent: 'space-around'
     },
@@ -171,11 +172,14 @@ export var styles = StyleSheet.create({
     },
 
     card_mid: {
-        flex: 5,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
         borderRadius: 6,
         padding: 8,
+        marginLeft: 40,
+        marginRight: 40,
+        margin: 4,
         backgroundColor: colors.box,
         alignItems: 'center'
     },
@@ -226,11 +230,11 @@ export var styles = StyleSheet.create({
     },
 
     sheet_dark: {
-        paddingBottom: 20,
-        paddingTop: 10,
+        paddingBottom: 10,
+        paddingTop: 8,
         paddingLeft: 40,
         paddingRight: 40,
-        backgroundColor: colors.box_dark
+        backgroundColor: colors.login
     },
 
     sheet_icon: {
