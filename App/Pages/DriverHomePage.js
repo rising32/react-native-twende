@@ -175,18 +175,18 @@ var DriverHomePage = React.createClass({
     renderSheetTop: function (decline_text, navigation_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'stretch', marginTop: -50, marginBottom: -15, elevation: 5}}>
+            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -50, marginBottom: -15, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderSheetTop}>
-                        <Text style={{fontSize: 15}}>
+                      <View style={styles.renderSheetTopItem}>
+                        <Text style={{fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View>
+                <View style={{marginLeft: 10, marginRight: 14}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={styles.renderSheetTop}>
+                    <View style={styles.renderSheetTopItem}>
                       <Link
                           url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                           text={navigation_text}
@@ -218,7 +218,7 @@ var DriverHomePage = React.createClass({
         }
         return  (
             <View style={styles.page}>
-                <View style={{flex: 1, marginTop: 20}}>
+                <View style={{flex: 1}}>
                     <View style={styles.toggle}>
                         <Button
                             action={() => this.toggleAvailability(false)}
@@ -355,13 +355,12 @@ var DriverHomePage = React.createClass({
                         </Text>
                         <View style={{flexDirection: 'column', marginTop: 5, marginBottom: 10, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
                           <Link
-                              url={"tel: 0791398120"}
+                              url={"tel: " + ride.customer.phone}
                               icon={"phone"}
                               size={16}
                               iconSize={24}
                               color={colors.secondary}
-                              text={"CALL SUPPORT"}
-                              style={{margin: 10}}
+                              text={"CALL " + ride.customer.first_name.toUpperCase()}
                           />
                         </View>
                         <View style={{flexDirection: 'row', marginLeft: 0, marginRight: 0}}>
@@ -379,40 +378,46 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
         var top = this.renderSheetTopDropoff();
         return  (
-          <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
-                <View style={{backgroundColor: colors.primary, height: 30}}>
-                </View>
-                    <View style={styles.sheetYellow}>
-                        <View style={styles.card_mid}>
-                            {top}
-                            <View style={styles.card_mid}>
-                                  <Text style={styles.item_title}>
-                                      Finalize
-                                    </Text>
-                                    <Text>
-
+            <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
+                <View style={styles.sheetYellow}>
+                    <View
+                        style={{flex: 0.5, backgroundColor: colors.primary}}>
+                    </View>
+                    <View style={styles.card_mid}>
+                        {top}
+                        <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', marginTop: 6, marginBottom: 6}}>
+                            <Text style={styles.item_title}>
+                                Finalize
+                            </Text>
+                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={{margin: 1}}>
+                                        Your trip was {ride.distance.distance}
                                     </Text>
                                     <Text style={styles.heavy_text}>
-                                      {ride.fare}
+                                        {ride.fare}
                                     </Text>
-                                    <Text>
-                                      Wait for {ride.customer.name} to pay
+                                    <Text style={{margin: 1}}>
+                                        Wait for {ride.customer.name} to pay
                                     </Text>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Button
-                                          action={this.askPayment}
-                                          text={"PAYMENT"}
-                                        />
-                                    </View>
-                              </View>
+                                </View>
                         </View>
-                  </View>
-                        <View>
-                            <Image
-                                source={require('../assets/banner.jpg')}
-                                style={styles.banner}
-                                />
+                            <View style={{flexDirection: 'row'}}>
+                                  <Button
+                                    action={this.askPayment}
+                                    text={"PAYMENT"}
+                                  />
+                            </View>
+                    </View>
+                        <View
+                            style={{flex: 0.5, backgroundColor: colors.primary}}>
                         </View>
+                </View>
+                    <View>
+                          <Image
+                              source={require('../assets/banner.jpg')}
+                              style={styles.banner}
+                              />
+                    </View>
             </View>
         );
     },
@@ -421,44 +426,48 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
         var top = this.renderSheetTopDropoff();
         return  (
-          <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
-                <View style={{backgroundColor: colors.primary, height: 30}}>
-                </View>
-                    <View style={styles.sheetYellow}>
-                        <View style={styles.card_mid}>
-                            {top}
-                            <View style={styles.card_mid}>
-                                  <Text style={styles.item_title}>
-                                  
-                                  </Text>
-                                  <Text style={styles.heavy_text}>
-                                       {ride.fare}
-                                  </Text>
+            <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
+                  <View style={styles.sheetYellow}>
+                      <View
+                          style={{flex: 0.5, backgroundColor: colors.primary}}>
+                      </View>
+                          <View style={styles.card_mid}>
+                              {top}
+                              <Text style={styles.item_title}>
+
+                              </Text>
+                              <Text style={styles.heavy_text}>
+                                   {ride.fare}
+                              </Text>
+                              <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                   <Text>
                                     Please rate this ride
                                   </Text>
                                   <StarRating
-                                    onChange={this.rateRide}
-                                    maxStars={5}
-                                    rating={0}
-                                    colorOn={colors.action}
-                                    colorOff={colors.action_disabled}
-                                  />
-                              <View style={{flexDirection: 'row'}}>
-                              <Button
-                                  action={this.finishRide}
-                                  text={"FINISH"}
+                                      onChange={this.rateRide}
+                                      maxStars={5}
+                                      rating={0}
+                                      colorOn={colors.action}
+                                      colorOff={colors.action_disabled}
                                   />
                               </View>
-                            </View>
-                      </View>
-                </View>
-                      <View>
-                          <Image
-                              source={require('../assets/banner.jpg')}
-                              style={styles.banner}
-                              />
-                      </View>
+                              <View style={{flexDirection: 'row'}}>
+                                  <Button
+                                      action={this.finishRide}
+                                      text={"FINISH"}
+                                      />
+                              </View>
+                          </View>
+                              <View
+                                  style={{flex: 0.5, backgroundColor: colors.primary}}>
+                              </View>
+                  </View>
+                        <View>
+                            <Image
+                                source={require('../assets/banner.jpg')}
+                                style={styles.banner}
+                                />
+                        </View>
           </View>
       );
   },

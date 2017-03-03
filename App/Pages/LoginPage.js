@@ -159,7 +159,7 @@ var LoginPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.spinner}>
-                    <Text>Login successful...</Text>
+                    <Text>Login successful!</Text>
                 </View>
             );
         }
@@ -168,20 +168,32 @@ var LoginPage = React.createClass({
 
         return (
             <View style={styles.loginPage}>
-              <View></View>
-                <View style={styles.login_image}>
-                    <Image source={require('../assets/logo.png')}/>
+                <View style={{flex: 1.6}}></View>
+                <View style={{flex: 2}}>
+                    <View>
+                        <Image
+                          style={{width: 120, height: 120}}
+                          source={require('../assets/logo.png')}/>
+                    </View>
                 </View>
+                <View style={{flex: 0.5}}>
                     <View>
                         {error}{content}
                     </View>
-                <View><Text>By signing up you agree to Twende's</Text></View>
-                <View >
-                    <Link
-                        action={() => this.props.navigator.push({id: 'TermsPage'})}
-                        text={'Terms of Service'}
-                        color={colors.action}
-                    />
+                </View>
+                <View style={{flex: 0.5, alignItems: 'center'}}>
+                    <View>
+                        <Text>
+                            By signing up you agree to Twende's
+                        </Text>
+                    </View>
+                    <View>
+                        <Link
+                            action={() => this.props.navigator.push({id: 'TermsPage'})}
+                            text={'Terms of Service'}
+                            color={colors.action}
+                        />
+                    </View>
                 </View>
                     {spinner}
             </View>

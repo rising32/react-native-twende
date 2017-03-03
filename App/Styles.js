@@ -11,10 +11,10 @@ export var colors = {
     action: '#1da69a', // brand book green
     secondary: '#273b95', // brand book blue
     disable: '#c2382b', // brand book red
-    splash: '#ffda57', // kan vervangen worden met primary
     primary_dark: '#d1af42',
     action_secondary: '#555555', // dark grey
     action_disabled: '#E0E0E0', // light grey
+    login: '#ededed',
     text: '#333333',
     text_important: '#1da69a', // kan vervangen worden met action
     title: '#555555',
@@ -61,25 +61,25 @@ export var styles = StyleSheet.create({
 
     // Splash
     splash: {
-        backgroundColor: colors.splash,
+        backgroundColor: colors.primary,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
 
     splash_title: {
-        marginTop: 160,
-        marginBottom: 65,
-        width: 225,
-        height: 92
+        width: 200,
+        height: 80
     },
 
     banner: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 360,
-        height: 180,
-        bottom: 0
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 0,
+      width: 360,
+      height: 200,
+      bottom: 0
     },
 
     loading: {
@@ -133,7 +133,7 @@ export var styles = StyleSheet.create({
 
     // Page
     page: {
-        marginTop: 56,
+        marginTop: 25,
         flex: 1
     },
     page_full: {
@@ -151,6 +151,7 @@ export var styles = StyleSheet.create({
 
     loginPage: {
         flex: 1,
+        backgroundColor: colors.box_dark,
         alignItems: 'center',
         justifyContent: 'space-around'
     },
@@ -170,9 +171,10 @@ export var styles = StyleSheet.create({
     },
 
     card_mid: {
-        flex: 1,
+        flex: 5,
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
+        borderRadius: 6,
         padding: 8,
         backgroundColor: colors.box,
         alignItems: 'center'
@@ -240,8 +242,9 @@ export var styles = StyleSheet.create({
         elevation: 4
     },
 
-    renderSheetTop: {
-        marginTop: 30
+    renderSheetTopItem: {
+        marginTop: 30,
+        marginLeft: 4
     },
 
     // Map
