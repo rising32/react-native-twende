@@ -14,7 +14,6 @@ export var colors = {
     primary_dark: '#d1af42',
     action_secondary: '#555555', // dark grey
     action_disabled: '#E0E0E0', // light grey
-    login: '#ededed',
     text: '#333333',
     text_important: '#1da69a', // kan vervangen worden met action
     title: '#555555',
@@ -133,7 +132,8 @@ export var styles = StyleSheet.create({
 
     // Page
     page: {
-        marginTop: 25,
+        marginTop: 50,
+        justifyContent: 'space-around',
         flex: 1
     },
     page_full: {
@@ -221,7 +221,8 @@ export var styles = StyleSheet.create({
     },
 
     sheet_content: {
-        paddingTop: 20
+        paddingTop: 20,
+        alignItems: 'center'
     },
 
     sheet_dark: {

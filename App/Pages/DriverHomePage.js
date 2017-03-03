@@ -267,7 +267,7 @@ var DriverHomePage = React.createClass({
             away = ride.customer_distance.distance + ' (' + ride.customer_distance.duration + ') away';
         }
         return  (
-          <View style={{flex: 1, justifyContent: 'space-between'}}>
+          <View style={{flex: 1, justifyContent: 'space-around'}}>
                 <Map
                     title={"request"}
                     driver={ride.driver.position}
