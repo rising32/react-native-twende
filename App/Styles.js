@@ -172,14 +172,25 @@ export var styles = StyleSheet.create({
     },
 
     card_mid: {
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
         borderRadius: 6,
-        padding: 8,
+        padding: 12,
         marginLeft: 40,
         marginRight: 40,
-        margin: 4,
+        margin: 0,
+        backgroundColor: colors.box,
+        alignItems: 'center'
+    },
+
+    card_mid_finalize: {
+        flex: 3,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        borderRadius: 6,
+        padding: 12,
+        marginLeft: 30,
+        marginRight: 30,
         backgroundColor: colors.box,
         alignItems: 'center'
     },

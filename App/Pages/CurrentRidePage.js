@@ -6,6 +6,7 @@ var {
     Alert,
     View,
     Text,
+    Image,
     TextInput,
     Navigator,
     ToastAndroid,
@@ -240,36 +241,44 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={{flexDirection: 'row', backgroundColor: colors.login, margin: 4, justifyContent: 'center'}}>
-                    <Avatar image={ride.driver.avatar}/>
-                    <Link style={{margin: 0, padding: 10}}
-                          action={this.cancelRide}
-                          icon={"clear"}
-                          size={16}
-                          iconSize={24}
-                          color={colors.action_secondary}
-                          text={"CANCEL RIDE"}
-                    />
-                </View>
+                <View style={{flexDirection: 'row', alignSelf: 'flex-end', justifyContent: 'space-between', marginTop: -35}}>
+                    <View style={{marginLeft: 10}}></View>
+                        <View style={{margin: 4}}>
+                            <Avatar image={ride.driver.avatar}/>
+                        </View>
+                        <View style={styles.renderSheetTopItem}>
+                            <Link style={{margin: 0, padding: 10}}
+                                action={this.cancelRide}
+                                icon={"clear"}
+                                size={14}
+                                iconSize={20}
+                                color={colors.disable}
+                                text={"CANCEL RIDE"}
+                            />
+                        </View>
+                    </View>
                     <View style={styles.card_mid}>
                         <Text style={styles.item_title}>
                             Hi {ride.customer.first_name},
                         </Text>
-                        <Text style={{margin: 10}}>
+                        <Text>
                             I'm on my way to pick you up!
                         </Text>
                     </View>
-                    <View style={[styles.sheet_dark, {padding: 8, paddingTop: 8}]}>
-                        <Link style={{margin: 0, padding: 10}}
-                              url={"tel: " + ride.driver.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action}
-                              text={"CALL " + ride.driver.name.toUpperCase()}
-                        />
+                    <View style={styles.sheet_dark}>
+                        <View style={{padding: 8, marginLeft: 28}}>
+                            <Link style={{margin: 8}}
+                                url={"tel: " + ride.driver.phone}
+                                icon={"phone"}
+                                size={16}
+                                iconSize={24}
+                                color={colors.action}
+                                text={"CALL " + ride.driver.name.toUpperCase()}
+                            />
+                        </View>
                     </View>
-            </View>
+                </View>
+
         )
     },
 
@@ -282,8 +291,30 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={{flexDirection: 'row', backgroundColor: colors.login, margin: 4, justifyContent: 'center'}}>
-                    <Avatar image={ride.driver.avatar}/>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -35}}>
+                    <View style={styles.renderSheetTopItem}>
+                        <Link style={{margin: 0, padding: 10}}
+                            url={"tel: " + ride.driver.phone}
+                            icon={"phone"}
+                            size={14}
+                            iconSize={20}
+                            color={colors.action}
+                            text={"CALL RIDER"}
+                        />
+                    </View>
+                    <View style={{margin: 4}}>
+                        <Avatar image={ride.driver.avatar}/>
+                    </View>
+                    <View style={styles.renderSheetTopItem}>
+                        <Link style={{margin: 0, padding: 10}}
+                            action={this.cancelRide}
+                            size={14}
+                            iconSize={20}
+                            color={colors.disable}
+                            text={"DECLINE"}
+                            icon={"clear"}
+                        />
+                    </View>
                 </View>
                         <View style={styles.card_mid}>
                             <Text style={styles.item_title}>
@@ -313,10 +344,11 @@ var CurrentRidePage = React.createClass({
         return (
             <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <View style={styles.sheetYellow}>
-                    <View
+                      <View
                         style={{flex: 0.5, backgroundColor: colors.primary}}>
                       </View>
-                      <View style={styles.card_mid}>
+                      <View style={styles.card_mid_finalize}>
+                          <Avatar image={ride.driver.avatar}/>
                           <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', marginTop: 6, marginBottom: 6}}>
                               <Text style={styles.item_title}>
                                 Payment
@@ -327,26 +359,95 @@ var CurrentRidePage = React.createClass({
                               <Text>
                                   Your trip was {ride.distance.distance}.
                               </Text>
-                              <View style={{flexDirection: 'row'}}>
-                                  <Button
-                                      action={this.payMpesa}
-                                      text={"M-PESA"}
-                                      color={colors.action}
-                                      />
-                                  <Button
-                                      action={this.payCash}
-                                      text={"CASH"}
-                                      color={colors.action}
-                                      />
-                              </View>
+                          </View>
+                          <View style={{flexDirection: 'row'}}>
+                              <Button
+                                  action={this.payMpesa}
+                                  text={"M-PESA"}
+                                  color={colors.action}
+                                  />
+                              <Button
+                                  action={this.payCash}
+                                  text={"CASH"}
+                                  color={colors.action}
+                                  />
                           </View>
                       </View>
+                          <View
+                              style={{flex: 0.5, backgroundColor: colors.primary}}>
+                          </View>
+                      </View>
+                      <View>
+                            <Image
+                                source={require('../assets/banner.jpg')}
+                                style={styles.banner}
+                                />
+                      </View>
                 </View>
-            </View>
+
         )
     },
 
     renderPayment: function () {
+      var ride = this.props.currentRide;
+      var phone;
+      if (ride.payment_method == 'mpesa') {
+          phone = "You can send the money to 07 19 33 19 03";
+          ;
+      }
+      var header = "Finalize";
+      var buttonText = "Done";
+      var buttonAction = this.completePayment;
+      var phone = "Thanks for your cash payment "
+
+
+        return (
+            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
+                <View style={styles.sheetYellow}>
+                    <View
+                        style={{flex: 0.5, backgroundColor: colors.primary}}>
+                      </View>
+
+                      <View style={styles.card_mid}>
+                          <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', marginTop: 6, marginBottom: 6}}>
+<Avatar image={ride.driver.avatar}/>
+
+                              <Text style={styles.item_title}>
+                                {header}
+                              </Text>
+                              <Text style={styles.heavy_text}>
+                                {ride.fare}
+                              </Text>
+                              <Text>
+                                  {phone}
+                              </Text>
+
+                          </View>
+                          <View style={{flexDirection: 'row'}}>
+                              <Button
+                                  action={buttonAction}
+                                  text={buttonText}
+                                  color={colors.action}
+                                  />
+                          </View>
+                      </View>
+
+                          <View
+                              style={{flex: 0.5, backgroundColor: colors.primary}}>
+                          </View>
+                      </View>
+                      <View>
+                            <Image
+                                source={require('../assets/banner.jpg')}
+                                style={styles.banner}
+                                />
+                      </View>
+                </View>
+
+        )
+    },
+
+    renderPayment2: function (payment) {
         var ride = this.props.currentRide;
         var phone;
         if (ride.payment_method == 'mpesa') {
