@@ -37,7 +37,11 @@ class CurrentRideStore extends EventEmitter {
                 this.error(actions.error);
                 break;
             case actions.receiveRideList:
-                this.set(action.rides[0]);
+                if (action.rides.length) {
+                    this.set(action.rides[0]);
+                } else {
+                    this.emit(events.noCurrentRide);
+                }
                 break;
             case actions.errorLoadRideList:
                 this.error(actions.error);
