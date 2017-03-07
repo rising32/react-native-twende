@@ -10,6 +10,7 @@ var {
     TextInput,
     Navigator,
     ToastAndroid,
+    Clipboard,
     } = ReactNative;
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
@@ -52,6 +53,7 @@ var CurrentRidePage = React.createClass({
         updateCurrentRide(currentRide);
     },
 
+
     findNewDriver: function() {
         // This ride is rejected so create a new one.
         var rejectedRide = this.props.currentRide;
@@ -65,7 +67,7 @@ var CurrentRidePage = React.createClass({
 
     refreshRide: function () {
         refreshCurrentRide(this.props.currentRide.id);
-        ToastAndroid.show('Refreshing...', ToastAndroid.SHORT)
+        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
     },
 
     rateRide: function (rating) {
@@ -161,8 +163,8 @@ var CurrentRidePage = React.createClass({
                     <View style={styles.renderSheetTopItem}>
                         <Link
                               action={this.refreshRide}
-                              text={'REFRESH'}
-                              icon={'autorenew'}
+                              text={'NEXT  '}
+                              iconRight={'fast-forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -259,8 +261,8 @@ var CurrentRidePage = React.createClass({
                     <View style={styles.renderSheetTopItem}>
                         <Link
                               action={this.refreshRide}
-                              text={'REFRESH'}
-                              icon={'autorenew'}
+                              text={'NEXT  '}
+                              iconRight={'fast-forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -367,7 +369,7 @@ var CurrentRidePage = React.createClass({
                         </View>
                         <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.item_title}>
-                              Payment
+                              Price
                             </Text>
                             <Text style={styles.heavy_text}>
                               {ride.fare}
@@ -403,21 +405,24 @@ var CurrentRidePage = React.createClass({
 
     renderPayment: function () {
       var ride = this.props.currentRide;
-      var phone;
+      var text;
+      var text2;
       if (ride.payment_method == 'mpesa') {
-          phone = "Please send the money to 07 19 33 19 03";
+          text = "M-Pesa Send Money no.";
+          text2 = "07 1933 1903";
         } else {
-          var phone = "Thanks for your cash payment";
+          var text = "Thanks for your cash payment";
       }
-      var header = "Finalize";
-      var buttonText = "Done";
+      var header = "Payment";
+      var buttonText = "DONE";
       var buttonAction = this.completePayment;
+
 
         return (
             <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <View style={styles.sheetYellow}>
                     <View
-                      style={{flex: 0.15, backgroundColor: colors.primary}}>
+                      style={{flex: 0.1, backgroundColor: colors.primary}}>
                     </View>
                     <View style={styles.card_mid_finalize}>
                         <View style={{alignSelf: 'center', elevation: 5}}>
@@ -431,7 +436,10 @@ var CurrentRidePage = React.createClass({
                               {ride.fare}
                             </Text>
                             <Text style={{textAlign: 'center'}}>
-                                {phone}
+                                {text}
+                            </Text>
+                            <Text selectable={true} onPress={()=>this.setClipboardContent(message)} style={{textAlign: 'center', fontWeight: 'bold'}}>
+                                {text2}
                             </Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>
@@ -458,7 +466,7 @@ var CurrentRidePage = React.createClass({
     renderFinalize: function () {
       var ride = this.props.currentRide;
       var message = "How was your ride with " + ride.driver.name +"?";
-      var header = "Rate this ride";
+      var header = "Rating";
       var buttonText = "Finish";
       var buttonAction = this.finishRide;
 

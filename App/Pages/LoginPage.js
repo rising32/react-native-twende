@@ -173,11 +173,11 @@ var LoginPage = React.createClass({
                 </View>
                 <View style={{flex: 0.2, marginTop: 20, justifyContent: 'flex-end'}}>
                         <Image
-                          style={{width: 110, height: 110}}
+                          style={{width: 105, height: 105}}
                           source={require('../assets/logo.png')}/>
                 </View>
                 <View style={{flex: 0.2, justifyContent: 'flex-end'}}>
-                    <Text style={[styles.item_title, {textAlign: 'center', color: colors.secondary, fontSize: 36}]}>
+                    <Text style={[styles.item_title, {textAlign: 'center', color: colors.secondary, fontSize: 30}]}>
                         Karibu!
                     </Text>
                 </View>
@@ -200,8 +200,8 @@ var LoginPage = React.createClass({
                         />
                     </View>
                 </View>
-                <View style={{flex: 0.2, justifyContent: 'flex-end'}}>
-                    <View style={{margin: 20}}>
+                <View style={{flex: 0.2, justifyContent: 'center'}}>
+                    <View style={{margin: 15}}>
                         {error}{content}
                     </View>
                 </View>

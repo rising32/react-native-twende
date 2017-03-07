@@ -83,7 +83,7 @@ var DriverHomePage = React.createClass({
     },
 
     refreshItems: function(){
-        ToastAndroid.show('Looking for clients.', ToastAndroid.SHORT);
+        ToastAndroid.show('Check Customer Activity..', ToastAndroid.SHORT);
         loadCustomerList();
     },
 
@@ -137,15 +137,8 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
-    askPayment: function() {
-        Alert.alert(
-            'Payment',
-            'The customer is choosing the payment method now. Please wait.',
-            [
-                {text: 'OK', onPress: () => {}}
-            ]
-        );
-    },
+    // kunnen we hieronder ook de refresh items functie aanroepen? Zodat rider ook de 
+    // staat van het dashboard ophaalt? 
 
     declineRide: function(ride) {
         Alert.alert(
@@ -183,7 +176,7 @@ var DriverHomePage = React.createClass({
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{marginLeft: 10, marginRight: 14}}>
+                <View style={{marginLeft: 10}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
                     <View style={styles.renderSheetTopItem}>
@@ -199,12 +192,33 @@ var DriverHomePage = React.createClass({
         )
     },
 
+    renderSheetTopRequest: function (decline_text) {
+        var ride = this.props.currentRide;
+        return (
+            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -15, elevation: 5}}>
+                <TouchableOpacity onPress={() => this.declineRide(ride)}>
+                      <View style={styles.renderSheetTopItem}>
+                        <Text style={{fontSize: 15, color: colors.disable}}>
+                            {decline_text}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+                <View style={{marginLeft: 10, marginRight: 14}}>
+                    <Avatar image={ride.customer.avatar} />
+                </View>
+                    <View style={styles.renderSheetTopItem}>
+                    </View>
+            </View>
+        )
+    },
+
     renderSheetTopDropoff: function () {
         var ride = this.props.currentRide;
         return (
             <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
                 <Avatar image={ride.customer.avatar} />
             </View>
+
         )
     },
 
@@ -250,7 +264,7 @@ var DriverHomePage = React.createClass({
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Link
-                            style={{padding:10}}
+                            style={{padding:10, marginBottom: 10}}
                             action={this.refreshItems}
                             text={'refresh'}
                             icon={'autorenew'}
@@ -265,7 +279,7 @@ var DriverHomePage = React.createClass({
 
     renderRequest: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTop("DECLINE");
+        var top = this.renderSheetTopRequest("DECLINE");
         var away = "Unknown distance customer";
         if (ride.driver_distance) {
             away = ride.customer_distance.distance + ' (' + ride.customer_distance.duration + ') away';
@@ -294,7 +308,7 @@ var DriverHomePage = React.createClass({
                     <View style={{flexDirection: 'row'}}>
                         <Button
                             action={this.acceptRide}
-                            text={"Accept Request"}
+                            text={"ACCEPT REQUEST"}
                             color={colors.action}
                             />
                     </View>
@@ -330,7 +344,7 @@ var DriverHomePage = React.createClass({
                           <View style={{flexDirection: 'row'}}>
                                 <Button
                                     action={this.startRide}
-                                    text={"Start Trip"}
+                                    text={"START TRIP"}
                                     color={colors.action}
                                     />
                           </View>
@@ -393,19 +407,20 @@ var DriverHomePage = React.createClass({
                         </View>
                          <View>
                             <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Finalize
+                                Price
                             </Text>
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
                         </View>
                             <Text style={{textAlign: 'center'}}>
-                                Wait for {ride.customer.name} to pay
+                                {ride.customer.name} selects payment method.
+                                
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                  <Button
-                                    action={this.askPayment}
-                                    text={"PAYMENT"}
+                                   <Button
+                                    action={this.refreshItems}
+                                    text={"REFRESH"}
                                   />
                             </View>
                     </View>
@@ -427,7 +442,7 @@ var DriverHomePage = React.createClass({
             <View style={{flex: 1, backgroundColor: colors.primary}}>
                   <View style={styles.sheetYellow}>
                       <View
-                          style={{flex: 0.15, backgroundColor: colors.primary}}>
+                          style={{flex: 0.1, backgroundColor: colors.primary}}>
                       </View>
                           <View style={styles.card_mid_finalize}>
                                 <View>
@@ -435,15 +450,23 @@ var DriverHomePage = React.createClass({
                                 </View>
                                 <View>
                                       <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                            Finalize
+                                            Payment
                                       </Text>
                                       <Text style={styles.heavy_text}>
                                            {ride.fare}
                                       </Text>
+                                <View>
+                                       <Text style={{textAlign: 'center'}}>
+                                            M-Pesa Send Money no.
+                                        </Text>
+                                        <Text style={{textAlign: 'center', marginBottom: 12}}>
+                                            07 1933 1903
+                                        </Text>
+                                </View>
                                 </View>
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                      <Text>
-                                        Please rate this ride
+                                      <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                                        Rate Customer
                                       </Text>
                                       <StarRating
                                           onChange={this.rateRide}

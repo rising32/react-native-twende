@@ -55,11 +55,14 @@ var DriverItem = React.createClass({
                                     colorOff={colors.action_disabled}
                                 />
                             </View>
-                            <SheetIcon
-                                icon={'done'}
-                                style={{marginTop: -55}}
-                                action={this.props.onSelect}
-                            />
+                            <View style={{alignItems: 'flex-end'}}>
+                                <Button
+                                    size={14}
+                                    style={{marginTop: -40, marginLeft: 20, width: 90, height: 36}}
+                                    action={this.props.onSelect}
+                                    text={"REQUEST"}
+                                />
+                            </View>
                         </View>
                     </View>
                 </View>

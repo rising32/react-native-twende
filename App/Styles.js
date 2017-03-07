@@ -408,8 +408,8 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.button_normal,
         elevation: 3,
         flex: 1
-
     },
+
     primary_button_text: {
         color: colors.button_text,
         fontWeight: 'bold'
