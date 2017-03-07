@@ -202,7 +202,7 @@ var DriverHomePage = React.createClass({
     renderSheetTopDropoff: function () {
         var ride = this.props.currentRide;
         return (
-            <View style={{justifyContent: 'space-between', marginTop: -10, alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
+            <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
                 <Avatar image={ride.customer.avatar} />
             </View>
         )
@@ -218,7 +218,9 @@ var DriverHomePage = React.createClass({
         }
         return  (
             <View style={styles.page}>
-                <View style={{flex: 1}}>
+                <View style={{flex: 0.6}}>
+                </View>
+                <View style={{flex:0.4}}>
                     <View style={styles.toggle}>
                         <Button
                             action={() => this.toggleAvailability(false)}
@@ -256,6 +258,8 @@ var DriverHomePage = React.createClass({
                     </View>
                 </View>
             </View>
+
+            
         );
     },
 
@@ -381,26 +385,23 @@ var DriverHomePage = React.createClass({
             <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
                 <View style={styles.sheetYellow}>
                     <View
-                        style={{flex: 0.5, backgroundColor: colors.primary}}>
+                        style={{flex: 0.15, backgroundColor: colors.primary}}>
                     </View>
                     <View style={styles.card_mid_finalize}>
+                        <View>
                         {top}
-                        <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', marginTop: 6, marginBottom: 6}}>
-                            <Text style={styles.item_title}>
+                        </View>
+                         <View>
+                            <Text style={[styles.item_title, {textAlign: 'center'}]}>
                                 Finalize
                             </Text>
-                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text style={{textAlign: 'center'}}>
-                                        Your trip was {ride.distance.distance}
-                                    </Text>
-                                    <Text style={styles.heavy_text}>
-                                        {ride.fare}
-                                    </Text>
-                                    <Text style={{textAlign: 'center'}}>
-                                        Wait for {ride.customer.name} to pay
-                                    </Text>
-                                </View>
+                            <Text style={styles.heavy_text}>
+                                {ride.fare}
+                            </Text>
                         </View>
+                            <Text style={{textAlign: 'center'}}>
+                                Wait for {ride.customer.name} to pay
+                            </Text>
                             <View style={{flexDirection: 'row'}}>
                                   <Button
                                     action={this.askPayment}
@@ -409,7 +410,7 @@ var DriverHomePage = React.createClass({
                             </View>
                     </View>
                 </View>
-                    <View>
+                     <View>
                           <Image
                               source={require('../assets/banner.jpg')}
                               style={styles.banner}
@@ -426,33 +427,38 @@ var DriverHomePage = React.createClass({
             <View style={{flex: 1, backgroundColor: colors.primary}}>
                   <View style={styles.sheetYellow}>
                       <View
-                          style={{flex: 0.5, backgroundColor: colors.primary}}>
+                          style={{flex: 0.15, backgroundColor: colors.primary}}>
                       </View>
                           <View style={styles.card_mid_finalize}>
-                              {top}
-                              <Text style={styles.item_title}>
-                              </Text>
-                              <Text style={styles.heavy_text}>
-                                   {ride.fare}
-                              </Text>
-                              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                  <Text>
-                                    Please rate this ride
-                                  </Text>
-                                  <StarRating
-                                      onChange={this.rateRide}
-                                      maxStars={5}
-                                      rating={0}
-                                      colorOn={colors.action}
-                                      colorOff={colors.action_disabled}
-                                  />
-                              </View>
-                              <View style={{flexDirection: 'row'}}>
+                                <View>
+                                    {top}
+                                </View>
+                                <View>
+                                      <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                                            Finalize
+                                      </Text>
+                                      <Text style={styles.heavy_text}>
+                                           {ride.fare}
+                                      </Text>
+                                </View>
+                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                      <Text>
+                                        Please rate this ride
+                                      </Text>
+                                      <StarRating
+                                          onChange={this.rateRide}
+                                          maxStars={5}
+                                          rating={0}
+                                          colorOn={colors.action}
+                                          colorOff={colors.action_disabled}
+                                      />
+                                </View>
+                                <View style={{flexDirection: 'row'}}>
                                   <Button
                                       action={this.finishRide}
-                                      text={"FINISH"}
+                                      text={"SUBMIT"}
                                       />
-                              </View>
+                                </View>
                           </View>
                   </View>
                         <View>

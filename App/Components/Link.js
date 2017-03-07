@@ -35,6 +35,7 @@ var Link = React.createClass({
         var size = this.props.size || 16;
         var iconSize = this.props.iconSize ? this.props.iconSize : size;
         var icon = null;
+        var iconRight = null;
         var action = this.props.action ? this.props.action : this.handleClick
         if (this.props.icon) {
             icon = <Icon name={this.props.icon}
@@ -42,6 +43,13 @@ var Link = React.createClass({
                          size={iconSize}
                          style={{marginRight: iconSize/2}} />
         }
+        if (this.props.iconRight) {
+            iconRight = <Icon name={this.props.iconRight}
+                         color={color}
+                         size={iconSize}
+                         style={{marginRight: iconSize/2}} />
+        }
+        
         return (
             <TouchableOpacity
                 onPress={action}
@@ -53,6 +61,7 @@ var Link = React.createClass({
                         {text}
                     </Text>
                 </View>
+                {iconRight}
             </TouchableOpacity>
         );
     }

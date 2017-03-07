@@ -64,13 +64,21 @@ export var styles = StyleSheet.create({
         height: 90
     },
 
-    banner: {
-      flex: 1,
+    banner_splash: {
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 0,
       width: 360,
-      height: 180,
+      height: 170,
+      bottom: 0
+    },
+
+    banner: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 0,
+      width: 360,
+      height: 150,
       bottom: 0
     },
 
@@ -177,7 +185,7 @@ export var styles = StyleSheet.create({
 
     card_mid_finalize: {
         elevation: 0,
-        flex: 3,
+        flex: 0.7,
         flexDirection: 'column',
         justifyContent: 'space-around',
         borderRadius: 6,
@@ -254,10 +262,9 @@ export var styles = StyleSheet.create({
     // Rider App
 
     toggle: {
-        marginTop: 20,
-        alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        alignItems: 'center',
+        padding: 10
     },
 
     // Sheet (persistent bottom sheet)

@@ -28,10 +28,10 @@ var SplashPage = React.createClass({
                         style={styles.splash_title}
                         />
                 </View>
-                <View style={{flex: 0.6}}>
+                <View>
                     <Image
                         source={require('../assets/banner.jpg')}
-                        style={styles.banner}
+                        style={styles.banner_splash}
                         />
                 </View>
             </View>

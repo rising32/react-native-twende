@@ -188,7 +188,7 @@ var CurrentLocationPage = React.createClass({
                         <View style={{flexDirection: 'row', margin: 18}}>
                               <Button
                                   action={this.createRide}
-                                  text={"Confirm Location"}
+                                  text={"CONFIRM LOCATION"}
                                   color={colors.action}
                                   />
                         </View>
