@@ -176,16 +176,16 @@ var CurrentLocationPage = React.createClass({
                         {pickup}
                     </MapView>
                 </View>
-                <View style={[styles.sheet, {flex: 1}]}>
-                    <View style={styles.sheet_content}>
+                <View style={{flex: 0.8, alignItems: 'center', margin: 10}}>
+
                             <Text style={styles.item_title}>
-                              Karibu {this.props.currentUser.first_name}!
+                                Karibu {this.props.currentUser.first_name}!
                             </Text>
                             <Text style={styles.text_important}>
                                 If location is not correct please drag pin.
                             </Text>
-                    </View>
-                        <View style={{flexDirection: 'row'}}>
+
+                        <View style={{flexDirection: 'row', margin: 18}}>
                               <Button
                                   action={this.createRide}
                                   text={"Confirm Location"}

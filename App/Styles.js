@@ -37,14 +37,6 @@ export var styles = StyleSheet.create({
         backgroundColor: '#DDCC60'
     },
 
-    toggle: {
-        marginTop: 20,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-
-    },
-
     // Text
     baseText: {
         fontFamily: 'gothamrounded_book'
@@ -68,8 +60,8 @@ export var styles = StyleSheet.create({
     },
 
     splash_title: {
-        width: 200,
-        height: 80
+        width: 220,
+        height: 90
     },
 
     banner: {
@@ -78,7 +70,7 @@ export var styles = StyleSheet.create({
       justifyContent: 'center',
       marginBottom: 0,
       width: 360,
-      height: 200,
+      height: 180,
       bottom: 0
     },
 
@@ -133,7 +125,7 @@ export var styles = StyleSheet.create({
 
     // Page
     page: {
-        marginTop: 50,
+        marginTop: 56,
         justifyContent: 'space-around',
         flex: 1
     },
@@ -184,13 +176,14 @@ export var styles = StyleSheet.create({
     },
 
     card_mid_finalize: {
+        elevation: 0,
         flex: 3,
         flexDirection: 'column',
         justifyContent: 'space-around',
         borderRadius: 6,
         padding: 12,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 24,
+        marginRight: 24,
         backgroundColor: colors.box,
         alignItems: 'center'
     },
@@ -230,8 +223,8 @@ export var styles = StyleSheet.create({
 
     sheetYellow: {
         flex: 1,
-        paddingLeft: 40,
-        paddingRight: 40,
+        paddingLeft: 30,
+        paddingRight: 30,
         backgroundColor: colors.primary
     },
 
@@ -258,8 +251,26 @@ export var styles = StyleSheet.create({
         elevation: 4
     },
 
+    // Rider App
+
+    toggle: {
+        marginTop: 20,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+
+    // Sheet (persistent bottom sheet)
+    sheet_rider: {
+        paddingBottom: 20,
+        paddingTop: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignItems: 'center'
+    },
+
     renderSheetTopItem: {
-        marginTop: 30,
+        marginTop: 34,
         marginLeft: 4
     },
 

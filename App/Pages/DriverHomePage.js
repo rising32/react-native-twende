@@ -175,7 +175,7 @@ var DriverHomePage = React.createClass({
     renderSheetTop: function (decline_text, navigation_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -50, marginBottom: -15, elevation: 5}}>
+            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -15, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
                       <View style={styles.renderSheetTopItem}>
                         <Text style={{fontSize: 15, color: colors.disable}}>
@@ -202,7 +202,7 @@ var DriverHomePage = React.createClass({
     renderSheetTopDropoff: function () {
         var ride = this.props.currentRide;
         return (
-            <View style={{justifyContent: 'space-between', marginBottom: 2, alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
+            <View style={{justifyContent: 'space-between', marginTop: -10, alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
                 <Avatar image={ride.customer.avatar} />
             </View>
         )
@@ -273,7 +273,7 @@ var DriverHomePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={styles.sheet}>
+                <View style={styles.sheet_rider}>
                     {top}
                     <View style={styles.sheet_content}>
                          <Text style={styles.item_title}>
@@ -284,7 +284,7 @@ var DriverHomePage = React.createClass({
                           text={away}
                           color={colors.secondary}
                           size={16}
-                          style={{padding: 6, margin: 14, marginLeft: -5}}
+                          style={{padding: 6, margin: 6, marginLeft: -5}}
                         />
                     </View>
                     <View style={{flexDirection: 'row'}}>
@@ -311,7 +311,7 @@ var DriverHomePage = React.createClass({
                         driver={ride.driver.position}
                         customer={ride.origin}
                     />
-                    <View style={styles.sheet}>
+                    <View style={styles.sheet_rider}>
                           {top}
                           <View style={{flexDirection: 'column', marginTop: 34, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
                                 <Link
@@ -348,7 +348,7 @@ var DriverHomePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={styles.sheet}>
+                <View style={styles.sheet_rider}>
                     {top}
                         <Text style={[styles.item_title, {marginTop: 30, marginBottom: 10, alignSelf: 'center'}]}>
                             Have a safe journey!
@@ -383,20 +383,20 @@ var DriverHomePage = React.createClass({
                     <View
                         style={{flex: 0.5, backgroundColor: colors.primary}}>
                     </View>
-                    <View style={styles.card_mid}>
+                    <View style={styles.card_mid_finalize}>
                         {top}
                         <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', marginTop: 6, marginBottom: 6}}>
                             <Text style={styles.item_title}>
                                 Finalize
                             </Text>
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text style={{margin: 1}}>
+                                    <Text style={{textAlign: 'center'}}>
                                         Your trip was {ride.distance.distance}
                                     </Text>
                                     <Text style={styles.heavy_text}>
                                         {ride.fare}
                                     </Text>
-                                    <Text style={{margin: 1}}>
+                                    <Text style={{textAlign: 'center'}}>
                                         Wait for {ride.customer.name} to pay
                                     </Text>
                                 </View>
@@ -408,9 +408,6 @@ var DriverHomePage = React.createClass({
                                   />
                             </View>
                     </View>
-                        <View
-                            style={{flex: 0.5, backgroundColor: colors.primary}}>
-                        </View>
                 </View>
                     <View>
                           <Image
@@ -426,15 +423,14 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
         var top = this.renderSheetTopDropoff();
         return  (
-            <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
+            <View style={{flex: 1, backgroundColor: colors.primary}}>
                   <View style={styles.sheetYellow}>
                       <View
                           style={{flex: 0.5, backgroundColor: colors.primary}}>
                       </View>
-                          <View style={styles.card_mid}>
+                          <View style={styles.card_mid_finalize}>
                               {top}
                               <Text style={styles.item_title}>
-
                               </Text>
                               <Text style={styles.heavy_text}>
                                    {ride.fare}
@@ -458,9 +454,6 @@ var DriverHomePage = React.createClass({
                                       />
                               </View>
                           </View>
-                              <View
-                                  style={{flex: 0.5, backgroundColor: colors.primary}}>
-                              </View>
                   </View>
                         <View>
                             <Image
