@@ -30,6 +30,7 @@ export default {
 
     receiveRideList:        'RECEIVE_RIDE_LIST',
     errorLoadRideList:      'ERROR_LOAD_RIDE_LIST',
+    noCurrentRide:          'NO_CURRENT_RIDE',
 
     updateCurrentRide:      'UPDATE_CURRENT_RIDE',
     errorUpdateCurrentRide: 'ERROR_UPDATE_CURRENT_RIDE',
