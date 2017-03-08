@@ -61,17 +61,20 @@ var CustomerSupportPage = React.createClass({
     renderScene: function (route, navigator) {
 
         return (
-            <View style={{marginTop: 50, padding:20, flex: 1}}>
-                <Text style={htmlStyle.h1}>
-                    Customer Support
+            <View style={{marginTop: 50, padding: 40, flex: 1}}>
+                <Text style={styles.item_title}>
+                    Pleas call us on this number in case of any issues related to the ride.
                 </Text>
+                <View style={{marginTop: 16, marginBottom: 20}}>
                 <Text>
-                    You can call customer support at any time...
+                    We also more than welcome any inquiries & feedback about our service.
+                    We look forward speaking to you.
                 </Text>
+                </View>
                 <Link style={{margin: 10}}
                       url={"tel: 0791398120"}
                       icon={"phone"}
-                      size={16}
+                      size={20}
                       iconSize={24}
                       color={colors.action}
                       text={"0791398120"}

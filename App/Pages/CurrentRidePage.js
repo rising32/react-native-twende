@@ -577,10 +577,16 @@ var CurrentRidePage = React.createClass({
 
 var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
-        return null;
+        return (
+            <NavIcon
+                icon={"menu"}
+                action={() => navigator.parentNavigator.props.drawer.openDrawer()}
+            />
+        );
     },
     RightButton(route, navigator, index, nextState) {
     },
+
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
@@ -589,5 +595,7 @@ var NavigationBarRouteMapper = {
         );
     }
 };
+
+
 
 module.exports = CurrentRidePage;
