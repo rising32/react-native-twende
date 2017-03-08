@@ -11,7 +11,6 @@ export var colors = {
     action: '#1da69a', // brand book green
     secondary: '#273b95', // brand book blue
     disable: '#c2382b', // brand book red
-    splash: '#ffda57', // kan vervangen worden met primary
     primary_dark: '#d1af42',
     action_secondary: '#555555', // dark grey
     action_disabled: '#E0E0E0', // light grey
@@ -21,6 +20,7 @@ export var colors = {
     border: '#777777',
     nav_text: '#877a42',
     box: '#FFFFFF',
+    login: '#f4f4f4',
     error: '#992200', // Dark Red
     box_dark: '#E0E0E0',
     button_normal: '#2BA59A',
@@ -37,14 +37,6 @@ export var styles = StyleSheet.create({
         backgroundColor: '#DDCC60'
     },
 
-    toggle: {
-        marginTop: 20,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-
-    },
-
     // Text
     baseText: {
         fontFamily: 'gothamrounded_book'
@@ -59,32 +51,35 @@ export var styles = StyleSheet.create({
         color: colors.text_important
     },
 
-    renderSheetTopText: {
-        fontWeight: 'bold',
-    },
-
     // Splash
     splash: {
-        backgroundColor: colors.splash,
+        backgroundColor: colors.primary,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
 
     splash_title: {
-        marginTop: 160,
-        marginBottom: 65,
-        width: 225,
-        height: 92
+        width: 220,
+        height: 90
+    },
+
+    banner_splash: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 0,
+      width: 360,
+      height: 170,
+      bottom: 0
     },
 
     banner: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 0,
-        width: 360,
-        height: 200,
-        bottom: 0
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 0,
+      width: 360,
+      height: 150,
+      bottom: 0
     },
 
     loading: {
@@ -139,6 +134,7 @@ export var styles = StyleSheet.create({
     // Page
     page: {
         marginTop: 56,
+        justifyContent: 'space-around',
         flex: 1
     },
     page_full: {
@@ -154,6 +150,18 @@ export var styles = StyleSheet.create({
         color: colors.secondary
     },
 
+    loginPage: {
+        flex: 1,
+        backgroundColor: colors.login,
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+
+    login_image: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
     // Card
     card: {
         paddingBottom: 20,
@@ -165,15 +173,27 @@ export var styles = StyleSheet.create({
 
     card_mid: {
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: 10,
-        marginTop: 0,
-        marginLeft: 0,
-        marginRight: 0,
-        marginBottom: -14,
+        justifyContent: 'space-around',
+        borderRadius: 6,
+        padding: 12,
+        marginLeft: 40,
+        marginRight: 40,
+        margin: 0,
         backgroundColor: colors.box,
-        alignItems: 'center',
-        alignSelf: 'stretch'
+        alignItems: 'center'
+    },
+
+    card_mid_finalize: {
+        elevation: 0,
+        flex: 0.7,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        borderRadius: 6,
+        padding: 12,
+        marginLeft: 24,
+        marginRight: 24,
+        backgroundColor: colors.box,
+        alignItems: 'center'
     },
 
     card_mid_spacer: {
@@ -204,28 +224,29 @@ export var styles = StyleSheet.create({
     sheet: {
         paddingBottom: 20,
         paddingTop: 20,
-        paddingLeft: 40,
-        paddingRight: 40
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignItems: 'center'
     },
 
     sheetYellow: {
-        paddingBottom: 20,
-        paddingTop: 20,
-        paddingLeft: 40,
-        paddingRight: 40,
+        flex: 1,
+        paddingLeft: 30,
+        paddingRight: 30,
         backgroundColor: colors.primary
     },
 
     sheet_content: {
-        paddingTop: 20
+        paddingTop: 20,
+        alignItems: 'center'
     },
 
     sheet_dark: {
-        paddingBottom: 20,
-        paddingTop: 10,
+        paddingBottom: 10,
+        paddingTop: 8,
         paddingLeft: 40,
         paddingRight: 40,
-        backgroundColor: colors.box_dark
+        backgroundColor: colors.login
     },
 
     sheet_icon: {
@@ -238,8 +259,26 @@ export var styles = StyleSheet.create({
         elevation: 4
     },
 
-    renderSheetTop: {
-        marginTop: 30
+    // Rider App
+
+    toggle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10
+    },
+
+    // Sheet (persistent bottom sheet)
+    sheet_rider: {
+        paddingBottom: 20,
+        paddingTop: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignItems: 'center'
+    },
+
+    renderSheetTopItem: {
+        marginTop: 34,
+        marginLeft: 4
     },
 
     // Map
@@ -369,8 +408,8 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.button_normal,
         elevation: 3,
         flex: 1
-
     },
+
     primary_button_text: {
         color: colors.button_text,
         fontWeight: 'bold'
@@ -423,5 +462,17 @@ export var styles = StyleSheet.create({
     menu_close: {
         marginTop: -190,
         marginLeft: 270
+    },
+
+    // StarRating
+    starRatingContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    colorOn: {
+        color: '#FF4946'
+    },
+    colorOff: {
+        color: '#999999'
     }
 });

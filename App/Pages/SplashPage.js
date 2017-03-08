@@ -19,14 +19,21 @@ var SplashPage = React.createClass({
     render: function() {
         return (
             <View style={styles.splash}>
-                <Image
-                    source={require('../assets/splash.jpg')}
-                    style={styles.splash_title}
-                    />
-                <Image
-                    source={require('../assets/banner.jpg')}
-                    style={styles.banner}
-                    />
+                  <View style={{flex: 0.4}}></View>
+
+
+                <View style={{flex: 0.4}}>
+                    <Image
+                        source={require('../assets/splash.jpg')}
+                        style={styles.splash_title}
+                        />
+                </View>
+                <View>
+                    <Image
+                        source={require('../assets/banner.jpg')}
+                        style={styles.banner_splash}
+                        />
+                </View>
             </View>
         );
     }

@@ -11,7 +11,7 @@ import { Icon } from 'react-native-material-design';
 var Avatar = require('../Components/Avatar');
 
 
-var SheetTop = React.createClass({
+var SheetTopOud = React.createClass({
 
     render: function () {
         return (
@@ -22,4 +22,4 @@ var SheetTop = React.createClass({
     }
 });
 
-module.exports = SheetTop;
+module.exports = SheetTopOud;

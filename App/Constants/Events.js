@@ -19,6 +19,7 @@ export default {
     errorLoadingCurrentRide: 'ERROR_LOADING_CURRENT_RIDE',
     currentRideLoaded: 'CURRENT_RIDE_LOADED',
     currentRideUpdated: 'CURRENT_RIDE_UPDATED',
+    noCurrentRide: 'NO_CURRENT_RIDE',
 
     // Customers
     customerListLoaded: 'REQUEST_LIST_LOADED'

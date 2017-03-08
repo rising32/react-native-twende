@@ -14,7 +14,8 @@ var MapView = require('react-native-maps');
 import { loadGeoLocation } from "../Actions/GeoLocationActions";
 var CurrentRideActions = require('../Actions/CurrentRideActions');
 var NavIcon = require('../Components/NavIcon');
-import { Avatar, Button, Icon } from 'react-native-material-design';
+import { Avatar, Icon } from 'react-native-material-design';
+var Button = require('../Components/Button');
 import {colors, styles} from "../Styles";
 var Link = require('../Components/Link');
 var SheetIcon = require('../Components/SheetIcon');
@@ -50,7 +51,7 @@ var CurrentLocationPage = React.createClass({
             }
         }
     },
-    
+
     updateLocation: function(loc) {
         var myLoc = 'location found';
         this.props.currentUser.position = loc;
@@ -175,26 +176,22 @@ var CurrentLocationPage = React.createClass({
                         {pickup}
                     </MapView>
                 </View>
-                <View style={[styles.sheet, {flex: 1}]}>
-                    <SheetIcon
-                        icon={'done'}
-                        action={this.createRide}
-                    />
-                    <View style={styles.sheet_content}>
+                <View style={{flex: 0.8, alignItems: 'center', margin: 10}}>
+
                             <Text style={styles.item_title}>
-                              Karibu {this.props.currentUser.first_name}!
-                            </Text>
-                            {/*<Text style={styles.text_important}>
-                                Is your pick up location correct?
-                            </Text>*/}
-                            <Text style={styles.text_important}>
-                                If location is not correct drag pin. 
+                                Karibu {this.props.currentUser.first_name}!
                             </Text>
                             <Text style={styles.text_important}>
-                                Confirm by pushing green button.
+                                If location is not correct please drag pin.
                             </Text>
-                    
-                    </View>
+
+                        <View style={{flexDirection: 'row', margin: 18}}>
+                              <Button
+                                  action={this.createRide}
+                                  text={"CONFIRM LOCATION"}
+                                  color={colors.action}
+                                  />
+                        </View>
                 </View>
                 {spinner}
             </View>

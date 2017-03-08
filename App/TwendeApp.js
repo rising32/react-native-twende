@@ -65,6 +65,7 @@ var TwendeApp = React.createClass({
         BackAndroid.addEventListener('hardwareBackPress', this.goBack);
 
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
+        CurrentRideStore.on(events.noCurrentRide, this.noCurrentRide);
         CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
         CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
         CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
@@ -120,6 +121,25 @@ var TwendeApp = React.createClass({
                 id: 'CurrentLocationPage',
                 currentUser: this.state.currentUser,
                 currentRide: this.state.currentRide
+            });
+        }
+    },
+
+    noCurrentRide: function(currentRide) {
+        if (this.state.currentUser.is_driver) {
+            if (currentRide.state == 'requested') {
+                sounds.alarm2.play();
+            }
+            this.navigator.push({
+                id: 'DriverHomePage',
+                currentUser: this.state.currentUser,
+                currentRide: currentRide
+            });
+
+        } else {
+            this.navigator.push({
+                id: 'CurrentLocationPage',
+                currentUser: this.state.currentUser
             });
         }
     },

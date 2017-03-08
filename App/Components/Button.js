@@ -35,7 +35,6 @@ module.exports = React.createClass({
         var size = this.props.size || 16;
         var iconSize = this.props.iconSize ? this.props.iconSize : size;
         var icon = null;
-        var borderRadius = this.props.borderRadius || 4;
         var action = this.props.action ? this.props.action : this.handleClick
         if (this.props.icon) {
             icon = <Icon name={this.props.icon}

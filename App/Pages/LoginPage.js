@@ -11,6 +11,7 @@ var {
     TextInput,
     Navigator,
     TouchableHighlight,
+    Image
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
@@ -158,28 +159,52 @@ var LoginPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.spinner}>
-                    <Text>Login successful...</Text>
+                    <Text>Login successful!</Text>
                 </View>
             );
         }
 
         var content = this.renderSocialLogin();
 
-        return (
-            <View style={[styles.page, styles.page_full, styles.card]}>
 
-                <View style={[styles.page, styles.page_full, styles.card]}>
-                    {error}
-                    {content}
+        return (
+            <View style={styles.loginPage}>
+                <View style={{flex: 0.3}}>
                 </View>
-                <Text>
-                    By signing up you agree to Twende's
-                </Text>
-                <Link
-                    action={() => this.props.navigator.push({id: 'TermsPage'})}
-                    text={'Terms of Service'}
-                    color={colors.action}
-                />
+                <View style={{flex: 0.2, marginTop: 20, justifyContent: 'flex-end'}}>
+                        <Image
+                          style={{width: 105, height: 105}}
+                          source={require('../assets/logo.png')}/>
+                </View>
+                <View style={{flex: 0.2, justifyContent: 'flex-end'}}>
+                    <Text style={[styles.item_title, {textAlign: 'center', color: colors.secondary, fontSize: 30}]}>
+                        Karibu!
+                    </Text>
+                </View>
+                 <View style={{flex: 0.1, marginTop: 20, justifyContent: 'center'}}>
+                    <View>
+                        <Image
+                          style={{width: 50, height: 33}}
+                          source={require('../assets/flagkenya.png')}/>
+                    </View>
+                </View>
+                <View style={{flex: 0.2, alignItems: 'center', margin: 10, justifyContent: 'flex-end'}}>
+                    <Text style={[styles.item_title, {textAlign: 'center', fontSize: 15}]}>
+                        By using this application, you agree to the Terms of Service and Privacy Policy
+                    </Text>
+                    <View style={{alignItems: 'center', marginTop: 10}}>
+                        <Link
+                            action={() => this.props.navigator.push({id: 'TermsPage'})}
+                            text={'View Terms of Service'}
+                            color={colors.action}
+                        />
+                    </View>
+                </View>
+                <View style={{flex: 0.2, justifyContent: 'center'}}>
+                    <View style={{margin: 15}}>
+                        {error}{content}
+                    </View>
+                </View>
                 {spinner}
             </View>
         );
