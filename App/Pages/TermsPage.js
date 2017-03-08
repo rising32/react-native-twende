@@ -112,12 +112,6 @@ var TermsPage = React.createClass({
                     </Text>
                     <Text style={{height: 60}} />
                 </ScrollView>
-                <Link
-                    action={() => this.props.navigator.pop()}
-                    style={{padding: 10, justifyContent: 'center'}}
-                    text={'Back'}
-                    color={colors.action}
-                />
             </View>
         );
     }
