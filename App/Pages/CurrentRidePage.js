@@ -324,33 +324,32 @@ var CurrentRidePage = React.createClass({
                               iconSize={18}
                               color={colors.action}
                           />
-
                     </View>
                 </View>
-                        <View style={styles.card_mid}>
-                            <Text style={styles.item_title}>
-                                Let's go!
-                            </Text>
-                            <Text>
-                                Your are on your way now.
-                            </Text>
-                            <Text>
-                                Enjoy the ride. :)
-                            </Text>
-                        </View>
-                       <View style={styles.sheet_dark}>
-                        <View style={{alignItems: 'center', marginRight: 10}}>
-                            <Link style={{margin: 16}}
-                                url={"tel: " + ride.driver.phone}
-                                icon={"phone"}
-                                size={16}
-                                iconSize={24}
-                                color={colors.action}
-                                text={"CALL " + ride.driver.name.toUpperCase()}
-                            />
-                        </View>
+                <View style={styles.card_mid}>
+                    <Text style={styles.item_title}>
+                        Let's go!
+                    </Text>
+                    <Text>
+                        Your are on your way now.
+                    </Text>
+                    <Text>
+                        Enjoy the ride. :)
+                    </Text>
+                </View>
+                <View style={styles.sheet_dark}>
+                    <View style={{alignItems: 'center', marginRight: 10}}>
+                        <Link style={{margin: 16}}
+                            url={"tel: " + ride.driver.phone}
+                            icon={"phone"}
+                            size={16}
+                            iconSize={24}
+                            color={colors.action}
+                            text={"CALL " + ride.driver.name.toUpperCase()}
+                        />
                     </View>
-                    </View>
+                </View>
+            </View>
 
         )
     },

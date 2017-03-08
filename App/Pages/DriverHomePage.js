@@ -31,8 +31,10 @@ var StarRating = require('../Components/StarRating');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
 import { loadCustomerList } from "../Actions/CustomerActions";
-import { updateCurrentRide } from "../Actions/CurrentRideActions";
-import { updateCurrentUser } from"../Actions/CurrentUserActions";
+import { updateCurrentRide,
+         loadCurrentRide } from "../Actions/CurrentRideActions";
+import { updateCurrentUser,
+         reloadCurrentUser } from"../Actions/CurrentUserActions";
 import { startWatchingGeoLocation,
          loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
@@ -64,13 +66,19 @@ var DriverHomePage = React.createClass({
 
     componentWillMount: function() {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
+        CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
         loadGeoLocation();
         startWatchingGeoLocation();
     },
 
     componentWillUnmount: function() {
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
+        CurrentUserStore.removeListener(events.currentUserLoaded, this.currentUserLoaded);
         stopWatchingGeoLocation();
+    },
+
+    currentUserLoaded: function(currentUser) {
+        this.setState({currentUser: currentUser});
     },
 
     updateLocation: function(loc) {
@@ -85,6 +93,11 @@ var DriverHomePage = React.createClass({
     refreshItems: function(){
         ToastAndroid.show('Check Customer Activity..', ToastAndroid.SHORT);
         loadCustomerList();
+        reloadCurrentUser();
+    },
+
+    refreshRide: function() {
+        loadCurrentRide(this.props.currentRide.id);
     },
 
     toggleAvailability: function(available) {
@@ -135,10 +148,8 @@ var DriverHomePage = React.createClass({
         ride.driver_rating = this.state.rating;
         ride.state = 'finalized';
         updateCurrentRide(ride);
+        reloadCurrentUser();
     },
-
-    // kunnen we hieronder ook de refresh items functie aanroepen? Zodat rider ook de 
-    // staat van het dashboard ophaalt? 
 
     declineRide: function(ride) {
         Alert.alert(
@@ -206,8 +217,8 @@ var DriverHomePage = React.createClass({
                 <View style={{marginLeft: 10, marginRight: 14}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={styles.renderSheetTopItem}>
-                    </View>
+                <View style={styles.renderSheetTopItem}>
+                </View>
             </View>
         )
     },
@@ -282,7 +293,7 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTopRequest("DECLINE");
         var away = "Unknown distance customer";
         if (ride.driver_distance) {
-            away = ride.customer_distance.distance + ' (' + ride.customer_distance.duration + ') away';
+            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
         }
         return  (
           <View style={{flex: 1, justifyContent: 'space-around'}}>
@@ -316,8 +327,6 @@ var DriverHomePage = React.createClass({
             </View>
         );
     },
-
-
 
     renderAccepted: function() {
         var ride = this.props.currentRide;
@@ -419,7 +428,7 @@ var DriverHomePage = React.createClass({
                             </Text>
                             <View style={{flexDirection: 'row'}}>
                                    <Button
-                                    action={this.refreshItems}
+                                    action={this.refreshRide}
                                     text={"REFRESH"}
                                   />
                             </View>
@@ -440,59 +449,58 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTopDropoff();
         return  (
             <View style={{flex: 1, backgroundColor: colors.primary}}>
-                  <View style={styles.sheetYellow}>
-                      <View
-                          style={{flex: 0.1, backgroundColor: colors.primary}}>
-                      </View>
-                          <View style={styles.card_mid_finalize}>
-                                <View>
-                                    {top}
-                                </View>
-                                <View>
-                                      <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                            Payment
-                                      </Text>
-                                      <Text style={styles.heavy_text}>
-                                           {ride.fare}
-                                      </Text>
-                                <View>
-                                       <Text style={{textAlign: 'center'}}>
-                                            M-Pesa Send Money no.
-                                        </Text>
-                                        <Text style={{textAlign: 'center', marginBottom: 12}}>
-                                            07 1933 1903
-                                        </Text>
-                                </View>
-                                </View>
-                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                      <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                        Rate Customer
-                                      </Text>
-                                      <StarRating
-                                          onChange={this.rateRide}
-                                          maxStars={5}
-                                          rating={0}
-                                          colorOn={colors.action}
-                                          colorOff={colors.action_disabled}
-                                      />
-                                </View>
-                                <View style={{flexDirection: 'row'}}>
-                                  <Button
-                                      action={this.finishRide}
-                                      text={"SUBMIT"}
-                                      />
-                                </View>
-                          </View>
-                  </View>
+                <View style={styles.sheetYellow}>
+                    <View style={{flex: 0.1, backgroundColor: colors.primary}}>
+                    </View>
+                    <View style={styles.card_mid_finalize}>
                         <View>
-                            <Image
-                                source={require('../assets/banner.jpg')}
-                                style={styles.banner}
-                                />
+                            {top}
                         </View>
+                        <View>
+                              <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                                    Payment
+                              </Text>
+                              <Text style={styles.heavy_text}>
+                                   {ride.fare}
+                              </Text>
+                        <View>
+                               <Text style={{textAlign: 'center'}}>
+                                    M-Pesa Send Money no.
+                                </Text>
+                                <Text style={{textAlign: 'center', marginBottom: 12}}>
+                                    07 1933 1903
+                                </Text>
+                        </View>
+                        </View>
+                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                              <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                                Rate Customer
+                              </Text>
+                              <StarRating
+                                  onChange={this.rateRide}
+                                  maxStars={5}
+                                  rating={0}
+                                  colorOn={colors.action}
+                                  colorOff={colors.action_disabled}
+                              />
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                          <Button
+                              action={this.finishRide}
+                              text={"SUBMIT"}
+                              />
+                        </View>
+                    </View>
+                </View>
+                <View>
+                    <Image
+                        source={require('../assets/banner.jpg')}
+                        style={styles.banner}
+                        />
+                </View>
           </View>
       );
-  },
+    },
 
     renderScene: function(route, navigator) {
         var content = this.renderHome();
