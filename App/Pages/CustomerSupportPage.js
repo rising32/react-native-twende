@@ -89,8 +89,8 @@ var NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
         return (
             <NavIcon
-                icon={"menu"}
-                action={() => navigator.parentNavigator.props.drawer.openDrawer()}
+                icon={"arrow-back"}
+                action={() => navigator.parentNavigator.pop()}
             />
         );
     },

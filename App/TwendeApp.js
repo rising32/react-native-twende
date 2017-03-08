@@ -74,7 +74,7 @@ var TwendeApp = React.createClass({
     },
 
     currentUserLoaded: function(currentUser) {
-        if (currentUser && this.state.currentUser !== currentUser) {
+        if (currentUser && this.state.currentUser.username !== currentUser.username) {
             this.setState({currentUser: currentUser});
             this.registerPushNotification();
             loadRideList();
@@ -82,6 +82,7 @@ var TwendeApp = React.createClass({
                 this.goHome()
             }
         }
+        this.setState({currentUser: currentUser});
     },
 
     openDrawer: function () {
