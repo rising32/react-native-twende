@@ -101,6 +101,18 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
+/*    createRideTest: 
+
+            if (this.state.phone) {
+            this.props.navigator.replace({id: homePage});
+        } else {
+            Alert.alert('Update your profile', 'Please fill out your phone number.', [
+                {text: 'OK'}
+            ]);
+        }
+    },
+*/
+
     createRide: function() {
         var ride = {
             origin:      this.state.origin,

@@ -137,6 +137,7 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
+    
     // kunnen we hieronder ook de refresh items functie aanroepen? Zodat rider ook de 
     // staat van het dashboard ophaalt? 
 
@@ -265,7 +266,7 @@ var DriverHomePage = React.createClass({
                     <View style={{alignItems: 'center'}}>
                         <Link
                             style={{padding:10, marginBottom: 10}}
-                            action={this.refreshItems}
+                            action={this.goHome}
                             text={'refresh'}
                             icon={'autorenew'}
                         />

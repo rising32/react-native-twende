@@ -134,9 +134,9 @@ export var styles = StyleSheet.create({
     // Page
     page: {
         marginTop: 56,
-        justifyContent: 'space-around',
         flex: 1
     },
+    
     page_full: {
         alignItems: 'center',
         justifyContent: 'center'

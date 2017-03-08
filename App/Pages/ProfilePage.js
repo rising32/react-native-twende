@@ -20,7 +20,8 @@ var IconText = require('../Components/IconText');
 var Link = require('../Components/Link');
 var Iconed = require('../Components/Iconed');
 var SheetIcon = require('../Components/SheetIcon');
-import { Avatar, Button, Icon } from 'react-native-material-design';
+import { Avatar, Icon } from 'react-native-material-design';
+var Button = require('../Components/Button');
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CurrentUserActions = require('../Actions/CurrentUserActions');
 
@@ -95,6 +96,7 @@ var ProfilePage = React.createClass({
         return (
             <Navigator
                 renderScene={this.renderScene}
+                navigator={this.props.navigator}
                 goHome={this.goHome}
                 navigationBar={
                     <Navigator.NavigationBar
@@ -126,7 +128,6 @@ var ProfilePage = React.createClass({
                     {image}
                 </View>
                 <View style={styles.sheet}>
-
                     <View style={{justifyContent: 'space-between', alignSelf: 'stretch', flexDirection: 'row', marginTop: -45, marginBottom: -15, elevation: 5}}>
                         <TouchableOpacity onPress={this.takePicture}>
                             <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
@@ -137,17 +138,7 @@ var ProfilePage = React.createClass({
                                 />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.goHome}>
-                            <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
-                                <Icon
-                                    name={'done'}
-                                    size={30}
-                                    color={'#ffffff'}
-                                />
-                            </View>
-                        </TouchableOpacity>
                     </View>
-
                     <View style={styles.sheet_content}>
                         <Iconed icon="person" size={24} color={colors.action_secondary}>
                             <TextInput
@@ -158,7 +149,7 @@ var ProfilePage = React.createClass({
                                 value={this.state.first_name}
                             />
                             <TextInput
-                                placeholder={"First name"}
+                                placeholder={"Second name"}
                                 autoCorrect={false}
                                 onChangeText={(text) => this.setState({last_name: text})}
                                 style={{borderColor: 'gray', flex: 1, color: colors.action_secondary}}
@@ -183,8 +174,16 @@ var ProfilePage = React.createClass({
                                 value={this.state.email}
                             />
                         </Iconed>
+                        </View>  
                     </View>
-                </View>
+                        <View style={{margin:20}}>
+                              <Button
+                                    text={'READY'}
+                                    size={30}
+                                    color={'#ffffff'}
+                                    action={this.goHome}
+                                />
+                        </View>
             </ScrollView>
         );
     }
