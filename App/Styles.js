@@ -138,6 +138,7 @@ export var styles = StyleSheet.create({
         flex: 1
     },
     scroll_page: {
+        // justifyContent doesn't work with ScrollView
         marginTop: 56,
         flex: 1
     },
