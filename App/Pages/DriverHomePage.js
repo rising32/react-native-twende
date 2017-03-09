@@ -296,7 +296,7 @@ var DriverHomePage = React.createClass({
             away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
         }
         return  (
-          <View style={{flex: 1, justifyContent: 'space-around'}}>
+            <View style={{flex: 1, justifyContent: 'space-around'}}>
                 <Map
                     title={"request"}
                     driver={ride.driver.position}
@@ -427,10 +427,10 @@ var DriverHomePage = React.createClass({
                                 
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                   <Button
+                                <Button
                                     action={this.refreshRide}
                                     text={"REFRESH"}
-                                  />
+                                />
                             </View>
                     </View>
                 </View>

@@ -27,6 +27,12 @@ var Map = React.createClass({
         }
     },
 
+    componentDidMount: function(){
+        setTimeout(() => {
+            this.refs.map.fitToElements(true);
+        }, 2000);
+    },
+
     render: function () {
         var driver;
         var customer;
@@ -35,6 +41,8 @@ var Map = React.createClass({
         if (this.props.driver) {
             driver =  <MapView.Marker
                         draggable
+                        ref="rider"
+                        title="Rider"
                         pinColor="yellow"
                         image={require('../assets/map-motor1.png')}
                         coordinate={this.props.driver}
@@ -43,6 +51,9 @@ var Map = React.createClass({
         if (this.props.customer) {
             customer =  <MapView.Marker
                         draggable
+                        ref="customer"
+                        title="Customer"
+                        description="Pick-up location"
                         pinColor="yellow"
                         image={require('../assets/map-customer.png')}
                         coordinate={this.props.customer}
@@ -54,6 +65,7 @@ var Map = React.createClass({
             <View style={styles.map_container}>
                 <MapView
                     region={this.state.region}
+                    ref="map"
                     showsUserLocation={true}
                     showUserLocation={true}
                     onRegionChange={this.onRegionChange}
