@@ -137,6 +137,10 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-around',
         flex: 1
     },
+    scroll_page: {
+        marginTop: 56,
+        flex: 1
+    },
     page_full: {
         alignItems: 'center',
         justifyContent: 'center'

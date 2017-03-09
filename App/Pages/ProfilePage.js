@@ -121,12 +121,11 @@ var ProfilePage = React.createClass({
         }
 
         return (
-            <ScrollView style={styles.page}>
+            <ScrollView style={styles.scroll_page}>
                 <View style={{height: 200, backgroundColor: '#e0e0e0', alignItems: 'center'}}>
                     {image}
                 </View>
                 <View style={styles.sheet}>
-
                     <View style={{justifyContent: 'space-between', alignSelf: 'stretch', flexDirection: 'row', marginTop: -45, marginBottom: -15, elevation: 5}}>
                         <TouchableOpacity onPress={this.takePicture}>
                             <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
