@@ -276,7 +276,7 @@ var DriverHomePage = React.createClass({
                     <View style={{alignItems: 'center'}}>
                         <Link
                             style={{padding:10, marginBottom: 10}}
-                            action={this.refreshItems}
+                            action={this.goHome}
                             text={'refresh'}
                             icon={'autorenew'}
                         />

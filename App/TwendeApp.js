@@ -145,6 +145,11 @@ var TwendeApp = React.createClass({
         }
     },
 
+    refreshRide: function () {
+        refreshCurrentRide(this.props.currentRide.id);
+        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
+    },
+
     currentRideLoaded: function(currentRide) {
         this.setState({currentRide: currentRide});
         if (this.state.currentUser.is_driver) {
@@ -237,7 +242,7 @@ var TwendeApp = React.createClass({
                 <View style={styles.menu_head}>
 
                     <Image
-                        source={require('./assets/banner.jpg')}
+                        source={require('./assets/banner_drawer.jpg')}
                         style={styles.menu_background}
                         />
                     <Link
@@ -256,12 +261,12 @@ var TwendeApp = React.createClass({
                 </View>
                 <View style={styles.menu_list}>
                     <Link
+                        action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
-                        action={() => this.goToPage('CurrentLocationPage')}
                         size={14}
                         color={'#FFFFFF'}
-                        icon={'motorcycle'}
-                        text={'New Ride'}
+                        icon={'phone'}
+                        text={'Customer Support'}
                     />
                     <Link
                         style={{padding: 8}}
@@ -270,14 +275,6 @@ var TwendeApp = React.createClass({
                         color={'#FFFFFF'}
                         icon={'account-circle'}
                         text={'My Profile'}
-                    />
-                    <Link
-                        action={() => this.goToPage('CustomerSupportPage')}
-                        style={{padding: 8}}
-                        size={14}
-                        color={'#FFFFFF'}
-                        icon={'phone'}
-                        text={'Customer support'}
                     />
                     <Link
                         action={() => this.goToPage('TermsPage')}
@@ -379,12 +376,11 @@ var TwendeApp = React.createClass({
                         icon={'power-settings-new'}
                         text={'Logout'}
                     />
-
                 </View>
-
             </View>
         );
     },
+
     anonymousDrawerView: function () {
         return (
             <View>

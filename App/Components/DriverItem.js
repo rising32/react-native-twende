@@ -58,7 +58,7 @@ var DriverItem = React.createClass({
                             <View style={{alignItems: 'flex-end'}}>
                                 <Button
                                     size={14}
-                                    style={{marginTop: -40, marginLeft: 20, width: 90, height: 36}}
+                                    style={{marginTop: -40, marginLeft: 20, width: 90}}
                                     action={this.props.onSelect}
                                     text={"REQUEST"}
                                 />
