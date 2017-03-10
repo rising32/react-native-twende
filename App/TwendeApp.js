@@ -7,7 +7,9 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+    Alert,
     Text,
+    NetInfo,
     View,
     Image,
     Navigator,
@@ -56,7 +58,8 @@ var TwendeApp = React.createClass({
     getInitialState: function (props) {
         return {
             currentUser: {},
-            currentRide: {}
+            currentRide: {},
+            isConnected: null
         };
     },
 
@@ -71,6 +74,30 @@ var TwendeApp = React.createClass({
         CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
         CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
         reloadCurrentUser()
+    },
+
+    componentWillUnmount: function() {
+        NetInfo.isConnected.removeEventListener( 'change', this.handleConnectivityChange );
+    },
+
+    componentDidMount() { 
+        NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange ); 
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); },
+
+    handleConnectivityChange: function (isConnected) {
+        this.setState({ 
+        isConnected, 
+        }); 
+    },
+
+    connectivityAlert : function() {
+        Alert.alert(
+            'Reminder',
+            'You seem to be out of wireless juice. Please connect.',
+            [
+                {text: 'OKAY!', onPress: () => {}}
+            ]
+        );
     },
 
     currentUserLoaded: function(currentUser) {
@@ -432,6 +459,19 @@ var TwendeApp = React.createClass({
         } else if (this.state.currentUser.username) {
             drawer = this.customerDrawerView;
         }
+
+
+        if (this.state.isConnected == false) {
+        Alert.alert(
+        'Reminder',
+        'You are offline, please connect to the Internet',
+                [
+                    {text: 'OKAY!', onPress: () => {}}
+                ]       
+            );
+        }
+
+        
         return (
             <DrawerLayoutAndroid
                 drawerWidth={300}
@@ -461,6 +501,7 @@ var TwendeApp = React.createClass({
     renderScene: function (route, navigator) {
         var routeId = route.id;
         this.navigator = navigator;
+
         if (routeId === 'SplashPage') {
             return (
                 <SplashPage
