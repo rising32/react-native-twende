@@ -407,8 +407,8 @@ var CurrentRidePage = React.createClass({
       var text;
       var text2;
       if (ride.payment_method == 'mpesa') {
-          text = "M-Pesa Send Money no.";
-          text2 = "07 1933 1903";
+          text = "Paybill No: 653839";
+          text2 = "Account No: Ride";
         } else {
           var text = "Thanks for your cash payment";
       }
@@ -434,10 +434,10 @@ var CurrentRidePage = React.createClass({
                             <Text style={styles.heavy_text}>
                               {ride.fare}
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                             <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6}]}>
                                 {text}
                             </Text>
-                            <Text selectable={true} onPress={()=>this.setClipboardContent(message)} style={{textAlign: 'center', fontWeight: 'bold'}}>
+                            <Text selectable={true} onPress={()=>this.setClipboardContent(message)} style={[styles.text_important, {textAlign: 'center', marginBottom: 6}]}>
                                 {text2}
                             </Text>
                         </View>

@@ -305,7 +305,7 @@ var TwendeApp = React.createClass({
                 <View style={styles.menu_head}>
 
                     <Image
-                        source={require('./assets/banner.jpg')}
+                        source={require('./assets/banner_drawer.jpg')}
                         style={styles.menu_background}
                         />
                     <Link
@@ -323,12 +323,12 @@ var TwendeApp = React.createClass({
                 </View>
                 <View style={styles.menu_list}>
                     <Link
+                        action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
-                        action={() => this.goToPage('DriverHomePage')}
                         size={14}
                         color={'#FFFFFF'}
-                        icon={'motorcycle'}
-                        text={'Home'}
+                        icon={'phone'}
+                        text={'Customer support'}
                     />
                     <Link
                         style={{padding: 8}}
@@ -337,14 +337,6 @@ var TwendeApp = React.createClass({
                         color={'#FFFFFF'}
                         icon={'account-circle'}
                         text={'My Profile'}
-                    />
-                    <Link
-                        action={() => this.goToPage('CustomerSupportPage')}
-                        style={{padding: 8}}
-                        size={14}
-                        color={'#FFFFFF'}
-                        icon={'phone'}
-                        text={'Customer support'}
                     />
                     <IconText
                         style={{padding: 8}}
@@ -384,6 +376,18 @@ var TwendeApp = React.createClass({
     anonymousDrawerView: function () {
         return (
             <View>
+                <View style={styles.menu_head}>
+                    <Image
+                        source={require('./assets/banner_drawer.jpg')}
+                        style={styles.menu_background}
+                        />
+                    <Link
+                        style={styles.menu_close}
+                        action={this.closeDrawer}
+                        iconSize={20}
+                        icon={'close'}
+                    />
+                </View>
                 <View style={{backgroundColor: '#555555', padding: 8}}>
                     <IconText
                         style={{padding: 8}}
