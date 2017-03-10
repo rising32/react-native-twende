@@ -141,7 +141,7 @@ var CurrentLocationPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.spinner}>
-                    <Text>Loading riders...</Text>
+                    <Text style={styles.spinner_text}>Loading riders...</Text>
                 </View>
             );
         }
@@ -186,9 +186,10 @@ var CurrentLocationPage = React.createClass({
                         style={styles.map}>
                         {pickup}
                     </MapView>
+                    {spinner}
                 </View>
                 <View style={{flex: 0.8, alignItems: 'center', margin: 10}}>
-
+                            
                             <Text style={styles.item_title}>
                                 Karibu {this.props.currentUser.first_name}!
                             </Text>
@@ -203,8 +204,7 @@ var CurrentLocationPage = React.createClass({
                                   color={colors.action}
                                   />
                         </View>
-                </View>
-                {spinner}
+                 </View>
             </View>
         );
     }

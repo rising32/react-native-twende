@@ -96,16 +96,16 @@ export var styles = StyleSheet.create({
         borderColor: '#999999',
         borderRadius: 10,
         borderWidth: 1,
-        margin: 40,
-        bottom: 200,
+        margin: 4,
         elevation: 10,
-        backgroundColor: 'white'
+        backgroundColor: colors.login
     },
 
     spinner_text: {
-        color: '#999999',
+        color: colors.secondary,
         fontFamily: 'gothamrounded_book',
-        fontSize: 18
+        fontSize: 14,
+        fontWeight: 'bold'
     },
 
     // Navigation

@@ -95,7 +95,7 @@ var TwendeApp = React.createClass({
             'Reminder',
             'You seem to be out of wireless juice. Please connect.',
             [
-                {text: 'OKAY!', onPress: () => {}}
+                {text: 'OKAY!'}
             ]
         );
     },

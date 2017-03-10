@@ -47,7 +47,7 @@ var CurrentRidePage = React.createClass({
     },
 
     cancelRide: function () {
-        ToastAndroid.show('Ride canceled.', ToastAndroid.LONG);
+        ToastAndroid.show('Ride canceled', ToastAndroid.LONG);
         var currentRide = this.props.currentRide;
         currentRide.state = 'canceled';
         updateCurrentRide(currentRide);
