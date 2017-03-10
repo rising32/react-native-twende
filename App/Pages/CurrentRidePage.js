@@ -284,7 +284,7 @@ var CurrentRidePage = React.createClass({
                                 icon={"phone"}
                                 size={16}
                                 iconSize={24}
-                                color={colors.action}
+                                color={colors.secondary}
                                 text={"CALL " + ride.driver.name.toUpperCase()}
                             />
                         </View>
@@ -344,7 +344,7 @@ var CurrentRidePage = React.createClass({
                             icon={"phone"}
                             size={16}
                             iconSize={24}
-                            color={colors.action}
+                            color={colors.secondary}
                             text={"CALL " + ride.driver.name.toUpperCase()}
                         />
                     </View>
@@ -407,12 +407,13 @@ var CurrentRidePage = React.createClass({
       var text;
       var text2;
       if (ride.payment_method == 'mpesa') {
-          text = "Paybill No: 653839";
-          text2 = "Account No: Ride";
+          var header = "M-Pesa Payment";
+          text = "Paybill No: 653839" + "\n" + "Account No: Ride";
         } else {
-          var text = "Thanks for your cash payment";
+          var header = "Cash Payment";  
+          var text = "Please pay the cash amount to rider";
       }
-      var header = "Payment";
+      
       var buttonText = "DONE";
       var buttonAction = this.completePayment;
 
@@ -436,9 +437,6 @@ var CurrentRidePage = React.createClass({
                             </Text>
                              <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6}]}>
                                 {text}
-                            </Text>
-                            <Text selectable={true} onPress={()=>this.setClipboardContent(message)} style={[styles.text_important, {textAlign: 'center', marginBottom: 6}]}>
-                                {text2}
                             </Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>

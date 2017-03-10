@@ -323,6 +323,14 @@ var TwendeApp = React.createClass({
                 </View>
                 <View style={styles.menu_list}>
                     <Link
+                        style={{padding: 8}}
+                        action={() => this.goToPage('DriverHomePage')}
+                        size={14}
+                        color={'#FFFFFF'}
+                        icon={'motorcycle'}
+                        text={'Home'}
+                    />
+                    <Link
                         action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
                         size={14}

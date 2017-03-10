@@ -451,12 +451,14 @@ var DriverHomePage = React.createClass({
         var text;
         var text2;
       if (ride.payment_method == 'mpesa') {
+            var header = "M-Pesa Payment";
             text = "Paybill No: 653839\nAccount No: Ride";
 
         } else {
+            var header = "Cash Payment";
             var text = ride.customer.first_name + " is paying with cash";          
         }
-        var header = "Payment";
+        
         var buttonText = "SUBMIT";
         var buttonAction = this.finishRide;
         var top = this.renderSheetTopDropoff();
