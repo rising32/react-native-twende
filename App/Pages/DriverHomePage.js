@@ -515,8 +515,8 @@ var DriverHomePage = React.createClass({
     },
 
     renderScene: function(route, navigator) {
-        var content = this.renderHome();
         var ride = this.props.currentRide;
+        var content = this.renderHome();
         var currentUser = this.props.currentUser;
         if (currentUser.state != 'unavailable' && ride) {
             switch (ride.state) {
