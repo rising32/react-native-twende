@@ -10,6 +10,7 @@ var {
     Text,
     View,
     Image,
+    Alert,
     Navigator,
     TouchableOpacity,
     DrawerLayoutAndroid,
@@ -60,9 +61,68 @@ var TwendeApp = React.createClass({
         };
     },
 
+    closeApp: function() {
+        let user = this.state.currentUser;
+        if (user.is_driver){
+            Alert.alert(
+                "Are you leaving?",
+                "Do you want to close Twende? You won't receive customer requests anymore.",
+                [
+                    {
+                        text: "No, I'm staying",
+                        onPress: () => {return true}
+                    },
+                    {   text: "Yes, close",
+                        onPress: () => {
+                            user.state = 'unvailable';
+                            updateCurrentUser(user);
+                            ToastAndroid.show("Goodbye, kuona hivi karibuni", ToastAndroid.LONG);
+                            BackAndroid.exitApp();
+                        }
+                    }
+                ]
+            );
+
+        } else {
+            Alert.alert(
+                "Are you leaving?",
+                "Are you sure you want to close Twende?.",
+                [
+                    {
+                        text: "No, I'm staying",
+                        onPress: () => {return true}
+                    },
+                    {
+                        text: "Yes, close",
+                        onPress: () => {
+                            ToastAndroid.show("Goodbye, kuona hivi karibuni", ToastAndroid.LONG);
+                            BackAndroid.exitApp();
+                        }
+                    }
+                ]
+            );
+
+        }
+        return true;
+
+    },
+
+    backButton: function() {
+        navigator = this.navigator
+        if (navigator.getCurrentRoutes().length > 2) {
+            navigator.pop();
+            return true;
+        } else {
+            return this.closeApp();
+        }
+
+    },
+
     componentWillMount: function () {
         PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-        BackAndroid.addEventListener('hardwareBackPress', this.goBack);
+
+        BackAndroid.addEventListener("hardwareBackPress", this.backButton);
+
 
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
         CurrentRideStore.on(events.noCurrentRide, this.noCurrentRide);
@@ -548,6 +608,7 @@ var TwendeApp = React.createClass({
         );
     }
 });
+
 
 module.exports = TwendeApp;
 
