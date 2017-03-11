@@ -335,6 +335,11 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.secondary,
     },
 
+     marker: {
+        width: 100,
+        height: 100
+    },
+
     // Lists
 
     list: {

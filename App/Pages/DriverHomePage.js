@@ -449,14 +449,13 @@ var DriverHomePage = React.createClass({
     renderFinalized: function() {
         var ride = this.props.currentRide;
         var text;
-        var text2;
       if (ride.payment_method == 'mpesa') {
             var header = "M-Pesa Payment";
             text = "Paybill No: 653839\nAccount No: Ride";
 
         } else {
             var header = "Cash Payment";
-            var text = ride.customer.first_name + " is paying with cash";          
+            var text = ride.customer.first_name + " is paying cash";          
         }
         
         var buttonText = "SUBMIT";
@@ -481,7 +480,7 @@ var DriverHomePage = React.createClass({
                                    {ride.fare}
                               </Text>
                         <View>
-                               <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6}]}>
+                               <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
                                     {text}
                                 </Text>
                         </View>
