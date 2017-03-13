@@ -100,7 +100,7 @@ var TwendeApp = React.createClass({
                         text: "Yes, close",
                         onPress: () => {
                             this.logout()
-                            ToastAndroid.show("Goodbye, kuona hivi karibuni", ToastAndroid.LONG);
+                            ToastAndroid.show("Goodbye, kuona hivi karibuni!", ToastAndroid.LONG);
                             BackAndroid.exitApp();
                         }
                     }
@@ -154,7 +154,7 @@ var TwendeApp = React.createClass({
 
     connectivityAlert : function() {
         Alert.alert(
-            'Reminder',
+            'You appear offline',
             'You seem to be out of wireless juice. Please connect.',
             [
                 {text: 'OKAY!'}
@@ -236,7 +236,7 @@ var TwendeApp = React.createClass({
 
     refreshRide: function () {
         refreshCurrentRide(this.props.currentRide.id);
-        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
+        ToastAndroid.show('Updating App State..', ToastAndroid.SHORT)
     },
 
     currentRideLoaded: function(currentRide) {
@@ -532,12 +532,12 @@ var TwendeApp = React.createClass({
 
 
         if (this.state.isConnected == false) {
-        Alert.alert(
-        'Reminder',
-        'You are offline, please connect to the Internet',
+            Alert.alert(
+                'You appear offline',
+                'You seem to be out of wireless juice. Please connect.',
                 [
-                    {text: 'OKAY!', onPress: () => {}}
-                ]       
+                    {text: 'OKAY!'}
+                ]
             );
         }
 

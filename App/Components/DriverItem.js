@@ -58,18 +58,10 @@ var DriverItem = React.createClass({
                                 />
                             </View>
                             <View style={{alignItems: 'flex-end', marginTop: -40, marginLeft: 20}}>
-                            
-                            
-                                <ButtonFlat
-
-                                               
+                                <ButtonFlat    
                                     size={14}
-                                    
                                     action={this.props.onSelect}
                                     text={"REQUEST"} />
-
-                            
-                            
                             </View>
                         </View>
                     </View>

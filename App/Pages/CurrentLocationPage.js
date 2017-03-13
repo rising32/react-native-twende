@@ -4,6 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
     View,
+    Alert,
     Text,
     ToastAndroid,
     Navigator,
@@ -100,6 +101,16 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
+    locationAlert : function() {
+        Alert.alert(
+            'Location not recognized',
+            'You seem to have your location off. Please switch it on or try outside! :)',
+            [
+                {text: 'OKAY!'}
+            ]
+        );
+    },
+
 /*    createRideTest: 
 
             if (this.state.phone) {
@@ -157,23 +168,16 @@ var CurrentLocationPage = React.createClass({
                 image = {require('../assets/map-customer.png')}
                 coordinate = {this.state.origin}
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
-        }  else {
-            spinner = (
-                <View style={styles.spinner}>
-                    <Text style={styles.heavy_text}>
-                        Loading current location
-                    </Text>
-                    <Link style={{marginLeft: 12}}
-                          action={this.refreshLocation}
-                          icon={"place"}
-                          size={14}
-                          iconSize={28}
-                          color={colors.action_secondary}
-                          text= {"Make sure you have Location enabled in your phone settings."}
-                    />
-                  </View>
+        }   else {
+                Alert.alert(
+                'You appear offline',
+                'You seem to be out of wireless juice. Please connect.',
+                [
+                    {text: 'OKAY!'}
+                ]
             );
         }
+        
         return (
             <View style={styles.page}>
                 <View style={styles.map_container}>
