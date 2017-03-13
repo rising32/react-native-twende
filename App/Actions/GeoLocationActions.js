@@ -35,7 +35,6 @@ export function loadGeoLocation(enableHighAccuracy) {
             );
         },
         (error) => {
-            ToastAndroid.show('Could not find location', ToastAndroid.SHORT);
             loadGeoLocation(enableHighAccuracy)
         },
         {
