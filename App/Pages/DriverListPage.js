@@ -172,7 +172,7 @@ var DriverListPage = React.createClass({
         if (this.state.isConnecting) {
             spinner = (
                 <View style={styles.spinner}>
-                    <Text>Connecting...</Text>
+                    <Text style={styles.spinner_text}>Connecting...</Text>
                 </View>
             );
         }
@@ -196,8 +196,8 @@ var DriverListPage = React.createClass({
 
         return (
             <View style={styles.page}>
-                {content}
                 {spinner}
+                {content}
                 <View style={{alignItems: 'center'}}>
                     {footer}
                 </View>
