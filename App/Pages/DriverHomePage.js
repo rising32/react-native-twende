@@ -158,11 +158,18 @@ var DriverHomePage = React.createClass({
             'Decline ride',
             'Are you sure you want to decline this ride??',
             [
-                {text: 'Yes, decline', onPress: () => {
-                    ride.state = 'declined';
-                    updateCurrentRide(ride);
-                }},
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+                {
+                    text: 'Yes, decline',
+                    onPress: () => {
+                        ride.state = 'declined';
+                        this.state.currentUser.state = 'unavailable';
+                        updateCurrentRide(ride);
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    style: 'cancel'
+                }
             ])
     },
 
