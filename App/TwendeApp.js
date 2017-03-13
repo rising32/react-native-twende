@@ -245,6 +245,9 @@ var TwendeApp = React.createClass({
             if (currentRide.state == 'requested') {
                 sounds.alarm2.play();
             }
+            if (currentRide.state == 'canceled') {
+                this.state.currentUser.state = 'unavailable';
+            }
             this.navigator.push({
                 id: 'DriverHomePage',
                 currentUser: this.state.currentUser,
