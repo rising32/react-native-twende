@@ -192,20 +192,20 @@ var CurrentLocationPage = React.createClass({
                     </MapView>
                     {spinner}
                 </View>
-                <View style={{alignItems: 'center', marginTop: 10, height: 125 }}>
-                            <Text style={styles.item_title}>
-                                Karibu {this.props.currentUser.first_name}!
-                            </Text>
-                            <Text style={styles.text_important}>
-                                If location is not correct please drag pin.
-                            </Text>
-                    <View style={{flexDirection: 'row', margin: 16}}>
-                                <Button
-                                    action={this.createRide}
-                                    text={"CONFIRM LOCATION"}
-                                    color={colors.action}
-                                />
-                    </View>
+                <View style={{alignItems: 'center', marginTop: 10}}>
+                    <Text style={styles.item_title}>
+                        Karibu {this.props.currentUser.first_name}!
+                    </Text>
+                    <Text style={styles.text_important}>
+                        If location is not correct please drag pin.
+                    </Text>
+                </View>
+                <View style={{flexDirection: 'row', margin: 16, bottom: 10}}>                          
+                    <Button
+                        action={this.createRide}
+                        text={"CONFIRM LOCATION"}
+                        color={colors.action}
+                    />
                 </View>
             </View>
         );

@@ -471,11 +471,11 @@ var CurrentRidePage = React.createClass({
           <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
               <View style={styles.sheetYellow}>
                     <View
-                      style={{flex: 0.15, backgroundColor: colors.primary}}>
+                        style={{flex: 0.15, backgroundColor: colors.primary}}>
                     </View>
-                      <View style={styles.card_mid_finalize}>
+                        <View style={styles.card_mid_finalize}>
                             <View style={{marginTop: -10, alignSelf: 'center', elevation: 5}}>
-                              <Avatar image={ride.driver.avatar}/>
+                                <Avatar image={ride.driver.avatar}/>
                             </View>
                             <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={styles.item_title}>
@@ -491,26 +491,39 @@ var CurrentRidePage = React.createClass({
                                     colorOn={colors.action}
                                     colorOff={colors.action_disabled}
                                 />
-                             </View>
-                             <View style={{flexDirection: 'row'}}>
-                                 <Button
-                                     action={this.finishRide}
-                                     text={"FINISH"}
-                                     color={colors.action}
-                                     />
-                             </View>
-                      </View>
-                      </View>
-                      <View>
+                                <View style={{paddingTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text>
+                                        For your feedback please call us:
+                                    </Text>
+                                </View>
+                                    <Link
+                                        url={"tel: 0791398120"}
+                                        icon={"phone"}
+                                        size={16}
+                                        iconSize={18}
+                                        color={colors.action}
+                                        text={"0791398120"}
+                                    />
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.finishRide}
+                                    text={"FINISH"}
+                                    color={colors.action}
+                                    />
+                            </View>
+                        </View>
+                    </View>
+                        <View>
                             <Image
                                 source={require('../assets/banner.jpg')}
                                 style={styles.banner}
                                 />
-                      </View>
+                        </View>
                 </View>
 
-        )
-    },
+            )
+        },
 
     renderDone: function () {
         return (
