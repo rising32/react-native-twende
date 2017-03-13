@@ -13,8 +13,9 @@ import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
 var Rating = require('../Components/Rating');
 var IconText = require('../Components/IconText');
-var Button = require('../Components/Button');
+var ButtonFlat = require('../Components/ButtonFlat');
 var config = require('../config');
+
 
 
 var DriverItem = React.createClass({
@@ -53,15 +54,22 @@ var DriverItem = React.createClass({
                                     rating={this.props.driver.rating}
                                     colorOn={colors.secondary}
                                     colorOff={colors.action_disabled}
+                                    size={16}
                                 />
                             </View>
-                            <View style={{alignItems: 'flex-end'}}>
-                                <Button
+                            <View style={{alignItems: 'flex-end', marginTop: -40, marginLeft: 20}}>
+                            
+                            
+                                <ButtonFlat
+
+                                               
                                     size={14}
-                                    style={{marginTop: -40, marginLeft: 20, width: 90}}
+                                    
                                     action={this.props.onSelect}
-                                    text={"REQUEST"}
-                                />
+                                    text={"REQUEST"} />
+
+                            
+                            
                             </View>
                         </View>
                     </View>
