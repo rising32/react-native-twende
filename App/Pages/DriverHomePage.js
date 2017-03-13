@@ -91,13 +91,15 @@ var DriverHomePage = React.createClass({
     },
 
     refreshItems: function(){
-        ToastAndroid.show('Check Customer Activity..', ToastAndroid.SHORT);
+        ToastAndroid.show('Checking Customer Activity..', ToastAndroid.SHORT);
         loadCustomerList();
         reloadCurrentUser();
     },
 
     refreshRide: function() {
+        ToastAndroid.show('Checking Customer Activity..', ToastAndroid.SHORT);
         loadCurrentRide(this.props.currentRide.id);
+        reloadCurrentUser();
     },
 
     toggleAvailability: function(available) {
@@ -276,7 +278,7 @@ var DriverHomePage = React.createClass({
                     <View style={{alignItems: 'center'}}>
                         <Link
                             style={{padding:10, marginBottom: 10}}
-                            action={this.goHome}
+                            action={this.refreshRide}
                             text={'refresh'}
                             icon={'autorenew'}
                         />
@@ -293,7 +295,7 @@ var DriverHomePage = React.createClass({
         var top = this.renderSheetTopRequest("DECLINE");
         var away = "Unknown distance customer";
         if (ride.driver_distance) {
-            away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
+            away = ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away";
         }
         return  (
             <View style={{flex: 1, justifyContent: 'space-around'}}>
@@ -313,7 +315,7 @@ var DriverHomePage = React.createClass({
                           text={away}
                           color={colors.secondary}
                           size={16}
-                          style={{padding: 6, margin: 6, marginLeft: -5}}
+                          style={{padding: 6, margin: 6, marginLeft: -5, marginRight: -5}}
                         />
                     </View>
                     <View style={{flexDirection: 'row'}}>
@@ -429,7 +431,7 @@ var DriverHomePage = React.createClass({
                             <View style={{flexDirection: 'row'}}>
                                 <Button
                                     action={this.refreshRide}
-                                    text={"REFRESH"}
+                                    text={"CONFIRM"}
                                 />
                             </View>
                     </View>
@@ -446,7 +448,21 @@ var DriverHomePage = React.createClass({
 
     renderFinalized: function() {
         var ride = this.props.currentRide;
+        var text;
+      if (ride.payment_method == 'mpesa') {
+            var header = "M-Pesa Payment";
+            text = "Paybill No: 653839\nAccount No: Ride";
+
+        } else {
+            var header = "Cash Payment";
+            var text = ride.customer.first_name + " is paying cash";          
+        }
+        
+        var buttonText = "SUBMIT";
+        var buttonAction = this.finishRide;
         var top = this.renderSheetTopDropoff();
+
+
         return  (
             <View style={{flex: 1, backgroundColor: colors.primary}}>
                 <View style={styles.sheetYellow}>
@@ -458,17 +474,14 @@ var DriverHomePage = React.createClass({
                         </View>
                         <View>
                               <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                    Payment
+                                    {header}
                               </Text>
                               <Text style={styles.heavy_text}>
                                    {ride.fare}
                               </Text>
                         <View>
-                               <Text style={{textAlign: 'center'}}>
-                                    M-Pesa Send Money no.
-                                </Text>
-                                <Text style={{textAlign: 'center', marginBottom: 12}}>
-                                    07 1933 1903
+                               <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
+                                    {text}
                                 </Text>
                         </View>
                         </View>
@@ -486,8 +499,8 @@ var DriverHomePage = React.createClass({
                         </View>
                         <View style={{flexDirection: 'row'}}>
                           <Button
-                              action={this.finishRide}
-                              text={"SUBMIT"}
+                              action={buttonAction}
+                              text={buttonText}
                               />
                         </View>
                     </View>
@@ -503,8 +516,8 @@ var DriverHomePage = React.createClass({
     },
 
     renderScene: function(route, navigator) {
-        var content = this.renderHome();
         var ride = this.props.currentRide;
+        var content = this.renderHome();
         var currentUser = this.props.currentUser;
         if (currentUser.state != 'unavailable' && ride) {
             switch (ride.state) {

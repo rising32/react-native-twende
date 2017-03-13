@@ -159,7 +159,7 @@ var LoginPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.spinner}>
-                    <Text>Login successful!</Text>
+                    <Text style={styles.spinner_text}>Login successful!</Text>
                 </View>
             );
         }
@@ -169,7 +169,10 @@ var LoginPage = React.createClass({
 
         return (
             <View style={styles.loginPage}>
-                <View style={{flex: 0.3}}>
+                <View style={{flex: 0.15}}>
+                </View>
+                <View style={{flex: 0.15}}>
+                {spinner}
                 </View>
                 <View style={{flex: 0.2, marginTop: 20, justifyContent: 'flex-end'}}>
                         <Image
@@ -205,7 +208,6 @@ var LoginPage = React.createClass({
                         {error}{content}
                     </View>
                 </View>
-                {spinner}
             </View>
         );
     }

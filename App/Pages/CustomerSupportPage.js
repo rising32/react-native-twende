@@ -62,13 +62,16 @@ var CustomerSupportPage = React.createClass({
 
         return (
             <View style={{marginTop: 50, padding: 40, flex: 1}}>
-                <Text style={styles.item_title}>
-                    Pleas call us on this number in case of any issues related to the ride.
+                <Text style={[styles.item_title, {color: colors.secondary}]}>
+                    Call Us
                 </Text>
                 <View style={{marginTop: 16, marginBottom: 20}}>
                 <Text>
+                    Please call us on this number in case of any issues related to the ride. 
                     We also more than welcome any inquiries & feedback about our service.
                     We look forward speaking to you.
+                    {"\n"}{"\n"}{"\n"}
+                    For this beta test our customer service is open from 9 - 5 (Monday - Friday)
                 </Text>
                 </View>
                 <Link style={{margin: 10}}
