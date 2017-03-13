@@ -458,6 +458,14 @@ var TwendeApp = React.createClass({
                         text={'Terms'}
                     />
                     <Link
+                        action={this.logout}
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#FFFFFF'}
+                        icon={'lock-open'}
+                        text={'Logout'}
+                    />
+                    <Link
                         action={this.closeApp}
                         style={{padding: 8}}
                         size={14}
