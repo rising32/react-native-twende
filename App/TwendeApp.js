@@ -144,7 +144,8 @@ var TwendeApp = React.createClass({
 
     componentDidMount() { 
         NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange ); 
-        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); },
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); 
+    },
 
     handleConnectivityChange: function (isConnected) {
         this.setState({ 
