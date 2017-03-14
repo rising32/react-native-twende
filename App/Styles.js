@@ -413,6 +413,7 @@ export var styles = StyleSheet.create({
         marginRight: 4,
         marginLeft: 4,
         padding: 10,
+        borderRadius: 4, 
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.button_normal,

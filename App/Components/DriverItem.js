@@ -13,7 +13,7 @@ import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
 var Rating = require('../Components/Rating');
 var IconText = require('../Components/IconText');
-var ButtonFlat = require('../Components/ButtonFlat');
+var ButtonListview = require('../Components/ButtonListview');
 var config = require('../config');
 
 
@@ -60,9 +60,8 @@ var DriverItem = React.createClass({
                                     size={16}
                                 />
                             </View>
-                            <View style={{alignItems: 'flex-end', marginTop: -40, marginLeft: 20}}>
-                                <ButtonFlat    
-                                    size={14}
+                            <View style={{alignItems: 'flex-end', marginTop: -36, marginBottom: -6, marginLeft: 20}}>
+                                <ButtonListview 
                                     action={this.props.onSelect}
                                     text={"REQUEST"} />
                             </View>

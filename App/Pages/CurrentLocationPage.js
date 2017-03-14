@@ -200,7 +200,7 @@ var CurrentLocationPage = React.createClass({
                         If location is not correct please drag pin.
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row', margin: 16, bottom: 10}}>                          
+                <View style={{flexDirection: 'row', margin: 16}}>                          
                     <Button
                         action={this.createRide}
                         text={"CONFIRM LOCATION"}

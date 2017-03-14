@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-    View,
+    View,   
     Text,
     Navigator,
     ListView,
