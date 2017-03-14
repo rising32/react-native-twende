@@ -23,12 +23,12 @@ var DriverItem = React.createClass({
     fuzzyDistance: function() {
         let dist = this.props.driver.distance;
         if (dist > 1000) {
-            return Math.round(dist / 100) / 10 + 'km (' + (((dist / 100) / 10) * 4).toFixed(1) + ' min)';
+            return Math.round(dist / 100) / 10 + 'km (' + (((dist / 100) / 10) * 4).toFixed(0) + ' min)';
         }
         if (dist > 240) {
-        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4).toFixed(1) + ' min)';
+        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4).toFixed(0) + ' min)';
         }
-        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4 * 60).toFixed(1) + ' sec)';
+        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4 * 60).toFixed(0) + ' sec)';
     },
 
     render: function () {
@@ -48,7 +48,7 @@ var DriverItem = React.createClass({
                                 {this.props.driver.name}
                             </Text>
                             <IconText icon="motorcycle"
-                                      size={16}
+                                      size={15}
                                       color={colors.secondary}
                                       text={this.fuzzyDistance()} />
                             <View style={{width: 100}}>
