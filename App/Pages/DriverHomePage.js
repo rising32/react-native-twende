@@ -417,7 +417,7 @@ var DriverHomePage = React.createClass({
             <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
                 <View style={styles.sheetYellow}>
                     <View
-                        style={{flex: 0.15, backgroundColor: colors.primary}}>
+                        style={{flex: 0.1, backgroundColor: colors.primary}}>
                     </View>
                     <View style={styles.card_mid_finalize}>
                         <View>
@@ -425,22 +425,29 @@ var DriverHomePage = React.createClass({
                         </View>
                          <View>
                             <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Price
+                                Payment
                             </Text>
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
                         </View>
-                            <Text style={{textAlign: 'center'}}>
-                                {ride.customer.name} selects payment method.
-                                
+                            <Text style={[styles.text_important, {textAlign: 'center', fontSize: 15, marginBottom: 3}]}>
+                                Client chooses cash or M-pesa. If there are issues finalizing ride, call customer support:
                             </Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Button
-                                    action={this.refreshRide}
-                                    text={"CONFIRM"}
+                                <Link
+                                    url={"tel: 0791398120"}
+                                    icon={"phone"}
+                                    size={16}
+                                    iconSize={18}
+                                    color={colors.action}
+                                    text={"0791398120"}
                                 />
-                            </View>
+                        <View style={{flexDirection: 'row', marginTop: 6}}>
+                            <Button
+                                action={this.refreshRide}
+                                text={"CONFIRM"}
+                            />
+                        </View>
                     </View>
                 </View>
                      <View>
