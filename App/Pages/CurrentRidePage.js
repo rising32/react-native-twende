@@ -493,7 +493,7 @@ var CurrentRidePage = React.createClass({
                                 />
                                 <View style={{paddingTop: 10, justifyContent: 'center', alignItems: 'center'}}>
                                     <Text>
-                                        For your feedback please call us:
+                                        We appreciate feedback! Call us:
                                     </Text>
                                 </View>
                                     <Link
