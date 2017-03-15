@@ -44,6 +44,7 @@ var CurrentLocationPage = React.createClass({
             origin: {},
             isLoading: false,
             status: 'new',
+            phone: this.props.currentUser.phone,
             region: {
                 latitude: this.props.currentUser.position.latitude,
                 longitude: this.props.currentUser.position.longitude,
@@ -111,20 +112,10 @@ var CurrentLocationPage = React.createClass({
         );
     },
 
-/*    createRideTest: 
-
-            if (this.state.phone) {
-            this.props.navigator.replace({id: homePage});
-        } else {
-            Alert.alert('Update your profile', 'Please fill out your phone number.', [
-                {text: 'OK'}
-            ]);
-        }
-    },
-*/
-
-    createRide: function() {
-        var ride = {
+createRide: function() {
+    ;
+        if (this.props.currentUser.phone != "") {
+                    var ride = {
             origin:      this.state.origin,
             origin_text: this.state.origin_text
         };
@@ -132,7 +123,21 @@ var CurrentLocationPage = React.createClass({
             ready: true
         });
         createCurrentRide(ride);
-    },
+            
+         } else { 
+            Alert.alert(
+                'Phone number required to request ride',
+                'Please fill out your phone number in My Profile in the left above corner.',
+                    [
+                        {text: 'OK'}
+                    ],
+                    { cancelable: false}
+                );
+
+
+    }
+
+},
 
     render: function () {
         return (
