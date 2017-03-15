@@ -115,14 +115,14 @@ var CurrentLocationPage = React.createClass({
 createRide: function() {
     ;
         if (this.props.currentUser.phone != "") {
-                    var ride = {
-            origin:      this.state.origin,
-            origin_text: this.state.origin_text
-        };
-        this.setState({
-            ready: true
-        });
-        createCurrentRide(ride);
+            var ride = {
+                origin:      this.state.origin,
+                origin_text: this.state.origin_text
+            };
+            this.setState({
+                ready: true
+            });
+            createCurrentRide(ride);
             
          } else { 
             Alert.alert(
