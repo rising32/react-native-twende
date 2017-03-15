@@ -102,16 +102,6 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    locationAlert : function() {
-        Alert.alert(
-            'Location not recognized',
-            'You seem to have your location off. Please switch it on or try outside! :)',
-            [
-                {text: 'OKAY!'}
-            ]
-        );
-    },
-
 createRide: function() {
     ;
         if (this.props.currentUser.phone != "") {
@@ -175,13 +165,14 @@ createRide: function() {
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
         }   else {
                 Alert.alert(
-                'You appear offline',
-                'You seem to be out of wireless juice. Please connect.',
-                [
-                    {text: 'OKAY!'}
-                ]
-            );
-        }
+                    'Location not recognized',
+                    'You seem to have your location off. Please switch it on or try outside! :)',
+                    [
+                        {text: 'OKAY!'}
+                    ]
+                );
+            }
+
         
         return (
             <View style={styles.page}>
