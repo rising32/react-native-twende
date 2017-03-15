@@ -159,7 +159,7 @@ var LoginPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.spinner}>
-                    <Text style={styles.spinner_text}>Login successful!</Text>
+                    <Text style={styles.spinner_text}>Logging in! Please stand by..</Text>
                 </View>
             );
         }
