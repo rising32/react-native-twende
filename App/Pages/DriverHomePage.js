@@ -14,7 +14,6 @@ var {
     Image
     } = ReactNative;
 
-import CustomerStore from '../Stores/CustomerStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import GeoLocationStore from '../Stores/GeoLocationStore';
@@ -30,8 +29,8 @@ var SheetAvatar = require('../Components/SheetAvatar');
 var StarRating = require('../Components/StarRating');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
-import { loadCustomerList } from "../Actions/CustomerActions";
 import { updateCurrentRide,
+         loadRideList,
          loadCurrentRide } from "../Actions/CurrentRideActions";
 import { updateCurrentUser,
          reloadCurrentUser } from"../Actions/CurrentUserActions";
@@ -92,7 +91,7 @@ var DriverHomePage = React.createClass({
 
     refreshItems: function(){
         ToastAndroid.show('Checking Customer Activity..', ToastAndroid.SHORT);
-        loadCustomerList();
+        loadRideList();
         reloadCurrentUser();
     },
 
@@ -285,7 +284,7 @@ var DriverHomePage = React.createClass({
                     <View style={{alignItems: 'center'}}>
                         <Link
                             style={{padding:10, marginBottom: 10}}
-                            action={this.refreshRide}
+                            action={this.refreshItems}
                             text={'refresh'}
                             icon={'autorenew'}
                         />

@@ -37,7 +37,7 @@ class CurrentRideStore extends EventEmitter {
                 this.error(actions.error);
                 break;
             case actions.receiveRideList:
-                if (action.rides.length) {
+                if (action.rides != undefined && action.rides.length) {
                     this.set(action.rides[0]);
                 } else {
                     this.emit(events.noCurrentRide);
