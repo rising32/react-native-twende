@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-    View,
+    View,   
     Text,
     Navigator,
     ListView,
@@ -103,7 +103,7 @@ var DriverListPage = React.createClass({
                             Title: (route, navigator, index, navState) => {
                                 return (
                                     <Text style={styles.nav_title}>
-                                        CLOSEST RIDERS
+                                        closest riders
                                     </Text>
                                 );
                             }

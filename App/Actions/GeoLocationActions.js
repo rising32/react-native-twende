@@ -4,11 +4,6 @@ import actions from "../Constants/Actions";
 import config from "../config"
 var LocationService = require('../Services/LocationService');
 var React = require('react-native');
-var {
-    ToastAndroid,
-    } = React;
-
-
 var watchId;
 
 export function loadGeoLocation(enableHighAccuracy) {
@@ -35,7 +30,6 @@ export function loadGeoLocation(enableHighAccuracy) {
             );
         },
         (error) => {
-            ToastAndroid.show('Could not find location', ToastAndroid.SHORT);
             loadGeoLocation(enableHighAccuracy)
         },
         {

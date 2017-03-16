@@ -155,24 +155,24 @@ var LoginPage = React.createClass({
         var error = this.state.error ?
             <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
 
+        var content = this.renderSocialLogin();
+
         var spinner;
         if (this.state.ready) {
+            var content = null;
             spinner = (
                 <View style={styles.spinner}>
-                    <Text style={styles.spinner_text}>Login successful!</Text>
+                    <Text style={styles.spinner_text}>Logging in! Please stand by..</Text>
                 </View>
             );
         }
 
-        var content = this.renderSocialLogin();
+        
 
 
         return (
             <View style={styles.loginPage}>
                 <View style={{flex: 0.15}}>
-                </View>
-                <View style={{flex: 0.15}}>
-                {spinner}
                 </View>
                 <View style={{flex: 0.2, marginTop: 20, justifyContent: 'flex-end'}}>
                         <Image
@@ -204,8 +204,8 @@ var LoginPage = React.createClass({
                     </View>
                 </View>
                 <View style={{flex: 0.2, justifyContent: 'center'}}>
-                    <View style={{margin: 15}}>
-                        {error}{content}
+                    <View style={{margin: 10, flexDirection: 'row'}}>
+                        {error}{content}{spinner}                 
                     </View>
                 </View>
             </View>

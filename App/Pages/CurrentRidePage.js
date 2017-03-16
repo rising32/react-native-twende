@@ -164,7 +164,7 @@ var CurrentRidePage = React.createClass({
                         <Link
                               action={this.refreshRide}
                               text={'NEXT  '}
-                              iconRight={'fast-forward'}
+                              iconRight={'forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -262,7 +262,7 @@ var CurrentRidePage = React.createClass({
                         <Link
                               action={this.refreshRide}
                               text={'NEXT  '}
-                              iconRight={'fast-forward'}
+                              iconRight={'forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -305,9 +305,11 @@ var CurrentRidePage = React.createClass({
                 />
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 10}}>
                     <View style={styles.renderSheetTopItem}>
-                        <Link
+                       <Link
                             action={this.cancelRide}
+                            icon={"clear"}
                             size={15}
+                            iconSize={18}
                             color={colors.disable}
                             text={"CANCEL"}
                         />
@@ -318,8 +320,8 @@ var CurrentRidePage = React.createClass({
                     <View style={styles.renderSheetTopItem}>
                          <Link
                               action={this.refreshRide}
-                              text={'PAYMENT '}
-                              iconRight={'fast-forward'}
+                              text={'NEXT '}
+                              iconRight={'forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -328,13 +330,10 @@ var CurrentRidePage = React.createClass({
                 </View>
                 <View style={styles.card_mid}>
                     <Text style={styles.item_title}>
-                        Let's go!
+                        Finalize Ride
                     </Text>
-                    <Text>
-                        Your are on your way now.
-                    </Text>
-                    <Text>
-                        Enjoy the ride. :)
+                      <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6, fontSize: 15}]}>
+                        When you are dropped off click NEXT to finalize ride.
                     </Text>
                 </View>
                 <View style={styles.sheet_dark}>
@@ -471,11 +470,11 @@ var CurrentRidePage = React.createClass({
           <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
               <View style={styles.sheetYellow}>
                     <View
-                      style={{flex: 0.15, backgroundColor: colors.primary}}>
+                        style={{flex: 0.15, backgroundColor: colors.primary}}>
                     </View>
-                      <View style={styles.card_mid_finalize}>
+                        <View style={styles.card_mid_finalize}>
                             <View style={{marginTop: -10, alignSelf: 'center', elevation: 5}}>
-                              <Avatar image={ride.driver.avatar}/>
+                                <Avatar image={ride.driver.avatar}/>
                             </View>
                             <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                                 <Text style={styles.item_title}>
@@ -491,26 +490,39 @@ var CurrentRidePage = React.createClass({
                                     colorOn={colors.action}
                                     colorOff={colors.action_disabled}
                                 />
-                             </View>
-                             <View style={{flexDirection: 'row'}}>
-                                 <Button
-                                     action={this.finishRide}
-                                     text={"FINISH"}
-                                     color={colors.action}
-                                     />
-                             </View>
-                      </View>
-                      </View>
-                      <View>
+                                <View style={{paddingTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text>
+                                        We appreciate feedback! Call us:
+                                    </Text>
+                                </View>
+                                    <Link
+                                        url={"tel: 0791398120"}
+                                        icon={"phone"}
+                                        size={16}
+                                        iconSize={18}
+                                        color={colors.action}
+                                        text={"0791398120"}
+                                    />
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.finishRide}
+                                    text={"FINISH"}
+                                    color={colors.action}
+                                    />
+                            </View>
+                        </View>
+                    </View>
+                        <View>
                             <Image
                                 source={require('../assets/banner.jpg')}
                                 style={styles.banner}
                                 />
-                      </View>
+                        </View>
                 </View>
 
-        )
-    },
+            )
+        },
 
     renderDone: function () {
         return (
@@ -587,7 +599,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                ON YOUR WAY
+                twende
             </Text>
         );
     }
