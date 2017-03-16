@@ -21,8 +21,8 @@ var Map = React.createClass({
             region: {
                 latitude: lat,
                 longitude: long,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.015
             }
         }
     },
@@ -43,7 +43,7 @@ var Map = React.createClass({
                         draggable
                         ref="rider"
                         title="Rider"
-                        anchor={{ x: 0.5, y: 0.65 }}
+                        anchor={{ x: 0.5, y: 0.5 }}
                         pinColor="yellow"
                         image={require('../assets/map-motor1.png')}
                         coordinate={this.props.driver}
@@ -54,7 +54,7 @@ var Map = React.createClass({
                         draggable
                         ref="customer"
                         title="Customer"
-                        anchor={{ x: 0.5, y: 0.64 }}
+                        anchor={{ x: 0.5, y: 0.5 }}
                         description="Pick-up location"
                         pinColor="yellow"
                         image={require('../assets/map-customer.png')}
@@ -69,6 +69,7 @@ var Map = React.createClass({
                 <MapView
                     region={this.state.region}
                     ref="map"
+                    mapType="terrain"
                     showsUserLocation={true}
                     showUserLocation={true}
                     onRegionChange={this.onRegionChange}

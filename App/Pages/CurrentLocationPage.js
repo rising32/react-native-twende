@@ -48,8 +48,8 @@ var CurrentLocationPage = React.createClass({
             region: {
                 latitude: this.props.currentUser.position.latitude,
                 longitude: this.props.currentUser.position.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.015
             }
         }
     },

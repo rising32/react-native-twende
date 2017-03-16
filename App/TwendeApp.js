@@ -125,10 +125,7 @@ var TwendeApp = React.createClass({
 
     componentWillMount: function () {
         PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-
         BackAndroid.addEventListener("hardwareBackPress", this.backButton);
-
-
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
         CurrentRideStore.on(events.noCurrentRide, this.noCurrentRide);
         CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
@@ -373,6 +370,14 @@ var TwendeApp = React.createClass({
                         color={'#FFFFFF'}
                         icon={'assignment'}
                         text={'Terms'}
+                    />
+                    <Link
+                        action={this.logout}
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#FFFFFF'}
+                        icon={'lock-open'}
+                        text={'Logout'}
                     />
                     <Link
                         action={this.closeApp}
@@ -657,8 +662,15 @@ var TwendeApp = React.createClass({
             );
         }
         return this.noRoute(navigator);
-
+             Alert.alert(
+            'Unable to log in',
+            'Check your internet and log in by SWIPING the UPPERLEFT of the screen to the right!',
+            [
+                {text: 'OKAY!'}
+            ]
+        );
     },
+
 
     noRoute: function (navigator) {
         return (
