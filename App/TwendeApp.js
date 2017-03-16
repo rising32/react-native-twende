@@ -100,7 +100,7 @@ var TwendeApp = React.createClass({
                         text: "Yes, close",
                         onPress: () => {
                             this.logout()
-                            ToastAndroid.show("Goodbye, kuona hivi karibuni", ToastAndroid.LONG);
+                            ToastAndroid.show("Goodbye, kuona hivi karibuni!", ToastAndroid.LONG);
                             BackAndroid.exitApp();
                         }
                     }
@@ -125,10 +125,7 @@ var TwendeApp = React.createClass({
 
     componentWillMount: function () {
         PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-
         BackAndroid.addEventListener("hardwareBackPress", this.backButton);
-
-
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
         CurrentRideStore.on(events.noCurrentRide, this.noCurrentRide);
         CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
@@ -144,7 +141,8 @@ var TwendeApp = React.createClass({
 
     componentDidMount() { 
         NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange ); 
-        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); },
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); 
+    },
 
     handleConnectivityChange: function (isConnected) {
         this.setState({ 
@@ -154,7 +152,7 @@ var TwendeApp = React.createClass({
 
     connectivityAlert : function() {
         Alert.alert(
-            'Reminder',
+            'You appear offline',
             'You seem to be out of wireless juice. Please connect.',
             [
                 {text: 'OKAY!'}
@@ -236,7 +234,7 @@ var TwendeApp = React.createClass({
 
     refreshRide: function () {
         refreshCurrentRide(this.props.currentRide.id);
-        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
+        ToastAndroid.show('Updating App State..', ToastAndroid.SHORT)
     },
 
     currentRideLoaded: function(currentRide) {
@@ -372,6 +370,14 @@ var TwendeApp = React.createClass({
                         color={'#FFFFFF'}
                         icon={'assignment'}
                         text={'Terms'}
+                    />
+                    <Link
+                        action={this.logout}
+                        style={{padding: 8}}
+                        size={14}
+                        color={'#FFFFFF'}
+                        icon={'lock-open'}
+                        text={'Logout'}
                     />
                     <Link
                         action={this.closeApp}
@@ -532,12 +538,12 @@ var TwendeApp = React.createClass({
 
 
         if (this.state.isConnected == false) {
-        Alert.alert(
-        'Reminder',
-        'You are offline, please connect to the Internet',
+            Alert.alert(
+                'You appear offline',
+                'You seem to be out of wireless juice. Please connect.',
                 [
-                    {text: 'OKAY!', onPress: () => {}}
-                ]       
+                    {text: 'OKAY!'}
+                ]
             );
         }
 
@@ -656,8 +662,15 @@ var TwendeApp = React.createClass({
             );
         }
         return this.noRoute(navigator);
-
+             Alert.alert(
+            'Unable to log in',
+            'Check your internet and log in by SWIPING the UPPERLEFT of the screen to the right!',
+            [
+                {text: 'OKAY!'}
+            ]
+        );
     },
+
 
     noRoute: function (navigator) {
         return (

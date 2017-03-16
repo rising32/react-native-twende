@@ -4,6 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
     View,
+    Alert,
     Text,
     ToastAndroid,
     Navigator,
@@ -43,11 +44,12 @@ var CurrentLocationPage = React.createClass({
             origin: {},
             isLoading: false,
             status: 'new',
+            phone: this.props.currentUser.phone,
             region: {
                 latitude: this.props.currentUser.position.latitude,
                 longitude: this.props.currentUser.position.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.015
             }
         }
     },
@@ -100,28 +102,32 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-/*    createRideTest: 
+createRide: function() {
+    ;
+        if (this.props.currentUser.phone != "") {
+            var ride = {
+                origin:      this.state.origin,
+                origin_text: this.state.origin_text
+            };
+            this.setState({
+                ready: true
+            });
+            createCurrentRide(ride);
+            
+         } else { 
+            Alert.alert(
+                'Phone number required to request ride',
+                'Please fill out your phone number in My Profile in the left above corner.',
+                    [
+                        {text: 'OK'}
+                    ],
+                    { cancelable: false}
+                );
 
-            if (this.state.phone) {
-            this.props.navigator.replace({id: homePage});
-        } else {
-            Alert.alert('Update your profile', 'Please fill out your phone number.', [
-                {text: 'OK'}
-            ]);
-        }
-    },
-*/
 
-    createRide: function() {
-        var ride = {
-            origin:      this.state.origin,
-            origin_text: this.state.origin_text
-        };
-        this.setState({
-            ready: true
-        });
-        createCurrentRide(ride);
-    },
+    }
+
+},
 
     render: function () {
         return (
@@ -157,23 +163,17 @@ var CurrentLocationPage = React.createClass({
                 image = {require('../assets/map-customer.png')}
                 coordinate = {this.state.origin}
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
-        }  else {
-            spinner = (
-                <View style={styles.spinner}>
-                    <Text style={styles.heavy_text}>
-                        Loading current location
-                    </Text>
-                    <Link style={{marginLeft: 12}}
-                          action={this.refreshLocation}
-                          icon={"place"}
-                          size={14}
-                          iconSize={28}
-                          color={colors.action_secondary}
-                          text= {"Make sure you have Location enabled in your phone settings."}
-                    />
-                  </View>
-            );
-        }
+        }   else {
+                Alert.alert(
+                    'Location Services are Off ',
+                    'You seem to have your GPS turned off. Please switch it on or try outside! :)',
+                    [
+                        {text: 'OKAY!'}
+                    ]
+                );
+            }
+
+        
         return (
             <View style={styles.page}>
                 <View style={styles.map_container}>
@@ -188,23 +188,21 @@ var CurrentLocationPage = React.createClass({
                     </MapView>
                     {spinner}
                 </View>
-                <View style={{flex: 0.8, alignItems: 'center', margin: 10}}>
-                            
-                            <Text style={styles.item_title}>
-                                Karibu {this.props.currentUser.first_name}!
-                            </Text>
-                            <Text style={styles.text_important}>
-                                If location is not correct please drag pin.
-                            </Text>
-
-                        <View style={{flexDirection: 'row', margin: 18}}>
-                              <Button
-                                  action={this.createRide}
-                                  text={"CONFIRM LOCATION"}
-                                  color={colors.action}
-                                  />
-                        </View>
-                 </View>
+                <View style={{alignItems: 'center', marginTop: 10}}>
+                    <Text style={styles.item_title}>
+                        Karibu {this.props.currentUser.first_name}!
+                    </Text>
+                    <Text style={styles.text_important}>
+                        If location is not correct please drag pin.
+                    </Text>
+                </View>
+                <View style={{flexDirection: 'row', margin: 16}}>                          
+                    <Button
+                        action={this.createRide}
+                        text={"CONFIRM LOCATION"}
+                        color={colors.action}
+                    />
+                </View>
             </View>
         );
     }
@@ -226,7 +224,7 @@ var NavigationBarRouteMapper = {
         this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
-                PICK UP LOCATION
+                pick up location
             </Text>
         );
     }

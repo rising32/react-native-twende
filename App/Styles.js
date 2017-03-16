@@ -121,8 +121,8 @@ export var styles = StyleSheet.create({
 
     nav_title: {
         color: colors.nav_text,
-        fontSize: 18,
-        marginTop: 16
+        fontSize: 22,
+        marginTop: 14
     },
 
     instructions: {
@@ -413,6 +413,7 @@ export var styles = StyleSheet.create({
         marginRight: 4,
         marginLeft: 4,
         padding: 10,
+        borderRadius: 4, 
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.button_normal,

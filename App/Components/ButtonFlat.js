@@ -11,6 +11,7 @@ var {
     } = ReactNative;
 import {colors, styles} from "../Styles";
 import { Icon } from 'react-native-material-design';
+import { Button } from 'react-native-material-design';
 
 
 module.exports = React.createClass({
@@ -43,17 +44,17 @@ module.exports = React.createClass({
                          style={{marginRight: iconSize/2}} />
         }
         return (
-            <TouchableOpacity
-                onPress={action}
-                style={[styles.primary_button, this.props.style]}
-            >
-                {icon}
-                <View style={this.props.link}>
-                    <Text style={[styles.primary_button_text, this.props.textStyle]}>
-                        {text}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+                    <View style={this.props.link}>
+                            <Button
+                            onPress={action}
+                            text={"Request"}
+                            primary={colors.action}
+                            style={[styles.primary_button, this.props.style]}
+                        />
+                    </View>
+                
+      
+
         );
     }
 });

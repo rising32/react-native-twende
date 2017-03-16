@@ -13,8 +13,9 @@ import {colors, styles} from "../Styles";
 var SheetIcon = require('../Components/SheetIcon');
 var Rating = require('../Components/Rating');
 var IconText = require('../Components/IconText');
-var Button = require('../Components/Button');
+var ButtonListview = require('../Components/ButtonListview');
 var config = require('../config');
+
 
 
 var DriverItem = React.createClass({
@@ -22,9 +23,12 @@ var DriverItem = React.createClass({
     fuzzyDistance: function() {
         let dist = this.props.driver.distance;
         if (dist > 1000) {
-            return Math.round(dist / 100) / 10 + 'km';
+            return Math.round(dist / 100) / 10 + 'km (' + (((dist / 100) / 10) * 4).toFixed(0) + ' min)';
         }
-        return Math.round(dist)  + 'm';
+        if (dist > 240) {
+        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4).toFixed(0) + ' min)';
+        }
+        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4 * 60).toFixed(0) + ' sec)';
     },
 
     render: function () {
@@ -44,7 +48,7 @@ var DriverItem = React.createClass({
                                 {this.props.driver.name}
                             </Text>
                             <IconText icon="motorcycle"
-                                      size={16}
+                                      size={15}
                                       color={colors.secondary}
                                       text={this.fuzzyDistance()} />
                             <View style={{width: 100}}>
@@ -53,15 +57,13 @@ var DriverItem = React.createClass({
                                     rating={this.props.driver.rating}
                                     colorOn={colors.secondary}
                                     colorOff={colors.action_disabled}
+                                    size={16}
                                 />
                             </View>
-                            <View style={{alignItems: 'flex-end'}}>
-                                <Button
-                                    size={14}
-                                    style={{marginTop: -40, marginLeft: 20, width: 90}}
+                            <View style={{alignItems: 'flex-end', marginTop: -36, marginBottom: -6, marginLeft: 20}}>
+                                <ButtonListview 
                                     action={this.props.onSelect}
-                                    text={"REQUEST"}
-                                />
+                                    text={"REQUEST"} />
                             </View>
                         </View>
                     </View>

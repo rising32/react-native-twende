@@ -45,11 +45,24 @@ module.exports = React.createClass({
         return (
             <TouchableOpacity
                 onPress={action}
-                style={[styles.primary_button, this.props.style]}
-            >
-                {icon}
-                <View style={this.props.link}>
-                    <Text style={[styles.primary_button_text, this.props.textStyle]}>
+                style={{
+                    margin: 10, 
+                    marginRight: 4,
+                    padding: 7, 
+                    height: 30, 
+                    width: 80, 
+                    borderRadius: 2, 
+                    backgroundColor: colors.button_normal,
+                    elevation: 3,
+                    flex: 1
+                }}>
+                    {icon}
+                <View style={{alignSelf: 'center'}}>
+                    <Text style={{
+                        fontSize: 12, 
+                        color: colors.button_text,
+                        fontWeight: 'bold'
+                    }}>
                         {text}
                     </Text>
                 </View>
