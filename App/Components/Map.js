@@ -69,7 +69,7 @@ var Map = React.createClass({
                 <MapView
                     region={this.state.region}
                     ref="map"
-                    mapType="terrain"
+                    mapType="standard"
                     showsUserLocation={true}
                     showUserLocation={true}
                     onRegionChange={this.onRegionChange}

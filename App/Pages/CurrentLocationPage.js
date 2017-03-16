@@ -165,8 +165,8 @@ createRide: function() {
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
         }   else {
                 Alert.alert(
-                    'Location not recognized',
-                    'You seem to have your location off. Please switch it on or try outside! :)',
+                    'Location Services are Off ',
+                    'You seem to have your GPS turned off. Please switch it on or try outside! :)',
                     [
                         {text: 'OKAY!'}
                     ]
@@ -224,7 +224,7 @@ var NavigationBarRouteMapper = {
         this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
-                PICK UP LOCATION
+                pick up location
             </Text>
         );
     }

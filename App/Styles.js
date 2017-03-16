@@ -121,8 +121,8 @@ export var styles = StyleSheet.create({
 
     nav_title: {
         color: colors.nav_text,
-        fontSize: 18,
-        marginTop: 16
+        fontSize: 22,
+        marginTop: 14
     },
 
     instructions: {

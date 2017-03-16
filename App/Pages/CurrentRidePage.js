@@ -164,7 +164,7 @@ var CurrentRidePage = React.createClass({
                         <Link
                               action={this.refreshRide}
                               text={'NEXT  '}
-                              iconRight={'fast-forward'}
+                              iconRight={'forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -262,7 +262,7 @@ var CurrentRidePage = React.createClass({
                         <Link
                               action={this.refreshRide}
                               text={'NEXT  '}
-                              iconRight={'fast-forward'}
+                              iconRight={'forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -305,9 +305,11 @@ var CurrentRidePage = React.createClass({
                 />
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 10}}>
                     <View style={styles.renderSheetTopItem}>
-                        <Link
+                       <Link
                             action={this.cancelRide}
+                            icon={"clear"}
                             size={15}
+                            iconSize={18}
                             color={colors.disable}
                             text={"CANCEL"}
                         />
@@ -318,8 +320,8 @@ var CurrentRidePage = React.createClass({
                     <View style={styles.renderSheetTopItem}>
                          <Link
                               action={this.refreshRide}
-                              text={'PAYMENT '}
-                              iconRight={'fast-forward'}
+                              text={'NEXT '}
+                              iconRight={'forward'}
                               size={15}
                               iconSize={18}
                               color={colors.action}
@@ -328,13 +330,10 @@ var CurrentRidePage = React.createClass({
                 </View>
                 <View style={styles.card_mid}>
                     <Text style={styles.item_title}>
-                        Let's go!
+                        Finalize Ride
                     </Text>
-                    <Text>
-                        Your are on your way now.
-                    </Text>
-                    <Text>
-                        Enjoy the ride. :)
+                      <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6, fontSize: 15}]}>
+                        When you are dropped off click NEXT to finalize ride.
                     </Text>
                 </View>
                 <View style={styles.sheet_dark}>
@@ -600,7 +599,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                ON YOUR WAY
+                twende
             </Text>
         );
     }
