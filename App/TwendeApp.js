@@ -213,22 +213,24 @@ var TwendeApp = React.createClass({
         }
     },
 
-    noCurrentRide: function(currentRide) {
+    noCurrentRide: function() {
+        var currentRoute = this.navigator.getCurrentRoutes().pop().id;
         if (this.state.currentUser.is_driver) {
-            if (currentRide.state == 'requested') {
-                sounds.alarm2.play();
+            if (currentRoute !== 'DriverHomePage') {
+                this.navigator.push({
+                    id: 'DriverHomePage',
+                    currentUser: this.state.currentUser,
+                    currentRide: {}
+                });
             }
-            this.navigator.push({
-                id: 'DriverHomePage',
-                currentUser: this.state.currentUser,
-                currentRide: currentRide
-            });
-
+            ToastAndroid.show('You have not received incoming request yet.. Please standby.', ToastAndroid.LONG)
         } else {
-            this.navigator.push({
-                id: 'CurrentLocationPage',
-                currentUser: this.state.currentUser
-            });
+            if (currentRoute !== 'CurrentLocationPage') {
+                this.navigator.push({
+                    id: 'CurrentLocationPage',
+                    currentUser: this.state.currentUser
+                });
+            }
         }
     },
 
@@ -242,6 +244,9 @@ var TwendeApp = React.createClass({
         if (this.state.currentUser.is_driver) {
             if (currentRide.state == 'requested') {
                 sounds.alarm2.play();
+            }
+            if (currentRide.state == 'canceled') {
+                this.state.currentUser.state = 'unavailable';
             }
             this.navigator.push({
                 id: 'DriverHomePage',

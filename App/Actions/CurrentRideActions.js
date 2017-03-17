@@ -49,7 +49,7 @@ export function refreshCurrentRide(ride) {
     );
 }
 
-export function loadRideList(ride) {
+export function loadRideList() {
 
     RideService.loadList(
         (rides) => {
