@@ -6,6 +6,7 @@ var {
     View,
     Alert,
     Text,
+    ActivityIndicator,
     ToastAndroid,
     Navigator,
     TouchableHighlight
@@ -44,12 +45,13 @@ var CurrentLocationPage = React.createClass({
             origin: {},
             isLoading: false,
             status: 'new',
+            animating: true,
             phone: this.props.currentUser.phone,
             region: {
                 latitude: this.props.currentUser.position.latitude,
                 longitude: this.props.currentUser.position.longitude,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.015
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01
             }
         }
     },
@@ -79,13 +81,26 @@ var CurrentLocationPage = React.createClass({
         loadGeoLocation(true);
     },
 
+    componentWillUnmount: function() {
+        GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
+        clearTimeout(this._timer);
+    },
+
+    setToggleTimeout: function() { 
+        this._timer = setTimeout(() => { 
+            this.setState({ animating: false });
+            this.setToggleTimeout(); 
+
+        }, 2000); 
+    },
+
+    componentDidMount: function() { 
+        this.setToggleTimeout(); 
+    },
+
     refreshLocation: function() {
         loadGeoLocation();
         loadGeoLocation(true);
-    },
-
-    componentWillUnmount: function() {
-        GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
     },
 
     dragOrigin: function (loc) {
@@ -102,8 +117,17 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-createRide: function() {
-    ;
+    locationAlert : function() {
+        Alert.alert(
+            'Location not recognized',
+            'You seem to have your location off. Please switch it on or try outside! :)',
+            [
+                {text: 'OKAY!'}
+            ]
+        );
+    },
+
+    createRide: function() {
         if (this.props.currentUser.phone != "") {
             var ride = {
                 origin:      this.state.origin,
@@ -123,31 +147,34 @@ createRide: function() {
                     ],
                     { cancelable: false}
                 );
+            }
 
-
-    }
-
-},
+        },
 
     render: function () {
         return (
-            <Navigator
-                renderScene={this.renderScene}
-                navigator={this.props.navigator}
-                navigationBar={
-                <Navigator.NavigationBar style={styles.nav_bar}
-                    routeMapper={NavigationBarRouteMapper} />
-              }/>
+
+                <Navigator
+                    renderScene={this.renderScene}
+                    navigator={this.props.navigator}
+                    navigationBar={
+                    <Navigator.NavigationBar style={styles.nav_bar}
+                        routeMapper={NavigationBarRouteMapper} />
+                  }/>
         );
     },
 
     renderScene: function (route, navigator) {
+        const {animating} = this.state;
         var locationInput = null;
         var spinner;
         if (this.state.ready) {
             spinner = (
-                <View style={styles.spinner}>
-                    <Text style={styles.spinner_text}>Loading riders...</Text>
+                <View style={styles.activity_indicator}> 
+                    <ActivityIndicator 
+                    size={50}
+                    color={colors.disable} 
+                    /> 
                 </View>
             );
         }
@@ -163,16 +190,7 @@ createRide: function() {
                 image = {require('../assets/map-customer.png')}
                 coordinate = {this.state.origin}
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
-        }   else {
-                Alert.alert(
-                    'Location Services are Off ',
-                    'You seem to have your GPS turned off. Please switch it on or try outside! :)',
-                    [
-                        {text: 'OKAY!'}
-                    ]
-                );
-            }
-
+        }   
         
         return (
             <View style={styles.page}>
@@ -188,6 +206,7 @@ createRide: function() {
                     </MapView>
                     {spinner}
                 </View>
+
                 <View style={{alignItems: 'center', marginTop: 10}}>
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
@@ -224,7 +243,7 @@ var NavigationBarRouteMapper = {
         this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
-                pick up location
+                PICK UP LOCATION
             </Text>
         );
     }

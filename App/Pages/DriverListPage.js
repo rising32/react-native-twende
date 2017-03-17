@@ -6,6 +6,7 @@ var {
     View,   
     Text,
     Navigator,
+    ActivityIndicator,
     ListView,
     ToastAndroid,
     } = ReactNative;
@@ -33,6 +34,7 @@ var DriverListPage = React.createClass({
             currentUser: this.props.currentUser,
             currentRide: this.props.currentRide,
             driver: {},
+            animating: true,
             items: [],
             isLoading: true,
             isConnecting: false
@@ -42,11 +44,21 @@ var DriverListPage = React.createClass({
     componentDidMount: function () {
         DriverStore.on(events.driverListLoaded, this.setItems);
         this.refreshItems();
+        this.setToggleTimeout(); 
     },
 
     componentWillUnmount: function () {
         DriverStore.removeListener(events.driverListLoaded, this.setItems);
+        clearTimeout(this._timer);
     },
+
+    setToggleTimeout: function() { 
+        this._timer = setTimeout(() => { 
+            this.setState({ animating: false });
+            this.setToggleTimeout(); 
+        }, 2000); 
+    },
+
 
     setItems: function(items) {
         this.setState({
@@ -103,7 +115,7 @@ var DriverListPage = React.createClass({
                             Title: (route, navigator, index, navState) => {
                                 return (
                                     <Text style={styles.nav_title}>
-                                        closest riders
+                                        CLOSEST RIDERS
                                     </Text>
                                 );
                             }
@@ -171,9 +183,13 @@ var DriverListPage = React.createClass({
         var spinner;
         if (this.state.isConnecting) {
             spinner = (
-                <View style={styles.spinner}>
-                    <Text style={styles.spinner_text}>Connecting...</Text>
+                <View style={styles.activity_indicator}> 
+                    <ActivityIndicator 
+                    size={50}
+                    color={colors.disable} 
+                    /> 
                 </View>
+
             );
         }
         var footer = (
@@ -196,8 +212,8 @@ var DriverListPage = React.createClass({
 
         return (
             <View style={styles.page}>
-                {spinner}
                 {content}
+                {spinner}
                 <View style={{alignItems: 'center'}}>
                     {footer}
                 </View>

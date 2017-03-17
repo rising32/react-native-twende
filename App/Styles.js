@@ -88,6 +88,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+
     // Spinner
     spinner: {
         alignItems: 'center',
@@ -108,8 +109,15 @@ export var styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    // Navigation
+    activity_indicator: { 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        flex: 1,
+        padding: 8, 
+    },
 
+
+    // Navigation
     nav_bar: {
         backgroundColor: colors.primary,
         alignItems: 'center',
@@ -121,8 +129,8 @@ export var styles = StyleSheet.create({
 
     nav_title: {
         color: colors.nav_text,
-        fontSize: 22,
-        marginTop: 14
+        fontSize: 18,
+        marginTop: 16
     },
 
     instructions: {

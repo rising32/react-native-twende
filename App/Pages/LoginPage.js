@@ -8,6 +8,7 @@ var {
     View,
     Text,
     ToastAndroid,
+    ActivityIndicator,
     TextInput,
     Navigator,
     TouchableHighlight,
@@ -33,6 +34,7 @@ var LoginPage = React.createClass({
         return {
             error: false,
             loading: false,
+            animating: true,
             currentUser: {},
             username: '',
             password: '',
@@ -48,8 +50,21 @@ var LoginPage = React.createClass({
         CurrentUserStore.removeListener(events.loginFailed, this.setLoginError);
     },
 
+    componentDidMount: function() { 
+        this.setToggleTimeout(); 
+    },
+
     componentWillUnmount: function () {
         this.removeListeners();
+        clearTimeout(this._timer);
+    },
+
+    setToggleTimeout: function() { 
+        this._timer = setTimeout(() => { 
+            this.setState({ animating: false });
+            this.setToggleTimeout(); 
+
+        }, 2000); 
     },
 
     setLoginError: function () {
@@ -166,6 +181,8 @@ var LoginPage = React.createClass({
                 </View>
             );
         }
+
+        
 
         
 
