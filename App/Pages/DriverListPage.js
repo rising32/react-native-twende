@@ -183,13 +183,12 @@ var DriverListPage = React.createClass({
         var spinner;
         if (this.state.isConnecting) {
             spinner = (
-                <View style={styles.activity_indicator}> 
+                <View style={[styles.activity_indicator, {left: 150, bottom: 275}]}>
                     <ActivityIndicator 
                     size={50}
                     color={colors.disable} 
                     /> 
                 </View>
-
             );
         }
         var footer = (
@@ -212,8 +211,8 @@ var DriverListPage = React.createClass({
 
         return (
             <View style={styles.page}>
-                {content}
-                {spinner}
+                    {content}
+                    {spinner}
                 <View style={{alignItems: 'center'}}>
                     {footer}
                 </View>

@@ -141,7 +141,7 @@ var TwendeApp = React.createClass({
 
     componentDidMount() { 
         NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange ); 
-        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); 
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );  
     },
 
     handleConnectivityChange: function (isConnected) {
@@ -534,6 +534,7 @@ var TwendeApp = React.createClass({
     },
 
     render: function (route, navigator) {
+
         var drawer = this.anonymousDrawerView;
         if (this.state.currentUser.is_driver) {
             drawer = this.driverDrawerView;
@@ -568,7 +569,7 @@ var TwendeApp = React.createClass({
                     goBack={this.goBack}
                     state={this.state}
                     configureScene={(route) => {
-                  return Navigator.SceneConfigs.FadeAndroid;
+                    return Navigator.SceneConfigs.FadeAndroid;
                 }}
                 />
             <StatusBar

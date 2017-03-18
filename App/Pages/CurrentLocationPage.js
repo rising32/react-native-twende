@@ -90,7 +90,6 @@ var CurrentLocationPage = React.createClass({
         this._timer = setTimeout(() => { 
             this.setState({ animating: false });
             this.setToggleTimeout(); 
-
         }, 2000); 
     },
 
@@ -170,7 +169,7 @@ var CurrentLocationPage = React.createClass({
         var spinner;
         if (this.state.ready) {
             spinner = (
-                <View style={styles.activity_indicator}> 
+                <View style={[styles.activity_indicator, {left: 150, bottom: 150}]}> 
                     <ActivityIndicator 
                     size={50}
                     color={colors.disable} 
@@ -206,7 +205,6 @@ var CurrentLocationPage = React.createClass({
                     </MapView>
                     {spinner}
                 </View>
-
                 <View style={{alignItems: 'center', marginTop: 10}}>
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!

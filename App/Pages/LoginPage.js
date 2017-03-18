@@ -167,6 +167,7 @@ var LoginPage = React.createClass({
     },
 
     renderScene: function (route, navigator) {
+        const {animating} = this.state;
         var error = this.state.error ?
             <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
 
@@ -174,18 +175,15 @@ var LoginPage = React.createClass({
 
         var spinner;
         if (this.state.ready) {
-            var content = null;
             spinner = (
-                <View style={styles.spinner}>
-                    <Text style={styles.spinner_text}>Logging in! Please stand by..</Text>
+                <View style={styles.component2}>
+                    <ActivityIndicator 
+                    size={50}
+                    color={colors.disable} 
+                    /> 
                 </View>
             );
         }
-
-        
-
-        
-
 
         return (
             <View style={styles.loginPage}>
@@ -221,9 +219,19 @@ var LoginPage = React.createClass({
                     </View>
                 </View>
                 <View style={{flex: 0.2, justifyContent: 'center'}}>
-                    <View style={{margin: 10, flexDirection: 'row'}}>
-                        {error}{content}{spinner}                 
+                        {error}{content}              
+                </View>
+                <View style={styles.activity_indicator}> 
+                    {spinner}
+                    {animating && (
+                    <View style={styles.component2}>
+                    <ActivityIndicator 
+                        animating={this.state.animating}
+                        size={60}
+                        color={colors.disable} 
+                    /> 
                     </View>
+                    )}
                 </View>
             </View>
         );

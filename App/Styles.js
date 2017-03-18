@@ -110,12 +110,27 @@ export var styles = StyleSheet.create({
     },
 
     activity_indicator: { 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        flex: 1,
-        padding: 8, 
+    flexDirection:'row',
+    position: 'absolute',
+    bottom: 220,
+    elevation: 10
     },
 
+    component1: {
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+
+    },
+    component2: {
+    flex:1,
+    justifyContent:'center'
+    },
+
+    component3: {
+    flex:1,
+    width: 30
+    },
 
     // Navigation
     nav_bar: {
