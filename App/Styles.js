@@ -88,6 +88,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+
     // Spinner
     spinner: {
         alignItems: 'center',
@@ -108,8 +109,30 @@ export var styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    // Navigation
+    activity_indicator: { 
+    flexDirection:'row',
+    position: 'absolute',
+    bottom: 220,
+    elevation: 10
+    },
 
+    component1: {
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+
+    },
+    component2: {
+    flex:1,
+    justifyContent:'center'
+    },
+
+    component3: {
+    flex:1,
+    width: 30
+    },
+
+    // Navigation
     nav_bar: {
         backgroundColor: colors.primary,
         alignItems: 'center',
@@ -121,8 +144,8 @@ export var styles = StyleSheet.create({
 
     nav_title: {
         color: colors.nav_text,
-        fontSize: 22,
-        marginTop: 14
+        fontSize: 18,
+        marginTop: 16
     },
 
     instructions: {
