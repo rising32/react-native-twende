@@ -6,13 +6,7 @@ var {
     View,
     Image,
     } = ReactNative;
-var TokenStore = require('../Stores/TokenStore');
 import {colors, styles} from "../Styles";
-
-import events from "../Constants/Events";
-import CurrentUserStore from '../Stores/CurrentUserStore';
-import { reloadCurrentUser }  from '../Actions/CurrentUserActions';
-
 
 var SplashPage = React.createClass({
 

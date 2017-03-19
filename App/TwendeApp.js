@@ -12,7 +12,6 @@ var {
     NetInfo,
     View,
     Image,
-    Alert,
     Navigator,
     TouchableOpacity,
     DrawerLayoutAndroid,
@@ -132,21 +131,18 @@ var TwendeApp = React.createClass({
         CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
         CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
         CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
+        //NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange );
+        //NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );
         reloadCurrentUser()
     },
 
     componentWillUnmount: function() {
-        NetInfo.isConnected.removeEventListener( 'change', this.handleConnectivityChange );
-    },
-
-    componentDidMount() { 
-        NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange ); 
-        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } ); 
+        //NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange );
     },
 
     handleConnectivityChange: function (isConnected) {
         this.setState({ 
-        isConnected, 
+            isConnected: isConnected
         }); 
     },
 
@@ -298,7 +294,9 @@ var TwendeApp = React.createClass({
                         notify(notification.title, notification.message);
                     }
                     if (notification.ride) {
-                        refreshCurrentRide(notification.ride);
+                        loadRideList();
+                        // Some how loading specific ride here gives a 404
+                        // refreshCurrentRide(notification.ride);
                     }
                 },
                 onError: function(error) {

@@ -41,6 +41,9 @@ var DriverListPage = React.createClass({
 
     componentDidMount: function () {
         DriverStore.on(events.driverListLoaded, this.setItems);
+        this.setState({
+            isConnecting: false
+        });
         this.refreshItems();
     },
 

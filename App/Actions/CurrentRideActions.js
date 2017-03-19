@@ -43,7 +43,7 @@ export function refreshCurrentRide(ride) {
         },
         (error) => {
             dispatch({
-                type: actions.errorUpdaCurrentRide
+                type: actions.errorUpdateCurrentRide
             })
         }
     );
