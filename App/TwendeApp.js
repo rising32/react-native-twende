@@ -131,18 +131,23 @@ var TwendeApp = React.createClass({
         CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
         CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
         CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
-        //NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange );
-        //NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );
+        NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange );
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );
         reloadCurrentUser()
     },
 
     componentWillUnmount: function() {
-        //NetInfo.isConnected.removeEventListener('change', this.handleConnectivityChange );
+        NetInfo.isConnected.removeEventListener( 'change', this.handleConnectivityChange );
+    },
+
+    componentDidMount() {
+        NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange );
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );
     },
 
     handleConnectivityChange: function (isConnected) {
         this.setState({ 
-            isConnected: isConnected
+        isConnected, 
         }); 
     },
 
@@ -566,8 +571,8 @@ var TwendeApp = React.createClass({
                     goBack={this.goBack}
                     state={this.state}
                     configureScene={(route) => {
-                  return Navigator.SceneConfigs.FadeAndroid;
-                }}
+                        return Navigator.SceneConfigs.FadeAndroid;
+                    }}
                 />
             <StatusBar
                  backgroundColor={colors.primary_dark}
