@@ -116,16 +116,6 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    locationAlert : function() {
-        Alert.alert(
-            'Location not recognized',
-            'You seem to have your location off. Please switch it on or try outside! :)',
-            [
-                {text: 'OKAY!'}
-            ]
-        );
-    },
-
     createRide: function() {
         if (this.props.currentUser.phone != "") {
             var ride = {
