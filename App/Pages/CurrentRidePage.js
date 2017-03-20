@@ -6,6 +6,7 @@ var {
     Alert,
     View,
     Text,
+    ActivityIndicator,
     Image,
     TextInput,
     Navigator,
@@ -41,7 +42,8 @@ var CurrentRidePage = React.createClass({
             currentRide: this.props.currentRide,
             isLoading: false,
             price: 0,
-            rating: 0
+            rating: 0,
+            animating: true
         }
 
     },
@@ -145,6 +147,15 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
+                <View style={styles.activity_indicator}> 
+                        <View style={styles.component2}>
+                            <ActivityIndicator 
+                                animating={this.state.animating}
+                                size={80}
+                                color={colors.disable} 
+                            /> 
+                        </View>
+                    </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
                     <View style={styles.renderSheetTopItem}>
                         <Link
@@ -155,15 +166,14 @@ var CurrentRidePage = React.createClass({
                             color={colors.disable}
                             text={"CANCEL"}
                         />
-
                     </View>
                     <View style={{marginLeft: 6}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderSheetTopItem}>
                         <Link
-                              action={this.refreshRide}
-                              text={'NEXT  '}
+                            action={this.refreshRide}
+                          text={'NEXT  '}
                               iconRight={'forward'}
                               size={15}
                               iconSize={18}
@@ -174,22 +184,23 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.sheet_dark}>
                     <View>
                         <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Requesting {ride.driver.name}!
+                            Requesting {ride.driver.name}!
                         </Text>
                         <Text style={{textAlign: 'center', margin: 2, color: colors.action_secondary}}>
-                            Wait for call of {ride.driver.first_name} or call with button below
+                            You can find customer support in the menu in case the rider doesn't respond and we will help you out.
                         </Text>
                     </View>
-                        <View style={{marginLeft: -8, alignItems: 'center'}}>
-                            <Link style={{margin: 16}}
-                                  url={"tel: " + ride.driver.phone}
-                                  icon={"phone"}
-                                  size={16}
-                                  iconSize={24}
-                                  color={colors.secondary}
-                                  text={"CALL " + ride.driver.name.toUpperCase()}
-                            />
-                        </View>
+                    <View style={{marginLeft: -8, alignItems: 'center'}}>
+                        <Link style={{margin: 16}}
+                              url={"tel: " + ride.driver.phone}
+                              icon={"phone"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.secondary}
+                              text={"CALL " + ride.driver.name.toUpperCase()}
+                        />
+                    </View>
+
                 </View>
             </View>
         )
@@ -204,7 +215,6 @@ var CurrentRidePage = React.createClass({
                             <Text style={{textAlign: 'center'}}>
                                 Sorry, your request has been declined.
                             </Text>
-
                         </View>
                     </View>
                     <Link style={{margin: 10}}
@@ -287,6 +297,18 @@ var CurrentRidePage = React.createClass({
                                 color={colors.secondary}
                                 text={"CALL " + ride.driver.name.toUpperCase()}
                             />
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Button
+                                action={this.payMpesa}
+                                text={"M-PESA"}
+                                color={colors.action}
+                                />
+                            <Button
+                                action={this.payCash}
+                                text={"CASH"}
+                                color={colors.action}
+                                />
                         </View>
                     </View>
                 </View>

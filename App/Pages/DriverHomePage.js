@@ -8,6 +8,7 @@ var {
     Text,
     TextInput,
     Switch,
+    ActivityIndicator,
     Navigator,
     TouchableOpacity,
     ToastAndroid,
@@ -129,6 +130,12 @@ var DriverHomePage = React.createClass({
     dropoffRide: function() {
         var ride = this.props.currentRide;
         ride.state = 'dropoff';
+        updateCurrentRide(ride);
+    },
+
+    paymentRide: function() {
+        var ride = this.props.currentRide;
+        ride.state = 'payment';
         updateCurrentRide(ride);
     },
 
@@ -310,11 +317,23 @@ var DriverHomePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
+                <View style={styles.activity_indicator}> 
+                    <View style={styles.component2}>
+                        <ActivityIndicator 
+                            animating={this.state.animating}
+                            size={80}
+                            color={colors.disable} 
+                        /> 
+                    </View>
+                </View>
                 <View style={styles.sheet_rider}>
                     {top}
                     <View style={styles.sheet_content}>
                          <Text style={styles.item_title}>
                             Request from {ride.customer.name}!
+                        </Text>
+                        <Text style={styles.text_important}>
+                            Waiting for your confirmation..
                         </Text>
                         <IconText
                           icon={"motorcycle"}
@@ -331,6 +350,7 @@ var DriverHomePage = React.createClass({
                             color={colors.action}
                             />
                     </View>
+                    
                 </View>
             </View>
         );
@@ -363,7 +383,7 @@ var DriverHomePage = React.createClass({
                                     action={this.startRide}
                                     text={"START TRIP"}
                                     color={colors.action}
-                                    />
+                                />
                           </View>
                     </View>
               </View>
@@ -443,8 +463,8 @@ var DriverHomePage = React.createClass({
                                 />
                         <View style={{flexDirection: 'row', marginTop: 6}}>
                             <Button
-                                action={this.refreshRide}
-                                text={"CONFIRM"}
+                                action={this.paymentRide}
+                                text={"PAYMENT"}
                             />
                         </View>
                     </View>
@@ -582,7 +602,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                rider home
+                RIDER HOME
             </Text>
         );
     }

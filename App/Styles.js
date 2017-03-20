@@ -112,7 +112,7 @@ export var styles = StyleSheet.create({
     activity_indicator: { 
     flexDirection:'row',
     position: 'absolute',
-    bottom: 220,
+    bottom: 260,
     elevation: 10
     },
 
