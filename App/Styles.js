@@ -116,20 +116,9 @@ export var styles = StyleSheet.create({
     elevation: 10
     },
 
-    component1: {
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-
-    },
     component2: {
     flex:1,
     justifyContent:'center'
-    },
-
-    component3: {
-    flex:1,
-    width: 30
     },
 
     // Navigation
@@ -212,14 +201,13 @@ export var styles = StyleSheet.create({
     },
 
     card_mid_finalize: {
-        elevation: 0,
         flex: 0.7,
         flexDirection: 'column',
         justifyContent: 'space-around',
         borderRadius: 6,
         padding: 12,
-        marginLeft: 24,
-        marginRight: 24,
+        marginLeft: 40,
+        marginRight: 40,
         backgroundColor: colors.box,
         alignItems: 'center'
     },
@@ -261,7 +249,7 @@ export var styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 30,
         paddingRight: 30,
-        backgroundColor: colors.primary
+        backgroundColor: 'red'
     },
 
     sheet_content: {

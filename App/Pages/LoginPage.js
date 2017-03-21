@@ -178,7 +178,7 @@ var LoginPage = React.createClass({
             spinner = (
                 <View style={styles.component2}>
                     <ActivityIndicator 
-                    size={60}
+                    size={80}
                     color={colors.disable} 
                     /> 
                 </View>

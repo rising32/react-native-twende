@@ -185,7 +185,7 @@ var DriverListPage = React.createClass({
             spinner = (
                 <View style={[styles.activity_indicator, {left: 150, bottom: 275}]}>
                     <ActivityIndicator 
-                    size={50}
+                    size={80}
                     color={colors.disable} 
                     /> 
                 </View>

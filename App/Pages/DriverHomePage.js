@@ -129,12 +129,6 @@ var DriverHomePage = React.createClass({
 
     dropoffRide: function() {
         var ride = this.props.currentRide;
-        ride.state = 'dropoff';
-        updateCurrentRide(ride);
-    },
-
-    paymentRide: function() {
-        var ride = this.props.currentRide;
         ride.state = 'payment';
         updateCurrentRide(ride);
     },
@@ -238,16 +232,6 @@ var DriverHomePage = React.createClass({
         )
     },
 
-    renderSheetTopDropoff: function () {
-        var ride = this.props.currentRide;
-        return (
-            <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
-                <Avatar image={ride.customer.avatar} />
-            </View>
-
-        )
-    },
-
     renderHome: function() {
         var is_available = this.state.currentUser.state == 'available';
         var statusText = "Customer cannot find you.";
@@ -330,10 +314,10 @@ var DriverHomePage = React.createClass({
                     {top}
                     <View style={styles.sheet_content}>
                          <Text style={styles.item_title}>
-                            Request from {ride.customer.name}!
+                            Request from {ride.customer.name}
                         </Text>
                         <Text style={styles.text_important}>
-                            Waiting for your confirmation..
+                            Waiting for your confirmation!
                         </Text>
                         <IconText
                           icon={"motorcycle"}
@@ -429,93 +413,38 @@ var DriverHomePage = React.createClass({
         );
     },
 
-    renderDropoff: function() {
+
+    renderFinalized: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTopDropoff();
+        var text = ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride"; 
+        var header = "Payment";
+        var buttonText = "FINALIZE";
+        var buttonAction = this.finishRide;
+
         return  (
-            <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
-                <View style={styles.sheetYellow}>
-                    <View
-                        style={{flex: 0.1, backgroundColor: colors.primary}}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              backgroundColor: colors.primary}}
+                >                    
+                    <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 5, marginBottom: -50, elevation: 5}}>                   
+                        <Avatar image={ride.driver.avatar}/>
+                    </View>
+                    <View style={{flex: 0.05}}>
                     </View>
                     <View style={styles.card_mid_finalize}>
                         <View>
-                        {top}
-                        </View>
-                         <View>
-                            <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Payment
+                            <Text style={[styles.item_title, {textAlign: 'center', margin: 10}]}>
+                                {header}
                             </Text>
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
-                        </View>
-                            <Text style={[styles.text_important, {textAlign: 'center', fontSize: 15, marginBottom: 3}]}>
-                                Client chooses cash or M-pesa. If there are issues finalizing ride, call customer support:
+                        <View>
+                            <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
+                                {text}
                             </Text>
-                                <Link
-                                    url={"tel: 0791398120"}
-                                    icon={"phone"}
-                                    size={16}
-                                    iconSize={18}
-                                    color={colors.action}
-                                    text={"0791398120"}
-                                />
-                        <View style={{flexDirection: 'row', marginTop: 6}}>
-                            <Button
-                                action={this.paymentRide}
-                                text={"PAYMENT"}
-                            />
-                        </View>
-                    </View>
-                </View>
-                     <View>
-                          <Image
-                              source={require('../assets/banner.jpg')}
-                              style={styles.banner}
-                              />
-                    </View>
-            </View>
-        );
-    },
-
-    renderFinalized: function() {
-        var ride = this.props.currentRide;
-        var text;
-      if (ride.payment_method == 'mpesa') {
-            var header = "M-Pesa Payment";
-            text = "Paybill No: 653839\nAccount No: Ride";
-
-        } else {
-            var header = "Cash Payment";
-            var text = ride.customer.first_name + " is paying cash";          
-        }
-        
-        var buttonText = "SUBMIT";
-        var buttonAction = this.finishRide;
-        var top = this.renderSheetTopDropoff();
-
-
-        return  (
-            <View style={{flex: 1, backgroundColor: colors.primary}}>
-                <View style={styles.sheetYellow}>
-                    <View style={{flex: 0.1, backgroundColor: colors.primary}}>
-                    </View>
-                    <View style={styles.card_mid_finalize}>
-                        <View>
-                            {top}
-                        </View>
-                        <View>
-                              <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                    {header}
-                              </Text>
-                              <Text style={styles.heavy_text}>
-                                   {ride.fare}
-                              </Text>
-                        <View>
-                               <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
-                                    {text}
-                                </Text>
                         </View>
                         </View>
                         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -537,7 +466,7 @@ var DriverHomePage = React.createClass({
                               />
                         </View>
                     </View>
-                </View>
+
                 <View>
                     <Image
                         source={require('../assets/banner.jpg')}
@@ -563,9 +492,6 @@ var DriverHomePage = React.createClass({
                 case 'driving' :
                     content = this.renderDriving();
                     break;
-                case 'dropoff' :
-                    content = this.renderDropoff();
-                    break;
                 case 'payment' :
                     if (!ride.driver_rating) {
                         content = this.renderFinalized();
@@ -577,7 +503,6 @@ var DriverHomePage = React.createClass({
                     }
                     break;
             }
-
         }
 
         return (
