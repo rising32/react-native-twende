@@ -137,19 +137,17 @@ var CurrentLocationPage = React.createClass({
                     { cancelable: false}
                 );
             }
-
         },
 
     render: function () {
         return (
-
                 <Navigator
                     renderScene={this.renderScene}
                     navigator={this.props.navigator}
                     navigationBar={
                     <Navigator.NavigationBar style={styles.nav_bar}
                         routeMapper={NavigationBarRouteMapper} />
-                  }/>
+                }/>
         );
     },
 
@@ -184,6 +182,7 @@ var CurrentLocationPage = React.createClass({
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
         }   
         
+
         return (
             <View style={styles.page}>
                 <View style={styles.map_container}>
@@ -195,7 +194,7 @@ var CurrentLocationPage = React.createClass({
                         showUserLocation={true}
                         style={styles.map}>
                         {pickup}
-                    </MapView>
+                    </MapView> 
                     {spinner}
                 </View>
                 <View style={{alignItems: 'center', marginTop: 10}}>
