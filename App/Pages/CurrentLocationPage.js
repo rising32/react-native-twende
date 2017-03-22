@@ -159,11 +159,14 @@ var CurrentLocationPage = React.createClass({
         var spinner;
         if (this.state.ready) {
             spinner = (
-                <View style={[styles.activity_indicator, {left: 150, bottom: 150}]}> 
-                    <ActivityIndicator 
-                    size={80}
-                    color={colors.disable} 
-                    /> 
+                <View style={styles.activity_indicator}> 
+                    <View style={styles.component2}>
+                        <ActivityIndicator 
+                            animating={this.state.animating}
+                            size={80}
+                            color={colors.disable} 
+                        /> 
+                    </View>
                 </View>
             );
         }

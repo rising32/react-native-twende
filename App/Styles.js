@@ -201,8 +201,8 @@ export var styles = StyleSheet.create({
     },
 
     card_mid_finalize: {
-        flex: 0.7,
-        flexDirection: 'column',
+        height: 290,
+        width: 235,
         justifyContent: 'space-around',
         borderRadius: 6,
         padding: 12,
@@ -260,8 +260,8 @@ export var styles = StyleSheet.create({
     sheet_dark: {
         paddingBottom: 10,
         paddingTop: 8,
-        paddingLeft: 40,
-        paddingRight: 40,
+        paddingLeft: 20,
+        paddingRight: 20,
         backgroundColor: colors.login
     },
 
