@@ -170,7 +170,7 @@ var DriverListPage = React.createClass({
             <View style={styles.loading}>
                 <IconText
                     color={colors.action_secondary}
-                    size={16}
+                    size={15}
                     icon={'settings-input-antenna'}
                     text={'Loading riders. Hang on...'}
                 />

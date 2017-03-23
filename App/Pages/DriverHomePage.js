@@ -189,22 +189,23 @@ var DriverHomePage = React.createClass({
     renderSheetTop: function (decline_text, navigation_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -15, elevation: 5}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderSheetTopItem}>
+                      <View style={styles.renderItemLeft}>
                         <Text style={{fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{marginLeft: 10}}>
+                <View style={{flex: 1, justifyContent: 'center', marginTop: -30}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={styles.renderSheetTopItem}>
+                    <View style={styles.renderItemRight}>
                       <Link
                           url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                           text={navigation_text}
                           size={15}
+                          textAlign={'right'}
                           color={colors.secondary}
                           iconSize={18}
                       />
@@ -216,25 +217,24 @@ var DriverHomePage = React.createClass({
     renderSheetTopRequest: function (decline_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -15, elevation: 5}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -10, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderSheetTopItem}>
+                      <View style={styles.renderItemLeft}>
                         <Text style={{fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{marginLeft: 10, marginRight: 14}}>
+                <View style={{justifyContent: 'center', marginTop: -30}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                <View style={styles.renderSheetTopItem}>
+                <View style={styles.renderItemRight}>
                 </View>
             </View>
         )
     },
 
     renderHome: function() {
-
         var is_available = this.state.currentUser.state == 'available';
         var statusText = "Customer cannot find you.";
         var statusIcon = "not-interested";
@@ -325,7 +325,7 @@ var DriverHomePage = React.createClass({
                                 color={colors.disable} 
                             /> 
                             <View style={{alignSelf: 'center'}}>
-                                    <Text style={{color: colors.secondary, fontWeight: 'bold'}}>
+                                    <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
                                         {requesting}
                                     </Text> 
                             </View>
@@ -353,9 +353,12 @@ var DriverHomePage = React.createClass({
                         driver={ride.driver.position}
                         customer={ride.origin}
                     />
+                    {top}
                     <View style={styles.sheet_rider}>
-                          {top}
-                          <View style={{flexDirection: 'column', marginTop: 34, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Text style={[styles.item_title, {marginTop: 20, alignSelf: 'center'}]}>
+                            You are on your way to pick customer!
+                        </Text>
+                          <View style={{flexDirection: 'column', marginTop: 20, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
                                 <Link
                                     url={"tel: " + ride.customer.phone}
                                     icon={"phone"}

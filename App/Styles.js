@@ -119,7 +119,7 @@ export var styles = StyleSheet.create({
     },
 
     component2: {
-    flex:1,
+    flex: 1,
     justifyContent:'center'
     },
 
@@ -134,10 +134,10 @@ export var styles = StyleSheet.create({
     },
 
     nav_title: {
-        fontFamily: 'gothamrounded_medium',
+        fontFamily: 'gothamrounded_book',
         color: colors.nav_text,
-        fontSize: 18,
-        marginTop: 16
+        fontSize: 17,
+        marginTop: 18
     },
 
     instructions: {
@@ -297,9 +297,18 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    renderSheetTopItem: {
-        marginTop: 34,
+    renderItemLeft: {
+        justifyContent: 'flex-start',
+        alignSelf: 'flex-start',
+        width: 120,
         marginLeft: 4
+    },
+
+    renderItemRight: {
+        justifyContent: 'flex-end',
+        alignSelf: 'flex-start',
+        width: 125,
+        marginRight: 4
     },
 
     // Map
@@ -378,9 +387,17 @@ export var styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2}
     },
     item_title: {
+        fontFamily: 'gothamrounded_medium',
         color: colors.title,
         fontWeight: 'bold',
         fontSize: 16
+    },
+
+    list_title: {
+        fontFamily: 'gothamrounded_book',
+        color: colors.title,
+        fontWeight: 'bold',
+        fontSize: 18
     },
 
     item_titlecentre: {

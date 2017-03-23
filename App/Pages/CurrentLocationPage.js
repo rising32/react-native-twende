@@ -201,7 +201,7 @@ var CurrentLocationPage = React.createClass({
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
-                    <Text style={styles.text_important}>
+                    <Text style={[styles.text_important, {fontSize: 14}]}>
                         If location is not correct please drag pin.
                     </Text>
                 </View>

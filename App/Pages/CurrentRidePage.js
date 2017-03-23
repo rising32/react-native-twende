@@ -152,7 +152,7 @@ var CurrentRidePage = React.createClass({
                     />
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
-                    <View style={styles.renderSheetTopItem}>
+                    <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
                             icon={"clear"}
@@ -162,10 +162,10 @@ var CurrentRidePage = React.createClass({
                             text={"CANCEL"}
                         />
                     </View>
-                    <View style={{marginLeft: 6}}>
+                    <View style={{flex: 1, justifyContent: 'center', marginTop: -30}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderSheetTopItem}>
+                    <View style={styles.renderItemRight}>
                         <Link 
                             url={"tel: " + ride.driver.phone}
                             iconRight={"phone"}
@@ -188,12 +188,12 @@ var CurrentRidePage = React.createClass({
                             color={colors.disable} 
                         /> 
                         <View style={{alignSelf: 'center'}}>
-                                <Text style={{color: colors.secondary, fontWeight: 'bold'}}>
+                                <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
                                     {requesting}
                                 </Text> 
                         </View>
                     </View>
-                        <Text style={{textAlign: 'center', margin: 2, color: colors.action_secondary}}>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', margin: 2, color: colors.action_secondary}}>
                             Call rider or call support if no response
                         </Text>
                     </View>
@@ -259,8 +259,8 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
-                      <View style={styles.renderSheetTopItem}>
+                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -10}}>
+                      <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
                             icon={"clear"}
@@ -270,10 +270,10 @@ var CurrentRidePage = React.createClass({
                             text={"CANCEL"}
                         />
                     </View>
-                    <View style={{marginLeft: 6}}>
+                    <View style={{justifyContent: 'center', marginTop: -30}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderSheetTopItem}>
+                    <View style={styles.renderItemRight}>
                         <Link 
                             url={"tel: " + ride.driver.phone}
                             iconRight={"phone"}
@@ -288,7 +288,7 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.item_title}>
                             Hi {ride.customer.first_name},
                         </Text>
-                        <Text>
+                        <Text style={{fontFamily: 'gothamrounded_book'}}>
                             I'm on my way to pick you up!
                         </Text>
                     </View>
@@ -315,18 +315,18 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 10}}>
-                    <View style={styles.renderSheetTopItem}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6}}>
+                    <View style={styles.renderItemLeft}>
                     </View>
-                    <View>
+                    <View style={{justifyContent: 'center', marginTop: -40}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderSheetTopItem}>
+                    <View style={styles.renderItemRight}>
                         <Link 
                             url={"tel: " + ride.driver.phone}
                             iconRight={"phone"}
-                            size={15}
-                            iconSize={18}
+                            size={14}
+                            iconSize={16}
                             color={colors.secondary}
                             text={"CALL " + ride.driver.first_name.toUpperCase() + "  "}
                         />
@@ -377,7 +377,7 @@ renderDropOff: function () {
                             <Text style={styles.heavy_text}>
                               {ride.fare}
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                                 Your trip was {ride.distance.distance}.
                             </Text>
                         </View>
@@ -469,7 +469,7 @@ renderDropOff: function () {
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
-                            <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6}]}>
+                           <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
                                 {text}
                             </Text>
                         </View>
@@ -491,7 +491,6 @@ renderDropOff: function () {
       var message = "How was your ride with " + ride.driver.name +"?";
       var header = "Rating";
       var buttonText = "Finish";
-      var buttonAction = this.finishRide;
 
       return (
             <View style={{
@@ -511,7 +510,7 @@ renderDropOff: function () {
                         <Text style={styles.item_title}>
                             {header}
                         </Text>
-                        <Text style={{textAlign: 'center'}}>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
                             {message}
                         </Text>
                         <StarRating
@@ -522,7 +521,7 @@ renderDropOff: function () {
                             colorOff={colors.action_disabled}
                         />
                         <View style={{alignSelf: 'center'}}>
-                            <Text>
+                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
                                 We appreciate feedback! Call:
                             </Text>
                         </View>

@@ -34,14 +34,16 @@ var Link = React.createClass({
         var color = this.props.color || colors.action;
         var size = this.props.size || 16;
         var iconSize = this.props.iconSize ? this.props.iconSize : size;
+        var textAlign = this.props.textAlign || 'right';
         var icon = null;
         var iconRight = null;
         var action = this.props.action ? this.props.action : this.handleClick
         if (this.props.icon) {
             icon = <Icon name={this.props.icon}
-                         color={color}
-                         size={iconSize}
-                         style={{marginRight: iconSize/2}} />
+                        fontFamily={'gothamrounded_book'}
+                        color={color}
+                        size={iconSize}
+                        style={{marginRight: iconSize/2}} />
         }
         if (this.props.iconRight) {
             iconRight = <Icon name={this.props.iconRight}
@@ -57,7 +59,7 @@ var Link = React.createClass({
             >
                 {icon}
                 <View style={styles.link}>
-                    <Text style={[this.props.textStyle, {color: color, fontSize: size}]}>
+                    <Text style={[this.props.textStyle, {color: color, fontSize: size, textAlign: textAlign}]}>
                         {text}
                     </Text>
                 </View>
