@@ -39,14 +39,16 @@ export var styles = StyleSheet.create({
 
     // Text
     baseText: {
-        fontFamily: 'gothamrounded_book'
+        fontFamily: 'gothamrounded_medium',
      },
 
     text: {
+        fontFamily: 'gothamrounded_medium',
         fontSize: 16
     },
 
     text_important: {
+        fontFamily: 'gothamrounded_medium',
         fontSize: 16,
         color: colors.text_important
     },
@@ -104,7 +106,7 @@ export var styles = StyleSheet.create({
 
     spinner_text: {
         color: colors.secondary,
-        fontFamily: 'gothamrounded_book',
+        fontFamily: 'gothamrounded_medium',
         fontSize: 14,
         fontWeight: 'bold'
     },
@@ -132,12 +134,14 @@ export var styles = StyleSheet.create({
     },
 
     nav_title: {
+        fontFamily: 'gothamrounded_medium',
         color: colors.nav_text,
         fontSize: 18,
         marginTop: 16
     },
 
     instructions: {
+        fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5
@@ -149,6 +153,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-around',
         flex: 1
     },
+
     scroll_page: {
         // justifyContent doesn't work with ScrollView
         marginTop: 56,
@@ -161,7 +166,7 @@ export var styles = StyleSheet.create({
 
     heavy_text: {
         fontSize: 20,
-        fontFamily: 'gothamrounded_book',
+        fontFamily: 'gothamrounded_medium',
         fontWeight: 'bold',
         textAlign: 'center',
         color: colors.secondary
@@ -332,6 +337,7 @@ export var styles = StyleSheet.create({
     map_text: {
         color: colors.secondary,
         fontWeight: '500',
+        fontFamily: 'gothamrounded_medium',
         fontSize: 12
     },
     map_info_container: {
@@ -388,6 +394,7 @@ export var styles = StyleSheet.create({
 
     item_text: {
         color: colors.secondary,
+        fontFamily: 'gothamrounded_medium',
     },
     item_image: {
         backgroundColor: '#999999',
@@ -405,6 +412,7 @@ export var styles = StyleSheet.create({
 
     item_action: {
         textAlign: 'right',
+        fontFamily: 'gothamrounded_medium',
         color: colors.action,
         fontWeight: 'bold',
         marginRight: 8
@@ -413,6 +421,7 @@ export var styles = StyleSheet.create({
     // Forms
 
     text_input: {
+        fontFamily: 'gothamrounded_medium',
         fontSize: 16,
         height: 40
     },
@@ -433,6 +442,7 @@ export var styles = StyleSheet.create({
     },
 
     primary_button_text: {
+        fontFamily: 'gothamrounded_medium',
         color: colors.button_text,
         fontWeight: 'bold'
     },
@@ -450,6 +460,7 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
     step_title: {
+        fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
         fontSize: 12
     },

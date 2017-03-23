@@ -317,14 +317,6 @@ var CurrentRidePage = React.createClass({
                 />
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 10}}>
                     <View style={styles.renderSheetTopItem}>
-                        <Link
-                            action={this.cancelRide}
-                            icon={"clear"}
-                            size={15}
-                            iconSize={18}
-                            color={colors.disable}
-                            text={"CANCEL"}
-                        />
                     </View>
                     <View>
                         <Avatar image={ride.driver.avatar}/>
