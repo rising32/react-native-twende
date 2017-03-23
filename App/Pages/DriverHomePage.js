@@ -189,18 +189,18 @@ var DriverHomePage = React.createClass({
     renderSheetTop: function (decline_text, navigation_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', elevation: 5}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', elevation: 10}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderItemLeft}>
+                    <View style={[styles.renderItemLeft, {width: 100}]}>
                         <Text style={{fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{flex: 1, justifyContent: 'center', marginTop: -30}}>
+                <View style={{justifyContent: 'center', marginTop: -30, elevation: 10}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={styles.renderItemRight}>
+                    <View style={[styles.renderItemRight, {width: 100}]}>
                       <Link
                           url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                           text={navigation_text}
@@ -217,7 +217,7 @@ var DriverHomePage = React.createClass({
     renderSheetTopRequest: function (decline_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -10, elevation: 5}}>
+            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
                       <View style={styles.renderItemLeft}>
                         <Text style={{fontSize: 15, color: colors.disable}}>
@@ -225,7 +225,7 @@ var DriverHomePage = React.createClass({
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{justifyContent: 'center', marginTop: -30}}>
+                <View style={{elevation: 10, justifyContent: 'center'}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
                 <View style={styles.renderItemRight}>
@@ -393,8 +393,8 @@ var DriverHomePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
+                {top}
                 <View style={styles.sheet_rider}>
-                    {top}
                         <Text style={[styles.item_title, {marginTop: 30, marginBottom: 10, alignSelf: 'center'}]}>
                             Have a safe journey!
                         </Text>

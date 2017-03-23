@@ -151,7 +151,7 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -2, margin: 6}}>
                     <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
@@ -171,6 +171,7 @@ var CurrentRidePage = React.createClass({
                             iconRight={"phone"}
                             size={15}
                             iconSize={18}
+                            alignText={'right'}
                             color={colors.secondary}
                             text={"CALL " + ride.driver.first_name.toUpperCase() + "  "}
                         />
@@ -259,7 +260,7 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -10}}>
+                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -2}}>
                       <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
@@ -315,10 +316,10 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6, marginTop: -2}}>
                     <View style={styles.renderItemLeft}>
                     </View>
-                    <View style={{justifyContent: 'center', marginTop: -40}}>
+                    <View style={{justifyContent: 'center', marginTop: -30}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderItemRight}>

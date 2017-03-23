@@ -301,6 +301,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignSelf: 'flex-start',
         width: 120,
+        marginTop: 30,
         marginLeft: 4
     },
 
@@ -308,6 +309,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignSelf: 'flex-start',
         width: 125,
+        marginTop: 30,
         marginRight: 4
     },
 
