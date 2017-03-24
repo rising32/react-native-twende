@@ -49,7 +49,7 @@ export var styles = StyleSheet.create({
 
     text_important: {
         fontFamily: 'gothamrounded_medium',
-        fontSize: 16,
+        fontSize: 15,
         color: colors.text_important
     },
 
@@ -167,7 +167,6 @@ export var styles = StyleSheet.create({
     heavy_text: {
         fontSize: 20,
         fontFamily: 'gothamrounded_medium',
-        fontWeight: 'bold',
         textAlign: 'center',
         color: colors.secondary
     },
@@ -308,7 +307,7 @@ export var styles = StyleSheet.create({
     renderItemRight: {
         justifyContent: 'flex-end',
         alignSelf: 'flex-start',
-        width: 125,
+        width: 120,
         marginTop: 30,
         marginRight: 4
     },
@@ -389,9 +388,8 @@ export var styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2}
     },
     item_title: {
-        fontFamily: 'gothamrounded_medium',
+        fontFamily: 'gothamrounded_bold',
         color: colors.title,
-        fontWeight: 'bold',
         fontSize: 16
     },
 
@@ -462,8 +460,7 @@ export var styles = StyleSheet.create({
 
     primary_button_text: {
         fontFamily: 'gothamrounded_medium',
-        color: colors.button_text,
-        fontWeight: 'bold'
+        color: colors.button_text
     },
 
     // Step bar

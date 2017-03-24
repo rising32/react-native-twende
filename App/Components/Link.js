@@ -59,7 +59,7 @@ var Link = React.createClass({
             >
                 {icon}
                 <View style={styles.link}>
-                    <Text style={[this.props.textStyle, {color: color, fontSize: size, textAlign: textAlign}]}>
+                    <Text style={[this.props.textStyle, {fontFamily: 'gothamrounded_book', color: color, fontSize: size, textAlign: textAlign}]}>
                         {text}
                     </Text>
                 </View>

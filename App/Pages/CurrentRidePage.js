@@ -151,7 +151,7 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -2, margin: 6}}>
+                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
                     <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
@@ -162,7 +162,7 @@ var CurrentRidePage = React.createClass({
                             text={"CANCEL"}
                         />
                     </View>
-                    <View style={{flex: 1, justifyContent: 'center', marginTop: -30}}>
+                       <View style={{flex: 1, justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderItemRight}>
@@ -173,7 +173,7 @@ var CurrentRidePage = React.createClass({
                             iconSize={18}
                             alignText={'right'}
                             color={colors.secondary}
-                            text={"CALL " + ride.driver.first_name.toUpperCase() + "  "}
+                            text={"CALL RIDER  "}
                         />
                     </View>
                 </View>
@@ -260,7 +260,7 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -2}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30}}>
                       <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
@@ -271,7 +271,7 @@ var CurrentRidePage = React.createClass({
                             text={"CANCEL"}
                         />
                     </View>
-                    <View style={{justifyContent: 'center', marginTop: -30}}>
+                    <View style={{justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderItemRight}>
@@ -281,7 +281,7 @@ var CurrentRidePage = React.createClass({
                             size={15}
                             iconSize={18}
                             color={colors.secondary}
-                            text={"CALL " + ride.driver.first_name.toUpperCase() + "  "}
+                            text={"CALL RIDER  "}
                         />
                     </View>
                     </View>
@@ -289,11 +289,11 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.item_title}>
                             Hi {ride.customer.first_name},
                         </Text>
-                        <Text style={{fontFamily: 'gothamrounded_book'}}>
-                            I'm on my way to pick you up!
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                         {ride.driver.first_name} is on his way to pick you up!
                         </Text>
                     </View>
-                    <View style={{margin: 18, flexDirection: 'row', alignItems: 'center'}}>
+                     <View style={{margin: 12, flexDirection: 'row', alignItems: 'center'}}>
                         <Button
                             action={this.refreshRide}
                             text={'NEXT STEP'}
@@ -316,10 +316,10 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6, marginTop: -2}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6, marginTop: -30}}>
                     <View style={styles.renderItemLeft}>
                     </View>
-                    <View style={{justifyContent: 'center', marginTop: -30}}>
+                    <View style={{justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderItemRight}>
@@ -329,28 +329,29 @@ var CurrentRidePage = React.createClass({
                             size={14}
                             iconSize={16}
                             color={colors.secondary}
-                            text={"CALL " + ride.driver.first_name.toUpperCase() + "  "}
+                            text={"   CALL RIDER  "}
                         />
                     </View>
                 </View>
                 <View style={[styles.sheet_dark, {alignItems: 'center'}]}>
-                    <Text style={styles.item_title}>
-                        Finalize Ride
-                    </Text>
-                        <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6, fontSize: 15}]}>
+                    <View style={styles.card_mid}>
+                        <Text style={styles.item_title}>
+                            Finalize Ride
+                        </Text>
+                         <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                             {text} 
                         </Text>
-                    <View style={{margin: 18, flexDirection: 'row', alignItems: 'center'}}>
-                    <Button
-                        action={this.refreshRide}
-                        text={'GO TO PAYMENT'}
-                        size={15}
-                        iconSize={18}
-                        color={colors.action}
-                    />
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Button
+                            action={this.refreshRide}
+                            text={'GO TO PAYMENT'}
+                            size={15}
+                            iconSize={18}
+                            color={colors.action}
+                        />
+                    </View>
                 </View>
-                </View>
-                
             </View>
         )
     },
