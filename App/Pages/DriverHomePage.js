@@ -191,7 +191,7 @@ var DriverHomePage = React.createClass({
         return (
              <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -30, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                    <View style={[styles.renderItemLeft, {width: 100}]}>
+                    <View style={[styles.renderItemLeft, {width: 110}]}>
                         <Text style={{fontFamily: 'gothamrounded_book', fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
@@ -200,7 +200,7 @@ var DriverHomePage = React.createClass({
                 <View style={{elevation: 10, justifyContent: 'center'}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={[styles.renderItemRight, {width: 100}]}>
+                    <View style={[styles.renderItemRight, {width: 110}]}>
                       <Link
                           url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                           text={navigation_text}
@@ -355,7 +355,7 @@ var DriverHomePage = React.createClass({
                     />
                     {top}
                     <View style={styles.sheet_rider}>
-                        <Text style={[styles.item_title, {marginTop: 20, alignSelf: 'center'}]}>
+                        <Text style={[styles.item_title, {fontSize: 15, textAlign: 'center'}]}>
                             You are on your way to pick customer!
                         </Text>
                           <View style={{flexDirection: 'column', marginTop: 20, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>

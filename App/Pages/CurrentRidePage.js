@@ -30,6 +30,7 @@ import {
     refreshCurrentRide,
     updateCurrentRide } from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
+import { sounds } from "../Sounds";
 
 var SheetIcon = require('../Components/SheetIcon');
 
@@ -90,7 +91,6 @@ var CurrentRidePage = React.createClass({
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
         this.props.navigator.push({id: 'CurrentLocationPage'});
-
     },
 
     moreInfoRating: function() {
@@ -329,7 +329,7 @@ var CurrentRidePage = React.createClass({
                             size={14}
                             iconSize={16}
                             color={colors.secondary}
-                            text={"   CALL RIDER  "}
+                            text={"  CALL RIDER  "}
                         />
                     </View>
                 </View>
@@ -357,7 +357,9 @@ var CurrentRidePage = React.createClass({
     },
 
 renderDropOff: function () {
+        sounds.alarm2.play();
         var ride = this.props.currentRide;
+
         return (
              <View style={{
               flex: 1,
@@ -408,47 +410,16 @@ renderDropOff: function () {
     },
 
     renderPayment: function () {
-      let ride = this.props.currentRide;
-      let header = "Payment";
-      let text = "Please indicate your payment method";
-      let buttons = (
-            <View style={{flexDirection: 'row'}}>
-                <Button
-                    action={this.payMpesa}
-                    text={"M-PESA"}
-                    color={colors.action}
-                    />
-                <Button
-                    action={this.payCash}
-                    text={"CASH"}
-                    color={colors.action}
-                    />
-            </View>
-        );
-
-        if (ride.payment_method == 'mpesa') {
-            text = "Paybill No: 653839" + "\n" + "Account No: Ride";
-            buttons = (
-                <View style={{flexDirection: 'row'}}>
-                    <Button
-                        action={this.completePayment}
-                        text={"Finish"}
-                        color={colors.action}
-                        />
-                </View>
-            );
-        } else if (ride.payment_method == 'cash') {
-          text = "Please pay the cash amount to rider";
-          buttons = (
-                <View style={{flexDirection: 'row'}}>
-                   <Button
-                        action={this.completePayment}
-                        text={"Finish"}
-                        color={colors.action}
-                        />
-                </View>
-            );
-        }
+        var ride = this.props.currentRide;
+         var text;
+      
+      if (ride.payment_method == 'mpesa') {
+          var header = "M-Pesa Payment";
+          text = "Paybill No: 653839" + "\n" + "Account No: Ride";
+        } else {
+          var header = "Cash Payment";  
+          var text = "Please pay the cash amount to rider";
+      }
 
         return (
                <View style={{
@@ -475,7 +446,15 @@ renderDropOff: function () {
                                 {text}
                             </Text>
                         </View>
-                            {buttons}
+
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.completePayment}
+                                    text={"Complete Payment"}
+                                    color={colors.action}
+                                />
+                            </View>
+                        
                     </View>
                 <View>
                      <Image
@@ -492,7 +471,8 @@ renderDropOff: function () {
       var ride = this.props.currentRide;
       var message = "How was your ride with " + ride.driver.name +"?";
       var header = "Rating";
-      var buttonText = "Finish";
+      var buttonText = "FINISH";
+      var buttonAction = this.finishRide;
 
       return (
             <View style={{
@@ -524,7 +504,7 @@ renderDropOff: function () {
                         />
                         <View style={{alignSelf: 'center'}}>
                             <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
-                                We appreciate feedback! Call:
+                                We appreciate feedback!
                             </Text>
                         </View>
                     </View>
@@ -537,10 +517,10 @@ renderDropOff: function () {
                         text={"0791398120"}
                     />
                     <View style={{flexDirection: 'row'}}>
-                        <Button
-                            action={this.finishRide}
-                            text={"FINISH"}
-                            color={colors.action}
+                            <Button
+                                action={this.finishRide}
+                                text={"FINISH"}
+                                color={colors.action}
                             />
                     </View>
                 </View>

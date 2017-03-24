@@ -207,7 +207,7 @@ export var styles = StyleSheet.create({
     card_mid_finalize: {
         height: 290,
         width: 235,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         borderRadius: 6,
         padding: 12,
         marginLeft: 40,
@@ -394,10 +394,9 @@ export var styles = StyleSheet.create({
     },
 
     list_title: {
-        fontFamily: 'gothamrounded_book',
+        fontFamily: 'gothamrounded_bold',
         color: colors.title,
-        fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 16
     },
 
     item_titlecentre: {
