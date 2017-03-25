@@ -8,10 +8,8 @@ var {
     Text,
     ActivityIndicator,
     Image,
-    TextInput,
     Navigator,
     ToastAndroid,
-    Clipboard,
     } = ReactNative;
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
@@ -46,7 +44,6 @@ var CurrentRidePage = React.createClass({
             rating: 0,
             animating: true
         }
-
     },
 
     cancelRide: function () {
@@ -446,11 +443,10 @@ renderDropOff: function () {
                                 {text}
                             </Text>
                         </View>
-
                             <View style={{flexDirection: 'row'}}>
                                 <Button
                                     action={this.completePayment}
-                                    text={"Complete Payment"}
+                                    text={"FINALIZE"}
                                     color={colors.action}
                                 />
                             </View>

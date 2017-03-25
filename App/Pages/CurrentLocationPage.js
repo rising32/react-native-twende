@@ -31,13 +31,15 @@ import events from "../Constants/Events";
 
 var CurrentLocationPage = React.createClass({
 
+    defaultPosition: {
+        latitude: -1.23825,
+        longitude: 35.8724
+    },
+
     getInitialState: function () {
 
         if (!this.props.currentUser.position) {
-            this.props.currentUser.position = {
-                latitude: -1.23825,
-                longitude: 35.8724
-            }
+            this.props.currentUser.position = this.defaultPosition
         }
 
         return {
@@ -86,34 +88,19 @@ var CurrentLocationPage = React.createClass({
         clearTimeout(this._timer);
     },
 
-    setToggleTimeout: function() { 
-        this._timer = setTimeout(() => { 
-            this.setState({ animating: false });
-            this.setToggleTimeout(); 
-        }, 2000); 
-    },
-
-    componentDidMount: function() { 
-        this.setToggleTimeout(); 
-    },
-
     refreshLocation: function() {
         loadGeoLocation();
         loadGeoLocation(true);
     },
 
-    dragOrigin: function (loc) {
-        var myLoc = Math.round(10000 * loc.latitude) / 10000 + ' x ' + Math.round(10000 * loc.longitude) / 10000;
+    mapMoved: function(region) {
         this.setState({
-            origin: loc,
-            region: {
-                latitude: loc.latitude,
-                longitude: loc.longitude,
-                latitudeDelta: this.state.region.latitudeDelta,
-                longitudeDelta: this.state.region.longitudeDelta
-            },
-            origin_text: myLoc
-        });
+            region: region,
+            origin: {
+                latitude: region.latitude,
+                longitude: region.longitude
+            }
+        })
     },
 
     createRide: function() {
@@ -141,13 +128,13 @@ var CurrentLocationPage = React.createClass({
 
     render: function () {
         return (
-                <Navigator
-                    renderScene={this.renderScene}
-                    navigator={this.props.navigator}
-                    navigationBar={
-                    <Navigator.NavigationBar style={styles.nav_bar}
-                        routeMapper={NavigationBarRouteMapper} />
-                }/>
+            <Navigator
+                renderScene={this.renderScene}
+                navigator={this.props.navigator}
+                navigationBar={
+                <Navigator.NavigationBar style={styles.nav_bar}
+                    routeMapper={NavigationBarRouteMapper} />
+            }/>
         );
     },
 
@@ -157,7 +144,7 @@ var CurrentLocationPage = React.createClass({
         var spinner;
         if (this.state.ready) {
             spinner = (
-                <View style={styles.activity_indicator}> 
+                <View style={styles.activity_indicator_pickup}> 
                     <View style={styles.component2}>
                         <ActivityIndicator 
                             animating={this.state.animating}
@@ -173,13 +160,11 @@ var CurrentLocationPage = React.createClass({
 
         if (this.state.origin.latitude && this.state.origin.longitude) {
             pickup = <MapView.Marker
-                draggable
                 pinColor = "yellow"
                 title = "You"
                 description = "Pick up location"
                 image = {require('../assets/map-customer.png')}
-                coordinate = {this.state.origin}
-                onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
+                coordinate = {this.state.origin} />
         }   
         
 
@@ -188,7 +173,7 @@ var CurrentLocationPage = React.createClass({
                 <View style={styles.map_container}>
                     <MapView
                         region={this.state.region}
-                        onRegionChange={this.onRegionChange}
+                        onRegionChange={this.mapMoved}
                         showsMyLocationButton={true}
                         showsUserLocation={true}
                         showUserLocation={true}
@@ -201,8 +186,8 @@ var CurrentLocationPage = React.createClass({
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
-                    <Text style={[styles.text_important, {fontSize: 14}]}>
-                        If location is not correct please drag pin.
+                    <Text style={{fontFamily: 'gothamrounded_medium', textAlign: 'center', color: colors.secondary}}>
+                        Swipe the map to change your pick up location
                     </Text>
                 </View>
                 <View style={{flexDirection: 'row', margin: 16}}>                          

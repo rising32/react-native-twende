@@ -59,9 +59,9 @@ module.exports = React.createClass({
                     {icon}
                 <View style={{alignSelf: 'center'}}>
                     <Text style={{
+                        fontFamily: 'gothamrounded_medium',
                         fontSize: 12, 
-                        color: colors.button_text,
-                        fontWeight: 'bold'
+                        color: colors.button_text
                     }}>
                         {text}
                     </Text>
