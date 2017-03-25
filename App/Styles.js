@@ -39,15 +39,17 @@ export var styles = StyleSheet.create({
 
     // Text
     baseText: {
-        fontFamily: 'gothamrounded_book'
+        fontFamily: 'gothamrounded_medium',
      },
 
     text: {
+        fontFamily: 'gothamrounded_medium',
         fontSize: 16
     },
 
     text_important: {
-        fontSize: 16,
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 15,
         color: colors.text_important
     },
 
@@ -104,7 +106,7 @@ export var styles = StyleSheet.create({
 
     spinner_text: {
         color: colors.secondary,
-        fontFamily: 'gothamrounded_book',
+        fontFamily: 'gothamrounded_medium',
         fontSize: 14,
         fontWeight: 'bold'
     },
@@ -112,24 +114,13 @@ export var styles = StyleSheet.create({
     activity_indicator: { 
     flexDirection:'row',
     position: 'absolute',
-    bottom: 220,
+    bottom: 260,
     elevation: 10
     },
 
-    component1: {
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-
-    },
     component2: {
-    flex:1,
+    flex: 1,
     justifyContent:'center'
-    },
-
-    component3: {
-    flex:1,
-    width: 30
     },
 
     // Navigation
@@ -143,12 +134,14 @@ export var styles = StyleSheet.create({
     },
 
     nav_title: {
+        fontFamily: 'gothamrounded_book',
         color: colors.nav_text,
-        fontSize: 18,
-        marginTop: 16
+        fontSize: 17,
+        marginTop: 18
     },
 
     instructions: {
+        fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5
@@ -160,6 +153,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-around',
         flex: 1
     },
+
     scroll_page: {
         // justifyContent doesn't work with ScrollView
         marginTop: 56,
@@ -172,8 +166,7 @@ export var styles = StyleSheet.create({
 
     heavy_text: {
         fontSize: 20,
-        fontFamily: 'gothamrounded_book',
-        fontWeight: 'bold',
+        fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
         color: colors.secondary
     },
@@ -212,14 +205,13 @@ export var styles = StyleSheet.create({
     },
 
     card_mid_finalize: {
-        elevation: 0,
-        flex: 0.7,
-        flexDirection: 'column',
-        justifyContent: 'space-around',
+        height: 290,
+        width: 235,
+        justifyContent: 'space-between',
         borderRadius: 6,
         padding: 12,
-        marginLeft: 24,
-        marginRight: 24,
+        marginLeft: 40,
+        marginRight: 40,
         backgroundColor: colors.box,
         alignItems: 'center'
     },
@@ -261,7 +253,7 @@ export var styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 30,
         paddingRight: 30,
-        backgroundColor: colors.primary
+        backgroundColor: 'red'
     },
 
     sheet_content: {
@@ -272,8 +264,8 @@ export var styles = StyleSheet.create({
     sheet_dark: {
         paddingBottom: 10,
         paddingTop: 8,
-        paddingLeft: 40,
-        paddingRight: 40,
+        paddingLeft: 20,
+        paddingRight: 20,
         backgroundColor: colors.login
     },
 
@@ -304,9 +296,20 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    renderSheetTopItem: {
-        marginTop: 34,
+    renderItemLeft: {
+        justifyContent: 'flex-start',
+        alignSelf: 'flex-start',
+        width: 120,
+        marginTop: 30,
         marginLeft: 4
+    },
+
+    renderItemRight: {
+        justifyContent: 'flex-end',
+        alignSelf: 'flex-start',
+        width: 120,
+        marginTop: 30,
+        marginRight: 4
     },
 
     // Map
@@ -344,6 +347,7 @@ export var styles = StyleSheet.create({
     map_text: {
         color: colors.secondary,
         fontWeight: '500',
+        fontFamily: 'gothamrounded_medium',
         fontSize: 12
     },
     map_info_container: {
@@ -384,8 +388,14 @@ export var styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2}
     },
     item_title: {
+        fontFamily: 'gothamrounded_bold',
         color: colors.title,
-        fontWeight: 'bold',
+        fontSize: 16
+    },
+
+    list_title: {
+        fontFamily: 'gothamrounded_bold',
+        color: colors.title,
         fontSize: 16
     },
 
@@ -400,6 +410,7 @@ export var styles = StyleSheet.create({
 
     item_text: {
         color: colors.secondary,
+        fontFamily: 'gothamrounded_medium',
     },
     item_image: {
         backgroundColor: '#999999',
@@ -417,6 +428,7 @@ export var styles = StyleSheet.create({
 
     item_action: {
         textAlign: 'right',
+        fontFamily: 'gothamrounded_medium',
         color: colors.action,
         fontWeight: 'bold',
         marginRight: 8
@@ -425,6 +437,7 @@ export var styles = StyleSheet.create({
     // Forms
 
     text_input: {
+        fontFamily: 'gothamrounded_medium',
         fontSize: 16,
         height: 40
     },
@@ -445,8 +458,8 @@ export var styles = StyleSheet.create({
     },
 
     primary_button_text: {
-        color: colors.button_text,
-        fontWeight: 'bold'
+        fontFamily: 'gothamrounded_medium',
+        color: colors.button_text
     },
 
     // Step bar
@@ -462,6 +475,7 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
     step_title: {
+        fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
         fontSize: 12
     },

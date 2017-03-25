@@ -8,6 +8,7 @@ var {
     Text,
     TextInput,
     Switch,
+    ActivityIndicator,
     Navigator,
     TouchableOpacity,
     ToastAndroid,
@@ -165,6 +166,7 @@ var DriverHomePage = React.createClass({
                 }
             ])
     },
+  
 
     render: function() {
         return (
@@ -181,22 +183,23 @@ var DriverHomePage = React.createClass({
     renderSheetTop: function (decline_text, navigation_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -15, elevation: 5}}>
+             <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -30, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderSheetTopItem}>
-                        <Text style={{fontSize: 15, color: colors.disable}}>
+                    <View style={[styles.renderItemLeft, {width: 110}]}>
+                        <Text style={{fontFamily: 'gothamrounded_book', fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{marginLeft: 10}}>
+                <View style={{elevation: 10, justifyContent: 'center'}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={styles.renderSheetTopItem}>
+                    <View style={[styles.renderItemRight, {width: 110}]}>
                       <Link
                           url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
                           text={navigation_text}
                           size={15}
+                          textAlign={'right'}
                           color={colors.secondary}
                           iconSize={18}
                       />
@@ -208,30 +211,20 @@ var DriverHomePage = React.createClass({
     renderSheetTopRequest: function (decline_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -15, elevation: 5}}>
+            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -10, elevation: 5}}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderSheetTopItem}>
+                      <View style={styles.renderItemLeft}>
                         <Text style={{fontSize: 15, color: colors.disable}}>
                             {decline_text}
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <View style={{marginLeft: 10, marginRight: 14}}>
+                <View style={{elevation: 10, justifyContent: 'center'}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                <View style={styles.renderSheetTopItem}>
+                <View style={styles.renderItemRight}>
                 </View>
             </View>
-        )
-    },
-
-    renderSheetTopDropoff: function () {
-        var ride = this.props.currentRide;
-        return (
-            <View style={{justifyContent: 'space-between', alignSelf: 'center', flexDirection: 'row', elevation: 5}}>
-                <Avatar image={ride.customer.avatar} />
-            </View>
-
         )
     },
 
@@ -292,11 +285,13 @@ var DriverHomePage = React.createClass({
 
     renderRequest: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTopRequest("DECLINE");
+        var top = this.renderSheetTopRequest("DECLINE");        
         var away = "Unknown distance customer";
         if (ride.driver_distance) {
             away = ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away";
         }
+        let requesting = " INCOMING REQUEST. PLEASE CONFIRM. ";
+
         return  (
             <View style={{flex: 1, justifyContent: 'space-around'}}>
                 <Map
@@ -306,17 +301,29 @@ var DriverHomePage = React.createClass({
                 />
                 <View style={styles.sheet_rider}>
                     {top}
-                    <View style={styles.sheet_content}>
-                         <Text style={styles.item_title}>
-                            Request from {ride.customer.name}!
+                    <View style={[styles.sheet_content, {justifyContent: 'center', alignItems: 'center'}]}>
+                        <Text style={styles.item_title}>
+                            Request from {ride.customer.name}
                         </Text>
                         <IconText
                           icon={"motorcycle"}
                           text={away}
                           color={colors.secondary}
                           size={16}
-                          style={{padding: 6, margin: 6, marginLeft: -5, marginRight: -5}}
+                          style={{marginBottom: 6, marginLeft: -5, marginRight: -5}}
                         />
+                        <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
+                            <ActivityIndicator 
+                                animating={this.state.animating}
+                                size={30}
+                                color={colors.disable} 
+                            /> 
+                            <View style={{alignSelf: 'center'}}>
+                                    <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
+                                        {requesting}
+                                    </Text> 
+                            </View>
+                        </View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Button
@@ -324,7 +331,7 @@ var DriverHomePage = React.createClass({
                             text={"ACCEPT REQUEST"}
                             color={colors.action}
                             />
-                    </View>
+                    </View> 
                 </View>
             </View>
         );
@@ -340,9 +347,12 @@ var DriverHomePage = React.createClass({
                         driver={ride.driver.position}
                         customer={ride.origin}
                     />
+                    {top}
                     <View style={styles.sheet_rider}>
-                          {top}
-                          <View style={{flexDirection: 'column', marginTop: 34, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Text style={[styles.item_title, {fontSize: 15, textAlign: 'center'}]}>
+                            You are on your way to pick customer!
+                        </Text>
+                          <View style={{flexDirection: 'column', marginTop: 20, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
                                 <Link
                                     url={"tel: " + ride.customer.phone}
                                     icon={"phone"}
@@ -357,7 +367,7 @@ var DriverHomePage = React.createClass({
                                     action={this.startRide}
                                     text={"START TRIP"}
                                     color={colors.action}
-                                    />
+                                />
                           </View>
                     </View>
               </View>
@@ -377,9 +387,9 @@ var DriverHomePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
+                {top}
                 <View style={styles.sheet_rider}>
-                    {top}
-                        <Text style={[styles.item_title, {marginTop: 30, marginBottom: 10, alignSelf: 'center'}]}>
+                        <Text style={[styles.item_title, {marginBottom: 10, alignSelf: 'center'}]}>
                             Have a safe journey!
                         </Text>
                         <View style={{flexDirection: 'column', marginTop: 5, marginBottom: 10, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
@@ -403,113 +413,114 @@ var DriverHomePage = React.createClass({
         );
     },
 
+
     renderDropoff: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTopDropoff();
+        var text = ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride"; 
+        var header = "Payment";
+        var buttonText = "FINALIZE";
+        var buttonAction = this.finishRide;
+
         return  (
-            <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: colors.primary}}>
-                <View style={styles.sheetYellow}>
-                    <View
-                        style={{flex: 0.1, backgroundColor: colors.primary}}>
-                    </View>
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: colors.primary}}
+            >              
+                <View style={{backgroundColor: colors.primary}}>
+                </View>      
                     <View style={styles.card_mid_finalize}>
-                        <View>
-                        {top}
-                        </View>
-                         <View>
-                            <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Payment
+                            <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                   
+                                <Avatar image={ride.customer.avatar}/>
+                            </View>
+                            <Text style={[styles.item_title, {textAlign: 'center', margin: 10}]}>
+                                {header}
                             </Text>
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
-                        </View>
-                            <Text style={[styles.text_important, {textAlign: 'center', fontSize: 15, marginBottom: 3}]}>
-                                Client chooses cash or M-pesa. If there are issues finalizing ride, call customer support:
-                            </Text>
-                                <Link
-                                    url={"tel: 0791398120"}
-                                    icon={"phone"}
-                                    size={16}
-                                    iconSize={18}
-                                    color={colors.action}
-                                    text={"0791398120"}
-                                />
-                        <View style={{flexDirection: 'row', marginTop: 6}}>
-                            <Button
-                                action={this.refreshRide}
-                                text={"CONFIRM"}
-                            />
-                        </View>
-                    </View>
-                </View>
-                     <View>
-                          <Image
-                              source={require('../assets/banner.jpg')}
-                              style={styles.banner}
-                              />
-                    </View>
-            </View>
-        );
-    },
-
-    renderFinalized: function() {
-        var ride = this.props.currentRide;
-        var text;
-      if (ride.payment_method == 'mpesa') {
-            var header = "M-Pesa Payment";
-            text = "Paybill No: 653839\nAccount No: Ride";
-
-        } else {
-            var header = "Cash Payment";
-            var text = ride.customer.first_name + " is paying cash";          
-        }
-        
-        var buttonText = "SUBMIT";
-        var buttonAction = this.finishRide;
-        var top = this.renderSheetTopDropoff();
-
-
-        return  (
-            <View style={{flex: 1, backgroundColor: colors.primary}}>
-                <View style={styles.sheetYellow}>
-                    <View style={{flex: 0.1, backgroundColor: colors.primary}}>
-                    </View>
-                    <View style={styles.card_mid_finalize}>
-                        <View>
-                            {top}
-                        </View>
-                        <View>
-                              <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                    {header}
-                              </Text>
-                              <Text style={styles.heavy_text}>
-                                   {ride.fare}
-                              </Text>
-                        <View>
-                               <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
+                            <View>
+                                <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
                                     {text}
                                 </Text>
-                        </View>
-                        </View>
-                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                              <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Rate Customer
-                              </Text>
-                              <StarRating
-                                  onChange={this.rateRide}
-                                  maxStars={5}
-                                  rating={0}
-                                  colorOn={colors.action}
-                                  colorOff={colors.action_disabled}
-                              />
-                        </View>
+                            </View>
                         <View style={{flexDirection: 'row'}}>
                           <Button
                               action={buttonAction}
                               text={buttonText}
                               />
                         </View>
+                    </View>
+                    <View>
+                        <Image
+                            source={require('../assets/banner.jpg')}
+                            style={styles.banner}
+                            />
+                    </View>
+                </View>
+            );
+        },
+
+    renderFinalized: function() {
+        var ride = this.props.currentRide;
+        var text = "Please confirm payment & give rating";
+        var header = "Payment";
+        if (ride.payment_method == 'mpesa') {
+            text = "Paybill No: 653839\nAccount No: Ride";
+
+        } else if (ride.payment_method == 'cash') {
+            var text = ride.customer.first_name + " is paying cash";          
+        }
+        
+        var buttonText = "FINISH";
+        var buttonAction = this.finishRide;
+
+               return  (
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: colors.primary}}
+            >              
+                <View style={{backgroundColor: colors.primary}}>
+                </View>      
+                    <View style={styles.card_mid_finalize}>
+                            <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                   
+                                <Avatar image={ride.customer.avatar}/>
+                            </View>
+                    <View>
+                        <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                            {header}
+                        </Text>
+                        <Text style={styles.heavy_text}>
+                            {ride.fare}
+                        </Text>
+                        <View>
+                           <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
+                                {text}
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                          <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                            Rate Customer
+                          </Text>
+                          <StarRating
+                              onChange={this.rateRide}
+                              maxStars={5}
+                              rating={0}
+                              colorOn={colors.action}
+                              colorOff={colors.action_disabled}
+                          />
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Button
+                          action={buttonAction}
+                          text={buttonText}
+                          />
                     </View>
                 </View>
                 <View>
@@ -534,7 +545,7 @@ var DriverHomePage = React.createClass({
                 case 'accepted' :
                     content = this.renderAccepted();
                     break;
-                case 'driving' :
+                 case 'driving' :
                     content = this.renderDriving();
                     break;
                 case 'dropoff' :
@@ -551,7 +562,6 @@ var DriverHomePage = React.createClass({
                     }
                     break;
             }
-
         }
 
         return (
@@ -576,7 +586,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                rider home
+                RIDER HOME
             </Text>
         );
     }

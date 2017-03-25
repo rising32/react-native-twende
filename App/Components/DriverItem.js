@@ -44,12 +44,12 @@ var DriverItem = React.createClass({
                             style={styles.item_details}
                             onPress={this.props.onSelect}
                         >
-                            <Text style={styles.item_title}>
+                            <Text style={styles.list_title}>
                                 {this.props.driver.name}
                             </Text>
                             <IconText icon="motorcycle"
-                                      size={15}
-                                      color={colors.secondary}
+                                      size={14}
+                                      color={colors.action}
                                       text={this.fuzzyDistance()} />
                             <View style={{width: 100}}>
                                 <Rating

@@ -173,7 +173,7 @@ var DriverListPage = React.createClass({
             <View style={styles.loading}>
                 <IconText
                     color={colors.action_secondary}
-                    size={16}
+                    size={15}
                     icon={'settings-input-antenna'}
                     text={'Loading riders. Hang on...'}
                 />
@@ -186,11 +186,14 @@ var DriverListPage = React.createClass({
         var spinner;
         if (this.state.isConnecting) {
             spinner = (
-                <View style={[styles.activity_indicator, {left: 150, bottom: 275}]}>
-                    <ActivityIndicator 
-                    size={50}
-                    color={colors.disable} 
-                    /> 
+                <View style={styles.activity_indicator}> 
+                    <View style={styles.component2}>
+                        <ActivityIndicator 
+                            animating={this.state.animating}
+                            size={80}
+                            color={colors.disable} 
+                        /> 
+                    </View>
                 </View>
             );
         }

@@ -6,6 +6,7 @@ var {
     Alert,
     View,
     Text,
+    ActivityIndicator,
     Image,
     TextInput,
     Navigator,
@@ -29,6 +30,7 @@ import {
     refreshCurrentRide,
     updateCurrentRide } from "../Actions/CurrentRideActions";
 import events from "../Constants/Events";
+import { sounds } from "../Sounds";
 
 var SheetIcon = require('../Components/SheetIcon');
 
@@ -41,7 +43,8 @@ var CurrentRidePage = React.createClass({
             currentRide: this.props.currentRide,
             isLoading: false,
             price: 0,
-            rating: 0
+            rating: 0,
+            animating: true
         }
 
     },
@@ -138,15 +141,18 @@ var CurrentRidePage = React.createClass({
 
     renderConnecting: function () {
         var ride = this.props.currentRide;
+        let requesting = " WAITING FOR RESPONSE... ";
         return (
             <View style={{flex: 1, backgroundColor: colors.login}}>
-                <Map
-                    title= {"Connecting..."}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
-                    <View style={styles.renderSheetTopItem}>
+                <View style={styles.map_container}>
+                    <Map
+                        title= {"Connecting..."}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
+                </View>
+                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
+                    <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
                             icon={"clear"}
@@ -155,42 +161,54 @@ var CurrentRidePage = React.createClass({
                             color={colors.disable}
                             text={"CANCEL"}
                         />
-
                     </View>
-                    <View style={{marginLeft: 6}}>
+                       <View style={{flex: 1, justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderSheetTopItem}>
-                        <Link
-                              action={this.refreshRide}
-                              text={'NEXT  '}
-                              iconRight={'forward'}
-                              size={15}
-                              iconSize={18}
-                              color={colors.action}
-                          />
+                    <View style={styles.renderItemRight}>
+                        <Link 
+                            url={"tel: " + ride.driver.phone}
+                            iconRight={"phone"}
+                            size={15}
+                            iconSize={18}
+                            alignText={'right'}
+                            color={colors.secondary}
+                            text={"CALL RIDER  "}
+                        />
                     </View>
                 </View>
                 <View style={styles.sheet_dark}>
                     <View>
                         <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                Requesting {ride.driver.name}!
+                            Requesting {ride.driver.name}!
                         </Text>
-                        <Text style={{textAlign: 'center', margin: 2, color: colors.action_secondary}}>
-                            Wait for call of {ride.driver.first_name} or call with button below
+                        <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
+                                <ActivityIndicator 
+                            animating={this.state.animating}
+                            size={30}
+                            color={colors.disable} 
+                        /> 
+                        <View style={{alignSelf: 'center'}}>
+                                <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
+                                    {requesting}
+                                </Text> 
+                        </View>
+                    </View>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', margin: 2, color: colors.action_secondary}}>
+                            Call rider or call support if no response
                         </Text>
                     </View>
-                        <View style={{marginLeft: -8, alignItems: 'center'}}>
-                            <Link style={{margin: 16}}
-                                  url={"tel: " + ride.driver.phone}
-                                  icon={"phone"}
-                                  size={16}
-                                  iconSize={24}
-                                  color={colors.secondary}
-                                  text={"CALL " + ride.driver.name.toUpperCase()}
-                            />
-                        </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Button
+                            action={this.refreshRide}
+                            text={'NEXT STEP'}
+                            size={15}
+                            iconSize={18}
+                            color={colors.action}
+                          />
+                    </View>
                 </View>
+            
             </View>
         )
     },
@@ -204,7 +222,6 @@ var CurrentRidePage = React.createClass({
                             <Text style={{textAlign: 'center'}}>
                                 Sorry, your request has been declined.
                             </Text>
-
                         </View>
                     </View>
                     <Link style={{margin: 10}}
@@ -243,8 +260,8 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
-                      <View style={styles.renderSheetTopItem}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30}}>
+                      <View style={styles.renderItemLeft}>
                         <Link
                             action={this.cancelRide}
                             icon={"clear"}
@@ -253,49 +270,45 @@ var CurrentRidePage = React.createClass({
                             color={colors.disable}
                             text={"CANCEL"}
                         />
-
                     </View>
-                    <View style={{marginLeft: 6}}>
+                    <View style={{justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderSheetTopItem}>
-                        <Link
-                              action={this.refreshRide}
-                              text={'NEXT  '}
-                              iconRight={'forward'}
-                              size={15}
-                              iconSize={18}
-                              color={colors.action}
-                          />
+                    <View style={styles.renderItemRight}>
+                        <Link 
+                            url={"tel: " + ride.driver.phone}
+                            iconRight={"phone"}
+                            size={15}
+                            iconSize={18}
+                            color={colors.secondary}
+                            text={"CALL RIDER  "}
+                        />
                     </View>
                     </View>
                     <View style={styles.card_mid}>
                         <Text style={styles.item_title}>
                             Hi {ride.customer.first_name},
                         </Text>
-                        <Text>
-                            I'm on my way to pick you up!
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                         {ride.driver.first_name} is on his way to pick you up!
                         </Text>
                     </View>
-                    <View style={styles.sheet_dark}>
-                        <View style={{alignItems: 'center', marginRight: 10}}>
-                            <Link style={{margin: 16}}
-                                url={"tel: " + ride.driver.phone}
-                                icon={"phone"}
-                                size={16}
-                                iconSize={24}
-                                color={colors.secondary}
-                                text={"CALL " + ride.driver.name.toUpperCase()}
-                            />
-                        </View>
+                     <View style={{margin: 12, flexDirection: 'row', alignItems: 'center'}}>
+                        <Button
+                            action={this.refreshRide}
+                            text={'NEXT STEP'}
+                            size={15}
+                            iconSize={18}
+                            color={colors.action}
+                        />
                     </View>
                 </View>
-
         )
     },
 
     renderDriving: function () {
         var ride = this.props.currentRide;
+        let text = "When the rider ends trip click GO TO PAYMENT";
         return (
             <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <Map
@@ -303,67 +316,63 @@ var CurrentRidePage = React.createClass({
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 10}}>
-                    <View style={styles.renderSheetTopItem}>
-                       <Link
-                            action={this.cancelRide}
-                            icon={"clear"}
-                            size={15}
-                            iconSize={18}
-                            color={colors.disable}
-                            text={"CANCEL"}
-                        />
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6, marginTop: -30}}>
+                    <View style={styles.renderItemLeft}>
                     </View>
-                    <View>
+                    <View style={{justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderSheetTopItem}>
-                         <Link
-                              action={this.refreshRide}
-                              text={'NEXT '}
-                              iconRight={'forward'}
-                              size={15}
-                              iconSize={18}
-                              color={colors.action}
-                          />
+                    <View style={styles.renderItemRight}>
+                        <Link 
+                            url={"tel: " + ride.driver.phone}
+                            iconRight={"phone"}
+                            size={14}
+                            iconSize={16}
+                            color={colors.secondary}
+                            text={"  CALL RIDER  "}
+                        />
                     </View>
                 </View>
-                <View style={styles.card_mid}>
-                    <Text style={styles.item_title}>
-                        Finalize Ride
-                    </Text>
-                      <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6, fontSize: 15}]}>
-                        When you are dropped off click NEXT to finalize ride.
-                    </Text>
-                </View>
-                <View style={styles.sheet_dark}>
-                    <View style={{alignItems: 'center', marginRight: 10}}>
-                        <Link style={{margin: 16}}
-                            url={"tel: " + ride.driver.phone}
-                            icon={"phone"}
-                            size={16}
-                            iconSize={24}
-                            color={colors.secondary}
-                            text={"CALL " + ride.driver.name.toUpperCase()}
+                <View style={[styles.sheet_dark, {alignItems: 'center'}]}>
+                    <View style={styles.card_mid}>
+                        <Text style={styles.item_title}>
+                            Finalize Ride
+                        </Text>
+                         <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                            {text} 
+                        </Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Button
+                            action={this.refreshRide}
+                            text={'GO TO PAYMENT'}
+                            size={15}
+                            iconSize={18}
+                            color={colors.action}
                         />
                     </View>
                 </View>
             </View>
-
         )
     },
 
-    renderDropOff: function () {
+renderDropOff: function () {
+        sounds.alarm2.play();
         var ride = this.props.currentRide;
+
         return (
-            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
-                <View style={styles.sheetYellow}>
-                    <View
-                      style={{flex: 0.15, backgroundColor: colors.primary}}>
-                    </View>
+             <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: colors.primary}}
+                >
+                <View style={{backgroundColor: colors.primary}}>
+                </View>   
                     <View style={styles.card_mid_finalize}>
-                        <View style={{alignSelf: 'center', elevation: 5}}>
-                          <Avatar image={ride.driver.avatar}/>
+                        <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                             
+                            <Avatar image={ride.driver.avatar}/>
                         </View>
                         <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.item_title}>
@@ -372,7 +381,7 @@ var CurrentRidePage = React.createClass({
                             <Text style={styles.heavy_text}>
                               {ride.fare}
                             </Text>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                                 Your trip was {ride.distance.distance}.
                             </Text>
                         </View>
@@ -388,7 +397,7 @@ var CurrentRidePage = React.createClass({
                                 color={colors.action}
                                 />
                         </View>
-                     </View>
+
                 </View>
                 <View>
                       <Image
@@ -397,14 +406,13 @@ var CurrentRidePage = React.createClass({
                           />
                 </View>
             </View>
-
         )
     },
 
     renderPayment: function () {
-      var ride = this.props.currentRide;
-      var text;
-      var text2;
+        var ride = this.props.currentRide;
+         var text;
+      
       if (ride.payment_method == 'mpesa') {
           var header = "M-Pesa Payment";
           text = "Paybill No: 653839" + "\n" + "Account No: Ride";
@@ -412,41 +420,42 @@ var CurrentRidePage = React.createClass({
           var header = "Cash Payment";  
           var text = "Please pay the cash amount to rider";
       }
-      
-      var buttonText = "DONE";
-      var buttonAction = this.completePayment;
-
 
         return (
-            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
-                <View style={styles.sheetYellow}>
-                    <View
-                      style={{flex: 0.1, backgroundColor: colors.primary}}>
-                    </View>
+               <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: colors.primary}}
+                >
+                <View style={{backgroundColor: colors.primary}}>
+                </View>   
                     <View style={styles.card_mid_finalize}>
-                        <View style={{alignSelf: 'center', elevation: 5}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                             
                             <Avatar image={ride.driver.avatar}/>
                         </View>
-                        <View style={{margin: 6, padding: 12, justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.item_title}>
-                              {header}
+                                {header}
                             </Text>
                             <Text style={styles.heavy_text}>
-                              {ride.fare}
+                                {ride.fare}
                             </Text>
-                             <Text style={[styles.text_important, {textAlign: 'center', marginTop: 6}]}>
+                           <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
                                 {text}
                             </Text>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Button
-                                action={buttonAction}
-                                text={buttonText}
-                                color={colors.action}
+
+                            <View style={{flexDirection: 'row'}}>
+                                <Button
+                                    action={this.completePayment}
+                                    text={"Complete Payment"}
+                                    color={colors.action}
                                 />
-                        </View>
+                            </View>
+                        
                     </View>
-                </View>
                 <View>
                      <Image
                         source={require('../assets/banner.jpg')}
@@ -454,7 +463,6 @@ var CurrentRidePage = React.createClass({
                         />
                 </View>
             </View>
-
         )
     },
 
@@ -463,56 +471,59 @@ var CurrentRidePage = React.createClass({
       var ride = this.props.currentRide;
       var message = "How was your ride with " + ride.driver.name +"?";
       var header = "Rating";
-      var buttonText = "Finish";
+      var buttonText = "FINISH";
       var buttonAction = this.finishRide;
 
-        return (
-          <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
-              <View style={styles.sheetYellow}>
-                    <View
-                        style={{flex: 0.15, backgroundColor: colors.primary}}>
+      return (
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: colors.primary}}
+            >
+                <View style={{backgroundColor: colors.primary}}>
+                </View>   
+                <View style={styles.card_mid_finalize}>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                             
+                        <Avatar image={ride.driver.avatar}/>
                     </View>
-                        <View style={styles.card_mid_finalize}>
-                            <View style={{marginTop: -10, alignSelf: 'center', elevation: 5}}>
-                                <Avatar image={ride.driver.avatar}/>
-                            </View>
-                            <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={styles.item_title}>
-                                  {header}
-                                </Text>
-                                <Text style={{textAlign: 'center'}}>
-                                    {message}
-                                </Text>
-                                <StarRating
-                                    onChange={this.rateRide}
-                                    maxStars={5}
-                                    rating={0}
-                                    colorOn={colors.action}
-                                    colorOff={colors.action_disabled}
-                                />
-                                <View style={{paddingTop: 10, justifyContent: 'center', alignItems: 'center'}}>
-                                    <Text>
-                                        We appreciate feedback! Call us:
-                                    </Text>
-                                </View>
-                                    <Link
-                                        url={"tel: 0791398120"}
-                                        icon={"phone"}
-                                        size={16}
-                                        iconSize={18}
-                                        color={colors.action}
-                                        text={"0791398120"}
-                                    />
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Button
-                                    action={this.finishRide}
-                                    text={"FINISH"}
-                                    color={colors.action}
-                                    />
-                            </View>
+                    <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
+                        <Text style={styles.item_title}>
+                            {header}
+                        </Text>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
+                            {message}
+                        </Text>
+                        <StarRating
+                            onChange={this.rateRide}
+                            maxStars={5}
+                            rating={0}
+                            colorOn={colors.action}
+                            colorOff={colors.action_disabled}
+                        />
+                        <View style={{alignSelf: 'center'}}>
+                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
+                                We appreciate feedback!
+                            </Text>
                         </View>
                     </View>
+                    <Link
+                        url={"tel: 0791398120"}
+                        icon={"phone"}
+                        size={16}
+                        iconSize={18}
+                        color={colors.action}
+                        text={"0791398120"}
+                    />
+                    <View style={{flexDirection: 'row'}}>
+                            <Button
+                                action={this.finishRide}
+                                text={"FINISH"}
+                                color={colors.action}
+                            />
+                    </View>
+                </View>
                         <View>
                             <Image
                                 source={require('../assets/banner.jpg')}

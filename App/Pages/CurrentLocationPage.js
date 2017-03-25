@@ -116,16 +116,6 @@ var CurrentLocationPage = React.createClass({
         });
     },
 
-    locationAlert : function() {
-        Alert.alert(
-            'Location not recognized',
-            'You seem to have your location off. Please switch it on or try outside! :)',
-            [
-                {text: 'OKAY!'}
-            ]
-        );
-    },
-
     createRide: function() {
         if (this.props.currentUser.phone != "") {
             var ride = {
@@ -147,19 +137,17 @@ var CurrentLocationPage = React.createClass({
                     { cancelable: false}
                 );
             }
-
         },
 
     render: function () {
         return (
-
                 <Navigator
                     renderScene={this.renderScene}
                     navigator={this.props.navigator}
                     navigationBar={
                     <Navigator.NavigationBar style={styles.nav_bar}
                         routeMapper={NavigationBarRouteMapper} />
-                  }/>
+                }/>
         );
     },
 
@@ -169,11 +157,14 @@ var CurrentLocationPage = React.createClass({
         var spinner;
         if (this.state.ready) {
             spinner = (
-                <View style={[styles.activity_indicator, {left: 150, bottom: 150}]}> 
-                    <ActivityIndicator 
-                    size={50}
-                    color={colors.disable} 
-                    /> 
+                <View style={styles.activity_indicator}> 
+                    <View style={styles.component2}>
+                        <ActivityIndicator 
+                            animating={this.state.animating}
+                            size={80}
+                            color={colors.disable} 
+                        /> 
+                    </View>
                 </View>
             );
         }
@@ -191,6 +182,7 @@ var CurrentLocationPage = React.createClass({
                 onDragEnd = {(e) => this.dragOrigin(e.nativeEvent.coordinate)}/>
         }   
         
+
         return (
             <View style={styles.page}>
                 <View style={styles.map_container}>
@@ -202,14 +194,14 @@ var CurrentLocationPage = React.createClass({
                         showUserLocation={true}
                         style={styles.map}>
                         {pickup}
-                    </MapView>
+                    </MapView> 
                     {spinner}
                 </View>
                 <View style={{alignItems: 'center', marginTop: 10}}>
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
-                    <Text style={styles.text_important}>
+                    <Text style={[styles.text_important, {fontSize: 14}]}>
                         If location is not correct please drag pin.
                     </Text>
                 </View>

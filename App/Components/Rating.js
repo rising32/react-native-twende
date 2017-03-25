@@ -52,7 +52,7 @@ var Rating = React.createClass({
         return (
             <View style={[styles.starRatingContainer]}>
                 {starButtons}
-                <Text style={{color: colorOn, fontWeight: 'bold', fontSize: 12, marginLeft: 4}}>{rating}</Text>
+                <Text style={{color: colorOn, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
             </View>
         );
     }
