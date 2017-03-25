@@ -66,19 +66,13 @@ var DriverHomePage = React.createClass({
 
     componentWillMount: function() {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
-        CurrentUserStore.on(events.currentUserLoaded, this.currentUserLoaded);
         loadGeoLocation();
         startWatchingGeoLocation();
     },
 
     componentWillUnmount: function() {
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
-        CurrentUserStore.removeListener(events.currentUserLoaded, this.currentUserLoaded);
         stopWatchingGeoLocation();
-    },
-
-    currentUserLoaded: function(currentUser) {
-        this.setState({currentUser: currentUser});
     },
 
     updateLocation: function(loc) {
