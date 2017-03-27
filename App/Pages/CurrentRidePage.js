@@ -373,10 +373,10 @@ renderDropOff: function () {
                         </View>
                         <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.item_title}>
-                              Arrival
+                                You have arrived!
                             </Text>
                             <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                              Congratulations! You have arrived :) Please make sure you pay {ride.driver.first_name}
+                             We hope you enjoyed the trip. :) Please make sure you pay {ride.driver.first_name}
                             </Text>
                             <Text style={styles.heavy_text}>
                               {ride.fare}
