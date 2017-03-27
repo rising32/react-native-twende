@@ -526,7 +526,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     colorOn: {
-        color: '#FF4946'
+        color: colors.primary,
     },
     colorOff: {
         color: '#999999'
