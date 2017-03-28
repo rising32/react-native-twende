@@ -9,6 +9,7 @@ var {
     } = ReactNative;
 
 import { Icon } from 'react-native-material-design';
+import {colors, styles} from "../Styles";
 
 
 var Rating = React.createClass({
@@ -52,23 +53,11 @@ var Rating = React.createClass({
         return (
             <View style={[styles.starRatingContainer]}>
                 {starButtons}
-                <Text style={{color: colorOn, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
+                <Text style={{color: colors.secondary, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
             </View>
         );
     }
 });
 
-const styles = StyleSheet.create({
-    starRatingContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    colorOn: {
-        color: '#FF4946'
-    },
-    colorOff: {
-        color: '#999999'
-    }
-});
 
 module.exports = Rating;

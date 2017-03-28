@@ -8,10 +8,8 @@ var {
     Text,
     ActivityIndicator,
     Image,
-    TextInput,
     Navigator,
     ToastAndroid,
-    Clipboard,
     } = ReactNative;
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
@@ -46,7 +44,6 @@ var CurrentRidePage = React.createClass({
             rating: 0,
             animating: true
         }
-
     },
 
     cancelRide: function () {
@@ -357,7 +354,7 @@ var CurrentRidePage = React.createClass({
     },
 
 renderDropOff: function () {
-        sounds.alarm2.play();
+        sounds.alarm3.play();
         var ride = this.props.currentRide;
 
         return (
@@ -376,7 +373,10 @@ renderDropOff: function () {
                         </View>
                         <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.item_title}>
-                              Price
+                                You have arrived!
+                            </Text>
+                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                             We hope you enjoyed the trip. :) Please make sure you pay {ride.driver.first_name}
                             </Text>
                             <Text style={styles.heavy_text}>
                               {ride.fare}
@@ -446,11 +446,10 @@ renderDropOff: function () {
                                 {text}
                             </Text>
                         </View>
-
                             <View style={{flexDirection: 'row'}}>
                                 <Button
                                     action={this.completePayment}
-                                    text={"Complete Payment"}
+                                    text={"FINALIZE"}
                                     color={colors.action}
                                 />
                             </View>

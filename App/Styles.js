@@ -118,6 +118,14 @@ export var styles = StyleSheet.create({
     elevation: 10
     },
 
+    activity_indicator_pickup: { 
+    flexDirection:'row',
+    position: 'absolute',
+    bottom: 160,
+    elevation: 10
+    },
+
+
     component2: {
     flex: 1,
     justifyContent:'center'
@@ -518,7 +526,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     colorOn: {
-        color: '#FF4946'
+        color: colors.primary,
     },
     colorOff: {
         color: '#999999'

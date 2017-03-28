@@ -15,22 +15,22 @@ import { Icon } from 'react-native-material-design';
 var Map = React.createClass({
 
     getInitialState: function () {
-        var lat = this.props.customer.latitude || this.props.driver.latitude || -1.23825
+        var lat = this.props.customer.latitude || this.props.driver.latitude || -1.23825;
         var long = this.props.customer.longitude || this.props.driver.longitude || 35.89125;
+        var latDelta = 0.015;
+        var longDelta = 0.015;
+        if (this.props.driver.latitude && this.props.customer.latitude) {
+            latDelta = Math.abs(3 * (this.props.driver.latitude - this.props.customer.latitude));
+            longDelta =  Math.abs(3 * (this.props.driver.longitude - this.props.customer.longitude));
+        }
         return {
             region: {
                 latitude: lat,
                 longitude: long,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.015
+                latitudeDelta: latDelta,
+                longitudeDelta: longDelta
             }
         }
-    },
-
-    componentDidMount: function(){
-        setTimeout(() => {
-            this.refs.map.fitToElements(true);
-        }, 2000);
     },
 
     render: function () {
@@ -83,4 +83,3 @@ var Map = React.createClass({
 });
 
 module.exports = Map;
-
