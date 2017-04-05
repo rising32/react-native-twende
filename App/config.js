@@ -1,5 +1,5 @@
-var apiUrl = 'https://twende.co.ke/api/';
-var mediaUrl = 'https://twende.co.ke/';
+const apiUrl = 'https://api.twende.co.ke/api/';
+const mediaUrl = 'https://api.twende.co.ke/';
 
 exports.apiUrl = apiUrl;
 exports.mediaUrl = mediaUrl;
