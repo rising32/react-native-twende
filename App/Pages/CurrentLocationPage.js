@@ -16,7 +16,7 @@ var MapView = require('react-native-maps');
 import { loadGeoLocation } from "../Actions/GeoLocationActions";
 var CurrentRideActions = require('../Actions/CurrentRideActions');
 var NavIcon = require('../Components/NavIcon');
-import { Avatar, Icon } from 'react-native-material-design';
+import Avatar from "../Components/Avatar";
 var Button = require('../Components/Button');
 import {colors, styles} from "../Styles";
 var Link = require('../Components/Link');
@@ -55,7 +55,9 @@ var CurrentLocationPage = React.createClass({
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }
+
         }
+
     },
 
     updateLocation: function(loc) {
@@ -136,6 +138,7 @@ var CurrentLocationPage = React.createClass({
                     routeMapper={NavigationBarRouteMapper} />
             }/>
         );
+
     },
 
     renderScene: function (route, navigator) {
@@ -158,6 +161,7 @@ var CurrentLocationPage = React.createClass({
 
         var pickup;
 
+
         if (this.state.origin.latitude && this.state.origin.longitude) {
             pickup = <MapView.Marker
                 pinColor = "yellow"
@@ -166,7 +170,6 @@ var CurrentLocationPage = React.createClass({
                 image = {require('../assets/map-customer.png')}
                 coordinate = {this.state.origin} />
         }   
-        
 
         return (
             <View style={styles.page}>
@@ -182,7 +185,8 @@ var CurrentLocationPage = React.createClass({
                     </MapView> 
                     {spinner}
                 </View>
-                <View style={{alignItems: 'center', marginTop: 10}}>
+                <View style={{alignItems: 'center', marginTop: -36}}>
+                    <Avatar image={this.props.currentUser.avatar}/>
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
