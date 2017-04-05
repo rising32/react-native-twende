@@ -121,7 +121,8 @@ var CurrentLocationPage = React.createClass({
                 'Phone number required to request ride',
                 'Please fill out your phone number in My Profile in the left above corner.',
                     [
-                        {text: 'OK'}
+                        {text: 'Cancel'},
+                        {text: 'Go to profile page', onPress: () => this.props.navigator.push({id: 'ProfilePage'})},
                     ],
                     { cancelable: false}
                 );
