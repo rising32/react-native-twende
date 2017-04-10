@@ -26,7 +26,9 @@ export var colors = {
     button_normal: '#2BA59A',
     button_over: '#228BE1',
     button_clicked: '#1C79CE',
-    button_text: '#FFFFFF'
+    button_text: '#FFFFFF',
+    username: '#757575',
+    star_rating: '#ffeb3b'
 };
 
 export var styles = StyleSheet.create({
@@ -403,7 +405,7 @@ export var styles = StyleSheet.create({
 
     list_title: {
         fontFamily: 'gothamrounded_bold',
-        color: colors.title,
+        color: colors.username,
         fontSize: 16
     },
 
@@ -521,6 +523,10 @@ export var styles = StyleSheet.create({
     },
 
     // StarRating
+    star_rating: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
     starRatingContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between'
