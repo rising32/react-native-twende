@@ -4,6 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
     View,
+    Image,
     Alert,
     Text,
     ActivityIndicator,
@@ -168,7 +169,7 @@ var CurrentLocationPage = React.createClass({
                 pinColor = "yellow"
                 title = "You"
                 description = "Pick up location"
-                image = {require('../assets/map-customer.png')}
+                image = {require('../assets/map-customer-invisible.png')}
                 coordinate = {this.state.origin} />
         }   
 
@@ -180,11 +181,18 @@ var CurrentLocationPage = React.createClass({
                         onRegionChange={this.mapMoved}
                         showsMyLocationButton={true}
                         showsUserLocation={true}
-                        showUserLocation={true}
+                        showUserLocation={false}
                         style={styles.map}>
                         {pickup}
                     </MapView> 
-                    {spinner}
+                    <View style={styles.map_marker_container}>
+                        <View style={styles.map_marker}>
+                            <Image
+                                source={require('../assets/map-customer.png')}
+                            />
+                        </View>
+                    </View>
+                    {spinner}                    
                 </View>
                 <View style={{alignItems: 'center', marginTop: -36}}>
                     <Avatar image={this.props.currentUser.avatar}/>

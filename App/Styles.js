@@ -377,6 +377,20 @@ export var styles = StyleSheet.create({
         height: 100
     },
 
+    map_marker_container: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'center'
+    },
+
+    map_marker: {
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginBottom: 40
+    },
+
+
     // Lists
 
     list: {
