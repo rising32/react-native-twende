@@ -308,24 +308,24 @@ var DriverHomePage = React.createClass({
                         <IconText
                           icon={"motorcycle"}
                           text={away}
-                          color={colors.secondary}
-                          size={16}
-                          style={{marginBottom: 6, marginLeft: -5, marginRight: -5}}
+                          color={colors.action_secondary}
+                          size={14}
+                          style={{marginBottom: 6}}
                         />
                         <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
                             <ActivityIndicator 
                                 animating={this.state.animating}
                                 size={30}
-                                color={colors.disable} 
+                                color={colors.action} 
                             /> 
                             <View style={{alignSelf: 'center'}}>
-                                    <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
-                                        {requesting}
-                                    </Text> 
+                                <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
+                                    {requesting}
+                                </Text> 
                             </View>
                         </View>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.primary_button_simple}>
                         <Button
                             action={this.acceptRide}
                             text={"ACCEPT REQUEST"}
@@ -349,10 +349,13 @@ var DriverHomePage = React.createClass({
                     />
                     {top}
                     <View style={styles.sheet_rider}>
-                        <Text style={[styles.item_title, {fontSize: 15, textAlign: 'center'}]}>
-                            You are on your way to pick customer!
+                        <Text style={styles.item_title}>
+                            Picking Customer
                         </Text>
-                          <View style={{flexDirection: 'column', marginTop: 20, marginBottom: 18, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Text style={styles.text}>
+                        You are on your way to pick customer!
+                        </Text>
+                          <View style={styles.telephone_button}>
                                 <Link
                                     url={"tel: " + ride.customer.phone}
                                     icon={"phone"}
@@ -362,7 +365,7 @@ var DriverHomePage = React.createClass({
                                     text={"CALL " + ride.customer.first_name.toUpperCase()}
                                 />
                           </View>
-                          <View style={{flexDirection: 'row'}}>
+                          <View style={styles.primary_button_simple}>
                                 <Button
                                     action={this.startRide}
                                     text={"START TRIP"}
@@ -389,10 +392,13 @@ var DriverHomePage = React.createClass({
                 />
                 {top}
                 <View style={styles.sheet_rider}>
-                        <Text style={[styles.item_title, {marginBottom: 10, alignSelf: 'center'}]}>
-                            Have a safe journey!
-                        </Text>
-                        <View style={{flexDirection: 'column', marginTop: 5, marginBottom: 10, marginLeft: -10, justifyContent: 'space-between', alignItems: 'center'}}>
+                    <Text style={styles.item_title}>
+                        Dropping Customer
+                    </Text>
+                    <Text style={styles.text}>
+                        Have a safe journey!
+                    </Text>
+                        <View style={styles.telephone_button}>
                           <Link
                               url={"tel: " + ride.customer.phone}
                               icon={"phone"}
@@ -402,7 +408,7 @@ var DriverHomePage = React.createClass({
                               text={"CALL " + ride.customer.first_name.toUpperCase()}
                           />
                         </View>
-                        <View style={{flexDirection: 'row', marginLeft: 0, marginRight: 0}}>
+                        <View style={styles.primary_button_simple}>
                               <Button
                                 action={this.dropoffRide}
                                 text={"FINISH RIDE"}
@@ -414,7 +420,7 @@ var DriverHomePage = React.createClass({
     },
 
 
-    renderDropoff: function() {
+renderDropoff: function() {
         var ride = this.props.currentRide;
         var text = ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride"; 
         var header = "Payment";
@@ -435,14 +441,17 @@ var DriverHomePage = React.createClass({
                             <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                   
                                 <Avatar image={ride.customer.avatar}/>
                             </View>
-                            <Text style={[styles.item_title, {textAlign: 'center', margin: 10}]}>
+                            <Text style={[styles.item_title, {textAlign: 'center'}]}>
                                 {header}
                             </Text>
                             <Text style={styles.heavy_text}>
                                 {ride.fare}
                             </Text>
+                            <Text style={styles.text}>
+                                    Distance: {ride.distance.distance}
+                                </Text>
                             <View>
-                                <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
+                               <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                                     {text}
                                 </Text>
                             </View>
@@ -463,10 +472,11 @@ var DriverHomePage = React.createClass({
             );
         },
 
+
     renderFinalized: function() {
         var ride = this.props.currentRide;
-        var text = "Please confirm payment & give rating";
-        var header = "Payment";
+        var text = "Please give customer a rating";
+        var header = "Rating";
         if (ride.payment_method == 'mpesa') {
             text = "Paybill No: 653839\nAccount No: Ride";
 
@@ -495,24 +505,18 @@ var DriverHomePage = React.createClass({
                         <Text style={[styles.item_title, {textAlign: 'center'}]}>
                             {header}
                         </Text>
-                        <Text style={styles.heavy_text}>
-                            {ride.fare}
-                        </Text>
                         <View>
-                           <Text style={[styles.text_important, {textAlign: 'center', marginTop: 2, marginBottom: 4}]}>
+                           <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                                 {text}
                             </Text>
                         </View>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                          <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                            Rate Customer
-                          </Text>
                           <StarRating
                               onChange={this.rateRide}
                               maxStars={5}
                               rating={0}
-                              colorOn={colors.action}
+                              colorOn={colors.primarydark}
                               colorOff={colors.action_disabled}
                           />
                     </View>

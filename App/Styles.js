@@ -8,12 +8,14 @@ var {
 
 export var colors = {
     primary: '#ffda57', // brand book yellow
+    primarydark: '#ffd400', 
     action: '#1da69a', // brand book green
     secondary: '#273b95', // brand book blue
     disable: '#c2382b', // brand book red
     primary_dark: '#d1af42',
     action_secondary: '#555555', // dark grey
     action_disabled: '#E0E0E0', // light grey
+    grey: '#848484', // medium grey
     text: '#333333',
     text_important: '#1da69a', // kan vervangen worden met action
     title: '#555555',
@@ -40,13 +42,15 @@ export var styles = StyleSheet.create({
     },
 
     // Text
+
     baseText: {
         fontFamily: 'gothamrounded_medium',
      },
 
     text: {
         fontFamily: 'gothamrounded_medium',
-        fontSize: 16
+        fontSize: 14,
+        color: colors.grey
     },
 
     text_important: {
@@ -56,6 +60,7 @@ export var styles = StyleSheet.create({
     },
 
     // Splash
+
     splash: {
         backgroundColor: colors.primary,
         flex: 1,
@@ -94,6 +99,7 @@ export var styles = StyleSheet.create({
 
 
     // Spinner
+
     spinner: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -114,19 +120,18 @@ export var styles = StyleSheet.create({
     },
 
     activity_indicator: { 
-    flexDirection:'row',
-    position: 'absolute',
-    bottom: 260,
-    elevation: 10
+        flexDirection:'row',
+        position: 'absolute',
+        bottom: 260,
+        elevation: 10
     },
 
     activity_indicator_pickup: { 
-    flexDirection:'row',
-    position: 'absolute',
-    bottom: 160,
-    elevation: 10
+        flexDirection:'row',
+        position: 'absolute',
+        bottom: 160,
+        elevation: 10
     },
-
 
     component2: {
     flex: 1,
@@ -134,6 +139,7 @@ export var styles = StyleSheet.create({
     },
 
     // Navigation
+
     nav_bar: {
         backgroundColor: colors.primary,
         alignItems: 'center',
@@ -193,7 +199,8 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    // Card
+    // Cards
+
     card: {
         paddingBottom: 20,
         paddingTop: 20,
@@ -251,6 +258,7 @@ export var styles = StyleSheet.create({
     },
 
     // Sheet (persistent bottom sheet)
+
     sheet: {
         paddingBottom: 20,
         paddingTop: 20,
@@ -298,6 +306,7 @@ export var styles = StyleSheet.create({
     },
 
     // Sheet (persistent bottom sheet)
+
     sheet_rider: {
         paddingBottom: 20,
         paddingTop: 8,
@@ -323,6 +332,7 @@ export var styles = StyleSheet.create({
     },
 
     // Map
+
     map_container: {
         flex: 1,
         height: 250,
@@ -397,6 +407,17 @@ export var styles = StyleSheet.create({
         marginTop: 10
     },
 
+    // Items
+
+    telephone_button: {
+        flexDirection: 'column', 
+        marginTop: 10, 
+        marginBottom: 10, 
+        marginLeft: -10, 
+        justifyContent: 'space-between', 
+        alignItems: 'center'
+    },
+
     item: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -414,7 +435,7 @@ export var styles = StyleSheet.create({
     item_title: {
         fontFamily: 'gothamrounded_bold',
         color: colors.title,
-        fontSize: 16
+        fontSize: 16,
     },
 
     list_title: {
@@ -436,6 +457,7 @@ export var styles = StyleSheet.create({
         color: colors.secondary,
         fontFamily: 'gothamrounded_medium',
     },
+
     item_image: {
         backgroundColor: '#999999',
         width: 80,
@@ -479,6 +501,12 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.button_normal,
         elevation: 3,
         flex: 1
+    },
+
+    primary_button_simple: {
+        flexDirection: 'row',
+        marginLeft: 0,
+        marginRight: 0
     },
 
     primary_button_text: {
