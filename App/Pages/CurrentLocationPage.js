@@ -150,11 +150,11 @@ var CurrentLocationPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.activity_indicator_pickup}> 
-                    <View style={styles.component2}>
+                    <View style={styles.activity_indicator_container}>
                         <ActivityIndicator 
                             animating={this.state.animating}
-                            size={80}
-                            color={colors.disable} 
+                            size={50}
+                            color={colors.grey} 
                         /> 
                     </View>
                 </View>
@@ -199,11 +199,11 @@ var CurrentLocationPage = React.createClass({
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
-                    <Text style={{fontFamily: 'gothamrounded_medium', textAlign: 'center', color: colors.secondary}}>
+                    <Text style={styles.text}>
                         Swipe the map to change your pick up location
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row', margin: 16}}>                          
+                <View style={styles.primary_button_customer_app}>                       
                     <Button
                         action={this.createRide}
                         text={"CONFIRM LOCATION"}

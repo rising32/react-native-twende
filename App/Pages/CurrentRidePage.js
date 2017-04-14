@@ -174,17 +174,16 @@ var CurrentRidePage = React.createClass({
                         />
                     </View>
                 </View>
-                <View style={styles.sheet_dark}>
                     <View>
-                        <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                        <Text style={styles.item_title}>
                             Requesting {ride.driver.name}!
                         </Text>
                         <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
-                                <ActivityIndicator 
-                            animating={this.state.animating}
-                            size={30}
-                            color={colors.disable} 
-                        /> 
+                            <ActivityIndicator 
+                                animating={this.state.animating}
+                                size={30}
+                                color={colors.grey} 
+                            /> 
                         <View style={{alignSelf: 'center'}}>
                                 <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
                                     {requesting}
@@ -195,7 +194,7 @@ var CurrentRidePage = React.createClass({
                             Call rider or call support if no response
                         </Text>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.primary_button_customer_app}>
                         <Button
                             action={this.refreshRide}
                             text={'NEXT STEP'}
@@ -206,7 +205,6 @@ var CurrentRidePage = React.createClass({
                     </View>
                 </View>
             
-            </View>
         )
     },
 
@@ -286,11 +284,11 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.item_title}>
                             Hi {ride.customer.first_name},
                         </Text>
-                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                        <Text style={styles.text}>
                          {ride.driver.first_name} is on his way to pick you up!
                         </Text>
                     </View>
-                     <View style={{margin: 12, flexDirection: 'row', alignItems: 'center'}}>
+                     <View style={styles.primary_button_customer_app}>
                         <Button
                             action={this.refreshRide}
                             text={'NEXT STEP'}
@@ -330,16 +328,15 @@ var CurrentRidePage = React.createClass({
                         />
                     </View>
                 </View>
-                <View style={[styles.sheet_dark, {alignItems: 'center'}]}>
                     <View style={styles.card_mid}>
                         <Text style={styles.item_title}>
                             Finalize Ride
                         </Text>
-                         <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                         <Text style={styles.text}>
                             {text} 
                         </Text>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.primary_button_customer_app}>
                         <Button
                             action={this.refreshRide}
                             text={'GO TO PAYMENT'}
@@ -349,7 +346,6 @@ var CurrentRidePage = React.createClass({
                         />
                     </View>
                 </View>
-            </View>
         )
     },
 
@@ -498,7 +494,7 @@ renderDropOff: function () {
                             onChange={this.rateRide}
                             maxStars={5}
                             rating={0}
-                            colorOn={colors.action}
+                            colorOn={colors.primarydark}
                             colorOff={colors.action_disabled}
                         />
                         <View style={{alignSelf: 'center'}}>

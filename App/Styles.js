@@ -50,6 +50,7 @@ export var styles = StyleSheet.create({
     text: {
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
+        textAlign: 'center',
         color: colors.grey
     },
 
@@ -133,7 +134,12 @@ export var styles = StyleSheet.create({
         elevation: 10
     },
 
-    component2: {
+    activity_indicator_container: {
+        flex: 1,
+        justifyContent:'center'
+    },
+
+        component2: {
     flex: 1,
     justifyContent:'center'
     },
@@ -433,6 +439,7 @@ export var styles = StyleSheet.create({
         shadowOffset: {width: 2, height: 2}
     },
     item_title: {
+        textAlign: 'center',
         fontFamily: 'gothamrounded_bold',
         color: colors.title,
         fontSize: 16,
@@ -489,6 +496,14 @@ export var styles = StyleSheet.create({
     },
 
     // Buttons
+
+    primary_button_customer_app: {
+        flexDirection: 'row', 
+        marginTop: 10,
+        marginLeft: 18,
+        marginRight: 18,
+        marginBottom: 18
+    },
 
     primary_button: {
         marginTop: 10,
