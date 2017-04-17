@@ -43,6 +43,9 @@ var DriverListPage = React.createClass({
 
     componentDidMount: function () {
         DriverStore.on(events.driverListLoaded, this.setItems);
+        this.setState({
+            isConnecting: false
+        });
         this.refreshItems();
         this.setToggleTimeout(); 
     },
@@ -184,11 +187,11 @@ var DriverListPage = React.createClass({
         if (this.state.isConnecting) {
             spinner = (
                 <View style={styles.activity_indicator}> 
-                    <View style={styles.component2}>
+                    <View style={styles.activity_indicator_container}>
                         <ActivityIndicator 
                             animating={this.state.animating}
-                            size={80}
-                            color={colors.disable} 
+                            size={50}
+                            color={colors.grey} 
                         /> 
                     </View>
                 </View>

@@ -12,7 +12,6 @@ var {
     NetInfo,
     View,
     Image,
-    Alert,
     Navigator,
     TouchableOpacity,
     DrawerLayoutAndroid,
@@ -132,6 +131,8 @@ var TwendeApp = React.createClass({
         CurrentUserStore.on(events.noCurrentUser, this.goToLogin);
         CurrentUserStore.on(events.userLoggedOut, this.goToLogin);
         CurrentUserStore.on(events.gcmTokenLoaded, this.setGcmToken);
+        NetInfo.isConnected.addEventListener('change', this.handleConnectivityChange );
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );
         reloadCurrentUser()
     },
 
@@ -139,9 +140,9 @@ var TwendeApp = React.createClass({
         NetInfo.isConnected.removeEventListener( 'change', this.handleConnectivityChange );
     },
 
-    componentDidMount() { 
+    componentDidMount() {
         NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange );
-        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );  
+        NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );
     },
 
     handleConnectivityChange: function (isConnected) {
@@ -298,9 +299,9 @@ var TwendeApp = React.createClass({
                         notify(notification.title, notification.message);
                     }
                     if (notification.ride) {
-                        // Check if the user has valid token.
-                        // Otherwise login first.
-                        refreshCurrentRide(notification.ride);
+                        loadRideList();
+                        // Some how loading specific ride here gives a 404
+                        // refreshCurrentRide(notification.ride);
                     }
                 },
                 onError: function(error) {
@@ -536,7 +537,6 @@ var TwendeApp = React.createClass({
     },
 
     render: function (route, navigator) {
-
         var drawer = this.anonymousDrawerView;
         if (this.state.currentUser.is_driver) {
             drawer = this.driverDrawerView;
@@ -571,8 +571,8 @@ var TwendeApp = React.createClass({
                     goBack={this.goBack}
                     state={this.state}
                     configureScene={(route) => {
-                    return Navigator.SceneConfigs.FadeAndroid;
-                }}
+                        return Navigator.SceneConfigs.FadeAndroid;
+                    }}
                 />
             <StatusBar
                  backgroundColor={colors.primary_dark}

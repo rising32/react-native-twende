@@ -4,6 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
     View,
+    Image,
     Alert,
     Text,
     ActivityIndicator,
@@ -16,7 +17,7 @@ var MapView = require('react-native-maps');
 import { loadGeoLocation } from "../Actions/GeoLocationActions";
 var CurrentRideActions = require('../Actions/CurrentRideActions');
 var NavIcon = require('../Components/NavIcon');
-import { Avatar, Icon } from 'react-native-material-design';
+import Avatar from "../Components/Avatar";
 var Button = require('../Components/Button');
 import {colors, styles} from "../Styles";
 var Link = require('../Components/Link');
@@ -55,7 +56,9 @@ var CurrentLocationPage = React.createClass({
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }
+
         }
+
     },
 
     updateLocation: function(loc) {
@@ -119,7 +122,8 @@ var CurrentLocationPage = React.createClass({
                 'Phone number required to request ride',
                 'Please fill out your phone number in My Profile in the left above corner.',
                     [
-                        {text: 'OK'}
+                        {text: 'Cancel'},
+                        {text: 'Go to profile page', onPress: () => this.props.navigator.push({id: 'ProfilePage'})},
                     ],
                     { cancelable: false}
                 );
@@ -136,6 +140,7 @@ var CurrentLocationPage = React.createClass({
                     routeMapper={NavigationBarRouteMapper} />
             }/>
         );
+
     },
 
     renderScene: function (route, navigator) {
@@ -145,11 +150,11 @@ var CurrentLocationPage = React.createClass({
         if (this.state.ready) {
             spinner = (
                 <View style={styles.activity_indicator_pickup}> 
-                    <View style={styles.component2}>
+                    <View style={styles.activity_indicator_container}>
                         <ActivityIndicator 
                             animating={this.state.animating}
-                            size={80}
-                            color={colors.disable} 
+                            size={50}
+                            color={colors.grey} 
                         /> 
                     </View>
                 </View>
@@ -158,15 +163,15 @@ var CurrentLocationPage = React.createClass({
 
         var pickup;
 
+
         if (this.state.origin.latitude && this.state.origin.longitude) {
             pickup = <MapView.Marker
                 pinColor = "yellow"
                 title = "You"
                 description = "Pick up location"
-                image = {require('../assets/map-customer.png')}
+                image = {require('../assets/map-customer-invisible.png')}
                 coordinate = {this.state.origin} />
         }   
-        
 
         return (
             <View style={styles.page}>
@@ -176,21 +181,29 @@ var CurrentLocationPage = React.createClass({
                         onRegionChange={this.mapMoved}
                         showsMyLocationButton={true}
                         showsUserLocation={true}
-                        showUserLocation={true}
+                        showUserLocation={false}
                         style={styles.map}>
                         {pickup}
                     </MapView> 
-                    {spinner}
+                    <View style={styles.map_marker_container}>
+                        <View style={styles.map_marker}>
+                            <Image
+                                source={require('../assets/map-customer.png')}
+                            />
+                        </View>
+                    </View>
+                    {spinner}                    
                 </View>
-                <View style={{alignItems: 'center', marginTop: 10}}>
+                <View style={{alignItems: 'center', marginTop: -36}}>
+                    <Avatar image={this.props.currentUser.avatar}/>
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
-                    <Text style={{fontFamily: 'gothamrounded_medium', textAlign: 'center', color: colors.secondary}}>
+                    <Text style={styles.text}>
                         Swipe the map to change your pick up location
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row', margin: 16}}>                          
+                <View style={styles.primary_button_customer_app}>                       
                     <Button
                         action={this.createRide}
                         text={"CONFIRM LOCATION"}
