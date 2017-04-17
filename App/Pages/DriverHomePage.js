@@ -149,7 +149,10 @@ var DriverHomePage = React.createClass({
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
         ride.state = 'finalized';
+        
         updateCurrentRide(ride);
+
+        // Reload currentUser to get new user state
         reloadCurrentUser();
     },
 

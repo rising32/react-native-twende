@@ -1,11 +1,14 @@
-const apiUrl = 'https://api.twende.co.ke/api/';
-const mediaUrl = 'https://api.twende.co.ke/';
+// const server = 'http://10.0.0.35:8000';
+const server = 'https://api.twende.co.ke';
+const apiUrl =  server + '/api/';
+const mediaUrl = server;
 
 exports.apiUrl = apiUrl;
 exports.mediaUrl = mediaUrl;
 
 exports.api = {
     socialLogin: apiUrl + 'auth/convert-token/',
+    errorLog: apiUrl + 'errors/',
     rides: apiUrl + 'rides/',
     location: apiUrl + 'location/',
     requensts: apiUrl + 'requensts/',

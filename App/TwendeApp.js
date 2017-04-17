@@ -113,7 +113,7 @@ var TwendeApp = React.createClass({
     },
 
     backButton: function() {
-        navigator = this.navigator
+        var navigator = this.navigator
         if (navigator.getCurrentRoutes().length > 2) {
             navigator.pop();
             return true;
@@ -140,7 +140,7 @@ var TwendeApp = React.createClass({
     },
 
     componentDidMount() { 
-        NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange ); 
+        NetInfo.isConnected.addEventListener( 'change', this.handleConnectivityChange );
         NetInfo.isConnected.fetch().done( (isConnected) => { this.setState({isConnected}); } );  
     },
 
@@ -298,6 +298,8 @@ var TwendeApp = React.createClass({
                         notify(notification.title, notification.message);
                     }
                     if (notification.ride) {
+                        // Check if the user has valid token.
+                        // Otherwise login first.
                         refreshCurrentRide(notification.ride);
                     }
                 },
@@ -651,10 +653,10 @@ var TwendeApp = React.createClass({
                 <CurrentRidePage
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
-                    currentRide={route.currentRide}
+                    currentRide={this.state.currentRide}
                     currentUser={this.state.currentUser}
                     navigator={navigator}
-                    driver={route.driver}/>
+                    driver={this.state.driver}/>
             );
         }
         if (routeId === 'DriverListPage') {
