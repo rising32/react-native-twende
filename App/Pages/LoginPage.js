@@ -174,12 +174,12 @@ var LoginPage = React.createClass({
         var content = this.renderSocialLogin();
 
         var spinner;
-        if (this.state.ready) {
+        if (this.state.ready || this.state.animating) {
             spinner = (
                 <View style={styles.component2}>
                     <ActivityIndicator 
-                    size={80}
-                    color={colors.disable} 
+                    size={50}
+                    color={colors.grey} 
                     /> 
                 </View>
             );
@@ -223,15 +223,6 @@ var LoginPage = React.createClass({
                 </View>
                 <View style={styles.activity_indicator}> 
                     {spinner}
-                    {animating && (
-                    <View style={styles.component2}>
-                    <ActivityIndicator 
-                        animating={this.state.animating}
-                        size={80}
-                        color={colors.disable} 
-                    /> 
-                    </View>
-                    )}
                 </View>
             </View>
         );
