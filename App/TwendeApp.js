@@ -112,7 +112,7 @@ var TwendeApp = React.createClass({
     },
 
     backButton: function() {
-        navigator = this.navigator
+        var navigator = this.navigator
         if (navigator.getCurrentRoutes().length > 2) {
             navigator.pop();
             return true;
@@ -653,10 +653,10 @@ var TwendeApp = React.createClass({
                 <CurrentRidePage
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
-                    currentRide={route.currentRide}
+                    currentRide={this.state.currentRide}
                     currentUser={this.state.currentUser}
                     navigator={navigator}
-                    driver={route.driver}/>
+                    driver={this.state.driver}/>
             );
         }
         if (routeId === 'DriverListPage') {

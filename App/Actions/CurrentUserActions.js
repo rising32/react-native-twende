@@ -8,7 +8,9 @@ var LocalKeyStore = require('../Stores/LocalKeyStore');
 var TokenStore = require('../Stores/TokenStore');
 var CurrentUserStore = require('../Stores/CurrentUserStore');
 var CurrentUserService = require('../Services/CurrentUserService');
+
 import dispatcher from "../Dispatcher";
+import {sendError} from "../Actions/ErrorLogActions";
 import actions from "../Constants/Actions";
 import {dispatch} from '../Dispatcher';
 
@@ -26,6 +28,7 @@ export function reloadCurrentUser() {
         CurrentUserService.reloadCurrentUser(
             token,
             (currentUser) => {
+                sendError("Successfully reloaded user with token " + token);
                 if (currentUser) {
                     dispatch({
                         type: actions.receiveCurrentUser,
@@ -34,6 +37,7 @@ export function reloadCurrentUser() {
                 }
             },
             (error) => {
+                sendError("Error reloading user with token " + token);
                 dispatch({
                     type: actions.errorFetchCurrentUser
                 })

@@ -65,12 +65,14 @@ var RideService = {
 
         }).then((response) => {
             if (response.status !== 200) {
+                // User x was denied loading ride y. Code response.status
                 reject(response);
             }
             return response.json();
         }).then((ride) => {
             return resolve(ride);
         }).catch((error) => {
+
             //reject(error);
         })
     },
