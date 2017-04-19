@@ -4,6 +4,7 @@ var RideService = require('../Services/RideService');
 import dispatcher from "../Dispatcher";
 import actions from "../Constants/Actions";
 import {dispatch} from '../Dispatcher';
+import {sendError} from "../Actions/ErrorLogActions";
 
 
 export function createCurrentRide(ride) {
@@ -97,13 +98,15 @@ export function updateCurrentRide(currentRide) {
     RideService.update(
         currentRide,
         (currentRide) => {
+            sendError("INFO", "Success loading ride ", currentRide, null, currentRide.id);
             dispatch({
                 type: actions.receiveCurrentRide,
                 ride: currentRide
             });
         },
         (error) => {
-            alert(JSON.stringify(error));
+            sendError("ERROR", "Error loading ride ", error, null, currentRide);
+            alert("Something went wrong. Please logout en login again.");
             dispatch({
                 type: actions.errorUpdaCurrentRide
             })
