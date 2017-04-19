@@ -3,6 +3,6 @@
 const ErrorLogService = require('../Services/ErrorLogService');
 
 
-export function sendError(token, message, data, user, ride) {
-    ErrorLogService.sendError(token, message, data, user, ride);
+export function sendError(token, message, data, ride) {
+    ErrorLogService.sendError(token, message, data, ride);
 }

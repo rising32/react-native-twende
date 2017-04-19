@@ -67,8 +67,8 @@ export function updateCurrentUser(currentUser) {
 
         },
         (error) => {
-            sendError("ERROR", "Error updating user", error, currentUser.id);
-            alert("Could not save user data.")
+            sendError("ERROR", "Error updating user", error);
+            alert("Could not save user data.");
             dispatch({
                 type: actions.errorUpdatingCurrentUser
             })

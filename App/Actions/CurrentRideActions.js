@@ -98,14 +98,14 @@ export function updateCurrentRide(currentRide) {
     RideService.update(
         currentRide,
         (currentRide) => {
-            sendError("INFO", "Success loading ride ", currentRide, null, currentRide.id);
+            sendError("INFO", "Success loading ride ", null, currentRide.id);
             dispatch({
                 type: actions.receiveCurrentRide,
                 ride: currentRide
             });
         },
         (error) => {
-            sendError("ERROR", "Error loading ride ", error, null, currentRide);
+            sendError("ERROR", "Error loading ride ", error, currentRide);
             alert("Something went wrong. Please logout en login again.");
             dispatch({
                 type: actions.errorUpdaCurrentRide

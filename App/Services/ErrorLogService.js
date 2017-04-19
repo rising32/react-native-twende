@@ -12,14 +12,13 @@ module.exports = {
         };
     },
 
-    sendError: function (level, message, data, user, ride) {
+    sendError: function (level, message, data, ride) {
         const token = token ? token : TokenStore.get();
         const sendData = {
             level: level,
             token: token,
             data: data,
             message: message,
-            user: user,
             ride: ride
         };
         fetch(config.api.errorLog, {
