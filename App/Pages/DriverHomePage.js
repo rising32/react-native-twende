@@ -478,7 +478,7 @@ renderDropoff: function() {
 
     renderFinalized: function() {
         var ride = this.props.currentRide;
-        var text = "Please give customer a rating";
+        var message = "Please give customer a rating";
         var header = "Rating";
         var buttonText = "FINISH";
         var buttonAction = this.finishRide;
@@ -500,6 +500,9 @@ renderDropoff: function() {
                     <View>
                         <Text style={[styles.item_title, {textAlign: 'center'}]}>
                             {header}
+                        </Text>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
+                            {message}
                         </Text>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
