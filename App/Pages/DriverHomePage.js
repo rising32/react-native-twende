@@ -480,13 +480,6 @@ renderDropoff: function() {
         var ride = this.props.currentRide;
         var text = "Please give customer a rating";
         var header = "Rating";
-        if (ride.payment_method == 'mpesa') {
-            text = "Paybill No: 653839\nAccount No: Ride";
-
-        } else if (ride.payment_method == 'cash') {
-            var text = ride.customer.first_name + " is paying cash";          
-        }
-        
         var buttonText = "FINISH";
         var buttonAction = this.finishRide;
 
@@ -508,11 +501,6 @@ renderDropoff: function() {
                         <Text style={[styles.item_title, {textAlign: 'center'}]}>
                             {header}
                         </Text>
-                        <View>
-                           <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                                {text}
-                            </Text>
-                        </View>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
                           <StarRating
