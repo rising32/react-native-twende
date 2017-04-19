@@ -242,6 +242,7 @@ var TwendeApp = React.createClass({
 
     currentRideLoaded: function(currentRide) {
         this.setState({currentRide: currentRide});
+
         if (this.state.currentUser.is_driver) {
             if (currentRide.state == 'requested') {
                 sounds.alarm2.play();
@@ -299,7 +300,8 @@ var TwendeApp = React.createClass({
                         notify(notification.title, notification.message);
                     }
                     if (notification.ride) {
-                        loadRideList();
+                        window.setTimeout(loadRideList, 800);
+                        // loadRideList();
                         // Some how loading specific ride here gives a 404
                         // refreshCurrentRide(notification.ride);
                     }

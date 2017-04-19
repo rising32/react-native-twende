@@ -28,7 +28,7 @@ export function reloadCurrentUser() {
         CurrentUserService.reloadCurrentUser(
             token,
             (currentUser) => {
-                sendError("Successfully reloaded user with token " + token);
+                sendError("INFO", "Successfully reloaded user with token " + token);
                 if (currentUser) {
                     dispatch({
                         type: actions.receiveCurrentUser,
@@ -37,7 +37,7 @@ export function reloadCurrentUser() {
                 }
             },
             (error) => {
-                sendError("Error reloading user with token " + token);
+                sendError("ERROR", "Error reloading user with token " + token);
                 dispatch({
                     type: actions.errorFetchCurrentUser
                 })
@@ -67,7 +67,8 @@ export function updateCurrentUser(currentUser) {
 
         },
         (error) => {
-            //alert(JSON.stringify(error));
+            sendError("ERROR", "Error updating user", error);
+            alert("Could not save user data.");
             dispatch({
                 type: actions.errorUpdatingCurrentUser
             })
