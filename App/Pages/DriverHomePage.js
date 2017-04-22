@@ -448,7 +448,7 @@ renderDropoff: function() {
                                 {header}
                             </Text>
                             <Text style={styles.heavy_text}>
-                                {ride.fare}
+                                {ride.ride_fare.amount} {ride.ride_fare.currency}
                             </Text>
                             <Text style={styles.text}>
                                     Distance: {ride.distance.distance}

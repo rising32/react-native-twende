@@ -82,6 +82,9 @@ var CurrentLocationPage = React.createClass({
 
     componentWillMount: function (props) {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
+        this.setState({
+            ready: false
+        });
         loadGeoLocation();
         loadGeoLocation(true);
     },
@@ -117,7 +120,7 @@ var CurrentLocationPage = React.createClass({
             });
             createCurrentRide(ride);
             
-         } else { 
+        } else {
             Alert.alert(
                 'Phone number required to request ride',
                 'Please fill out your phone number in My Profile in the left above corner.',

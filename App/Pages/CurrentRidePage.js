@@ -375,7 +375,7 @@ var CurrentRidePage = React.createClass({
                              We hope you enjoyed the trip. :) Please make sure you pay {ride.driver.first_name}
                             </Text>
                             <Text style={styles.heavy_text}>
-                              {ride.fare}
+                              {ride.ride_fare.amount} {ride.ride_fare.currency}
                             </Text>
                             <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                                 Your trip was {ride.distance.distance}.
