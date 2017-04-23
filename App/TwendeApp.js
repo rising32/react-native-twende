@@ -78,7 +78,7 @@ var TwendeApp = React.createClass({
                         onPress: () => {
                             user.state = 'unvailable';
                             updateCurrentUser(user);
-                            this.logout()
+                            this.logout();
                             ToastAndroid.show("Goodbye, kuona hivi karibuni", ToastAndroid.LONG);
                             BackAndroid.exitApp();
                         }

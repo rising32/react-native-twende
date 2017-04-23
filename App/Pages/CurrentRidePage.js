@@ -303,7 +303,7 @@ var CurrentRidePage = React.createClass({
 
     renderDriving: function () {
         var ride = this.props.currentRide;
-        let text = "When the rider ends trip click GO TO PAYMENT";
+        let text = "When the rider ends trip click\nGO TO PAYMENT";
         return (
             <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <Map
