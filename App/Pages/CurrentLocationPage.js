@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+const React = require('react');
+const ReactNative = require('react-native');
+const {
     View,
     Image,
     Alert,
@@ -13,56 +13,55 @@ var {
     TouchableHighlight
     } = ReactNative;
 
-var MapView = require('react-native-maps');
+const MapView = require('react-native-maps');
+const CurrentRideActions = require('../Actions/CurrentRideActions');
+const NavIcon = require('../Components/NavIcon');
+const Button = require('../Components/Button');
+const Link = require('../Components/Link');
+const SheetIcon = require('../Components/SheetIcon');
+
 import { loadGeoLocation } from "../Actions/GeoLocationActions";
-var CurrentRideActions = require('../Actions/CurrentRideActions');
-var NavIcon = require('../Components/NavIcon');
 import Avatar from "../Components/Avatar";
-var Button = require('../Components/Button');
-import {colors, styles} from "../Styles";
-var Link = require('../Components/Link');
-var SheetIcon = require('../Components/SheetIcon');
 import GeoLocationStore from '../Stores/GeoLocationStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
+import {colors, styles} from "../Styles";
 import {
     createCurrentRide,
     loadRideList } from '../Actions/CurrentRideActions';
 import events from "../Constants/Events";
 
-var CurrentLocationPage = React.createClass({
-
-    defaultPosition: {
-        latitude: 0,
-        longitude: 0
-    },
+const CurrentLocationPage = React.createClass({
 
     getInitialState: function () {
-
         if (!this.props.currentUser.position) {
-            this.props.currentUser.position = this.defaultPosition
+            this.props.currentUser.position = {
+                latitude: 0,
+                longitude: 0
+            }
         }
 
         return {
             origin_text: '- finding your location -',
-            origin: this.defaultStatus,
+            origin: {
+                latitude: 0,
+                longitude: 0
+            },
             isLoading: false,
             status: 'new',
             animating: true,
             phone: this.props.currentUser.phone,
             region: {
-                latitude: this.props.currentUser.position.latitude || -1.283333,
-                longitude: this.props.currentUser.position.longitude || 36.816667,
+                latitude: -1.283333,
+                longitude: 36.816667,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }
-
         }
-
     },
 
     updateLocation: function(loc) {
-        var myLoc = 'location found';
+        let myLoc = 'location found';
         this.props.currentUser.position = loc;
         this.setState({
             origin: {
@@ -110,28 +109,36 @@ var CurrentLocationPage = React.createClass({
     },
 
     createRide: function() {
-        if (this.props.currentUser.phone != "") {
-            var ride = {
-                origin:      this.state.origin,
+        if (this.props.currentUser.phone == "") {
+            Alert.alert(
+                'Phone number required to request ride',
+                'Please fill out your phone number in My Profile in the left above corner.',
+                [
+                    {text: 'Cancel'},
+                    {text: 'Go to profile page', onPress: () => this.props.navigator.push({id: 'ProfilePage'})},
+                ],
+                {cancelable: false}
+            );
+        } else if (this.state.origin.latitude == 0) {
+            Alert.alert(
+                'Pick up location not set',
+                'Make sure location service is enabled..',
+                [
+                    {text: 'OK'}
+                ],
+                {cancelable: false}
+            );
+        } else {
+            let ride = {
+                origin: this.state.origin,
                 origin_text: this.state.origin_text
             };
             this.setState({
                 ready: true
             });
             createCurrentRide(ride);
-            
-        } else {
-            Alert.alert(
-                'Phone number required to request ride',
-                'Please fill out your phone number in My Profile in the left above corner.',
-                    [
-                        {text: 'Cancel'},
-                        {text: 'Go to profile page', onPress: () => this.props.navigator.push({id: 'ProfilePage'})},
-                    ],
-                    { cancelable: false}
-                );
-            }
-        },
+        }
+    },
 
     render: function () {
         return (
@@ -148,8 +155,8 @@ var CurrentLocationPage = React.createClass({
 
     renderScene: function (route, navigator) {
         const {animating} = this.state;
-        var locationInput = null;
-        var spinner;
+        let locationInput = null;
+        let spinner;
         if (this.state.ready) {
             spinner = (
                 <View style={styles.activity_indicator_pickup}> 
@@ -164,9 +171,8 @@ var CurrentLocationPage = React.createClass({
             );
         }
 
-        var pickup;
-
-
+        let pickup;
+        let customer;
         if (this.state.origin.latitude && this.state.origin.longitude) {
             pickup = <MapView.Marker
                 pinColor = "yellow"
@@ -174,7 +180,16 @@ var CurrentLocationPage = React.createClass({
                 description = "Pick up location"
                 image = {require('../assets/map-customer-invisible.png')}
                 coordinate = {this.state.origin} />
-        }   
+            customer = (
+                <View style={styles.map_marker_container}>
+                    <View style={styles.map_marker}>
+                        <Image
+                            source={require('../assets/map-customer.png')}
+                        />
+                    </View>
+                </View>
+            );
+        }
 
         return (
             <View style={styles.page}>
@@ -188,14 +203,8 @@ var CurrentLocationPage = React.createClass({
                         style={styles.map}>
                         {pickup}
                     </MapView> 
-                    <View style={styles.map_marker_container}>
-                        <View style={styles.map_marker}>
-                            <Image
-                                source={require('../assets/map-customer.png')}
-                            />
-                        </View>
-                    </View>
-                    {spinner}                    
+                    {spinner}
+                    {customer}
                 </View>
                 <View style={{alignItems: 'center', marginTop: -36}}>
                     <Avatar image={this.props.currentUser.avatar}/>
@@ -218,7 +227,7 @@ var CurrentLocationPage = React.createClass({
     }
 });
 
-var NavigationBarRouteMapper = {
+let NavigationBarRouteMapper = {
     LeftButton(route, navigator, index, nextState) {
         return (
             <NavIcon
