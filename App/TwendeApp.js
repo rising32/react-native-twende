@@ -177,7 +177,9 @@ var TwendeApp = React.createClass({
         this.refs['DRAWER'].openDrawer()
     },
     closeDrawer: function () {
-        this.refs['DRAWER'].closeDrawer()
+        if (this.refs['DRAWER']) {
+            this.refs['DRAWER'].closeDrawer()
+        }
     },
 
     logout: function () {

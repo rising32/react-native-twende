@@ -15,8 +15,8 @@ import { Icon } from 'react-native-material-design';
 var Map = React.createClass({
 
     getInitialState: function () {
-        var lat = this.props.customer.latitude || this.props.driver.latitude || -1.23825;
-        var long = this.props.customer.longitude || this.props.driver.longitude || 35.89125;
+        var lat = this.props.customer.latitude || this.props.driver.latitude || -1.283333;
+        var long = this.props.customer.longitude || this.props.driver.longitude || 36.816667;
         var latDelta = 0.015;
         var longDelta = 0.015;
         if (this.props.driver.latitude && this.props.customer.latitude) {

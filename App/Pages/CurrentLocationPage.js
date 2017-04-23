@@ -33,8 +33,8 @@ import events from "../Constants/Events";
 var CurrentLocationPage = React.createClass({
 
     defaultPosition: {
-        latitude: -1.23825,
-        longitude: 35.8724
+        latitude: 0,
+        longitude: 0
     },
 
     getInitialState: function () {
@@ -45,14 +45,14 @@ var CurrentLocationPage = React.createClass({
 
         return {
             origin_text: '- finding your location -',
-            origin: {},
+            origin: this.defaultStatus,
             isLoading: false,
             status: 'new',
             animating: true,
             phone: this.props.currentUser.phone,
             region: {
-                latitude: this.props.currentUser.position.latitude,
-                longitude: this.props.currentUser.position.longitude,
+                latitude: this.props.currentUser.position.latitude || -1.283333,
+                longitude: this.props.currentUser.position.longitude || 36.816667,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.01
             }
