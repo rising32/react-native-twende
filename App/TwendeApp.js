@@ -78,7 +78,7 @@ var TwendeApp = React.createClass({
                         onPress: () => {
                             user.state = 'unvailable';
                             updateCurrentUser(user);
-                            this.logout()
+                            this.logout();
                             ToastAndroid.show("Goodbye, kuona hivi karibuni", ToastAndroid.LONG);
                             BackAndroid.exitApp();
                         }
@@ -177,7 +177,9 @@ var TwendeApp = React.createClass({
         this.refs['DRAWER'].openDrawer()
     },
     closeDrawer: function () {
-        this.refs['DRAWER'].closeDrawer()
+        if (this.refs['DRAWER']) {
+            this.refs['DRAWER'].closeDrawer()
+        }
     },
 
     logout: function () {

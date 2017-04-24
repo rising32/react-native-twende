@@ -99,7 +99,7 @@ var LoginPage = React.createClass({
 
 
     renderSocialLogin: function () {
-        var fbToken;
+        let fbToken;
         return (
             <FBLogin
                 style={{flex: 0}}
