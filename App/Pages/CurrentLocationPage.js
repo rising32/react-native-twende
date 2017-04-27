@@ -10,7 +10,8 @@ const {
     ActivityIndicator,
     ToastAndroid,
     Navigator,
-    TouchableHighlight
+    TouchableHighlight,
+    TouchableOpacity
     } = ReactNative;
 
 const MapView = require('react-native-maps');
@@ -155,6 +156,7 @@ const CurrentLocationPage = React.createClass({
 
     renderScene: function (route, navigator) {
         const {animating} = this.state;
+        let sheettoptext = ' FARE PRICE';
         let locationInput = null;
         let spinner;
         if (this.state.ready) {
@@ -206,8 +208,24 @@ const CurrentLocationPage = React.createClass({
                     {spinner}
                     {customer}
                 </View>
-                <View style={{alignItems: 'center', marginTop: -36}}>
+                <View style={styles.sheet_top}>
+                     <TouchableOpacity>
+                        <View style={styles.renderItemLeft}>
+                            <Image
+                                source={require('../assets/dollar-icon.png')}
+                                style={styles.sheet_top_icon}
+                            />
+                            <Text style={{fontFamily: 'gothamrounded_medium', fontSize: 12, color: colors.secondary}}>
+                                {sheettoptext}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                     <Avatar image={this.props.currentUser.avatar}/>
+                        <View style={styles.renderItemRight}>
+                    </View>
+                </View>
+                <View>
+                    
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>

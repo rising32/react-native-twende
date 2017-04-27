@@ -186,7 +186,7 @@ var DriverHomePage = React.createClass({
     renderSheetTop: function (decline_text, navigation_text) {
         var ride = this.props.currentRide;
         return (
-             <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -30, elevation: 5}}>
+             <View style={styles.sheet_top}>
                 <TouchableOpacity onPress={() => this.declineRide(ride)}>
                     <View style={[styles.renderItemLeft, {width: 110}]}>
                         <Text style={{fontFamily: 'gothamrounded_book', fontSize: 15, color: colors.disable}}>

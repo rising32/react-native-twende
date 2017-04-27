@@ -181,6 +181,7 @@ export var styles = StyleSheet.create({
         marginTop: 56,
         flex: 1
     },
+
     page_full: {
         alignItems: 'center',
         justifyContent: 'center'
@@ -203,6 +204,20 @@ export var styles = StyleSheet.create({
     login_image: {
         justifyContent: 'center',
         alignItems: 'center'
+    },
+
+    sheet_top: {
+        flexDirection: 'row', 
+        alignSelf: 'stretch', 
+        justifyContent: 'space-between', 
+        marginTop: -30, 
+        elevation: 5
+    },
+
+    sheet_top_icon: {
+        marginTop: -8,
+        width: 30,
+        height: 30
     },
 
     // Cards
@@ -322,6 +337,7 @@ export var styles = StyleSheet.create({
     },
 
     renderItemLeft: {
+        flexDirection: 'row',
         justifyContent: 'flex-start',
         alignSelf: 'flex-start',
         width: 120,
