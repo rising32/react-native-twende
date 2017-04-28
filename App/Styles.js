@@ -60,6 +60,13 @@ export var styles = StyleSheet.create({
         color: colors.text_important
     },
 
+    text_card_mid: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 14,
+        textAlign: 'center',
+        color: colors.secondary
+    },
+
     // Splash
 
     splash: {

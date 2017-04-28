@@ -109,6 +109,10 @@ const CurrentLocationPage = React.createClass({
         })
     },
 
+    handleFarePrice: function() {
+        this.props.navigator.push({id: 'FarePricePage'});
+    },
+
     createRide: function() {
         if (this.props.currentUser.phone == "") {
             Alert.alert(
@@ -209,7 +213,7 @@ const CurrentLocationPage = React.createClass({
                     {customer}
                 </View>
                 <View style={styles.sheet_top}>
-                     <TouchableOpacity>
+                     <TouchableOpacity onPress={this.handleFarePrice}>
                         <View style={styles.renderItemLeft}>
                             <Image
                                 source={require('../assets/dollar-icon.png')}

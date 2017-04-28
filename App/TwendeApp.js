@@ -31,6 +31,7 @@ var DriverHomePage = require('./Pages/DriverHomePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
 var TermsPage = require('./Pages/TermsPage');
 var CustomerSupportPage = require('./Pages/CustomerSupportPage');
+var FarePricePage = require('./Pages/FarePricePage');
 
 var Drawer = require('./Components/Drawer');
 var Avatar = require('./Components/Avatar');
@@ -666,6 +667,16 @@ var TwendeApp = React.createClass({
         if (routeId === 'DriverListPage') {
             return (
                 <DriverListPage
+                    openDrawer={this.openDrawer}
+                    goToPage={this.goToPage}
+                    currentRide={route.currentRide}
+                    currentUser={this.state.currentUser}
+                    navigator={navigator}/>
+            );
+        }
+        if (routeId === 'FarePricePage') {
+            return (
+                <FarePricePage
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
                     currentRide={route.currentRide}
