@@ -118,7 +118,7 @@ var DriverListPage = React.createClass({
                             Title: (route, navigator, index, navState) => {
                                 return (
                                     <Text style={styles.nav_title}>
-                                        CLOSEST RIDERS
+                                        NEARBY RIDERS
                                     </Text>
                                 );
                             }

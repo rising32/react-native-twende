@@ -215,9 +215,9 @@ export var styles = StyleSheet.create({
     },
 
     sheet_top_icon: {
-        marginTop: -8,
-        width: 30,
-        height: 30
+        marginTop: -10,
+        width: 35,
+        height: 35
     },
 
     // Cards

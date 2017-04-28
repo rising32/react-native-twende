@@ -233,6 +233,7 @@ var DriverHomePage = React.createClass({
 
     renderHome: function() {
         var is_available = this.state.currentUser.state == 'available';
+        var questionText = "Are you available for a ride?";
         var statusText = "Customer cannot find you.";
         var statusIcon = "not-interested";
         if (is_available) {
@@ -241,9 +242,12 @@ var DriverHomePage = React.createClass({
         }
         return  (
             <View style={styles.page}>
-                <View style={{flex: 0.6}}>
+                <View style={{flex: 0.5}}>
                 </View>
-                <View style={{flex:0.4}}>
+                <View style={{flex:0.5}}>
+                    <Text>
+                        {questionText}
+                    </Text>
                     <View style={styles.toggle}>
                         <Button
                             action={() => this.toggleAvailability(false)}

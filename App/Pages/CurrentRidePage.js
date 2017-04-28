@@ -149,64 +149,37 @@ var CurrentRidePage = React.createClass({
                     />
                 </View>
                  <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
-                    <View style={styles.renderItemLeft}>
-                        <Link
-                            action={this.cancelRide}
-                            icon={"clear"}
-                            size={15}
-                            iconSize={18}
-                            color={colors.disable}
-                            text={"CANCEL"}
-                        />
-                    </View>
-                       <View style={{flex: 1, justifyContent: 'center'}}>
-                        <Avatar image={ride.driver.avatar}/>
-                    </View>
-                    <View style={styles.renderItemRight}>
-                        <Link
-                            url={"tel: " + ride.driver.phone}
-                            iconRight={"phone"}
-                            size={15}
-                            iconSize={18}
-                            alignText={'right'}
-                            color={colors.secondary}
-                            text={"CALL RIDER  "}
-                        />
-                    </View>
-                </View>
-                    <View>
-                        <Text style={styles.item_title}>
-                            Requesting {ride.driver.name}!
+                    <Avatar image={ride.customer.avatar}/>
+                        <Text style={{width: 90, textAlign: 'center', marginLeft: 20, marginRight: 20}}>
+                            We're connecting you with {ride.driver.name}
                         </Text>
-                        <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
-                            <ActivityIndicator
-                                animating={this.state.animating}
-                                size={30}
-                                color={colors.grey}
-                            />
-                        <View style={{alignSelf: 'center'}}>
-                                <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
-                                    {requesting}
-                                </Text>
-                        </View>
-                    </View>
-                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', margin: 2, color: colors.action_secondary}}>
-                            Call rider or call support if no response
-                        </Text>
-                    </View>
-                    <View style={styles.primary_button_customer_app}>
-                        <Button
-                            action={this.refreshRide}
-                            text={'NEXT STEP'}
-                            size={15}
-                            iconSize={18}
-                            color={colors.action}
-                          />
-                    </View>
-                </View>
+                        <Avatar image={ride.driver.avatar} />
 
+                </View>
+                <View style={styles.sheet_dark}>
+                        <Link style={{margin: 10}}
+                              url={"tel: " + ride.driver.phone}
+                              icon={"phone"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.action}
+                              text={"CALL " + ride.driver.name.toUpperCase()}
+                        />
+                        <Link style={{margin: 10}}
+                              action={this.cancelRide}
+                              icon={"clear"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.action_secondary}
+                              text={"CANCEL RIDE"}
+                        />
+
+                </View>
+                </View>
         )
     },
+
+   
 
     renderDeclined: function () {
         return (
@@ -288,13 +261,14 @@ var CurrentRidePage = React.createClass({
                          {ride.driver.first_name} is on his way to pick you up!
                         </Text>
                     </View>
-                     <View style={styles.primary_button_customer_app}>
-                        <Button
-                            action={this.refreshRide}
-                            text={'NEXT STEP'}
-                            size={15}
-                            iconSize={18}
-                            color={colors.action}
+                    <View style={styles.sheet_dark}>
+                        <Link style={{margin: 10}}
+                              url={"tel: " + ride.driver.phone}
+                              icon={"phone"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.action}
+                              text={"CALL " + ride.driver.name.toUpperCase()}
                         />
                     </View>
                 </View>
@@ -336,13 +310,14 @@ var CurrentRidePage = React.createClass({
                             {text}
                         </Text>
                     </View>
-                    <View style={styles.primary_button_customer_app}>
-                        <Button
-                            action={this.refreshRide}
-                            text={'GO TO PAYMENT'}
-                            size={15}
-                            iconSize={18}
-                            color={colors.action}
+                    <View style={styles.sheet_dark}>
+                        <Link style={{margin: 10}}
+                              url={"tel: " + ride.driver.phone}
+                              icon={"phone"}
+                              size={16}
+                              iconSize={24}
+                              color={colors.action}
+                              text={"CALL " + ride.driver.name.toUpperCase()}
                         />
                     </View>
                 </View>
@@ -372,7 +347,7 @@ var CurrentRidePage = React.createClass({
                                 You have arrived!
                             </Text>
                             <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                             We hope you enjoyed the trip. :) Please make sure you pay {ride.driver.first_name}
+                             Fare:
                             </Text>
                             <Text style={styles.heavy_text}>
                               {ride.ride_fare.amount} {ride.ride_fare.currency}
@@ -393,8 +368,7 @@ var CurrentRidePage = React.createClass({
                                 color={colors.action}
                                 />
                         </View>
-
-                </View>
+                    </View>
                 <View>
                       <Image
                           source={require('../assets/banner.jpg')}
@@ -499,7 +473,7 @@ var CurrentRidePage = React.createClass({
                             onChange={this.rateRide}
                             maxStars={5}
                             rating={0}
-                            colorOn={colors.primarydark}
+                            colorOn={colors.action}
                             colorOff={colors.action_disabled}
                         />
                         <View style={{alignSelf: 'center'}}>
@@ -513,7 +487,7 @@ var CurrentRidePage = React.createClass({
                         icon={"phone"}
                         size={16}
                         iconSize={18}
-                        color={colors.action}
+                        color={colors.secondary}
                         text={"0791398120"}
                     />
                     <View style={{flexDirection: 'row'}}>
