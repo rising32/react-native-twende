@@ -65,7 +65,7 @@ const FarePricePage = React.createClass({
                                 This is our price
                             </Text>
                             <Text style={styles.text_card_mid}>
-                                Starting fee: 50 shilling
+                                Pick-up fee: 60 shilling
                                 Kilometer price: 50 shilling
                             </Text>
                             <Text style={styles.text_card_mid}>

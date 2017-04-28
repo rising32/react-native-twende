@@ -148,38 +148,26 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>
-                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
+                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: -30, margin: 6}}>
                     <Avatar image={ride.customer.avatar}/>
-                        <Text style={{width: 90, textAlign: 'center', marginLeft: 20, marginRight: 20}}>
+                        <Text style={{width: 140, textAlign: 'center', marginTop: 30}}>
                             We're connecting you with {ride.driver.name}
                         </Text>
                         <Avatar image={ride.driver.avatar} />
-
                 </View>
                 <View style={styles.sheet_dark}>
-                        <Link style={{margin: 10}}
-                              url={"tel: " + ride.driver.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action}
-                              text={"CALL " + ride.driver.name.toUpperCase()}
-                        />
-                        <Link style={{margin: 10}}
-                              action={this.cancelRide}
-                              icon={"clear"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action_secondary}
-                              text={"CANCEL RIDE"}
-                        />
-
+                    <Link style={{margin: 16, justifyContent: 'center'}}
+                          url={"tel: " + ride.driver.phone}
+                          icon={"phone"}
+                          size={16}
+                          iconSize={24}
+                          color={colors.action}
+                          text={"CALL " + ride.driver.name.toUpperCase()}
+                    />
                 </View>
-                </View>
+            </View>
         )
     },
-
-   
 
     renderDeclined: function () {
         return (
@@ -230,26 +218,19 @@ var CurrentRidePage = React.createClass({
                 />
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30}}>
                       <View style={styles.renderItemLeft}>
-                        <Link
-                            action={this.cancelRide}
-                            icon={"clear"}
-                            size={15}
-                            iconSize={18}
-                            color={colors.disable}
-                            text={"CANCEL"}
-                        />
+                        
                     </View>
                     <View style={{justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderItemRight}>
-                        <Link
-                            url={"tel: " + ride.driver.phone}
-                            iconRight={"phone"}
+                       <Link
+                            action={this.cancelRide}
+                            iconRight={"clear"}
                             size={15}
-                            iconSize={18}
-                            color={colors.secondary}
-                            text={"CALL RIDER  "}
+                            iconSize={20}
+                            color={colors.disable}
+                            text={"     CANCEL"}
                         />
                     </View>
                     </View>
@@ -262,13 +243,13 @@ var CurrentRidePage = React.createClass({
                         </Text>
                     </View>
                     <View style={styles.sheet_dark}>
-                        <Link style={{margin: 10}}
-                              url={"tel: " + ride.driver.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action}
-                              text={"CALL " + ride.driver.name.toUpperCase()}
+                        <Link style={{margin: 10, justifyContent: 'center'}}
+                          url={"tel: " + ride.driver.phone}
+                          icon={"phone"}
+                          size={16}
+                          iconSize={24}
+                          color={colors.action}
+                          text={"CALL " + ride.driver.name.toUpperCase()}
                         />
                     </View>
                 </View>
@@ -277,7 +258,7 @@ var CurrentRidePage = React.createClass({
 
     renderDriving: function () {
         var ride = this.props.currentRide;
-        let text = "When the rider ends trip click\nGO TO PAYMENT";
+        let text = "Let's go!";
         return (
             <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <Map
@@ -304,20 +285,20 @@ var CurrentRidePage = React.createClass({
                 </View>
                     <View style={styles.card_mid}>
                         <Text style={styles.item_title}>
-                            Finalize Ride
+                            Hi {ride.customer.first_name},
                         </Text>
                          <Text style={styles.text}>
                             {text}
                         </Text>
                     </View>
                     <View style={styles.sheet_dark}>
-                        <Link style={{margin: 10}}
-                              url={"tel: " + ride.driver.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.action}
-                              text={"CALL " + ride.driver.name.toUpperCase()}
+                        <Link style={{margin: 10, justifyContent: 'center'}}
+                            url={"tel: " + ride.driver.phone}
+                            icon={"phone"}
+                            size={16}
+                            iconSize={24}
+                            color={colors.action}
+                            text={"CALL " + ride.driver.name.toUpperCase()}
                         />
                     </View>
                 </View>
@@ -344,16 +325,16 @@ var CurrentRidePage = React.createClass({
                         </View>
                         <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={styles.item_title}>
-                                You have arrived!
+                                Fare Price
                             </Text>
                             <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                             Fare:
-                            </Text>
-                            <Text style={styles.heavy_text}>
-                              {ride.ride_fare.amount} {ride.ride_fare.currency}
+                             {ride.customer.first_name}, you have arrived!
                             </Text>
                             <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
                                 Your trip was {ride.distance.distance}.
+                            </Text>
+                            <Text style={styles.heavy_text}>
+                                {ride.ride_fare.amount} {ride.ride_fare.currency}
                             </Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>

@@ -160,7 +160,7 @@ const CurrentLocationPage = React.createClass({
 
     renderScene: function (route, navigator) {
         const {animating} = this.state;
-        let sheettoptext = ' FARE PRICE';
+        let sheettoptext = ' RIDE FARE';
         let locationInput = null;
         let spinner;
         if (this.state.ready) {
