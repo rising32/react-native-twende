@@ -34,9 +34,11 @@ var ImageLink = React.createClass({
         var size = this.props.size || 16;
         var imagestyle = this.props.imagestyle;
         var source = this.props.source;
+        var sourceRight = this.props.sourceRight;
         var iconSize = this.props.iconSize ? this.props.iconSize : size;
         var textAlign = this.props.textAlign || 'right';
         var image;
+        var imageRight;
         var fontFamily = this.props.fontFamily || 'gothamrounded_book';
         var action = this.props.action ? this.props.action : this.handleClick
 
@@ -47,18 +49,25 @@ var ImageLink = React.createClass({
                     />
         }
         
+        if (this.props.sourceRight) {
+            imageRight = <Image
+                        source={sourceRight}
+                        style={imagestyle}
+                    />
+        }
+
         return (
             <TouchableOpacity
                 onPress={action}
                 style={[this.props.style, {flexDirection: 'row', alignItems: 'center'}]}
             >
-                
+                {image}
                 <View style={styles.link}>
                     <Text style={[this.props.textStyle, {fontFamily: fontFamily, color: color, fontSize: size, textAlign: textAlign}]}>
                         {text}
                     </Text>
                 </View>
-                {image}
+                {imageRight}
             </TouchableOpacity>
         );
     }

@@ -228,8 +228,8 @@ export var styles = StyleSheet.create({
     },
 
     phone_icon: {
-        width: 36,
-        height: 36
+        width: 32,
+        height: 32
     },
 
     cancel_icon: {

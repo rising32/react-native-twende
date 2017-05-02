@@ -53,7 +53,7 @@ import { notify } from "./Actions/NotifyActions"
 import {
     refreshCurrentRide,
     loadRideList } from "./Actions/CurrentRideActions";
-import DropdownAlert from 'react-native-dropdownalert'
+
 
 
 var TwendeApp = React.createClass({
@@ -206,12 +206,6 @@ var TwendeApp = React.createClass({
                 currentUser: this.state.currentUser,
                 currentRide: this.state.currentRide
             });
-        }
-    },
-
-    handleRequestCallback(err, response) {
-        if (err != null) {
-        this.dropdown.alertWithType('error', 'Error', err)
         }
     },
 
@@ -575,10 +569,6 @@ var TwendeApp = React.createClass({
                  backgroundColor={colors.primary_dark}
                  barStyle="dark-content"
                />
-            <DropdownAlert
-                ref={(ref) => this.dropdown = ref}
-                onClose={(data) => this.onClose(data)} 
-            />   
             </DrawerLayoutAndroid>
         );
     },
@@ -683,7 +673,7 @@ var TwendeApp = React.createClass({
         return this.noRoute(navigator);
              Alert.alert(
             'Unable to log in',
-            'Check your connectivity',
+            'Check your internet connection',
             [
                 {text: 'OKAY!'}
             ]

@@ -63,7 +63,7 @@ var CurrentRidePage = React.createClass({
 
     showMessage: function () {
         this.setState({showMessage: true}, () => timer.setTimeout(
-        this, 'hideMessage', () => this.setState({showMessage: false}), 10000
+        this, 'hideMessage', () => this.setState({showMessage: false}), 60000
         ));
     },
 
@@ -168,8 +168,7 @@ var CurrentRidePage = React.createClass({
                         driver={ride.driver.position}
                         customer={ride.origin}
                     />
-                </View>
-                             
+                </View>            
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
                     <View style={styles.renderItemLeft}>
                     </View>
@@ -182,46 +181,33 @@ var CurrentRidePage = React.createClass({
                             fontFamily={'gothamrounded_bold'}
                             size={12}
                             color={colors.disable}
-                            text={"CANCEL "}
-                            source={require('../assets/cancel_icon.png')}
+                            text={" CANCEL "}
+                            sourceRight={require('../assets/cancel_icon.png')}
                             imagestyle={styles.cancel_icon}
                         />
-                        <View>
-                        </View>
                     </View>
                 </View>
-                <View>
-                    <Text style={styles.item_title}>
-                        Requesting {ride.driver.name}!
-                    </Text>
-                    
-                        
-
-
-            
-
-        {this.state.showMessage ? (
-            <View style={{alignItems: 'center'}}>
-          <Timer ms={10000} expired={() => {this.showMessage}} />
-            <Text style={{fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
+                <View style={styles.card_mid}>
+                    <View>
+                        <Text style={styles.item_title}>
+                            Requesting {ride.driver.name}!
+                        </Text>
+                    {this.state.showMessage ? (
+                    <View style={{alignItems: 'center'}}>
+                        <Timer ms={60000} expired={() => {this.showMessage}} />
+                        <Text style={{fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
                             {requesting}
                         </Text>
+                    </View>
+                    ) : (
+                        <View style={{alignItems: 'center'}}>
+                            <Timer ms={60000} expired={() => {this.showMessage}} />
+                            <Text style={{textAlign: 'center', fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
+                                Rider not responding. Please cancel and find other rider or call support!
+                            </Text>
                         </View>
-
-        ) : (
-        <View style={{alignItems: 'center'}}>
-        <Timer ms={10000} expired={() => {this.showMessage}} />
-                                                            <Text style={{textAlign: 'center', fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
-                            Rider not responding. Please cancel and find other rider or call support!
-                        </Text>
-                         </View>
-        )}
-
-
-
-
-
-                    
+                    )}                    
+                    </View>
                 </View>
                 <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
                     <Image
@@ -293,14 +279,15 @@ var CurrentRidePage = React.createClass({
                     <View style={{justifyContent: 'center'}}>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderItemRight}>
-                        <Link
+                     <View style={styles.renderItemRight}>
+                        <ImageLink
                             action={this.cancelRide}
-                            iconRight={"clear"}
-                            size={10}
-                            iconSize={20}
+                            fontFamily={'gothamrounded_bold'}
+                            size={12}
                             color={colors.disable}
-                            text={"          CANCEL RIDE"}
+                            text={" CANCEL "}
+                            sourceRight={require('../assets/cancel_icon.png')}
+                            imagestyle={styles.cancel_icon}
                         />
                     </View>
                 </View>
@@ -313,15 +300,14 @@ var CurrentRidePage = React.createClass({
                     </Text>
                 </View>
                 <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
-                    <Image
+                    <ImageLink
+                        url={"tel: " + ride.driver.phone}
+                        size={14}
+                        fontFamily={'gothamrounded_bold'}
+                        color={colors.action}
+                        text={"  CALL " + ride.driver.name.toUpperCase()}
                         source={require('../assets/phone-icon.png')}
-                        style={styles.phone_icon}
-                    />
-                    <Link 
-                          url={"tel: " + ride.driver.phone}
-                          size={14}
-                          color={colors.action}
-                          text={"  CALL " + ride.driver.name.toUpperCase()}
+                        imagestyle={styles.phone_icon}
                     />
                 </View>
             </View>
@@ -356,15 +342,14 @@ var CurrentRidePage = React.createClass({
                     </Text>
                 </View>
                 <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
-                    <Image
+                    <ImageLink
+                        url={"tel: 0791398120"}
+                        size={14}
+                        fontFamily={'gothamrounded_bold'}
+                        color={colors.action}
+                        text={"  CALL SUPPORT"}
                         source={require('../assets/phone-icon.png')}
-                        style={styles.phone_icon}
-                    />
-                    <Link 
-                          url={"tel: 0791398120"}
-                          size={14}
-                          color={colors.action}
-                          text={"  CALL SUPPORT"}
+                        imagestyle={styles.phone_icon}
                     />
                 </View>
             </View>
@@ -432,7 +417,7 @@ var CurrentRidePage = React.createClass({
 
       if (ride.payment_method == 'mpesa') {
           var header = "M-Pesa Payment";
-          text = "Paybill No: 653839" + "\n" + "Account No: Ride";
+          text = "Please pay to:" + "\n" + "Paybill No: 653839" + "\n" + "Account No: Ride";
         } else {
           var header = "Cash Payment";
           var text = "Please pay the cash amount to rider";
