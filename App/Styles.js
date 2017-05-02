@@ -146,7 +146,7 @@ export var styles = StyleSheet.create({
         justifyContent:'center'
     },
 
-        component2: {
+    component2: {
     flex: 1,
     justifyContent:'center'
     },
@@ -222,10 +222,22 @@ export var styles = StyleSheet.create({
     },
 
     sheet_top_icon: {
-        marginTop: -10,
-        width: 35,
-        height: 35
+        marginTop: -4,
+        width: 29,
+        height: 29
     },
+
+    phone_icon: {
+        width: 36,
+        height: 36
+    },
+
+    cancel_icon: {
+        width: 22,
+        height: 22,
+        marginTop: 2
+    },
+
 
     // Cards
 
@@ -353,6 +365,7 @@ export var styles = StyleSheet.create({
     },
 
     renderItemRight: {
+        flexDirection: 'row',
         justifyContent: 'flex-end',
         alignSelf: 'flex-start',
         width: 120,

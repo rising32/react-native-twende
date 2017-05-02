@@ -5,15 +5,14 @@ var ReactNative = require('react-native');
 var {
     Linking,
     Text,
+    Image,
     TouchableOpacity,
     TouchableNativeFeedback,
     View,
     } = ReactNative;
 import {colors, styles} from "../Styles";
-import { Icon } from 'react-native-material-design';
 
-
-var Link = React.createClass({
+var ImageLink = React.createClass({
 
     propTypes: {
         url: React.PropTypes.string
@@ -33,24 +32,19 @@ var Link = React.createClass({
         var text = this.props.text || '';
         var color = this.props.color || colors.action;
         var size = this.props.size || 16;
+        var imagestyle = this.props.imagestyle;
+        var source = this.props.source;
         var iconSize = this.props.iconSize ? this.props.iconSize : size;
         var textAlign = this.props.textAlign || 'right';
-        var icon = null;
-        var iconRight = null;
+        var image;
         var fontFamily = this.props.fontFamily || 'gothamrounded_book';
         var action = this.props.action ? this.props.action : this.handleClick
-        if (this.props.icon) {
-            icon = <Icon name={this.props.icon}
-                        fontFamily={'gothamrounded_book'}
-                        color={color}
-                        size={iconSize}
-                        style={{marginRight: iconSize/2}} />
-        }
-        if (this.props.iconRight) {
-            iconRight = <Icon name={this.props.iconRight}
-                         color={color}
-                         size={iconSize}
-                         style={{marginRight: iconSize/2}} />
+
+        if (this.props.source) {
+            image = <Image
+                        source={source}
+                        style={imagestyle}
+                    />
         }
         
         return (
@@ -58,16 +52,16 @@ var Link = React.createClass({
                 onPress={action}
                 style={[this.props.style, {flexDirection: 'row', alignItems: 'center'}]}
             >
-                {icon}
+                
                 <View style={styles.link}>
                     <Text style={[this.props.textStyle, {fontFamily: fontFamily, color: color, fontSize: size, textAlign: textAlign}]}>
                         {text}
                     </Text>
                 </View>
-                {iconRight}
+                {image}
             </TouchableOpacity>
         );
     }
 });
 
-module.exports = Link;
+module.exports = ImageLink;

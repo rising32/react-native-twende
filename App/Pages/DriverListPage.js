@@ -97,6 +97,7 @@ var DriverListPage = React.createClass({
     },
 
     render: function () {
+        var CurrentLocationPage = 'CurrentLocationPage';
         return (
             <Navigator
                 renderScene={this.renderScene}
@@ -110,7 +111,7 @@ var DriverListPage = React.createClass({
                                 return (
                                     <NavIcon
                                         icon={"arrow-back"}
-                                        action={this.back}
+                                        action={() => this.props.navigator.replace({id: CurrentLocationPage})}
                                     />
                                 );
                             },

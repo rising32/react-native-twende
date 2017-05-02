@@ -31,6 +31,8 @@ import {
     createCurrentRide,
     loadRideList } from '../Actions/CurrentRideActions';
 import events from "../Constants/Events";
+import { Bubbles } from 'react-native-loader';
+
 
 const CurrentLocationPage = React.createClass({
 
@@ -155,7 +157,6 @@ const CurrentLocationPage = React.createClass({
                     routeMapper={NavigationBarRouteMapper} />
             }/>
         );
-
     },
 
     renderScene: function (route, navigator) {
@@ -219,7 +220,7 @@ const CurrentLocationPage = React.createClass({
                                 source={require('../assets/dollar-icon.png')}
                                 style={styles.sheet_top_icon}
                             />
-                            <Text style={{fontFamily: 'gothamrounded_medium', fontSize: 12, color: colors.secondary}}>
+                            <Text style={{fontFamily: 'gothamrounded_bold', fontSize: 12, color: colors.secondary, marginTop: 2}}>
                                 {sheettoptext}
                             </Text>
                         </View>
@@ -265,7 +266,7 @@ let NavigationBarRouteMapper = {
         this.currentUser = CurrentUserStore.get();
         return (
             <Text style={styles.nav_title}>
-                PICK UP LOCATION
+                MY LOCATION
             </Text>
         );
     }
