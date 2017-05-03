@@ -24,6 +24,7 @@ var IconText = require('../Components/IconText');
 import { Icon } from 'react-native-material-design';
 var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
+var ImageLink = require('../Components/ImageLink');
 var Button = require('../Components/Button');
 var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
@@ -38,6 +39,9 @@ import { updateCurrentUser,
 import { startWatchingGeoLocation,
          loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
+import Timer from 'react-native-timer-component';
+import TimerMixin from 'react-timer-mixin';
+const timer = require('react-native-timer');
 
 
 var DriverHomePage = React.createClass({
@@ -60,7 +64,8 @@ var DriverHomePage = React.createClass({
             trueSwitchIsOn: true,
             falseSwitchIsOn: false,
             rating: 0,
-            price: 0
+            price: 0,
+            showMessage: true
         }
     },
 
@@ -70,9 +75,21 @@ var DriverHomePage = React.createClass({
         startWatchingGeoLocation();
     },
 
+        componentDidMount() {
+        this.showMessage();
+    },
+
     componentWillUnmount: function() {
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
         stopWatchingGeoLocation();
+        timer.clearTimeout(this);
+    },
+
+    // message when time is up when receiving request from customer
+    showMessage: function () {
+        this.setState({showMessage: true}, () => timer.setTimeout(
+        this, 'hideMessage', () => this.setState({showMessage: false}), 30000
+        ));
     },
 
     updateLocation: function(loc) {
@@ -151,6 +168,7 @@ var DriverHomePage = React.createClass({
     },
 
     declineRide: function(ride) {
+        var ride = this.props.currentRide;
         Alert.alert(
             'Decline ride',
             'Are you sure you want to decline this ride??',
@@ -187,25 +205,31 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
         return (
              <View style={styles.sheet_top}>
-                <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                    <View style={[styles.renderItemLeft, {width: 110}]}>
-                        <Text style={{fontFamily: 'gothamrounded_book', fontSize: 15, color: colors.disable}}>
-                            {decline_text}
-                        </Text>
+                    <View style={styles.renderItemLeft}>
+                        <ImageLink
+                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={"route"}
+                            fontFamily={'gothamrounded_bold'}
+                            size={13}
+                            textAlign={'right'}
+                            source={require('../assets/motorcycle_icon2.png')}
+                            imagestyle={styles.cancel_icon}
+                            color={colors.secondary}
+                        />
                     </View>
-                </TouchableOpacity>
-                <View style={{elevation: 10, justifyContent: 'center'}}>
+                <View style={styles.avatar_centre}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={[styles.renderItemRight, {width: 110}]}>
-                      <Link
-                          url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
-                          text={navigation_text}
-                          size={15}
-                          textAlign={'right'}
-                          color={colors.secondary}
-                          iconSize={18}
-                      />
+                    <View style={styles.renderItemRight}>
+                         <ImageLink
+                            action={this.declineRide}
+                            fontFamily={'gothamrounded_bold'}
+                            size={13}
+                            color={colors.disable}
+                            text={"DECLINE "}
+                            sourceRight={require('../assets/cancel_icon.png')}
+                            imagestyle={styles.cancel_icon}
+                        />
                     </View>
             </View>
         )
@@ -214,18 +238,22 @@ var DriverHomePage = React.createClass({
     renderSheetTopRequest: function (decline_text) {
         var ride = this.props.currentRide;
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -10, elevation: 5}}>
-                <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderItemLeft}>
-                        <Text style={{fontSize: 15, color: colors.disable}}>
-                            {decline_text}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={styles.sheet_top}>
+                <View style={styles.renderItemLeft}>
+                </View>                
                 <View style={{elevation: 10, justifyContent: 'center'}}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
                 <View style={styles.renderItemRight}>
+                    <ImageLink
+                        action={this.declineRide}
+                        fontFamily={'gothamrounded_bold'}
+                        size={13}
+                        color={colors.disable}
+                        text={"DECLINE "}
+                        sourceRight={require('../assets/cancel_icon.png')}
+                        imagestyle={styles.cancel_icon}
+                    />
                 </View>
             </View>
         )
@@ -234,20 +262,30 @@ var DriverHomePage = React.createClass({
     renderHome: function() {
         var is_available = this.state.currentUser.state == 'available';
         var questionText = "Are you available for a ride?";
-        var statusText = "Customer cannot find you.";
+        var statusText = "Customer cannot find you";
         var statusIcon = "not-interested";
         if (is_available) {
-            statusText = "Customer can find you.";
+            statusText = "Customer can find you";
             statusIcon = "alarm";
         }
         return  (
             <View style={styles.page}>
-                <View style={{flex: 0.5}}>
+                <View style={styles.empty_view_riderhome}>
                 </View>
-                <View style={{flex:0.5}}>
-                    <Text>
-                        {questionText}
-                    </Text>
+                <View style={styles.avatar_centre_column}>
+                     <Image
+                        source={require('../assets/twende_avatar.png')}
+                        style={styles.avatar}
+                    />
+                    <View style={styles.sheet_rider}>
+                        <Text style={styles.item_title}>
+                            Hi {this.props.currentUser.first_name},
+                        </Text>
+                       <Text style={styles.text}>
+                            {questionText}
+                        </Text>
+                    </View>
+                </View>
                     <View style={styles.toggle}>
                         <Button
                             action={() => this.toggleAvailability(false)}
@@ -267,12 +305,14 @@ var DriverHomePage = React.createClass({
                             color={colors.action}
                             />
                     </View>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={styles.avatar_centre_column}>
                         <IconText
                             icon={statusIcon}
                             text={statusText}
                             color={colors.action_secondary}
                             style={{margin: 10}}
+                            size ={14}
+                            iconSize={26}
                         />
                     </View>
                     <View style={{alignItems: 'center'}}>
@@ -284,9 +324,6 @@ var DriverHomePage = React.createClass({
                         />
                     </View>
                 </View>
-            </View>
-
-            
         );
     },
 
@@ -313,23 +350,29 @@ var DriverHomePage = React.createClass({
                             Request from {ride.customer.name}
                         </Text>
                         <IconText
-                          icon={"motorcycle"}
-                          text={away}
-                          color={colors.action_secondary}
-                          size={14}
-                          style={{marginBottom: 6}}
+                            icon={"motorcycle"}
+                            text={away}
+                            color={colors.action_secondary}
+                            size={14}
+                            style={{marginBottom: 6}}
                         />
                         <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
-                            <ActivityIndicator 
-                                animating={this.state.animating}
-                                size={30}
-                                color={colors.action} 
-                            /> 
-                            <View style={{alignSelf: 'center'}}>
-                                <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
-                                    {requesting}
-                                </Text> 
-                            </View>
+                        {this.state.showMessage ? (
+                    <View style={{alignItems: 'center'}}>
+                        <Timer ms={60000} expired={() => {this.showMessage}} />
+                        <Text style={{fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
+                            {requesting}
+                        </Text>
+                    </View>
+                    ) : (
+                        <View style={{alignItems: 'center'}}>
+                            <Timer ms={60000} expired={() => {this.showMessage}} />
+                            <Text style={{textAlign: 'center', fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
+                                Request will be cancelled in 30 seconds.
+                            </Text>
+                        </View>
+                    )}                    
+ 
                         </View>
                     </View>
                     <View style={styles.primary_button_simple}>
@@ -346,47 +389,48 @@ var DriverHomePage = React.createClass({
 
     renderAccepted: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTop("DECLINE", "NAVIGATION");
+        var top = this.renderSheetTop("DECLINE ", "  NAVIGATION");
         return  (
-          <View style={{flex: 1, justifyContent: 'space-between'}}>
-                    <Map
-                        title={"request"}
-                        driver={ride.driver.position}
-                        customer={ride.origin}
-                    />
-                    {top}
-                    <View style={styles.sheet_rider}>
-                        <Text style={styles.item_title}>
-                            Picking Customer
-                        </Text>
-                        <Text style={styles.text}>
-                        You are on your way to pick customer!
-                        </Text>
-                          <View style={styles.telephone_button}>
-                                <Link
-                                    url={"tel: " + ride.customer.phone}
-                                    icon={"phone"}
-                                    size={16}
-                                    iconSize={24}
-                                    color={colors.secondary}
-                                    text={"CALL " + ride.customer.first_name.toUpperCase()}
-                                />
-                          </View>
-                          <View style={styles.primary_button_simple}>
-                                <Button
-                                    action={this.startRide}
-                                    text={"START TRIP"}
-                                    color={colors.action}
-                                />
-                          </View>
+            <View style={{flex: 1, justifyContent: 'space-between'}}>
+                <Map
+                    title={"request"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
+                {top}
+                <View style={styles.sheet_rider}>
+                    <Text style={styles.item_title}>
+                        Hi {rider.customer.first_name}, 
+                    </Text>
+                    <Text style={styles.text}> 
+                        First give me a call. Then pick me up.
+                    </Text>
+                    <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
+                        <ImageLink
+                            url={"tel: " + ride.customer.phone}
+                            size={14}
+                            fontFamily={'gothamrounded_bold'}
+                            color={colors.action}
+                            text={" CALL " + ride.customer.name.toUpperCase()}
+                            source={require('../assets/phone-icon.png')}
+                            imagestyle={styles.phone_icon}
+                        />
                     </View>
-              </View>
+                    <View style={styles.primary_button_simple}>
+                        <Button
+                            action={this.startRide}
+                            text={"WE GO!"}
+                            color={colors.action}
+                        />
+                    </View>
+                </View>
+            </View>
         );
     },
 
     renderDriving: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTop("DECLINE", "NAVIGATION");
+        var top = this.renderSheetTop("", "NAVIGATION");
         return  (
             <View style={{
               flex: 1,
@@ -396,25 +440,23 @@ var DriverHomePage = React.createClass({
                     title={"request"}
                     driver={ride.driver.position}
                     customer={ride.origin}
-                />
+                />  
                 {top}
                 <View style={styles.sheet_rider}>
-                    <Text style={styles.item_title}>
-                        Dropping Customer
-                    </Text>
                     <Text style={styles.text}>
-                        Have a safe journey!
+                        Please offer me a helmet & hair net. Ride carefully!
                     </Text>
-                        <View style={styles.telephone_button}>
-                          <Link
-                              url={"tel: " + ride.customer.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.secondary}
-                              text={"CALL " + ride.customer.first_name.toUpperCase()}
-                          />
-                        </View>
+                        <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
+                        <ImageLink
+                            url={"tel: " + ride.customer.phone}
+                            size={14}
+                            fontFamily={'gothamrounded_bold'}
+                            color={colors.action}
+                            text={" CALL " + ride.customer.name.toUpperCase()}
+                            source={require('../assets/phone-icon.png')}
+                            imagestyle={styles.phone_icon}
+                        />
+                    </View>
                         <View style={styles.primary_button_simple}>
                               <Button
                                 action={this.dropoffRide}
@@ -482,7 +524,7 @@ renderDropoff: function() {
 
     renderFinalized: function() {
         var ride = this.props.currentRide;
-        var message = "Please give customer a rating";
+        var message = "How was your ride with {ride.customer.first_name} ";
         var header = "Rating";
         var buttonText = "FINISH";
         var buttonAction = this.finishRide;
@@ -514,7 +556,7 @@ renderDropoff: function() {
                               onChange={this.rateRide}
                               maxStars={5}
                               rating={0}
-                              colorOn={colors.primarydark}
+                              colorOn={colors.action}
                               colorOff={colors.action_disabled}
                           />
                     </View>
@@ -588,7 +630,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                RIDER HOME
+                TWENDE
             </Text>
         );
     }

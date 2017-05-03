@@ -38,7 +38,6 @@ import TimerMixin from 'react-timer-mixin';
 const timer = require('react-native-timer');
 var SheetIcon = require('../Components/SheetIcon');
 
-
 var CurrentRidePage = React.createClass({
 
     getInitialState: function () {
@@ -61,12 +60,17 @@ var CurrentRidePage = React.createClass({
         timer.clearTimeout(this);
     },
 
+    refreshRide: function () {
+        refreshCurrentRide(this.props.currentRide.id);
+        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
+    },
+
+    // message when time is up when requesting rider
     showMessage: function () {
         this.setState({showMessage: true}, () => timer.setTimeout(
         this, 'hideMessage', () => this.setState({showMessage: false}), 60000
         ));
     },
-
 
     cancelRide: function () {
         ToastAndroid.show('Ride canceled', ToastAndroid.LONG);
@@ -86,23 +90,11 @@ var CurrentRidePage = React.createClass({
         createCurrentRide(ride);
     },
 
-    refreshRide: function () {
-        refreshCurrentRide(this.props.currentRide.id);
-        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
-    },
-
     rateRide: function (rating) {
         this.setState({rating: rating});
     },
 
     finishRide: function() {
-        Alert.alert(
-            'Asante sana',
-            'Thanks for using Twende, we hope to see you again soon.',
-            [
-                {text: 'OK', onPress: () => {}}
-            ]
-        );
         var ride = this.props.currentRide;
         ride.customer_rating = this.state.rating;
         ride.state = 'finalized';
@@ -209,22 +201,23 @@ var CurrentRidePage = React.createClass({
                     )}                    
                     </View>
                 </View>
-                <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
-                    <Image
-                        source={require('../assets/phone-icon.png')}
-                        style={styles.phone_icon}
-                    />
-                    <Link 
+               <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
+                    <ImageLink
                         url={"tel: " + ride.driver.phone}
                         size={14}
                         fontFamily={'gothamrounded_bold'}
                         color={colors.action}
                         text={"  CALL " + ride.driver.name.toUpperCase()}
+                        source={require('../assets/phone-icon.png')}
+                        imagestyle={styles.phone_icon}
                     />
                 </View>
             </View>
         )
     },
+
+
+
 
     renderDeclined: function () {
         return (
@@ -316,7 +309,7 @@ var CurrentRidePage = React.createClass({
 
     renderDriving: function () {
         var ride = this.props.currentRide;
-        let text = "Let's go!";
+        let text = "Twende!";
         return (
             <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
                 <Map
@@ -508,20 +501,7 @@ var CurrentRidePage = React.createClass({
                             colorOn={colors.action}
                             colorOff={colors.action_disabled}
                         />
-                        <View style={{alignSelf: 'center'}}>
-                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
-                                We appreciate feedback!
-                            </Text>
-                        </View>
                     </View>
-                    <Link
-                        url={"tel: 0791398120"}
-                        icon={"phone"}
-                        size={16}
-                        iconSize={18}
-                        color={colors.secondary}
-                        text={"0791398120"}
-                    />
                     <View style={{flexDirection: 'row'}}>
                             <Button
                                 action={this.finishRide}

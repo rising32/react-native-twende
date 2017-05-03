@@ -107,7 +107,6 @@ export var styles = StyleSheet.create({
 
 
     // Spinner
-
     spinner: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -147,8 +146,8 @@ export var styles = StyleSheet.create({
     },
 
     component2: {
-    flex: 1,
-    justifyContent:'center'
+        flex: 1,
+        justifyContent:'center'
     },
 
     // Navigation
@@ -176,11 +175,17 @@ export var styles = StyleSheet.create({
         marginBottom: 5
     },
 
-    // Page
+    // Page Elements
     page: {
+        backgroundColor: colors.box_dark,
         marginTop: 56,
         justifyContent: 'space-around',
         flex: 1
+    },
+
+    empty_view_riderhome: {
+        backgroundColor: colors.box_dark,
+        flex: 0.8
     },
 
     scroll_page: {
@@ -219,6 +224,18 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between', 
         marginTop: -30, 
         elevation: 5
+    },
+
+    avatar_centre: {
+        elevation: 20,
+        flexDirection: 'row',
+        justifyContent: 'center'
+        
+    },
+
+    // when parent view rendered 'column'
+     avatar_centre_column: {
+        alignItems: 'center'
     },
 
     sheet_top_icon: {
@@ -270,6 +287,20 @@ export var styles = StyleSheet.create({
         marginLeft: 40,
         marginRight: 40,
         backgroundColor: colors.box,
+        alignItems: 'center'
+    },
+
+    card_requesting: {
+        position: 'absolute',
+        marginLeft: 20,
+        marginRight: 20,
+        elevation: 2,
+        height: 290,
+        width: 235,
+        justifyContent: 'space-between',
+        borderRadius: 6,
+        padding: 12,
+        margin: 10,
         alignItems: 'center'
     },
 
@@ -339,6 +370,17 @@ export var styles = StyleSheet.create({
 
     // Rider App
 
+    text_box: {
+        paddingBottom: 20,
+        paddingTop: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 7,
+        marginTop: -16,
+        alignItems: 'center',
+        backgroundColor: colors.box
+    },
+
     toggle: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -346,6 +388,8 @@ export var styles = StyleSheet.create({
     },
 
     // Sheet (persistent bottom sheet)
+
+
 
     sheet_rider: {
         paddingBottom: 20,
@@ -587,6 +631,7 @@ export var styles = StyleSheet.create({
 
     // Avatar
     avatar: {
+        elevation: 1,
         width: 70,
         height: 70,
         borderRadius: 40,
