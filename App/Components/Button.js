@@ -45,7 +45,8 @@ module.exports = React.createClass({
         return (
             <TouchableOpacity
                 onPress={action}
-                style={[styles.primary_button, this.props.style]}
+                style={[this.props.style, styles.primary_button]}
+
             >
                 {icon}
                 <View style={this.props.link}>

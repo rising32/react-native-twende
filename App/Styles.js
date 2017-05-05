@@ -54,6 +54,13 @@ export var styles = StyleSheet.create({
         color: colors.grey
     },
 
+    text_finalize: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 14,
+        textAlign: 'center',
+        color: colors.grey
+    },
+
     text_important: {
         fontFamily: 'gothamrounded_medium',
         fontSize: 15,
@@ -65,6 +72,14 @@ export var styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         color: colors.secondary
+    },
+
+    item_title: {
+        textAlign: 'center',
+        margin: 4,
+        fontFamily: 'gothamrounded_bold',
+        color: colors.title,
+        fontSize: 16,
     },
 
     // Splash
@@ -96,6 +111,7 @@ export var styles = StyleSheet.create({
       marginBottom: 0,
       width: 360,
       height: 150,
+      marginTop: -80,
       bottom: 0
     },
 
@@ -183,6 +199,19 @@ export var styles = StyleSheet.create({
         flex: 1
     },
 
+    page_ride: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+
+
+    page_finalize: {
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: colors.primary
+    },
+
     empty_view_riderhome: {
         backgroundColor: colors.box_dark,
         flex: 0.8
@@ -200,6 +229,14 @@ export var styles = StyleSheet.create({
     },
 
     heavy_text: {
+        fontSize: 20,
+        margin: 4,
+        fontFamily: 'gothamrounded_medium',
+        textAlign: 'center',
+        color: colors.secondary
+    },
+
+    customer_title: {
         fontSize: 20,
         fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
@@ -222,20 +259,38 @@ export var styles = StyleSheet.create({
         flexDirection: 'row', 
         alignSelf: 'stretch', 
         justifyContent: 'space-between', 
-        marginTop: -30, 
+        marginTop: -24, 
+        elevation: 5
+    },
+
+    sheet_top_request: {
+        flexDirection: 'row', 
+        alignSelf: 'stretch', 
+        justifyContent: 'space-between', 
+        marginTop: -24, 
+        marginBottom: -10, 
         elevation: 5
     },
 
     avatar_centre: {
-        elevation: 20,
+        elevation: 10,
         flexDirection: 'row',
-        justifyContent: 'center'
-        
+        justifyContent: 'center',
+        marginBottom: 6
     },
 
     // when parent view rendered 'column'
      avatar_centre_column: {
-        alignItems: 'center'
+        alignItems: 'center',
+        elevation: 20
+    },
+
+    line: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 110,
+        height: 1.5,
+        margin: 6
     },
 
     sheet_top_icon: {
@@ -245,8 +300,8 @@ export var styles = StyleSheet.create({
     },
 
     phone_icon: {
-        width: 32,
-        height: 32
+        width: 26,
+        height: 26
     },
 
     cancel_icon: {
@@ -255,6 +310,11 @@ export var styles = StyleSheet.create({
         marginTop: 2
     },
 
+    motorcycle_icon: {
+        width: 23,
+        height: 23,
+        marginTop: 2
+    },
 
     // Cards
 
@@ -274,18 +334,6 @@ export var styles = StyleSheet.create({
         marginLeft: 40,
         marginRight: 40,
         margin: 0,
-        backgroundColor: colors.box,
-        alignItems: 'center'
-    },
-
-    card_mid_finalize: {
-        height: 290,
-        width: 235,
-        justifyContent: 'space-between',
-        borderRadius: 6,
-        padding: 12,
-        marginLeft: 40,
-        marginRight: 40,
         backgroundColor: colors.box,
         alignItems: 'center'
     },
@@ -346,7 +394,9 @@ export var styles = StyleSheet.create({
     },
 
     sheet_content: {
+        flex: 0.4,
         paddingTop: 20,
+        justifyContent: 'center', 
         alignItems: 'center'
     },
 
@@ -371,18 +421,23 @@ export var styles = StyleSheet.create({
     // Rider App
 
     text_box: {
-        paddingBottom: 20,
+        elevation: 4,
+        paddingBottom: 10,
         paddingTop: 20,
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 7,
-        marginTop: -16,
+        marginLeft: 26,
+        marginRight: 26,
+        marginBottom: 10,
+        marginTop: -26,
         alignItems: 'center',
         backgroundColor: colors.box
     },
 
     toggle: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10
     },
@@ -404,7 +459,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignSelf: 'flex-start',
         width: 120,
-        marginTop: 30,
+        marginTop: 14,
         marginLeft: 4
     },
 
@@ -413,7 +468,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignSelf: 'flex-start',
         width: 120,
-        marginTop: 30,
+        marginTop: 14,
         marginRight: 4
     },
 
@@ -506,6 +561,18 @@ export var styles = StyleSheet.create({
 
     item: {
         flexDirection: 'row',
+        marginTop: 2,
+        borderWidth: 0,
+        borderColor: colors.border,
+        borderRadius: 2,
+        backgroundColor: '#FFFFFF',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {width: 2, height: 2}
+    },
+
+    item_old: {
+        flexDirection: 'row',
         justifyContent: 'flex-start',
         margin: 10,
         marginTop: 0,
@@ -517,12 +584,6 @@ export var styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {width: 2, height: 2}
-    },
-    item_title: {
-        textAlign: 'center',
-        fontFamily: 'gothamrounded_bold',
-        color: colors.title,
-        fontSize: 16,
     },
 
     list_title: {
@@ -586,16 +647,26 @@ export var styles = StyleSheet.create({
     },
 
     primary_button: {
-        marginTop: 10,
-        marginRight: 4,
-        marginLeft: 4,
+        margin: 14,
+        height: 50,
         padding: 10,
         borderRadius: 4, 
-        alignItems: 'center',
+        alignSelf: 'stretch',
         justifyContent: 'center',
         backgroundColor: colors.button_normal,
-        elevation: 3,
-        flex: 1
+        elevation: 4
+    },
+
+    primary_button_flex: {
+        flex: 1,
+        margin: 14,
+        height: 50,
+        padding: 10,
+        borderRadius: 4, 
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        backgroundColor: colors.button_normal,
+        elevation: 4
     },
 
     primary_button_simple: {
@@ -606,7 +677,8 @@ export var styles = StyleSheet.create({
 
     primary_button_text: {
         fontFamily: 'gothamrounded_medium',
-        color: colors.button_text
+        color: colors.button_text,
+        alignSelf: 'center'
     },
 
     // Step bar
@@ -631,7 +703,6 @@ export var styles = StyleSheet.create({
 
     // Avatar
     avatar: {
-        elevation: 1,
         width: 70,
         height: 70,
         borderRadius: 40,
@@ -667,7 +738,8 @@ export var styles = StyleSheet.create({
     },
     starRatingContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        margin: 10
     },
     colorOn: {
         color: colors.primary,

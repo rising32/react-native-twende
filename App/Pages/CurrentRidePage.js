@@ -21,7 +21,6 @@ var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
 var Map = require('../Components/Map');
 var Link = require('../Components/Link');
-var ImageLink = require('../Components/ImageLink');
 var Button = require('../Components/Button');
 var StarRating = require('../Components/StarRating');
 var NavIcon = require('../Components/NavIcon');
@@ -168,7 +167,7 @@ var CurrentRidePage = React.createClass({
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                     <View style={styles.renderItemRight}>
-                        <ImageLink
+                        <Link
                             action={this.cancelRide}
                             fontFamily={'gothamrounded_bold'}
                             size={12}
@@ -202,7 +201,7 @@ var CurrentRidePage = React.createClass({
                     </View>
                 </View>
                <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
-                    <ImageLink
+                    <Link
                         url={"tel: " + ride.driver.phone}
                         size={14}
                         fontFamily={'gothamrounded_bold'}
@@ -273,7 +272,7 @@ var CurrentRidePage = React.createClass({
                         <Avatar image={ride.driver.avatar}/>
                     </View>
                      <View style={styles.renderItemRight}>
-                        <ImageLink
+                        <Link
                             action={this.cancelRide}
                             fontFamily={'gothamrounded_bold'}
                             size={12}
@@ -293,7 +292,7 @@ var CurrentRidePage = React.createClass({
                     </Text>
                 </View>
                 <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
-                    <ImageLink
+                    <Link
                         url={"tel: " + ride.driver.phone}
                         size={14}
                         fontFamily={'gothamrounded_bold'}
@@ -335,7 +334,7 @@ var CurrentRidePage = React.createClass({
                     </Text>
                 </View>
                 <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
-                    <ImageLink
+                    <Link
                         url={"tel: 0791398120"}
                         size={14}
                         fontFamily={'gothamrounded_bold'}
