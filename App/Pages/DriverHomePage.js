@@ -196,8 +196,11 @@ var DriverHomePage = React.createClass({
         );
     },
 
-    renderSheetTop: function (route, decline, image_route, image_decline) {
+    renderSheetTop: function (route, decline, image_route, image_decline, timer) {
         var ride = this.props.currentRide;
+
+        timer = <View><Timer ms={60000} />   </View>
+
         route = <View style={styles.renderItemLeft}>
                         <Link
                             url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
@@ -226,7 +229,7 @@ var DriverHomePage = React.createClass({
 
         return (
              <View style={styles.sheet_top}>
-                    {route}
+                    {route} {timer}
                 <View style={styles.avatar_centre}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
@@ -365,7 +368,7 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
 
         // components in screen
-        var top = this.renderSheetTop(null, "DECLINE ", null, require('../assets/cancel_icon.png'));   
+        var top = this.renderSheetTop(null, "DECLINE ", null, require('../assets/cancel_icon.png'), "timer");   
         var header = this.renderHeader("Incoming Request"); 
         var customer = this.renderCustomer(ride.customer.name);          
         var away = this.renderText(away); 
@@ -376,14 +379,16 @@ var DriverHomePage = React.createClass({
 
         return  (
             <View style={styles.page_ride}>
-                <Map
-                    title={"request"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
+
+                    <Map
+                        title={"request"}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
+
                 {top}
                 <View style={styles.text_box}>
-                    {header}
+                    
                     {customer}
                     {away}
                     <Rating
@@ -396,7 +401,7 @@ var DriverHomePage = React.createClass({
                     />
                     <View style={styles.step_bar}>
                         {text}
-                        <Timer ms={60000} expired={() => {this.showMessage}} />             
+                                  
                     </View>  
                 </View>  
                 <Button

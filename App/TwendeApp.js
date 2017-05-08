@@ -219,7 +219,6 @@ var TwendeApp = React.createClass({
                     currentRide: {}
                 });
             }
-            ToastAndroid.show('You have not received incoming request yet.. Please standby.', ToastAndroid.LONG)
         } else {
             if (currentRoute !== 'CurrentLocationPage') {
                 this.navigator.push({
@@ -332,7 +331,6 @@ var TwendeApp = React.createClass({
         return (
             <View>
                 <View style={styles.menu_head}>
-
                     <Image
                         source={require('./assets/banner_drawer.jpg')}
                         style={styles.menu_background}

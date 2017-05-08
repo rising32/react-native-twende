@@ -76,7 +76,7 @@ var Link = React.createClass({
         return (
             <TouchableOpacity
                 onPress={action}
-                style={[this.props.style, {flexDirection: 'row', alignItems: 'center', marginTop: 10}]}
+                style={[this.props.style, {flexDirection: 'row', alignItems: 'center'}]}
             >
                 {icon}{image}
                 <View style={styles.link}>
