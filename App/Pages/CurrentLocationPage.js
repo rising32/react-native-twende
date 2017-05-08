@@ -161,7 +161,7 @@ const CurrentLocationPage = React.createClass({
 
     renderScene: function (route, navigator) {
         const {animating} = this.state;
-        let sheettoptext = ' RIDE FARE';
+        let sheettoptext = 'RIDE FARE';
         let locationInput = null;
         let spinner;
         if (this.state.ready) {
@@ -187,15 +187,15 @@ const CurrentLocationPage = React.createClass({
                 description = "Pick up location"
                 image = {require('../assets/map-customer-invisible.png')}
                 coordinate = {this.state.origin} />
-            customer = (
-                <View style={styles.map_marker_container}>
-                    <View style={styles.map_marker}>
-                        <Image
-                            source={require('../assets/map-customer.png')}
-                        />
+                customer = (
+                    <View style={styles.map_marker_container}>
+                        <View style={styles.map_marker}>
+                            <Image
+                                source={require('../assets/map-customer.png')}
+                            />
+                        </View>
                     </View>
-                </View>
-            );
+                );
         }
 
         return (
@@ -214,17 +214,11 @@ const CurrentLocationPage = React.createClass({
                     {customer}
                 </View>
                 <View style={styles.sheet_top}>
-                     <TouchableOpacity onPress={this.handleFarePrice}>
-                        <View style={styles.renderItemLeft}>
-                            <Image
-                                source={require('../assets/dollar-icon.png')}
-                                style={styles.sheet_top_icon}
-                            />
-                            <Text style={{fontFamily: 'gothamrounded_bold', fontSize: 12, color: colors.secondary, marginTop: 2}}>
-                                {sheettoptext}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <SheetIcon
+                        action={this.handleFarePrice}
+                        icon={'attach-money'}
+                        text={'RIDE FARE'}
+                    />
                     <Avatar image={this.props.currentUser.avatar}/>
                         <View style={styles.renderItemRight}>
                     </View>

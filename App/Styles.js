@@ -409,12 +409,12 @@ export var styles = StyleSheet.create({
     },
 
     sheet_icon: {
-        borderRadius: 25,
-        width: 50,
-        height: 50,
+        borderRadius: 15,
+        width: 26,
+        height: 26,
         alignItems: 'center',
-        paddingTop: 10,
-        marginBottom: 6,
+        paddingTop: 3,
+        marginBottom: 3,
         elevation: 4
     },
 
