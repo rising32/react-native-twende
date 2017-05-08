@@ -214,10 +214,7 @@ var CurrentRidePage = React.createClass({
             </View>
         )
     },
-
-
-
-
+    
     renderDeclined: function () {
         return (
             <View style={{flex: 1}}>

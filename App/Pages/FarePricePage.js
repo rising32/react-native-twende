@@ -49,44 +49,46 @@ const FarePricePage = React.createClass({
     renderScene: function (route, navigator) {
         return  (
             <View style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: colors.primary}}
-            >              
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: colors.primary}}
+            >
                 <View style={{backgroundColor: colors.primary}}>
-                </View>      
-                    <View style={styles.card_mid_finalize}>
-                            <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                   
-                                <Avatar image={this.props.currentUser.avatar}/>
-                            </View>
-                            <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                This is our price
-                            </Text>
-                            <Text style={styles.text_card_mid}>
-                                Pick-up fee: 60 shilling
-                                Kilometer price: 50 shilling
-                            </Text>
-                            <Text style={styles.text_card_mid}>
-                            The app keeps track of the kilometers.
-                                At the end of the trip you can pay 
-                                with mobile money or cash        
-                            </Text>
-                            <Text style={styles.text_card_mid}>
-                                Have a good ride!
-                            </Text>
-
-                        </View>
-                    <View>
-                        <Image
-                            source={require('../assets/banner.jpg')}
-                            style={styles.banner}
-                            />
-                    </View>
                 </View>
-            );
-        },
+                <View style={[styles.card_mid_finalize, {padding: 40}]}>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>
+                        <Avatar image={this.props.currentUser.avatar}/>
+                    </View>
+                    <Text style={[styles.item_title, {textAlign: 'center'}]}>
+                        This is our price
+                    </Text>
+                    <Text style={styles.text_card_mid}>
+                        Pick-up fee: 60 shilling
+                    </Text>
+                    <Text style={styles.text_card_mid}>
+                        Kilometer price: 50 shilling
+                    </Text>
+                    <Text style={styles.text_card_mid}>
+                        The app keeps track of the kilometers.
+                        At the end of the trip you can pay
+                        with mobile money or cash
+                    </Text>
+                    <Text style={styles.text_card_mid}>
+                        Have a good ride!
+                    </Text>
+
+                    </View>
+                <View>
+                <Image
+                    source={require('../assets/banner.jpg')}
+                    style={styles.banner}
+                    />
+                </View>
+            </View>
+        );
+    },
 });
 
 let NavigationBarRouteMapper = {
