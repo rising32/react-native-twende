@@ -51,7 +51,7 @@ var Rating = React.createClass({
             );
         }
         return (
-            <View style={[styles.starRatingContainer]}>
+            <View style={[this.props.style, styles.starRatingContainer]}>
                 {starButtons}
                 <Text style={{color: colors.secondary, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
             </View>

@@ -43,7 +43,6 @@ var Map = React.createClass({
                         draggable
                         ref="rider"
                         title="Rider"
-                        anchor={{ x: 0.5, y: 1 }}
                         pinColor="yellow"
                         image={require('../assets/map-motor1.png')}
                         coordinate={this.props.driver}
@@ -54,7 +53,6 @@ var Map = React.createClass({
                         draggable
                         ref="customer"
                         title="Customer"
-                        anchor={{ x: 0.5, y: 1.1 }}
                         description="Pick-up location"
                         pinColor="yellow"
                         image={require('../assets/map-customer.png')}

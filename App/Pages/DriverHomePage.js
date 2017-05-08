@@ -24,9 +24,12 @@ var IconText = require('../Components/IconText');
 import { Icon } from 'react-native-material-design';
 var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
+var Line = require('../Components/Line');
+var Banner = require('../Components/Banner');
 var Button = require('../Components/Button');
 var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
+var Rating = require('../Components/Rating');
 var StarRating = require('../Components/StarRating');
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
@@ -38,6 +41,9 @@ import { updateCurrentUser,
 import { startWatchingGeoLocation,
          loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
+import Timer from 'react-native-timer-component';
+import TimerMixin from 'react-timer-mixin';
+const timer = require('react-native-timer');
 
 
 var DriverHomePage = React.createClass({
@@ -60,7 +66,8 @@ var DriverHomePage = React.createClass({
             trueSwitchIsOn: true,
             falseSwitchIsOn: false,
             rating: 0,
-            price: 0
+            price: 0,
+            showMessage: true
         }
     },
 
@@ -70,9 +77,21 @@ var DriverHomePage = React.createClass({
         startWatchingGeoLocation();
     },
 
+        componentDidMount() {
+        this.showMessage();
+    },
+
     componentWillUnmount: function() {
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
         stopWatchingGeoLocation();
+        timer.clearTimeout(this);
+    },
+
+    // message when time is up when receiving request from customer
+    showMessage: function () {
+        this.setState({showMessage: true}, () => timer.setTimeout(
+        this, 'hideMessage', () => this.setState({showMessage: false}), 30000
+        ));
     },
 
     updateLocation: function(loc) {
@@ -132,13 +151,6 @@ var DriverHomePage = React.createClass({
     },
 
     finishRide: function() {
-        Alert.alert(
-            'Asante sana',
-            'Thanks for using Twende, we hope to see you again soon.',
-            [
-                {text: 'OK', onPress: () => {}}
-            ]
-        );
         var ride = this.props.currentRide;
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
@@ -151,6 +163,7 @@ var DriverHomePage = React.createClass({
     },
 
     declineRide: function(ride) {
+        var ride = this.props.currentRide;
         Alert.alert(
             'Decline ride',
             'Are you sure you want to decline this ride??',
@@ -183,241 +196,296 @@ var DriverHomePage = React.createClass({
         );
     },
 
-    renderSheetTop: function (decline_text, navigation_text) {
+    renderSheetTop: function (route, decline, image_route, image_decline, timer) {
         var ride = this.props.currentRide;
-        return (
-             <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -30, elevation: 5}}>
-                <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                    <View style={[styles.renderItemLeft, {width: 110}]}>
-                        <Text style={{fontFamily: 'gothamrounded_book', fontSize: 15, color: colors.disable}}>
-                            {decline_text}
-                        </Text>
+
+        timer = <View><Timer ms={60000} />   </View>
+
+        route = <View style={styles.renderItemLeft}>
+                        <Link
+                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
+                            text={route}
+                            fontFamily={'gothamrounded_bold'}
+                            size={13}
+                            textAlign={'right'}
+                            source={image_route}
+                            imagestyle={styles.motorcycle_icon}
+                            color={colors.secondary}
+                        />
                     </View>
-                </TouchableOpacity>
-                <View style={{elevation: 10, justifyContent: 'center'}}>
+
+        decline =  <View style={styles.renderItemRight}>
+                         <Link
+                            action={this.declineRide}
+                            fontFamily={'gothamrounded_bold'}
+                            size={13}
+                            color={colors.disable}
+                            text={decline}
+                            sourceRight={image_decline}
+                            imagestyle={styles.cancel_icon}
+                        />
+                    </View>
+
+
+        return (
+             <View style={styles.sheet_top}>
+                    {route} {timer}
+                <View style={styles.avatar_centre}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
-                    <View style={[styles.renderItemRight, {width: 110}]}>
-                      <Link
-                          url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
-                          text={navigation_text}
-                          size={15}
-                          textAlign={'right'}
-                          color={colors.secondary}
-                          iconSize={18}
-                      />
-                    </View>
+                  {decline}
             </View>
+        );
+    },
+
+    renderCustomer: function (customer) {
+        return (
+            <Text style={styles.customer_title}>
+                {customer} 
+            </Text>
         )
     },
 
-    renderSheetTopRequest: function (decline_text) {
-        var ride = this.props.currentRide;
+    renderHeader: function (header) {
         return (
-            <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', marginTop: -40, marginBottom: -10, elevation: 5}}>
-                <TouchableOpacity onPress={() => this.declineRide(ride)}>
-                      <View style={styles.renderItemLeft}>
-                        <Text style={{fontSize: 15, color: colors.disable}}>
-                            {decline_text}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-                <View style={{elevation: 10, justifyContent: 'center'}}>
-                    <Avatar image={ride.customer.avatar} />
-                </View>
-                <View style={styles.renderItemRight}>
-                </View>
+        <Text style={styles.item_title}>
+            {header}
+        </Text>
+        )
+    },
+
+    renderAvatar: function (avatar) {
+        return (
+
+            <View style={styles.avatar_centre}>
+                <Image
+                    source={avatar}
+                    style={styles.avatar}
+                />
             </View>
+
+        )
+    },
+
+    renderText: function (text) {
+        return (
+            <Text style={styles.text_finalize}>
+                    {text}
+            </Text>
+        )
+    },
+
+    renderFare: function (fare_amount, fare_currency) {
+        return (
+            <Text style={styles.heavy_text}>
+                {fare_amount} {fare_currency}
+            </Text>
+        )
+    },
+
+    renderEarnings: function (fare_amount, fare_currency) {
+        fare_amount = fare_amount * 0.8;
+
+        return (
+            <Text style={styles.text}>
+                Rider earning: {fare_amount} {fare_currency} 
+            </Text>
+        )
+    },
+
+    renderDistance: function (distance) {
+        return (
+            <Text style={styles.text}>
+                {distance} 
+            </Text>
         )
     },
 
     renderHome: function() {
         var is_available = this.state.currentUser.state == 'available';
-        var statusText = "Customer cannot find you.";
+        var header = this.renderHeader("Hi " + this.props.currentUser.first_name);
+        var text = this.renderText("Are you available for a ride?");
+
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
+        var statusText = "Customer cannot find you";
         var statusIcon = "not-interested";
         if (is_available) {
-            statusText = "Customer can find you.";
+            statusText = "Customer can find you";
             statusIcon = "alarm";
         }
         return  (
             <View style={styles.page}>
-                <View style={{flex: 0.6}}>
+                <View style={styles.empty_view_riderhome}>
                 </View>
-                <View style={{flex:0.4}}>
-                    <View style={styles.toggle}>
-                        <Button
-                            action={() => this.toggleAvailability(false)}
-                            style={styles.button_simple}
-                            text={"Not available"}
-                            color={colors.action}
-                            />
-                        <Switch
-                            style={{borderColor: colors.action}}
-                            onTintColor={colors.action}
-                            onValueChange={(val) => this.toggleAvailability(val)}
-                            value={is_available}
+                {avatar}
+                <View style={styles.text_box}>
+                    {header}
+                    {text}
+                </View>
+                <View style={styles.toggle}>
+                    <Button
+                        action={() => this.toggleAvailability(false)}
+                        text={"Not available"}
+                        style={styles.primary_button_flex}
+                        color={colors.disable}
                         />
-                        <Button
-                            action={() => this.toggleAvailability(true)}
-                            text={"Available"}
-                            color={colors.action}
-                            />
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <IconText
-                            icon={statusIcon}
-                            text={statusText}
-                            color={colors.action_secondary}
-                            style={{margin: 10}}
-                        />
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <Link
-                            style={{padding:10, marginBottom: 10}}
-                            action={this.refreshItems}
-                            text={'refresh'}
-                            icon={'autorenew'}
-                        />
-                    </View>
+                    <Switch
+                        style={{borderColor: colors.action}}
+                        onTintColor={colors.action}
+                        onValueChange={(val) => this.toggleAvailability(val)}
+                        value={is_available}
+                    />
+                    <Button
+                        action={() => this.toggleAvailability(true)}
+                        text={"Available"}
+                        style={styles.primary_button_flex}
+                        color={colors.action}
+                    />
+                </View>
+                <View style={styles.avatar_centre_column}>
+                    <IconText
+                        icon={statusIcon}
+                        text={statusText}
+                        color={colors.action_secondary}
+                        style={{margin: 10}}
+                        size ={14}
+                        iconSize={26}
+                    />
+                </View>
+                <View style={{alignItems: 'center'}}>
+                    <Link
+                        style={{padding:10, marginBottom: 10}}
+                        action={this.refreshItems}
+                        text={'refresh'}
+                        icon={'autorenew'}
+                    />
                 </View>
             </View>
-
-            
         );
     },
 
     renderRequest: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTopRequest("DECLINE");        
-        var away = "Unknown distance customer";
+
+        // components in screen
+        var top = this.renderSheetTop(null, "DECLINE ", null, require('../assets/cancel_icon.png'), "timer");   
+        var header = this.renderHeader("Incoming Request"); 
+        var customer = this.renderCustomer(ride.customer.name);          
+        var away = this.renderText(away); 
+        var text = this.renderText("Time to accept:"); 
         if (ride.driver_distance) {
-            away = ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away";
+            away = this.renderText(ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away");
         }
-        let requesting = " INCOMING REQUEST. PLEASE CONFIRM. ";
 
         return  (
-            <View style={{flex: 1, justifyContent: 'space-around'}}>
-                <Map
-                    title={"request"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
-                <View style={styles.sheet_rider}>
-                    {top}
-                    <View style={[styles.sheet_content, {justifyContent: 'center', alignItems: 'center'}]}>
-                        <Text style={styles.item_title}>
-                            Request from {ride.customer.name}
-                        </Text>
-                        <IconText
-                          icon={"motorcycle"}
-                          text={away}
-                          color={colors.action_secondary}
-                          size={14}
-                          style={{marginBottom: 6}}
-                        />
-                        <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: colors.logins}}>
-                            <ActivityIndicator 
-                                animating={this.state.animating}
-                                size={30}
-                                color={colors.action} 
-                            /> 
-                            <View style={{alignSelf: 'center'}}>
-                                <Text style={{fontFamily: 'gothamrounded_medium', color: colors.secondary, fontWeight: 'bold'}}>
-                                    {requesting}
-                                </Text> 
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.primary_button_simple}>
-                        <Button
-                            action={this.acceptRide}
-                            text={"ACCEPT REQUEST"}
-                            color={colors.action}
-                            />
-                    </View> 
-                </View>
+            <View style={styles.page_ride}>
+
+                    <Map
+                        title={"request"}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
+
+                {top}
+                <View style={styles.text_box}>
+                    
+                    {customer}
+                    {away}
+                    <Rating
+                        maxStars={5}
+                        rating={ride.customer.rating}
+                        colorOn={colors.secondary}
+                        colorOff={colors.action_disabled}
+                        size={20}
+                        style={styles.item}
+                    />
+                    <View style={styles.step_bar}>
+                        {text}
+                                  
+                    </View>  
+                </View>  
+                <Button
+                    action={this.acceptRide}
+                    text={"ACCEPT REQUEST"}
+                    color={colors.action}
+                />        
             </View>
         );
     },
 
     renderAccepted: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTop("DECLINE", "NAVIGATION");
+
+        // components in screen
+        var top = this.renderSheetTop(" ROUTE", "DECLINE ", require('../assets/motorcycle_icon.png'), require('../assets/cancel_icon.png'));    
+        var header =this.renderHeader("Hi " + ride.customer.first_name + ",");           
+        var text = this.renderText("First give me a call. Then pick me up."); 
+
+
         return  (
-          <View style={{flex: 1, justifyContent: 'space-between'}}>
-                    <Map
-                        title={"request"}
-                        driver={ride.driver.position}
-                        customer={ride.origin}
+            <View style={styles.page_ride}>
+                <Map
+                    title={"on your way"}
+                    driver={ride.driver.position}
+                    customer={ride.origin}
+                />
+                {top}
+                <View style={styles.text_box}>
+                    {header}
+                    {text}
+                    <Link
+                        url={"tel: " + ride.customer.phone}
+                        size={14}
+                        fontFamily={'gothamrounded_bold'}
+                        color={colors.secondary}
+                        text={" CALL " + ride.customer.name.toUpperCase()}
+                        source={require('../assets/phone_icon_blue.png')}
+                        imagestyle={styles.phone_icon}
                     />
-                    {top}
-                    <View style={styles.sheet_rider}>
-                        <Text style={styles.item_title}>
-                            Picking Customer
-                        </Text>
-                        <Text style={styles.text}>
-                        You are on your way to pick customer!
-                        </Text>
-                          <View style={styles.telephone_button}>
-                                <Link
-                                    url={"tel: " + ride.customer.phone}
-                                    icon={"phone"}
-                                    size={16}
-                                    iconSize={24}
-                                    color={colors.secondary}
-                                    text={"CALL " + ride.customer.first_name.toUpperCase()}
-                                />
-                          </View>
-                          <View style={styles.primary_button_simple}>
-                                <Button
-                                    action={this.startRide}
-                                    text={"START TRIP"}
-                                    color={colors.action}
-                                />
-                          </View>
-                    </View>
-              </View>
+                </View>  
+                <Button
+                    action={this.startRide}
+                    text={"WE GO!"}
+                    color={colors.action}
+                    />        
+            </View>
         );
     },
 
     renderDriving: function() {
         var ride = this.props.currentRide;
-        var top = this.renderSheetTop("DECLINE", "NAVIGATION");
+
+        // components in screen
+        var top = this.renderSheetTop(" ROUTE", "DECLINE ", require('../assets/motorcycle_icon.png'), require('../assets/cancel_icon.png'));     
+        var header =this.renderHeader("Hi" + ride.customer.first_name);           
+        var text = this.renderText("Please offer me a helmet & hair net. Ride carefully!"); 
+
+
         return  (
-            <View style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-between'}}>
+            <View style={styles.page_ride}>
                 <Map
-                    title={"request"}
+                    title={"on your way"}
                     driver={ride.driver.position}
                     customer={ride.origin}
                 />
                 {top}
-                <View style={styles.sheet_rider}>
-                    <Text style={styles.item_title}>
-                        Dropping Customer
-                    </Text>
-                    <Text style={styles.text}>
-                        Have a safe journey!
-                    </Text>
-                        <View style={styles.telephone_button}>
-                          <Link
-                              url={"tel: " + ride.customer.phone}
-                              icon={"phone"}
-                              size={16}
-                              iconSize={24}
-                              color={colors.secondary}
-                              text={"CALL " + ride.customer.first_name.toUpperCase()}
-                          />
-                        </View>
-                        <View style={styles.primary_button_simple}>
-                              <Button
-                                action={this.dropoffRide}
-                                text={"FINISH RIDE"}
-                                />
-                        </View>
-                  </View>
+                <View style={styles.text_box}>
+                    {text}
+                    <Link
+                        url={"tel: 0791398120"}
+                        size={14}
+                        fontFamily={'gothamrounded_bold'}
+                        color={colors.secondary}
+                        text={" CALL SUPPORT"}
+                        source={require('../assets/phone_icon_blue.png')}
+                        imagestyle={styles.phone_icon}
+                    />
+                </View>  
+                <Button
+                    action={this.dropoffRide}
+                    text={"FINISH RIDE"}
+                    color={colors.action}
+                    />        
             </View>
         );
     },
@@ -425,111 +493,81 @@ var DriverHomePage = React.createClass({
 
 renderDropoff: function() {
         var ride = this.props.currentRide;
-        var text = ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride"; 
-        var header = "Payment";
-        var buttonText = "FINALIZE";
-        var buttonAction = this.finishRide;
+        
+        // screen components
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
+        var header = this.renderHeader("Payment");
+        var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
+        var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
+        var distance = this.renderDistance("The trip was " + ride.distance.distance);
+        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride");         
 
         return  (
-            <View style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: colors.primary}}
-            >              
-                <View style={{backgroundColor: colors.primary}}>
+            <View style={styles.page_finalize}>     
+                <View>
+                </View>
+                <View style={styles.text_box}>
+                {avatar} 
+                    {header}
+                    {ride_fare}
+                    {distance}
+                    {rider_earnings}
+                    <Line/>
+                    {text}
+                    <Button
+                        action={this.finishRide}
+                        text={"FINALIZE"}
+                        color={colors.action}
+                    />
+                </View>
+                <View>
+                    <Banner/>
+                </View>
+            </View>
+        );
+    },
+
+        renderFinalized: function() {
+        var ride = this.props.currentRide;
+        
+        // screen components
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
+        var header = this.renderHeader("Rating");
+        var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
+        var text = this.renderText("How was your ride with" + ride.customer.first_name +"?");         
+
+        return  (
+            <View style={styles.page_finalize}>     
+                <View>
                 </View>      
-                    <View style={styles.card_mid_finalize}>
-                            <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                   
-                                <Avatar image={ride.customer.avatar}/>
-                            </View>
-                            <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                                {header}
-                            </Text>
-                            <Text style={styles.heavy_text}>
-                                {ride.ride_fare.amount} {ride.ride_fare.currency}
-                            </Text>
-                            <Text style={styles.text}>
-                                    Distance: {ride.distance.distance}
-                                </Text>
-                            <View>
-                               <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                                    {text}
-                                </Text>
-                            </View>
-                        <View style={{flexDirection: 'row'}}>
-                          <Button
-                              action={buttonAction}
-                              text={buttonText}
-                              />
+                    <View style={styles.text_box}>
+                        {avatar}
+                        {header}
+                        {text}
+                        <Line/>
+                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                          <StarRating
+                              onChange={this.rateRide}
+                              maxStars={5}
+                              rating={0}
+                              colorOn={colors.action}
+                              colorOff={colors.action_disabled}
+                          />
                         </View>
+                        <Button
+                            action={this.finishRide}
+                            text={"FINISH"}
+                        /> 
                     </View>
                     <View>
-                        <Image
-                            source={require('../assets/banner.jpg')}
-                            style={styles.banner}
-                            />
+                        <Banner/>
                     </View>
                 </View>
             );
         },
 
 
-    renderFinalized: function() {
-        var ride = this.props.currentRide;
-        var message = "Please give customer a rating";
-        var header = "Rating";
-        var buttonText = "FINISH";
-        var buttonAction = this.finishRide;
-
-               return  (
-            <View style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: colors.primary}}
-            >              
-                <View style={{backgroundColor: colors.primary}}>
-                </View>      
-                    <View style={styles.card_mid_finalize}>
-                            <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>                   
-                                <Avatar image={ride.customer.avatar}/>
-                            </View>
-                    <View>
-                        <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                            {header}
-                        </Text>
-                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
-                            {message}
-                        </Text>
-                    </View>
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                          <StarRating
-                              onChange={this.rateRide}
-                              maxStars={5}
-                              rating={0}
-                              colorOn={colors.primarydark}
-                              colorOff={colors.action_disabled}
-                          />
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                      <Button
-                          action={buttonAction}
-                          text={buttonText}
-                          />
-                    </View>
-                </View>
-                <View>
-                    <Image
-                        source={require('../assets/banner.jpg')}
-                        style={styles.banner}
-                        />
-                </View>
-          </View>
-      );
-    },
+    
 
     renderScene: function(route, navigator) {
         var ride = this.props.currentRide;
@@ -584,7 +622,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                RIDER HOME
+                TWENDE
             </Text>
         );
     }

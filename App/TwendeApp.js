@@ -31,6 +31,7 @@ var DriverHomePage = require('./Pages/DriverHomePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
 var TermsPage = require('./Pages/TermsPage');
 var CustomerSupportPage = require('./Pages/CustomerSupportPage');
+var FarePricePage = require('./Pages/FarePricePage');
 
 var Drawer = require('./Components/Drawer');
 var Avatar = require('./Components/Avatar');
@@ -52,6 +53,8 @@ import { notify } from "./Actions/NotifyActions"
 import {
     refreshCurrentRide,
     loadRideList } from "./Actions/CurrentRideActions";
+
+
 
 var TwendeApp = React.createClass({
 
@@ -151,16 +154,6 @@ var TwendeApp = React.createClass({
         }); 
     },
 
-    connectivityAlert : function() {
-        Alert.alert(
-            'You appear offline',
-            'You seem to be out of wireless juice. Please connect.',
-            [
-                {text: 'OKAY!'}
-            ]
-        );
-    },
-
     currentUserLoaded: function(currentUser) {
         if (currentUser && this.state.currentUser.username !== currentUser.username) {
             this.setState({currentUser: currentUser});
@@ -226,7 +219,6 @@ var TwendeApp = React.createClass({
                     currentRide: {}
                 });
             }
-            ToastAndroid.show('You have not received incoming request yet.. Please standby.', ToastAndroid.LONG)
         } else {
             if (currentRoute !== 'CurrentLocationPage') {
                 this.navigator.push({
@@ -339,7 +331,6 @@ var TwendeApp = React.createClass({
         return (
             <View>
                 <View style={styles.menu_head}>
-
                     <Image
                         source={require('./assets/banner_drawer.jpg')}
                         style={styles.menu_background}
@@ -362,7 +353,7 @@ var TwendeApp = React.createClass({
                     <Link
                         action={() => this.goToPage('CustomerSupportPage')}
                         style={{padding: 8}}
-                        size={14}
+                        size={15}
                         color={'#FFFFFF'}
                         icon={'phone'}
                         text={'Customer Support'}
@@ -370,7 +361,7 @@ var TwendeApp = React.createClass({
                     <Link
                         style={{padding: 8}}
                         action={() => this.goToPage('ProfilePage')}
-                        size={14}
+                        size={15}
                         color={'#FFFFFF'}
                         icon={'account-circle'}
                         text={'My Profile'}
@@ -378,7 +369,7 @@ var TwendeApp = React.createClass({
                     <Link
                         action={() => this.goToPage('TermsPage')}
                         style={{padding: 8}}
-                        size={14}
+                        size={15}
                         color={'#FFFFFF'}
                         icon={'assignment'}
                         text={'Terms'}
@@ -386,7 +377,7 @@ var TwendeApp = React.createClass({
                     <Link
                         action={this.logout}
                         style={{padding: 8}}
-                        size={14}
+                        size={15}
                         color={'#FFFFFF'}
                         icon={'lock-open'}
                         text={'Logout'}
@@ -394,7 +385,7 @@ var TwendeApp = React.createClass({
                     <Link
                         action={this.closeApp}
                         style={{padding: 8}}
-                        size={14}
+                        size={15}
                         color={'#FFFFFF'}
                         icon={'power-settings-new'}
                         text={'Close Twende'}
@@ -453,14 +444,14 @@ var TwendeApp = React.createClass({
                         icon={'account-circle'}
                         text={'My Profile'}
                     />
-                    <IconText
+                    <Link
                         style={{padding: 8}}
                         size={14}
                         color={'#666666'}
                         icon={'history'}
                         text={'My Ride History'}
                     />
-                    <IconText
+                    <Link
                         style={{padding: 8}}
                         size={14}
                         color={'#666666'}
@@ -550,13 +541,7 @@ var TwendeApp = React.createClass({
 
 
         if (this.state.isConnected == false) {
-            Alert.alert(
-                'You appear offline',
-                'You seem to be out of wireless juice. Please connect.',
-                [
-                    {text: 'OKAY!'}
-                ]
-            );
+            this.handleRequestCallback;
         }
 
         
@@ -673,10 +658,20 @@ var TwendeApp = React.createClass({
                     navigator={navigator}/>
             );
         }
+        if (routeId === 'FarePricePage') {
+            return (
+                <FarePricePage
+                    openDrawer={this.openDrawer}
+                    goToPage={this.goToPage}
+                    currentRide={route.currentRide}
+                    currentUser={this.state.currentUser}
+                    navigator={navigator}/>
+            );
+        }
         return this.noRoute(navigator);
              Alert.alert(
             'Unable to log in',
-            'Check your internet and log in by SWIPING the UPPERLEFT of the screen to the right!',
+            'Check your internet connection',
             [
                 {text: 'OKAY!'}
             ]
