@@ -160,23 +160,18 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>            
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30, margin: 6}}>
+                <View style={styles.sheet_top}>
                     <View style={styles.renderItemLeft}>
                     </View>
                     <View>
                         <Avatar image={ride.driver.avatar}/>
                     </View>
-                    <View style={styles.renderItemRight}>
-                        <Link
-                            action={this.cancelRide}
-                            fontFamily={'gothamrounded_bold'}
-                            size={12}
-                            color={colors.disable}
-                            text={" CANCEL "}
-                            sourceRight={require('../assets/cancel_icon.png')}
-                            imagestyle={styles.cancel_icon}
-                        />
-                    </View>
+                    <SheetIcon
+                        action={this.cancelRide}
+                        icon={'attach-money'}
+                        text={'CANCEL'}
+                        color={colors.disable}
+                    />
                 </View>
                 <View style={styles.card_mid}>
                     <View>
