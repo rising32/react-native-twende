@@ -30,8 +30,8 @@ var DriverListPage = require('./Pages/DriverListPage');
 var DriverHomePage = require('./Pages/DriverHomePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
 var TermsPage = require('./Pages/TermsPage');
-var CustomerSupportPage = require('./Pages/CustomerSupportPage');
 var FarePricePage = require('./Pages/FarePricePage');
+var CustomerSupportPage = require('./Pages/CustomerSupportPage');
 
 var Drawer = require('./Components/Drawer');
 var Avatar = require('./Components/Avatar');
@@ -602,6 +602,14 @@ var TwendeApp = React.createClass({
         if (routeId === 'TermsPage') {
             return (
                 <TermsPage
+                    goToPage={this.goToPage}
+                    navigator={navigator}/>
+            );
+        }
+        if (routeId === 'FarePricePage') {
+            return (
+                <FarePricePage
+                    currentUser={this.state.currentUser}
                     goToPage={this.goToPage}
                     navigator={navigator}/>
             );
