@@ -276,7 +276,7 @@ export var styles = StyleSheet.create({
     },
 
     // when parent view rendered 'column'
-     avatar_centre_column: {
+    avatar_centre_column: {
         alignItems: 'center',
         elevation: 20
     },

@@ -31,6 +31,8 @@ var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
 var Rating = require('../Components/Rating');
 var StarRating = require('../Components/StarRating');
+var Avatar = require('../Components/Avatar');
+
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
 import { updateCurrentRide,
@@ -252,18 +254,6 @@ var DriverHomePage = React.createClass({
         )
     },
 
-    renderAvatar: function (avatar) {
-        return (
-            <View style={styles.avatar_centre}>
-                <Image
-                    source={avatar}
-                    style={styles.avatar}
-                />
-            </View>
-
-        )
-    },
-
     renderText: function (text) {
         return (
             <Text style={styles.text_finalize}>
@@ -302,8 +292,6 @@ var DriverHomePage = React.createClass({
         var is_available = this.state.currentUser.state == 'available';
         var header = this.renderHeader("Hi " + this.props.currentUser.first_name);
         var text = this.renderText("Are you available for a ride?");
-
-        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
         var statusText = "Customer cannot find you";
         var statusIcon = "not-interested";
         if (is_available) {
@@ -315,7 +303,7 @@ var DriverHomePage = React.createClass({
             <View style={styles.page}>
                 <View style={styles.empty_view_riderhome}>
                 </View>
-                {avatar}
+                <Avatar />
                 <View style={styles.text_box}>
                     {header}
                     {text}
@@ -499,7 +487,6 @@ renderDropoff: function() {
         var ride = this.props.currentRide;
         
         // screen components
-        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
         var header = this.renderHeader("Payment");
         var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
@@ -510,7 +497,7 @@ renderDropoff: function() {
             <View style={styles.page_finalize}>    
                 <View></View>
                 <View style={styles.text_box}>
-                    {avatar} 
+                    <Avatar />
                     {header}
                     {ride_fare}
                     {distance}
@@ -534,7 +521,6 @@ renderDropoff: function() {
         var ride = this.props.currentRide;
         
         // screen components
-        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
         var header = this.renderHeader("Rating");
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var text = this.renderText("How was your ride with" + ride.customer.first_name +"?");         
@@ -544,7 +530,7 @@ renderDropoff: function() {
                 <View>
                 </View>      
                     <View style={styles.text_box}>
-                        {avatar}
+                        <Avatar />
                         {header}
                         {text}
                         <Line/>
