@@ -218,6 +218,7 @@ const CurrentLocationPage = React.createClass({
                         action={this.handleFarePrice}
                         icon={'attach-money'}
                         text={'RIDE FARE'}
+                        align="flex-start"
                     />
                     <Avatar image={this.props.currentUser.avatar}/>
                         <View style={styles.renderItemRight}>
@@ -232,13 +233,11 @@ const CurrentLocationPage = React.createClass({
                         Swipe the map to change your pick up location
                     </Text>
                 </View>
-                <View style={styles.primary_button_customer_app}>                       
-                    <Button
-                        action={this.createRide}
-                        text={"CONFIRM LOCATION"}
-                        color={colors.action}
-                    />
-                </View>
+                <Button
+                    action={this.createRide}
+                    text={"CONFIRM LOCATION"}
+                    color={colors.action}
+                />
             </View>
         );
     }

@@ -255,6 +255,7 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
 
+<<<<<<< HEAD
     sheet_top: {
         flexDirection: 'row', 
         alignSelf: 'stretch', 
@@ -268,6 +269,8 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
 
+=======
+>>>>>>> master
     avatar_centre: {
         elevation: 10,
         flexDirection: 'row',
@@ -403,7 +406,41 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.login
     },
 
+    sheet_top: {
+        flexDirection: 'row',
+        alignSelf: 'stretch',
+        justifyContent: 'space-between',
+        marginTop: -36,
+        marginBottom: 5,
+        elevation: 5
+    },
+
+    sheet_top_request: {
+        flexDirection: 'row',
+        alignSelf: 'stretch',
+        justifyContent: 'space-between',
+        marginTop: -24,
+        marginBottom: -10,
+        elevation: 5
+    },
+
     sheet_icon: {
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 42,
+        marginBottom: 0,
+        elevation: 5
+    },
+
+    sheet_icon_text: {
+        fontFamily: 'gothamrounded_bold',
+        fontSize: 12,
+        marginLeft: 4,
+        marginRight: 4,
+        marginTop: 0
+    },
+
+    sheet_icon_icon: {
         borderRadius: 15,
         width: 26,
         height: 26,
@@ -555,7 +592,7 @@ export var styles = StyleSheet.create({
     // Lists
 
     list: {
-        marginTop: 10
+        marginTop: 0
     },
 
     // Items
