@@ -11,30 +11,43 @@ import {colors, styles} from "../Styles";
 import { Icon } from 'react-native-material-design';
 
 
-var SheetIcon = React.createClass({
+module.exports = React.createClass({
 
     render: function () {
-        var align = this.props.align ? this.props.align : 'flex-end';
-        var color = this.props.color ? this.props.color : colors.secondary;
+        const align = this.props.align ? this.props.align : 'flex-end';
+        const color = this.props.color ? this.props.color : colors.secondary;
+
+        const icon = (
+            <View style={[styles.sheet_icon_icon, {backgroundColor: color}]}>
+                <Icon
+                    name={this.props.icon}
+                    size={18}
+                    color={'#ffffff'}
+                />
+            </View>
+        );
+        const link = (
+            <Text style={[styles.sheet_icon_text, {color: color}]}>
+                {this.props.text}
+            </Text>
+        );
+        if (align == 'flex-end') {
+            return (
+                <View style={[styles.sheet_icon, {alignItems: align}]}>
+                    <TouchableOpacity onPress={this.props.action} style={{flexDirection: 'row', alignItems: 'center'}}>
+                        {link}
+                        {icon}
+                    </TouchableOpacity>
+                </View>
+            );
+        }
         return (
-            <View style={[{alignItems: align, marginLeft: 10, marginTop: 28, marginBottom: -15, elevation: 5}, this.props.style]}>
+            <View style={[styles.sheet_icon, {alignItems: align}]}>
                 <TouchableOpacity onPress={this.props.action} style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <View style={[styles.sheet_icon, {backgroundColor: color}]}>
-                        <Icon
-                            name={this.props.icon}
-                            size={18}
-                            color={'#ffffff'}
-                        />
-                    </View>
-                    <Text style={{fontFamily: 'gothamrounded_bold', fontSize: 12, color: colors.secondary, marginLeft: 4, marginTop: 0}}>
-                        {this.props.text}
-                    </Text>
+                    {icon}
+                    {link}
                 </TouchableOpacity>
             </View>
         );
     }
 });
-
-
-
-module.exports = SheetIcon;
