@@ -4,6 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
     Alert,
+    Linking,
     View,
     Text,
     TextInput,
@@ -142,6 +143,11 @@ var DriverHomePage = React.createClass({
         updateCurrentRide(ride);
     },
 
+    openNavigation: function() {
+        let url = "geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude;
+        Linking.openURL(url);
+    },
+
     dropoffRide: function() {
         var ride = this.props.currentRide;
         ride.state = 'dropoff';
@@ -198,42 +204,29 @@ var DriverHomePage = React.createClass({
         );
     },
 
-    renderSheetTop: function (route, decline, image_route, image_decline) {
-        var ride = this.props.currentRide;
-
-        route = <View style={styles.renderItemLeft}>
-                        <Link
-                            url={"geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude}
-                            text={route}
-                            fontFamily={'gothamrounded_bold'}
-                            size={13}
-                            textAlign={'right'}
-                            source={image_route}
-                            imagestyle={styles.motorcycle_icon}
-                            color={colors.secondary}
-                        />
-                    </View>
-
-        decline =  <View style={styles.renderItemRight}>
-                         <Link
-                            action={this.declineRide}
-                            fontFamily={'gothamrounded_bold'}
-                            size={13}
-                            color={colors.disable}
-                            text={decline}
-                            sourceRight={image_decline}
-                            imagestyle={styles.cancel_icon}
-                        />
-                    </View>
-
-
+    renderSheetTop: function (renderRoute=true) {
+        const ride = this.props.currentRide;
         return (
-             <View style={styles.sheet_top}>
-                    {route}
-                <View style={styles.avatar_centre}>
-                    <Avatar image={ride.customer.avatar} />
+            <View style={styles.sheet_top}>
+                <View style={styles.renderItemLeft}>
+                    {renderRoute ?
+                        <SheetIcon
+                            url={this.openNavigation}
+                            icon={'motorcycle'}
+                            text={'ROUTE'}
+                            align={'flex-start'}
+                        /> : <Text />
+                    }
                 </View>
-                  {decline}
+                <Avatar image={ride.customer.avatar}/>
+                <View style={styles.renderItemRight}>
+                    <SheetIcon
+                        action={this.declineRide}
+                        icon={'clear'}
+                        text={'DECLINE'}
+                        color={colors.disable}
+                    />
+                </View>
             </View>
         );
     },
@@ -272,7 +265,6 @@ var DriverHomePage = React.createClass({
 
     renderEarnings: function (fare_amount, fare_currency) {
         fare_amount = fare_amount * 0.8;
-
         return (
             <Text style={styles.text}>
                 Rider earning: {fare_amount} {fare_currency} 
@@ -354,7 +346,7 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
 
         // components in screen
-        var top = this.renderSheetTop(null, "DECLINE ", null, require('../assets/cancel_icon.png'));   
+        var top = this.renderSheetTop(false);
         var header = this.renderHeader("Incoming Request"); 
         var customer = this.renderCustomer(ride.customer.name);          
         var away = this.renderText(away); 
@@ -386,9 +378,6 @@ var DriverHomePage = React.createClass({
                     />
                     {text}
                     <View style={styles.timer}>
-                    
-                        
-
                         <Timer/>
                     </View>  
                 </View>  
@@ -405,7 +394,7 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
 
         // components in screen
-        var top = this.renderSheetTop(" ROUTE", "DECLINE ", require('../assets/motorcycle_icon.png'), require('../assets/cancel_icon.png'));    
+        var top = this.renderSheetTop();
         var header =this.renderHeader("Hi " + ride.customer.first_name + ",");           
         var text = this.renderText("First give me a call. Then pick me up."); 
 
@@ -446,9 +435,9 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
 
         // components in screen
-        var top = this.renderSheetTop(" ROUTE", "DECLINE ", require('../assets/motorcycle_icon.png'), require('../assets/cancel_icon.png'));     
+        var top = this.renderSheetTop();
         var header =this.renderHeader("Hi" + ride.customer.first_name);           
-        var text = this.renderText("Please offer me a helmet & hair net. Ride carefully!"); 
+        var text = this.renderText("Please offer me a helmet & hair net.\nRide carefully!");
 
 
         return  (
@@ -483,7 +472,7 @@ var DriverHomePage = React.createClass({
     },
 
 
-renderDropoff: function() {
+    renderDropoff: function() {
         var ride = this.props.currentRide;
         
         // screen components
@@ -491,7 +480,7 @@ renderDropoff: function() {
         var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: Ride");         
+        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa.\nPaybill No: 653839.\nAccount No: Ride");
 
         return  (
             <View style={styles.page_finalize}>    
@@ -510,14 +499,12 @@ renderDropoff: function() {
                         text={"FINALIZE"}
                     />
                 </View>
-                
-                    <Banner/>
-                
+                <Banner/>
             </View>
         );
     },
 
-        renderFinalized: function() {
+    renderFinalized: function() {
         var ride = this.props.currentRide;
         
         // screen components
@@ -549,9 +536,7 @@ renderDropoff: function() {
                             style={styles.primary_button_finalize}
                         /> 
                     </View>
-                    <View>
-                        <Banner/>
-                    </View>
+                    <Banner/>
                 </View>
             );
         },
