@@ -16,6 +16,7 @@ var {
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
+var Banner = require('../Components/Banner');
 var IconText = require('../Components/IconText');
 var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
@@ -135,6 +136,47 @@ var CurrentRidePage = React.createClass({
         updateCurrentRide(ride);
     },
 
+    renderSheetTop: function () {
+        var ride = this.props.currentRide;
+
+        return (
+            <View style={styles.sheet_top}>
+                <View style={styles.renderItemLeft}>
+                </View>
+                <View>
+                    <Avatar image={ride.driver.avatar}/>
+                </View>
+                <View style={styles.renderItemRight}>
+                    <SheetIcon
+                        action={this.cancelRide}
+                        icon={'clear'}
+                        text={'CANCEL'}
+                        color={colors.disable}
+                    />
+                </View>
+            </View>
+        );
+    },
+
+    renderAvatar: function (avatar) {
+        return (
+            <View style={styles.avatar_centre}>
+                <Image
+                    source={avatar}
+                    style={styles.avatar}
+                />
+            </View>
+        )
+    },
+
+    renderText: function (text) {
+        return (
+            <Text style={styles.text_finalize}>
+                    {text}
+            </Text>
+        )
+    },
+
     render: function () {
         return (
             <Navigator
@@ -150,9 +192,12 @@ var CurrentRidePage = React.createClass({
 
     renderConnecting: function () {
         var ride = this.props.currentRide;
-        let requesting = " WAIT FOR RESPONSE... ";
+        var top = this.renderSheetTop();   
+        var text = this.renderText("Wait for response"); 
+        var text_no_response = this.renderText("Rider not responding. Please cancel and find other rider or call support!"); 
+
         return (
-            <View style={{flex: 1, backgroundColor: colors.login}}>
+            <View style={styles.page_ride}>
                 <View style={styles.map_container}>
                     <Map
                         title= {"Connecting..."}
@@ -160,42 +205,26 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>            
-                <View style={styles.sheet_top}>
-                    <View style={styles.renderItemLeft}>
-                    </View>
+                {top}
+                <View style={styles.text_box}>
+                    <Text style={styles.item_title}>
+                        Requesting {ride.driver.name}!
+                    </Text>
                     <View>
-                        <Avatar image={ride.driver.avatar}/>
-                    </View>
-                    <SheetIcon
-                        action={this.cancelRide}
-                        icon={'attach-money'}
-                        text={'CANCEL'}
-                        color={colors.disable}
-                    />
-                </View>
-                <View style={styles.card_mid}>
-                    <View>
-                        <Text style={styles.item_title}>
-                            Requesting {ride.driver.name}!
-                        </Text>
-                    {this.state.showMessage ? (
-                    <View style={{alignItems: 'center'}}>
-                        <Timer ms={60000} expired={() => {this.showMessage}} />
-                        <Text style={{fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
-                            {requesting}
-                        </Text>
-                    </View>
-                    ) : (
-                        <View style={{alignItems: 'center'}}>
-                            <Timer ms={60000} expired={() => {this.showMessage}} />
-                            <Text style={{textAlign: 'center', fontFamily: 'gothamrounded_bold', color: colors.secondary, fontSize: 14}}>
-                                Rider not responding. Please cancel and find other rider or call support!
-                            </Text>
+                        {this.state.showMessage ? (
+                        <View style={styles.timer}>
+                            {text}
+                            <Timer ms={60000} />
                         </View>
-                    )}                    
+                        ) : (
+                            <View style={styles.timer}>
+                                {text_no_response}
+                            </View>
+                        )}                    
                     </View>
                 </View>
-               <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
+                {this.state.showMessage ? (
+                <View style={styles.telephone_button}>
                     <Link
                         url={"tel: " + ride.driver.phone}
                         size={14}
@@ -206,6 +235,19 @@ var CurrentRidePage = React.createClass({
                         imagestyle={styles.phone_icon}
                     />
                 </View>
+                    ) : (
+                <View style={styles.telephone_button}>
+                    <Link
+                        url={"tel: 0791398120"}
+                        size={14}
+                        fontFamily={'gothamrounded_bold'}
+                        color={colors.action}
+                        text={"  CALL SUPPORT"}
+                        source={require('../assets/phone-icon.png')}
+                        imagestyle={styles.phone_icon}
+                    />
+                </View>
+                    )}      
             </View>
         )
     },
@@ -252,6 +294,7 @@ var CurrentRidePage = React.createClass({
 
     renderAccepted: function () {
         var ride = this.props.currentRide;
+        var top = this.renderSheetTop();   
         // var away = "Rider is on his way...";
         // Once the time / distance of rider to customer can be upated along the way it
         // would be interesting to implement this the 'away variable'
@@ -267,26 +310,16 @@ var CurrentRidePage = React.createClass({
         //                />
 
         return (
-            <View style={{flex: 1, backgroundColor: colors.login}}>
-                <Map
-                    title={"rider on his way"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: -30}}>
-                    <View style={styles.renderItemLeft}> 
-                    </View>
-                    <View style={{justifyContent: 'center'}}>
-                        <Avatar image={ride.driver.avatar}/>
-                    </View>
-                    <SheetIcon
-                        action={this.cancelRide}
-                        icon={'attach-money'}
-                        text={'CANCEL'}
-                        color={colors.disable}
+            <View style={styles.page_ride}>
+                <View style={styles.map_container}>
+                    <Map
+                        title={"rider on his way"}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
                     />
                 </View>
-                <View style={styles.card_mid}>
+                {top}
+                <View style={styles.text_box}>
                     <Text style={styles.item_title}>
                         Hi {ride.customer.first_name},
                     </Text>
@@ -294,7 +327,7 @@ var CurrentRidePage = React.createClass({
                      {ride.driver.first_name} is on his way to pick you up!
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
+                <View style={styles.telephone_button}>
                     <Link
                         url={"tel: " + ride.driver.phone}
                         size={14}
@@ -312,23 +345,18 @@ var CurrentRidePage = React.createClass({
     renderDriving: function () {
         var ride = this.props.currentRide;
         let text = "Twende!";
+        var top = this.renderSheetTop(); 
         return (
-            <View style={{flex: 1, backgroundColor: colors.login, justifyContent: 'space-between'}}>
-                <Map
-                    style={{flex: 1}}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 6, marginTop: -30}}>
-                    <View style={styles.renderItemLeft}>
-                    </View>
-                    <View style={{justifyContent: 'center'}}>
-                        <Avatar image={ride.driver.avatar}/>
-                    </View>
-                    <View style={styles.renderItemRight}>
-                    </View>
+            <View style={styles.page_ride}>
+                <View style={styles.map_container}>
+                    <Map
+                        style={{flex: 1}}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
                 </View>
-                <View style={styles.card_mid}>
+                {top}
+                <View style={styles.text_box}>
                     <Text style={styles.item_title}>
                         Hi {ride.customer.first_name},
                     </Text>
@@ -336,7 +364,7 @@ var CurrentRidePage = React.createClass({
                         {text}
                     </Text>
                 </View>
-                <View style={{flexDirection: 'row', margin: 16, justifyContent: 'center'}}>
+                <View style={styles.telephone_button}>
                     <Link
                         url={"tel: 0791398120"}
                         size={14}
@@ -354,60 +382,51 @@ var CurrentRidePage = React.createClass({
     renderDropOff: function () {
         sounds.alarm3.play();
         var ride = this.props.currentRide;
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
 
         return (
-            <View style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  backgroundColor: colors.primary}}
-            >
-                <View style={{backgroundColor: colors.primary}}>
-                </View>
-                    <View style={styles.card_mid_finalize}>
-                        <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>
-                            <Avatar image={ride.driver.avatar}/>
-                        </View>
-                        <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
-                            <Text style={styles.item_title}>
-                                Fare Price
-                            </Text>
-                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                             {ride.customer.first_name}, you have arrived!
-                            </Text>
-                            <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                                Your trip was {ride.distance.distance}.
-                            </Text>
-                            <Text style={styles.heavy_text}>
-                                {ride.ride_fare.amount} {ride.ride_fare.currency}
-                            </Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Button
-                                action={this.payMpesa}
-                                text={"M-PESA"}
-                                color={colors.action}
-                                />
-                            <Button
-                                action={this.payCash}
-                                text={"CASH"}
-                                color={colors.action}
-                                />
-                        </View>
+            <View style={styles.page_finalize}>   
+                <View></View>
+                <View style={styles.text_box}>
+                    {avatar}
+                    <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
+                        <Text style={styles.item_title}>
+                            Fare Price
+                        </Text>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                         {ride.customer.first_name}, you have arrived!
+                        </Text>
+                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
+                            Your trip was {ride.distance.distance}.
+                        </Text>
+                        <Text style={styles.heavy_text}>
+                            {ride.ride_fare.amount} {ride.ride_fare.currency}
+                        </Text>
                     </View>
-                <View>
-                    <Image
-                        source={require('../assets/banner.jpg')}
-                        style={styles.banner}
-                    />
+                    <View style={styles.star_rating}>
+                        <Button
+                            style={styles.primary_buttons}
+                            action={this.payMpesa}
+                            text={"M-PESA"}
+                            color={colors.action}
+                            />
+                        <Button
+                            style={styles.primary_buttons}
+                            action={this.payCash}
+                            text={"CASH"}
+                            color={colors.action}
+                            />
+                    </View>
                 </View>
+                <Banner/>
             </View>
         )
     },
 
     renderPayment: function () {
         var ride = this.props.currentRide;
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
+
         var text;
 
         if (ride.payment_method == 'mpesa') {
@@ -419,19 +438,10 @@ var CurrentRidePage = React.createClass({
         }
 
         return (
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: colors.primary}}
-            >
-                <View style={{backgroundColor: colors.primary}}>
-                </View>
-                <View style={styles.card_mid_finalize}>
-                    <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>
-                        <Avatar image={ride.driver.avatar}/>
-                    </View>
+            <View style={styles.page_finalize}>   
+                <View></View>
+                <View style={styles.text_box}>
+                    {avatar}
                     <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={styles.item_title}>
                             {header}
@@ -443,7 +453,7 @@ var CurrentRidePage = React.createClass({
                             {text}
                         </Text>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.star_rating}>
                         <Button
                             action={this.completePayment}
                             text={"FINALIZE"}
@@ -451,12 +461,7 @@ var CurrentRidePage = React.createClass({
                         />
                     </View>
                 </View>
-                <View>
-                     <Image
-                        source={require('../assets/banner.jpg')}
-                        style={styles.banner}
-                        />
-                </View>
+                    <Banner/>
             </View>
         )
     },
@@ -464,6 +469,7 @@ var CurrentRidePage = React.createClass({
 
     renderFinalize: function () {
         var ride = this.props.currentRide;
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
         var driver = {};
         if (ride.driver) {
             driver = ride.driver
@@ -475,19 +481,10 @@ var CurrentRidePage = React.createClass({
         var buttonAction = this.finishRide;
 
         return (
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: colors.primary}}
-            >
-                <View style={{backgroundColor: colors.primary}}>
-                </View>
-                <View style={styles.card_mid_finalize}>
-                    <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>
-                        <Avatar image={driver.avatar}/>
-                    </View>
+            <View style={styles.page_finalize}>   
+                <View></View>
+                <View style={styles.text_box}>
+                    {avatar}
                     <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={styles.item_title}>
                             {header}
@@ -503,13 +500,11 @@ var CurrentRidePage = React.createClass({
                             colorOff={colors.action_disabled}
                         />
                     </View>
-                    <View style={{flexDirection: 'row'}}>
-                            <Button
-                                action={this.finishRide}
-                                text={"FINISH"}
-                                color={colors.action}
-                            />
-                    </View>
+                    <Button
+                        action={this.finishRide}
+                        text={"FINISH"}
+                        color={colors.action}
+                    />
                 </View>
                 <View>
                     <Image

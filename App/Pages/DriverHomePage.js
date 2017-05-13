@@ -196,10 +196,8 @@ var DriverHomePage = React.createClass({
         );
     },
 
-    renderSheetTop: function (route, decline, image_route, image_decline, timer) {
+    renderSheetTop: function (route, decline, image_route, image_decline) {
         var ride = this.props.currentRide;
-
-        timer = <View><Timer ms={60000} />   </View>
 
         route = <View style={styles.renderItemLeft}>
                         <Link
@@ -229,7 +227,7 @@ var DriverHomePage = React.createClass({
 
         return (
              <View style={styles.sheet_top}>
-                    {route} {timer}
+                    {route}
                 <View style={styles.avatar_centre}>
                     <Avatar image={ride.customer.avatar} />
                 </View>
@@ -256,7 +254,6 @@ var DriverHomePage = React.createClass({
 
     renderAvatar: function (avatar) {
         return (
-
             <View style={styles.avatar_centre}>
                 <Image
                     source={avatar}
@@ -313,6 +310,7 @@ var DriverHomePage = React.createClass({
             statusText = "Customer can find you";
             statusIcon = "alarm";
         }
+
         return  (
             <View style={styles.page}>
                 <View style={styles.empty_view_riderhome}>
@@ -368,7 +366,7 @@ var DriverHomePage = React.createClass({
         var ride = this.props.currentRide;
 
         // components in screen
-        var top = this.renderSheetTop(null, "DECLINE ", null, require('../assets/cancel_icon.png'), "timer");   
+        var top = this.renderSheetTop(null, "DECLINE ", null, require('../assets/cancel_icon.png'));   
         var header = this.renderHeader("Incoming Request"); 
         var customer = this.renderCustomer(ride.customer.name);          
         var away = this.renderText(away); 
@@ -379,16 +377,15 @@ var DriverHomePage = React.createClass({
 
         return  (
             <View style={styles.page_ride}>
-
+                <View style={styles.map_container}>
                     <Map
                         title={"request"}
                         driver={ride.driver.position}
                         customer={ride.origin}
                     />
-
+                </View>
                 {top}
                 <View style={styles.text_box}>
-                    
                     {customer}
                     {away}
                     <Rating
@@ -399,9 +396,12 @@ var DriverHomePage = React.createClass({
                         size={20}
                         style={styles.item}
                     />
-                    <View style={styles.step_bar}>
-                        {text}
-                                  
+                    {text}
+                    <View style={styles.timer}>
+                    
+                        
+
+                        <Timer/>
                     </View>  
                 </View>  
                 <Button
@@ -424,11 +424,13 @@ var DriverHomePage = React.createClass({
 
         return  (
             <View style={styles.page_ride}>
-                <Map
-                    title={"on your way"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
+                <View style={styles.map_container}>
+                    <Map
+                        title={"on your way"}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
+                </View>
                 {top}
                 <View style={styles.text_box}>
                     {header}
@@ -463,11 +465,13 @@ var DriverHomePage = React.createClass({
 
         return  (
             <View style={styles.page_ride}>
-                <Map
-                    title={"on your way"}
-                    driver={ride.driver.position}
-                    customer={ride.origin}
-                />
+                <View style={styles.map_container}>
+                    <Map
+                        title={"on your way"}
+                        driver={ride.driver.position}
+                        customer={ride.origin}
+                    />
+                </View>
                 {top}
                 <View style={styles.text_box}>
                     {text}
@@ -500,14 +504,13 @@ renderDropoff: function() {
         var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride");         
+        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: Ride");         
 
         return  (
-            <View style={styles.page_finalize}>     
-                <View>
-                </View>
+            <View style={styles.page_finalize}>    
+                <View></View>
                 <View style={styles.text_box}>
-                {avatar} 
+                    {avatar} 
                     {header}
                     {ride_fare}
                     {distance}
@@ -516,13 +519,13 @@ renderDropoff: function() {
                     {text}
                     <Button
                         action={this.finishRide}
+                        style={styles.primary_button_finalize}
                         text={"FINALIZE"}
-                        color={colors.action}
                     />
                 </View>
-                <View>
+                
                     <Banner/>
-                </View>
+                
             </View>
         );
     },
@@ -557,6 +560,7 @@ renderDropoff: function() {
                         <Button
                             action={this.finishRide}
                             text={"FINISH"}
+                            style={styles.primary_button_finalize}
                         /> 
                     </View>
                     <View>

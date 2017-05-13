@@ -97,22 +97,23 @@ export var styles = StyleSheet.create({
     },
 
     banner_splash: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 0,
-      width: 360,
-      height: 170,
-      bottom: 0
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 0,
+        width: 360,
+        height: 170,
+        bottom: 0
     },
 
     banner: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 0,
-      width: 360,
-      height: 150,
-      marginTop: -80,
-      bottom: 0
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 0,
+        width: 380,
+        height: 120,
+        marginTop: -40,
+        bottom: 0
     },
 
     loading: {
@@ -255,11 +256,23 @@ export var styles = StyleSheet.create({
         alignItems: 'center'
     },
 
+    sheet_top: {
+        flexDirection: 'row', 
+        alignSelf: 'stretch', 
+        justifyContent: 'space-between', 
+        marginTop: -24, 
+        elevation: 5
+    },
+
+    timer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
     avatar_centre: {
         elevation: 10,
         flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 6
+        justifyContent: 'center'
     },
 
     // when parent view rendered 'column'
@@ -307,18 +320,6 @@ export var styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         backgroundColor: colors.box
-    },
-
-    card_mid: {
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        borderRadius: 6,
-        padding: 12,
-        marginLeft: 40,
-        marginRight: 40,
-        margin: 0,
-        backgroundColor: colors.box,
-        alignItems: 'center'
     },
 
     card_requesting: {
@@ -391,28 +392,9 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.login
     },
 
-    sheet_top: {
-        flexDirection: 'row',
-        alignSelf: 'stretch',
-        justifyContent: 'space-between',
-        marginTop: -36,
-        marginBottom: 5,
-        elevation: 5
-    },
-
-    sheet_top_request: {
-        flexDirection: 'row',
-        alignSelf: 'stretch',
-        justifyContent: 'space-between',
-        marginTop: -24,
-        marginBottom: -10,
-        elevation: 5
-    },
-
     sheet_icon: {
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 42,
         marginBottom: 0,
         elevation: 5
     },
@@ -440,17 +422,31 @@ export var styles = StyleSheet.create({
     text_box: {
         elevation: 4,
         paddingBottom: 10,
-        paddingTop: 20,
+        paddingTop: 10,
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 7,
         marginLeft: 26,
         marginRight: 26,
-        marginBottom: 10,
-        marginTop: -26,
+        marginTop: -10,
         alignItems: 'center',
         backgroundColor: colors.box
     },
+
+    text_box_finalize: {
+        elevation: 4,
+        paddingBottom: 10,
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 7,
+        marginLeft: 26,
+        marginRight: 26,
+        marginBottom: 6,
+        alignItems: 'center',
+        backgroundColor: colors.box
+    },
+
 
     toggle: {
         flexDirection: 'row',
@@ -476,7 +472,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignSelf: 'flex-start',
         width: 120,
-        marginTop: 14,
+        marginTop: 26,
         marginLeft: 4
     },
 
@@ -485,7 +481,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignSelf: 'flex-start',
         width: 120,
-        marginTop: 14,
+        marginTop: 26,
         marginRight: 4
     },
 
@@ -493,11 +489,11 @@ export var styles = StyleSheet.create({
 
     map_container: {
         flex: 1,
-        height: 250,
         backgroundColor: '#999999',
-        borderWidth: 1,
+        borderWidth: 0.55,
         borderColor: colors.border
     },
+
     map: {
         position: 'absolute',
         flex: 1,
@@ -575,6 +571,8 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between', 
         alignItems: 'center'
     },
+
+
 
     item: {
         flexDirection: 'row',
@@ -666,6 +664,20 @@ export var styles = StyleSheet.create({
     primary_button: {
         margin: 14,
         height: 50,
+        bottom: 0,
+        padding: 10,
+        borderRadius: 4, 
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        backgroundColor: colors.button_normal,
+        elevation: 4
+    },
+
+    primary_button_finalize: {
+        margin: 10,
+        marginBottom: -2,
+        height: 40,
+        bottom: 0,
         padding: 10,
         borderRadius: 4, 
         alignSelf: 'stretch',
@@ -686,16 +698,17 @@ export var styles = StyleSheet.create({
         elevation: 4
     },
 
-    primary_button_simple: {
+    primary_buttons: {
         flexDirection: 'row',
-        marginLeft: 0,
-        marginRight: 0
+        height: 40,
+        width: 100
     },
 
     primary_button_text: {
+        flexDirection: 'row',
+        textAlign: 'center',
         fontFamily: 'gothamrounded_medium',
-        color: colors.button_text,
-        alignSelf: 'center'
+        color: colors.button_text
     },
 
     // Step bar
@@ -706,6 +719,7 @@ export var styles = StyleSheet.create({
         justifyContent: "space-between",
         margin: 0
     },
+
     step: {
         width: 100,
         alignItems: 'center'
@@ -755,8 +769,7 @@ export var styles = StyleSheet.create({
     },
     starRatingContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 10
+        justifyContent: 'space-between'
     },
     colorOn: {
         color: colors.primary,

@@ -34,7 +34,20 @@ import events from "../Constants/Events";
 
 const FarePricePage = React.createClass({
 
+    renderAvatar: function (avatar) {
+        return (
+            <View style={styles.avatar_centre}>
+                <Image
+                    source={avatar}
+                    style={styles.avatar}
+                />
+            </View>
+        )
+    },
+
     render: function () {
+
+
         return (
             <Navigator
                 renderScene={this.renderScene}
@@ -47,20 +60,12 @@ const FarePricePage = React.createClass({
     },
 
     renderScene: function (route, navigator) {
+                var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
         return  (
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: colors.primary}}
-            >
-                <View style={{backgroundColor: colors.primary}}>
-                </View>
-                <View style={[styles.card_mid_finalize, {padding: 40}]}>
-                    <View style={{flexDirection: 'row', justifyContent: 'center', elevation: 5}}>
-                        <Avatar image={this.props.currentUser.avatar}/>
-                    </View>
+                        <View style={styles.page_finalize}>   
+                <View></View>
+                <View style={styles.text_box}>
+                    {avatar}
                     <Text style={[styles.item_title, {textAlign: 'center'}]}>
                         This is our price
                     </Text>
