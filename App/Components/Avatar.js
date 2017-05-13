@@ -1,30 +1,31 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
-    Image
+const React = require('react');
+const ReactNative = require('react-native');
+const {
+    Image,
+    View
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
-var config = require('../config');
+const config = require('../config');
 
-var Avatar = React.createClass({
+module.exports = React.createClass({
 
     render: function () {
+        // Default avatar
+        let avatar = require('../assets/twende_avatar.png')
+        // Use specified avatar
+        if (this.props.image) {
+            avatar = {uri: config.mediaUrl + this.props.image}
+        }
         return (
-            <Image
-                source={{uri: config.mediaUrl + this.props.image}}
-                style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 40,
-                    borderWidth: 2,
-                    borderColor: '#ffffff'
-                }}
-            />
+            <View style={styles.avatar_centre}>
+                <Image
+                    source={avatar}
+                    style={styles.avatar}
+                />
+            </View>
         );
     }
 });
-
-module.exports = Avatar;
