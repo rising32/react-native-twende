@@ -42,6 +42,7 @@ import { sounds } from "./Sounds";
 import events from "./Constants/Events";
 import CurrentUserStore from './Stores/CurrentUserStore';
 import CurrentRideStore from './Stores/CurrentRideStore';
+import { createCurrentRide } from './Actions/CurrentRideActions';
 import {
     reloadCurrentUser,
     logoutCurrentUser,
@@ -252,10 +253,12 @@ var TwendeApp = React.createClass({
 
         } else {
             if (currentRide.state == 'canceled') {
-                this.navigator.push({
-                    id: 'CurrentLocationPage',
-                    currentUser: this.state.currentUser
-                });
+                // Create a new ride so you end up at driver list.
+                let ride = {
+                    origin: currentRide.origin,
+                    origin_text: currentRide.origin_text
+                };
+                createCurrentRide(ride);
             } else if (currentRide.state == 'new') {
                 this.navigator.push({
                     id: 'DriverListPage',
