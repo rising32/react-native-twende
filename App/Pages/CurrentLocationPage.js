@@ -214,24 +214,30 @@ const CurrentLocationPage = React.createClass({
                     {customer}
                 </View>
                 <View style={styles.sheet_top}>
-                    <SheetIcon
-                        action={this.handleFarePrice}
-                        icon={'attach-money'}
-                        text={'RIDE FARE'}
-                        align="flex-start"
-                    />
-                    <Avatar image={this.props.currentUser.avatar}/>
-                        <View style={styles.renderItemRight}>
+                    <View style={styles.renderItemLeft}>
+                        <SheetIcon
+                            action={this.handleFarePrice}
+                            icon={'attach-money'}
+                            text={'RIDE FARE'}
+                            align="flex-start"
+                        />
                     </View>
+                    <View style={styles.avatar_centre}>
+                        <Avatar image={this.props.currentUser.avatar}/>
+                    </View>
+                    <View style={styles.renderItemRight}>
+                    </View>
+                    
                 </View>
                 <View>
-                    
+                <View style={styles.text_box}>
                     <Text style={styles.item_title}>
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
                     <Text style={styles.text}>
                         Swipe the map to change your pick up location
                     </Text>
+                </View>
                 </View>
                 <Button
                     action={this.createRide}

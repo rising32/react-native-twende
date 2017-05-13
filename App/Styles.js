@@ -97,22 +97,23 @@ export var styles = StyleSheet.create({
     },
 
     banner_splash: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 0,
-      width: 360,
-      height: 170,
-      bottom: 0
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 0,
+        width: 360,
+        height: 170,
+        bottom: 0
     },
 
     banner: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 0,
-      width: 320,
-      height: 120,
-      marginTop: -40,
-      bottom: 0
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 0,
+        width: 380,
+        height: 120,
+        marginTop: -40,
+        bottom: 0
     },
 
     loading: {
@@ -321,18 +322,6 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.box
     },
 
-    card_mid: {
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        borderRadius: 6,
-        padding: 12,
-        marginLeft: 40,
-        marginRight: 40,
-        margin: 0,
-        backgroundColor: colors.box,
-        alignItems: 'center'
-    },
-
     card_requesting: {
         position: 'absolute',
         marginLeft: 20,
@@ -406,7 +395,6 @@ export var styles = StyleSheet.create({
     sheet_icon: {
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 42,
         marginBottom: 0,
         elevation: 5
     },
@@ -484,7 +472,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignSelf: 'flex-start',
         width: 120,
-        marginTop: 24,
+        marginTop: 26,
         marginLeft: 4
     },
 
@@ -493,7 +481,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignSelf: 'flex-start',
         width: 120,
-        marginTop: 24,
+        marginTop: 26,
         marginRight: 4
     },
 
@@ -502,7 +490,7 @@ export var styles = StyleSheet.create({
     map_container: {
         flex: 1,
         backgroundColor: '#999999',
-        borderWidth: 0.5,
+        borderWidth: 0.55,
         borderColor: colors.border
     },
 
@@ -583,6 +571,8 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between', 
         alignItems: 'center'
     },
+
+
 
     item: {
         flexDirection: 'row',
@@ -708,10 +698,10 @@ export var styles = StyleSheet.create({
         elevation: 4
     },
 
-    primary_button_simple: {
+    primary_buttons: {
         flexDirection: 'row',
-        marginLeft: 0,
-        marginRight: 0
+        height: 40,
+        width: 100
     },
 
     primary_button_text: {
