@@ -234,6 +234,22 @@ var CurrentRidePage = React.createClass({
         )
     },
 
+    renderCanceled: function () {
+        return (
+            <View style={{flex: 1}}>
+                <View style={styles.sheet_dark}>
+                    <View style={{alignItems: 'center'}}>
+                        <View style={styles.card_mid}>
+                            <Text style={{textAlign: 'center'}}>
+                                Canceling ride. Please hang on as we search for nearby riders.
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        )
+    },
+
     renderAccepted: function () {
         var ride = this.props.currentRide;
         // var away = "Rider is on his way...";
@@ -537,6 +553,9 @@ var CurrentRidePage = React.createClass({
                 break;
             case 'declined':
                 content = this.renderDeclined();
+                break;
+            case 'canceled':
+                content = this.renderCanceled();
                 break;
             case 'driving':
                 content = this.renderDriving();
