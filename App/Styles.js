@@ -395,8 +395,7 @@ export var styles = StyleSheet.create({
     sheet_icon: {
         marginLeft: 10,
         marginRight: 10,
-        marginBottom: 0,
-        elevation: 5
+        marginBottom: 0
     },
 
     sheet_icon_text: {
@@ -404,7 +403,8 @@ export var styles = StyleSheet.create({
         fontSize: 12,
         marginLeft: 4,
         marginRight: 4,
-        marginTop: 0
+        marginTop: 0,
+        elevation: 2
     },
 
     sheet_icon_icon: {
@@ -414,7 +414,7 @@ export var styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 3,
         marginBottom: 3,
-        elevation: 4
+        elevation: 2
     },
 
     // Rider App

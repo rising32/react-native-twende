@@ -54,21 +54,28 @@ var CurrentRidePage = React.createClass({
 
     componentDidMount() {
         this.showMessage();
+        this.startRidePoller();
     },
 
     componentWillUnmount() {
         timer.clearTimeout(this);
+        timer.clearInterval(this);
+    },
+
+    startRidePoller() {
+        timer.setInterval(
+            this, 'pollRide', this.refreshRide, 10000
+        );
     },
 
     refreshRide: function () {
         refreshCurrentRide(this.props.currentRide.id);
-        ToastAndroid.show('Checking State Rider..', ToastAndroid.SHORT)
     },
 
     // message when time is up when requesting rider
     showMessage: function () {
         this.setState({showMessage: true}, () => timer.setTimeout(
-        this, 'hideMessage', () => this.setState({showMessage: false}), 60000
+            this, 'hideMessage', () => this.setState({showMessage: false}), 60000
         ));
     },
 
@@ -295,19 +302,7 @@ var CurrentRidePage = React.createClass({
     renderAccepted: function () {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
-        // var away = "Rider is on his way...";
-        // Once the time / distance of rider to customer can be upated along the way it
-        // would be interesting to implement this the 'away variable'
-        //
-        // if (ride.driver_distance) {
-        //    away = ride.driver_distance.distance + ' (' + ride.driver_distance.duration + ') away';
-        // }
-        //                         <IconText
-        //                icon={"motorcycle"}
-        //                text={away}
-        //                color={colors.secondary}
-        //                style={{padding: 6, margin: 14}}
-        //                />
+        var away = "Rider is on his way...";
 
         return (
             <View style={styles.page_ride}>
@@ -324,7 +319,7 @@ var CurrentRidePage = React.createClass({
                         Hi {ride.customer.first_name},
                     </Text>
                     <Text style={styles.text}>
-                     {ride.driver.first_name} is on his way to pick you up!
+                        {ride.driver.first_name} is on his way to pick you up!
                     </Text>
                 </View>
                 <View style={styles.telephone_button}>

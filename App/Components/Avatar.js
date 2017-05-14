@@ -15,6 +15,7 @@ module.exports = React.createClass({
     render: function () {
         // Default avatar
         let avatar = require('../assets/twende_avatar.png')
+
         // Use specified avatar
         if (this.props.image) {
             avatar = {uri: config.mediaUrl + this.props.image}

@@ -234,13 +234,20 @@ var TwendeApp = React.createClass({
     },
 
     currentRideLoaded: function(currentRide) {
+        let previous = this.state.currentRide;
+        if (previous.id === currentRide.id
+                && previous.state === currentRide.state
+                && previous.driver.username === currentRide.driver.username) {
+            // Nothing much changed. Just update state and return.
+            this.setState({currentRide: currentRide});
+            return;
+        }
         this.setState({currentRide: currentRide});
-
         if (this.state.currentUser.is_driver) {
-            if (currentRide.state == 'requested') {
+            if (currentRide.state === 'requested') {
                 sounds.alarm2.play();
             }
-            if (currentRide.state == 'canceled') {
+            if (currentRide.state === 'canceled') {
                 this.state.currentUser.state = 'unavailable';
             }
             this.navigator.push({
@@ -250,33 +257,33 @@ var TwendeApp = React.createClass({
             });
 
         } else {
-            if (currentRide.state == 'canceled') {
+            if (currentRide.state === 'canceled') {
                 // Create a new ride so you end up at driver list.
                 let ride = {
                     origin: currentRide.origin,
                     origin_text: currentRide.origin_text
                 };
                 createCurrentRide(ride);
-            } else if (currentRide.state == 'new') {
-                this.navigator.push({
+            } else if (currentRide.state === 'new') {
+                this.navigator.replace({
                     id: 'DriverListPage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
             } else if (['requested', 'accepted', 'driving', 'dropoff', 'payment'].indexOf(currentRide.state) > -1) {
-                this.navigator.push({
+                this.navigator.replace({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
-            } else if (currentRide.state == 'finalized' && !currentRide.customer_rating) {
-                this.navigator.push({
+            } else if (currentRide.state === 'finalized' && !currentRide.customer_rating) {
+                this.navigator.replace({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
             } else {
-                this.navigator.push({
+                this.navigator.replace({
                     id: 'CurrentLocationPage',
                     currentUser: this.state.currentUser
                 });
