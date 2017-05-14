@@ -59,6 +59,7 @@ var CurrentRidePage = React.createClass({
 
     componentWillUnmount() {
         timer.clearTimeout(this);
+        timer.clearInterval(this);
     },
 
     startRidePoller() {

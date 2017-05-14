@@ -235,7 +235,9 @@ var TwendeApp = React.createClass({
 
     currentRideLoaded: function(currentRide) {
         let previous = this.state.currentRide;
-        if (previous.id === currentRide.id && previous.state === currentRide.state) {
+        if (previous.id === currentRide.id
+                && previous.state === currentRide.state
+                && previous.driver.username === currentRide.driver.username) {
             // Nothing much changed. Just update state and return.
             this.setState({currentRide: currentRide});
             return;
@@ -263,25 +265,25 @@ var TwendeApp = React.createClass({
                 };
                 createCurrentRide(ride);
             } else if (currentRide.state === 'new') {
-                this.navigator.push({
+                this.navigator.replace({
                     id: 'DriverListPage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
             } else if (['requested', 'accepted', 'driving', 'dropoff', 'payment'].indexOf(currentRide.state) > -1) {
-                this.navigator.push({
+                this.navigator.replace({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
             } else if (currentRide.state === 'finalized' && !currentRide.customer_rating) {
-                this.navigator.push({
+                this.navigator.replace({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
             } else {
-                this.navigator.push({
+                this.navigator.replace({
                     id: 'CurrentLocationPage',
                     currentUser: this.state.currentUser
                 });
