@@ -234,13 +234,18 @@ var TwendeApp = React.createClass({
     },
 
     currentRideLoaded: function(currentRide) {
+        let previous = this.state.currentRide;
+        if (previous.id === currentRide.id && previous.state === currentRide.state) {
+            // Nothing much changed. Just update state and return.
+            this.setState({currentRide: currentRide});
+            return;
+        }
         this.setState({currentRide: currentRide});
-
         if (this.state.currentUser.is_driver) {
-            if (currentRide.state == 'requested') {
+            if (currentRide.state === 'requested') {
                 sounds.alarm2.play();
             }
-            if (currentRide.state == 'canceled') {
+            if (currentRide.state === 'canceled') {
                 this.state.currentUser.state = 'unavailable';
             }
             this.navigator.push({
@@ -250,14 +255,14 @@ var TwendeApp = React.createClass({
             });
 
         } else {
-            if (currentRide.state == 'canceled') {
+            if (currentRide.state === 'canceled') {
                 // Create a new ride so you end up at driver list.
                 let ride = {
                     origin: currentRide.origin,
                     origin_text: currentRide.origin_text
                 };
                 createCurrentRide(ride);
-            } else if (currentRide.state == 'new') {
+            } else if (currentRide.state === 'new') {
                 this.navigator.push({
                     id: 'DriverListPage',
                     currentUser: this.state.currentUser,
@@ -269,7 +274,7 @@ var TwendeApp = React.createClass({
                     currentUser: this.state.currentUser,
                     currentRide: currentRide
                 });
-            } else if (currentRide.state == 'finalized' && !currentRide.customer_rating) {
+            } else if (currentRide.state === 'finalized' && !currentRide.customer_rating) {
                 this.navigator.push({
                     id: 'CurrentRidePage',
                     currentUser: this.state.currentUser,
