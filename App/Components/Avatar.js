@@ -21,7 +21,7 @@ module.exports = React.createClass({
             avatar = {uri: config.mediaUrl + this.props.image}
         }
         return (
-            <View style={styles.avatar_centre}>
+            <View style={[styles.avatar_centre, {justifyContent: this.props.justify}]}>
                 <Image
                     source={avatar}
                     style={styles.avatar}

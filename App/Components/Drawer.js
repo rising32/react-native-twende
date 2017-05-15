@@ -10,6 +10,7 @@ var {
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
+import Avatar from "../Components/Avatar";
 var IconText = require('../Components/IconText');
 
 
@@ -17,9 +18,10 @@ var Drawer = React.createClass({
     render: function () {
         return (
             <View>
-                <View style={{padding:10}}>
-                    <Avatar image={this.state.currentUser.avatar}/>
-                </View>
+                    <Avatar 
+                        image={this.state.currentUser.avatar}
+                        justify={justify}
+                    />
                 <View style={{padding:10}}>
                     <Text>
                         {this.state.currentUser.name}

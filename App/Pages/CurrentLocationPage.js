@@ -216,10 +216,16 @@ const CurrentLocationPage = React.createClass({
                 <View style={styles.sheet_top}>
                     <View style={styles.renderItemLeft}>
                         <SheetIcon
+                            align={'center'}
                             action={this.handleFarePrice}
-                            icon={'attach-money'}
+                            name={'attach-money'}
                             text={'RIDE FARE'}
-                            align="flex-start"
+                            color={colors.white}
+                            size={20}
+                            backgroundColor={colors.secondary}
+                            width={27}
+                            height={27}
+                            text_color={colors.secondary}
                         />
                     </View>
                     <View style={styles.avatar_centre}>
@@ -227,7 +233,6 @@ const CurrentLocationPage = React.createClass({
                     </View>
                     <View style={styles.renderItemRight}>
                     </View>
-                    
                 </View>
                 <View>
                 <View style={styles.text_box}>

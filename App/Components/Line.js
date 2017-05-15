@@ -11,10 +11,8 @@ import {colors, styles} from "../Styles";
 var Line = React.createClass({
  	render: function () {
 	    return (
-	            <Image
-	                source={require('../assets/line.png')}
-	                style={styles.line}
-	            />
+	            <View style={styles.line}>
+	            </View>
         );
     }
 });
