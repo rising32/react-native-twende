@@ -22,6 +22,7 @@ var Iconed = require('../Components/Iconed');
 var StepBar = require('../Components/StepBar');
 var Map = require('../Components/Map');
 var Link = require('../Components/Link');
+var Line = require('../Components/Line');
 var Button = require('../Components/Button');
 var StarRating = require('../Components/StarRating');
 var NavIcon = require('../Components/NavIcon');
@@ -155,10 +156,18 @@ var CurrentRidePage = React.createClass({
                 </View>
                 <View style={styles.renderItemRight}>
                     <SheetIcon
+                        align={'center'}
                         action={this.cancelRide}
-                        icon={'clear'}
+                        name={'clear'}
                         text={'CANCEL'}
-                        color={colors.disable}
+                        color={colors.white}
+                        size={20}
+                        backgroundColor={colors.disable}
+                        width={27}
+                        height={27}
+                        right={true}
+                        text_color={colors.disable}
+                        url={"tel: " + ride.driver.phone}
                     />
                 </View>
             </View>
@@ -224,34 +233,40 @@ var CurrentRidePage = React.createClass({
                             <Timer ms={60000} />
                         </View>
                         ) : (
-                            <View style={styles.timer}>
-                                {text_no_response}
-                            </View>
+                        <View style={styles.timer}>
+                            {text_no_response}
+                        </View>
                         )}                    
                     </View>
                 </View>
                 {this.state.showMessage ? (
                 <View style={styles.telephone_button}>
-                    <Link
+                    <SheetIcon
                         url={"tel: " + ride.driver.phone}
-                        size={14}
-                        fontFamily={'gothamrounded_bold'}
-                        color={colors.action}
+                        name={'phone'}
+                        size={23}
+                        text_color={colors.action}
+                        color={colors.white}
+                        width={30}
+                        height={30}
+                        backgroundColor={colors.action}
                         text={"  CALL " + ride.driver.name.toUpperCase()}
-                        source={require('../assets/phone-icon.png')}
-                        imagestyle={styles.phone_icon}
+                        fontSize={15}
                     />
                 </View>
                     ) : (
                 <View style={styles.telephone_button}>
-                    <Link
+                    <SheetIcon
                         url={"tel: 0791398120"}
-                        size={14}
-                        fontFamily={'gothamrounded_bold'}
-                        color={colors.action}
-                        text={"  CALL SUPPORT"}
-                        source={require('../assets/phone-icon.png')}
-                        imagestyle={styles.phone_icon}
+                        name={'phone'}
+                        size={23}
+                        text_color={colors.action}
+                        color={colors.white}
+                        width={30}
+                        height={30}
+                        backgroundColor={colors.action}
+                        text={"CALL SUPPORT"}
+                        fontSize={16}
                     />
                 </View>
                     )}      
@@ -323,14 +338,17 @@ var CurrentRidePage = React.createClass({
                     </Text>
                 </View>
                 <View style={styles.telephone_button}>
-                    <Link
+                    <SheetIcon
                         url={"tel: " + ride.driver.phone}
-                        size={14}
-                        fontFamily={'gothamrounded_bold'}
-                        color={colors.action}
+                        name={'phone'}
+                        size={23}
+                        text_color={colors.action}
+                        color={colors.white}
+                        width={30}
+                        height={30}
+                        backgroundColor={colors.action}
                         text={"  CALL " + ride.driver.name.toUpperCase()}
-                        source={require('../assets/phone-icon.png')}
-                        imagestyle={styles.phone_icon}
+                        fontSize={15}
                     />
                 </View>
             </View>
@@ -360,14 +378,17 @@ var CurrentRidePage = React.createClass({
                     </Text>
                 </View>
                 <View style={styles.telephone_button}>
-                    <Link
+                    <SheetIcon
                         url={"tel: 0791398120"}
-                        size={14}
-                        fontFamily={'gothamrounded_bold'}
-                        color={colors.action}
-                        text={"  CALL SUPPORT"}
-                        source={require('../assets/phone-icon.png')}
-                        imagestyle={styles.phone_icon}
+                        name={'phone'}
+                        size={23}
+                        text_color={colors.action}
+                        color={colors.white}
+                        width={30}
+                        height={30}
+                        backgroundColor={colors.action}
+                        text={"CALL SUPPORT"}
+                        fontSize={16}
                     />
                 </View>
             </View>
@@ -375,7 +396,7 @@ var CurrentRidePage = React.createClass({
     },
 
     renderDropOff: function () {
-        sounds.alarm3.play();
+
         var ride = this.props.currentRide;
         var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
 
@@ -388,17 +409,18 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.item_title}>
                             Fare Price
                         </Text>
-                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                         {ride.customer.first_name}, you have arrived!
-                        </Text>
-                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center'}}>
-                            Your trip was {ride.distance.distance}.
-                        </Text>
                         <Text style={styles.heavy_text}>
                             {ride.ride_fare.amount} {ride.ride_fare.currency}
                         </Text>
+                        <Text style={styles.text_finalize}>
+                            Your trip was {ride.distance.distance}
+                        </Text>
+                        <Line/>
+                        <Text style={styles.text_finalize}>
+                            Please choose:
+                        </Text>
                     </View>
-                    <View style={styles.star_rating}>
+                    <View style={{flexDirection: 'row'}}>
                         <Button
                             style={styles.primary_buttons}
                             action={this.payMpesa}
@@ -444,19 +466,21 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.heavy_text}>
                             {ride.fare}
                         </Text>
-                       <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
+                        <Line/>
+                       <Text style={styles.text_finalize}>
                             {text}
                         </Text>
                     </View>
-                    <View style={styles.star_rating}>
+                    
                         <Button
+                            style={styles.primary_buttons}
                             action={this.completePayment}
                             text={"FINALIZE"}
                             color={colors.action}
                         />
-                    </View>
+                    
                 </View>
-                    <Banner/>
+                <Banner/>
             </View>
         )
     },
@@ -484,7 +508,7 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.item_title}>
                             {header}
                         </Text>
-                        <Text style={{fontFamily: 'gothamrounded_book', textAlign: 'center', marginTop: 6}}>
+                        <Text style={styles.text_finalize}>
                             {message}
                         </Text>
                         <StarRating
@@ -497,6 +521,7 @@ var CurrentRidePage = React.createClass({
                     </View>
                     <Button
                         action={this.finishRide}
+                        style={styles.primary_buttons}
                         text={"FINISH"}
                         color={colors.action}
                     />
@@ -517,7 +542,7 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.sheet_dark}>
                     <View style={{alignItems: 'center'}}>
                         <View style={styles.card_mid}>
-                            <Text style={{textAlign: 'center'}}>
+                            <Text style={styles.text_finalize}>
                                 Sorry, your request has been declined.
                             </Text>
                         </View>

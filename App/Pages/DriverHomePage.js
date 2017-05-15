@@ -510,7 +510,7 @@ var DriverHomePage = React.createClass({
         // screen components
         var header = this.renderHeader("Rating");
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
-        var text = this.renderText("How was your ride with" + ride.customer.first_name +"?");         
+        var text = this.renderText("How was your ride with " + ride.customer.first_name +"?");         
 
         return  (
             <View style={styles.page_finalize}>     

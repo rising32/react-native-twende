@@ -30,7 +30,8 @@ export var colors = {
     button_clicked: '#1C79CE',
     button_text: '#FFFFFF',
     username: '#757575',
-    star_rating: '#ffeb3b'
+    star_rating: '#ffeb3b',
+    white: '#ffffff'
 };
 
 export var styles = StyleSheet.create({
@@ -282,8 +283,9 @@ export var styles = StyleSheet.create({
     },
 
     line: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: colors.secondary,
+        borderRadius: 5,
+        elevation: 0.5,
         width: 110,
         height: 1.5,
         margin: 6
@@ -393,17 +395,18 @@ export var styles = StyleSheet.create({
     },
 
     sheet_icon: {
-        marginLeft: 10,
+        flexDirection: 'row',
         marginRight: 10,
         marginBottom: 0
     },
 
     sheet_icon_text: {
         fontFamily: 'gothamrounded_bold',
+        alignSelf: 'center',
         fontSize: 12,
         marginLeft: 4,
         marginRight: 4,
-        marginTop: 0,
+        marginBottom: 3,
         elevation: 2
     },
 
@@ -420,7 +423,7 @@ export var styles = StyleSheet.create({
     // Rider App
 
     text_box: {
-        elevation: 4,
+        elevation: 2,
         paddingBottom: 10,
         paddingTop: 10,
         paddingLeft: 10,
@@ -662,7 +665,7 @@ export var styles = StyleSheet.create({
     },
 
     primary_button: {
-        margin: 14,
+        margin: 8,
         height: 50,
         bottom: 0,
         padding: 10,
@@ -700,8 +703,8 @@ export var styles = StyleSheet.create({
 
     primary_buttons: {
         flexDirection: 'row',
-        height: 40,
-        width: 100
+        flex: 1,
+        height: 40
     },
 
     primary_button_text: {

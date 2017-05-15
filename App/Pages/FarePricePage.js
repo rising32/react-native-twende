@@ -23,6 +23,7 @@ const SheetIcon = require('../Components/SheetIcon');
 
 import { loadGeoLocation } from "../Actions/GeoLocationActions";
 import Avatar from "../Components/Avatar";
+import Line from "../Components/Line";
 import GeoLocationStore from '../Stores/GeoLocationStore';
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import CurrentRideStore from '../Stores/CurrentRideStore';
@@ -60,30 +61,28 @@ const FarePricePage = React.createClass({
     },
 
     renderScene: function (route, navigator) {
-                var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
+        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
+        
         return  (
-                        <View style={styles.page_finalize}>   
+            <View style={styles.page_finalize}>   
                 <View></View>
                 <View style={styles.text_box}>
                     {avatar}
-                    <Text style={[styles.item_title, {textAlign: 'center'}]}>
-                        This is our price
+                    <Text style={styles.item_title}>
+                        Our Price
                     </Text>
-                    <Text style={styles.text_card_mid}>
+                    <Text style={[styles.text_finalize, {color: colors.secondary}]}>
                         Pick-up fee: 60 shilling
                     </Text>
-                    <Text style={styles.text_card_mid}>
+                    <Text style={[styles.text_finalize, {color: colors.secondary}]}>
                         Kilometer price: 50 shilling
                     </Text>
-                    <Text style={styles.text_card_mid}>
+                    <Line/>
+                    <Text style={styles.text_finalize}>
                         The app keeps track of the kilometers.
                         At the end of the trip you can pay
                         with mobile money or cash
                     </Text>
-                    <Text style={styles.text_card_mid}>
-                        Have a good ride!
-                    </Text>
-
                     </View>
                 <View>
                 <Image
