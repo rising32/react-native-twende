@@ -506,7 +506,7 @@ var DriverHomePage = React.createClass({
         var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride");
+        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: 'Ride'");
 
         return  (
             <View style={styles.page_finalize}>    
@@ -547,7 +547,6 @@ var DriverHomePage = React.createClass({
                         {header}
                         {text}
                         <Line/>
-                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
                           <StarRating
                               onChange={this.rateRide}
                               maxStars={5}
@@ -555,12 +554,12 @@ var DriverHomePage = React.createClass({
                               colorOn={colors.action}
                               colorOff={colors.action_disabled}
                           />
-                        </View>
                         <Button
                             action={this.finishRide}
                             text={"FINISH"}
                             style={styles.primary_button_finalize}
-                        /> 
+                        />
+                        
                     </View>
                     <Banner/>
                 </View>

@@ -391,7 +391,6 @@ var CurrentRidePage = React.createClass({
                 <View></View>
                 <View style={styles.text_box}>
                     <Avatar/>
-                    <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={styles.item_title}>
                             Fare Price
                         </Text>
@@ -405,7 +404,6 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.text_finalize}>
                             Please choose:
                         </Text>
-                    </View>
                     <View style={{flexDirection: 'row'}}>
                         <Button
                             style={styles.primary_buttons}
