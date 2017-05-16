@@ -53,8 +53,15 @@ export var styles = StyleSheet.create({
     text_finalize: {
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
-        marginBottom: 6,
         textAlign: 'center',
+        color: colors.grey
+    },
+    
+    text_ride: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: 6,
         color: colors.grey
     },
 
@@ -633,8 +640,8 @@ export var styles = StyleSheet.create({
 
     item_image: {
         backgroundColor: '#999999',
-        width: 80,
-        height: 80
+        width: 90,
+        height: 90
     },
     item_content: {
         flex: 1,

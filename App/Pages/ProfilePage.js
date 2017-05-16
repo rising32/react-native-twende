@@ -140,6 +140,7 @@ var ProfilePage = React.createClass({
                                     size={40}
                                     color={'#ffffff'}
                                     width={48}
+                                    action={this.takePicture}
                                     height={48}
                                     borderRadius={23}
                                     backgroundColor={colors.action}
@@ -189,7 +190,7 @@ var ProfilePage = React.createClass({
                                     text={'READY'}
                                     size={30}
                                     color={'#ffffff'}
-                                    action={this.goHome}
+                                    action={() => navigator.parentNavigator.pop()}
                                 />
                         </View>
             </ScrollView>
@@ -203,7 +204,7 @@ var NavigationBarRouteMapper = {
         return (
             <NavIcon
                 icon={"arrow-back"}
-                action={navigator.props.goHome}
+                action={() => navigator.parentNavigator.pop()}
             />
         );
     },

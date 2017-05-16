@@ -60,11 +60,12 @@ var DriverItem = React.createClass({
                                     size={16}
                                 />
                             </View>
-                            <View style={{alignItems: 'flex-end', marginTop: -36, marginBottom: -6, marginLeft: 20}}>
+                            
                                 <ButtonListview 
                                     action={this.props.onSelect}
-                                    text={"REQUEST"} />
-                            </View>
+                                    text={"REQUEST"} 
+                                />
+                            
                         </View>
                     </View>
                 </View>

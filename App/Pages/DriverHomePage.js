@@ -269,6 +269,14 @@ var DriverHomePage = React.createClass({
         )
     },
 
+    renderTextRide: function (text) {
+        return (
+            <Text style={styles.text_ride}>
+                {text}
+            </Text>
+        )
+    },
+
     renderFare: function (fare_amount, fare_currency) {
         return (
             <Text style={styles.heavy_text}>
@@ -411,7 +419,7 @@ var DriverHomePage = React.createClass({
         // components in screen
         var top = this.renderSheetTop();
         var header =this.renderHeader("Hi " + ride.customer.first_name + ",");           
-        var text = this.renderText("First give me a call. Then pick me up."); 
+        var text = this.renderTextRide("First give me a call. Then pick me up."); 
 
 
         return  (
@@ -454,7 +462,7 @@ var DriverHomePage = React.createClass({
         // components in screen
         var top = this.renderSheetTop();
         var header =this.renderHeader("Hi" + ride.customer.first_name);           
-        var text = this.renderText("Please offer me a helmet & hair net.\nRide carefully!");
+        var text = this.renderTextRide("Please offer me a helmet & hair net.\nRide carefully!");
 
         return  (
             <View style={styles.page_ride}>
