@@ -23,10 +23,10 @@ var DriverItem = React.createClass({
     fuzzyDistance: function() {
         let dist = this.props.driver.distance;
         if (dist > 1000) {
-            return Math.round(dist / 100) / 10 + 'km (' + (((dist / 100) / 10) * 4).toFixed(0) + ' min)';
+            return Math.round(dist / 100) / 10 + 'km (' + (((dist / 100) / 10) * 2.5).toFixed(0) + ' min)';
         }
         if (dist > 240) {
-        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4).toFixed(0) + ' min)';
+        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 3).toFixed(0) + ' min)';
         }
         return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 4 * 60).toFixed(0) + ' sec)';
     },
