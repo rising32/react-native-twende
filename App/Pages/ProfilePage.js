@@ -134,11 +134,15 @@ var ProfilePage = React.createClass({
                 <View style={styles.sheet}>
                     <View style={{justifyContent: 'space-between', alignSelf: 'stretch', flexDirection: 'row', marginTop: -45, marginBottom: -15, elevation: 5}}>
                         <TouchableOpacity onPress={this.takePicture}>
-                            <View style={[styles.sheet_icon, {backgroundColor: colors.action}]}>
-                                <Icon
+                            <View style={styles.sheet_icon}>
+                                <SheetIcon
                                     name={'camera-alt'}
-                                    size={30}
+                                    size={40}
                                     color={'#ffffff'}
+                                    width={48}
+                                    height={48}
+                                    borderRadius={23}
+                                    backgroundColor={colors.action}
                                 />
                             </View>
                         </TouchableOpacity>

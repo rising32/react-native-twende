@@ -144,8 +144,9 @@ var CurrentRidePage = React.createClass({
         updateCurrentRide(ride);
     },
 
-    renderSheetTop: function () {
+    renderSheetTop: function (renderRoute=true) {
         var ride = this.props.currentRide;
+
 
         return (
             <View style={styles.sheet_top}>
@@ -155,6 +156,7 @@ var CurrentRidePage = React.createClass({
                     <Avatar image={ride.driver.avatar}/>
                 </View>
                 <View style={styles.renderItemRight}>
+                {renderRoute ?
                     <SheetIcon
                         align={'center'}
                         action={this.cancelRide}
@@ -169,20 +171,11 @@ var CurrentRidePage = React.createClass({
                         text_color={colors.disable}
                         url={"tel: " + ride.driver.phone}
                     />
+                    : <Text/> 
+                }
                 </View>
             </View>
         );
-    },
-
-    renderAvatar: function (avatar) {
-        return (
-            <View style={styles.avatar_centre}>
-                <Image
-                    source={avatar}
-                    style={styles.avatar}
-                />
-            </View>
-        )
     },
 
     renderText: function (text) {
@@ -358,7 +351,8 @@ var CurrentRidePage = React.createClass({
     renderDriving: function () {
         var ride = this.props.currentRide;
         let text = "Twende!";
-        var top = this.renderSheetTop(); 
+        var top = this.renderSheetTop(false);   
+
         return (
             <View style={styles.page_ride}>
                 <View style={styles.map_container}>
@@ -398,13 +392,12 @@ var CurrentRidePage = React.createClass({
     renderDropOff: function () {
 
         var ride = this.props.currentRide;
-        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
 
         return (
             <View style={styles.page_finalize}>   
                 <View></View>
                 <View style={styles.text_box}>
-                    {avatar}
+                    <Avatar/>
                     <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={styles.item_title}>
                             Fare Price
@@ -442,8 +435,6 @@ var CurrentRidePage = React.createClass({
 
     renderPayment: function () {
         var ride = this.props.currentRide;
-        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
-
         var text;
 
         if (ride.payment_method == 'mpesa') {
@@ -458,27 +449,23 @@ var CurrentRidePage = React.createClass({
             <View style={styles.page_finalize}>   
                 <View></View>
                 <View style={styles.text_box}>
-                    {avatar}
-                    <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
-                        <Text style={styles.item_title}>
-                            {header}
-                        </Text>
-                        <Text style={styles.heavy_text}>
-                            {ride.fare}
-                        </Text>
-                        <Line/>
-                       <Text style={styles.text_finalize}>
-                            {text}
-                        </Text>
-                    </View>
-                    
-                        <Button
-                            style={styles.primary_buttons}
-                            action={this.completePayment}
-                            text={"FINALIZE"}
-                            color={colors.action}
-                        />
-                    
+                    <Avatar/>
+                    <Text style={styles.item_title}>
+                        {header}
+                    </Text>
+                    <Text style={styles.heavy_text}>
+                        {ride.fare}
+                    </Text>
+                    <Line/>
+                   <Text style={styles.text_finalize}>
+                        {text}
+                    </Text>
+                    <Button
+                        style={styles.primary_button_finalize}
+                        action={this.completePayment}
+                        text={"FINALIZE"}
+                        color={colors.action}
+                    />
                 </View>
                 <Banner/>
             </View>
@@ -488,7 +475,6 @@ var CurrentRidePage = React.createClass({
 
     renderFinalize: function () {
         var ride = this.props.currentRide;
-        var avatar = this.renderAvatar(require('../assets/twende_avatar.png'))
         var driver = {};
         if (ride.driver) {
             driver = ride.driver
@@ -503,25 +489,23 @@ var CurrentRidePage = React.createClass({
             <View style={styles.page_finalize}>   
                 <View></View>
                 <View style={styles.text_box}>
-                    {avatar}
-                    <View style={{margin: 6, justifyContent: 'center', alignItems: 'center'}}>
-                        <Text style={styles.item_title}>
-                            {header}
-                        </Text>
-                        <Text style={styles.text_finalize}>
-                            {message}
-                        </Text>
-                        <StarRating
-                            onChange={this.rateRide}
-                            maxStars={5}
-                            rating={0}
-                            colorOn={colors.action}
-                            colorOff={colors.action_disabled}
-                        />
-                    </View>
+                    <Avatar/>
+                    <Text style={styles.item_title}>
+                        {header}
+                    </Text>
+                    <Text style={styles.text_finalize}>
+                        {message}
+                    </Text>
+                    <StarRating
+                        onChange={this.rateRide}
+                        maxStars={5}
+                        rating={0}
+                        colorOn={colors.action}
+                        colorOff={colors.action_disabled}
+                    />
                     <Button
                         action={this.finishRide}
-                        style={styles.primary_buttons}
+                        style={styles.primary_button_finalize}
                         text={"FINISH"}
                         color={colors.action}
                     />
