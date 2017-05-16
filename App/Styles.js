@@ -53,6 +53,7 @@ export var styles = StyleSheet.create({
     text_finalize: {
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
+        marginBottom: 6,
         textAlign: 'center',
         color: colors.grey
     },
@@ -68,6 +69,14 @@ export var styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         color: colors.secondary
+    },
+
+    text_timer: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: -22,
+        color: colors.grey
     },
 
     item_title: {
@@ -395,8 +404,7 @@ export var styles = StyleSheet.create({
 
     sheet_icon: {
         flexDirection: 'row',
-        marginRight: 10,
-        marginBottom: 0
+        marginRight: 10
     },
 
     sheet_icon_text: {

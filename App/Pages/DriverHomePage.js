@@ -144,7 +144,7 @@ var DriverHomePage = React.createClass({
     },
 
     openNavigation: function() {
-        let url = "geo:?q=" + ride.origin.latitude + ","  + ride.origin.longitude;
+        let url = "geo:?q=" + this.props.currentRide.origin.latitude + ","  + this.props.currentRide.origin.longitude;
         Linking.openURL(url);
     },
 
@@ -211,10 +211,17 @@ var DriverHomePage = React.createClass({
                 <View style={styles.renderItemLeft}>
                     {renderRoute ?
                         <SheetIcon
-                            url={this.openNavigation}
-                            icon={'motorcycle'}
+                            action={this.openNavigation}
+                            name={'motorcycle'}
                             text={'ROUTE'}
+                            size={20}
+                            text_color={colors.action}
                             align={'flex-start'}
+                            fontSize={13}
+                            color={colors.white}
+                            width={27}
+                            height={27}
+                            backgroundColor={colors.action}
                         /> : <Text />
                     }
                 </View>
@@ -222,9 +229,16 @@ var DriverHomePage = React.createClass({
                 <View style={styles.renderItemRight}>
                     <SheetIcon
                         action={this.declineRide}
-                        icon={'clear'}
+                        size={20}
+                        right={true}
+                        fontSize={13}
+                        text_color={colors.disable}
+                        name={'clear'}
                         text={'DECLINE'}
-                        color={colors.disable}
+                        backgroundColor={colors.disable}
+                        color={colors.white}
+                        width={27}
+                        height={27}
                     />
                 </View>
             </View>
@@ -250,7 +264,7 @@ var DriverHomePage = React.createClass({
     renderText: function (text) {
         return (
             <Text style={styles.text_finalize}>
-                    {text}
+                {text}
             </Text>
         )
     },
@@ -295,8 +309,8 @@ var DriverHomePage = React.createClass({
             <View style={styles.page}>
                 <View style={styles.empty_view_riderhome}>
                 </View>
-                <Avatar />
                 <View style={styles.text_box}>
+                    <Avatar/>
                     {header}
                     {text}
                 </View>
@@ -350,7 +364,6 @@ var DriverHomePage = React.createClass({
         var header = this.renderHeader("Incoming Request"); 
         var customer = this.renderCustomer(ride.customer.name);          
         var away = this.renderText(away); 
-        var text = this.renderText("Time to accept:"); 
         if (ride.driver_distance) {
             away = this.renderText(ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away");
         }
@@ -376,7 +389,9 @@ var DriverHomePage = React.createClass({
                         size={20}
                         style={styles.item}
                     />
-                    {text}
+                    <Text style={styles.text_timer}>
+                        Time to accept:
+                    </Text>
                     <View style={styles.timer}>
                         <Timer/>
                     </View>  
@@ -412,14 +427,16 @@ var DriverHomePage = React.createClass({
                 <View style={styles.text_box}>
                     {header}
                     {text}
-                    <Link
+                    <SheetIcon
                         url={"tel: " + ride.customer.phone}
-                        size={14}
-                        fontFamily={'gothamrounded_bold'}
-                        color={colors.secondary}
+                        name={'phone'}
+                        backgroundColor={colors.secondary}
+                        width={30}
+                        height={30}
+                        color={colors.white}
+                        size={22}
+                        text_color={colors.secondary}
                         text={" CALL " + ride.customer.name.toUpperCase()}
-                        source={require('../assets/phone_icon_blue.png')}
-                        imagestyle={styles.phone_icon}
                     />
                 </View>  
                 <Button
@@ -439,7 +456,6 @@ var DriverHomePage = React.createClass({
         var header =this.renderHeader("Hi" + ride.customer.first_name);           
         var text = this.renderText("Please offer me a helmet & hair net.\nRide carefully!");
 
-
         return  (
             <View style={styles.page_ride}>
                 <View style={styles.map_container}>
@@ -452,14 +468,16 @@ var DriverHomePage = React.createClass({
                 {top}
                 <View style={styles.text_box}>
                     {text}
-                    <Link
+                    <SheetIcon
+                        name={'phone'}
+                        backgroundColor={colors.secondary}
+                        width={30}
+                        height={30}
+                        color={colors.white}
+                        size={22}
+                        text_color={colors.secondary}
                         url={"tel: 0791398120"}
-                        size={14}
-                        fontFamily={'gothamrounded_bold'}
-                        color={colors.secondary}
                         text={" CALL SUPPORT"}
-                        source={require('../assets/phone_icon_blue.png')}
-                        imagestyle={styles.phone_icon}
                     />
                 </View>  
                 <Button
@@ -480,7 +498,7 @@ var DriverHomePage = React.createClass({
         var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa.\nPaybill No: 653839.\nAccount No: Ride");
+        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa\nPaybill No: 653839\nAccount No: Ride");
 
         return  (
             <View style={styles.page_finalize}>    

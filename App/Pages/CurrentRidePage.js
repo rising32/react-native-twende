@@ -55,7 +55,6 @@ var CurrentRidePage = React.createClass({
 
     componentDidMount() {
         this.showMessage();
-        this.startRidePoller();
     },
 
     componentWillUnmount() {
@@ -147,14 +146,11 @@ var CurrentRidePage = React.createClass({
     renderSheetTop: function (renderRoute=true) {
         var ride = this.props.currentRide;
 
-
         return (
             <View style={styles.sheet_top}>
                 <View style={styles.renderItemLeft}>
                 </View>
-                <View>
-                    <Avatar image={ride.driver.avatar}/>
-                </View>
+                <Avatar image={ride.driver.avatar}/>
                 <View style={styles.renderItemRight}>
                 {renderRoute ?
                     <SheetIcon
@@ -293,20 +289,17 @@ var CurrentRidePage = React.createClass({
 
     renderCanceled: function () {
         return (
-            <View style={{flex: 1}}>
-                <View style={styles.sheet_dark}>
-                    <View style={{alignItems: 'center'}}>
-                        <View style={styles.card_mid}>
-                            <Text style={{textAlign: 'center'}}>
-                                Canceling ride. Please hang on as we search for nearby riders.
-                            </Text>
-                        </View>
-                    </View>
-                </View>
+            <View style={styles.loading}>
+                <IconText
+                    color={colors.action_secondary}
+                    size={15}
+                    icon={'settings-input-antenna'}
+                    text={'Canceling ride. Please hang on as we search for nearby riders.'}
+                />
             </View>
-        )
+        );
     },
-
+                                
     renderAccepted: function () {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
@@ -439,7 +432,7 @@ var CurrentRidePage = React.createClass({
 
         if (ride.payment_method == 'mpesa') {
             var header = "M-Pesa Payment";
-            text = "Please pay to:" + "\n" + "Paybill No: 653839" + "\n" + "Account No: Ride";
+            text = "Choose Paybill Number: 653839" + "\n" + "Account No: Ride";
         } else {
             var header = "Cash Payment";
             var text = "Please pay the cash amount to rider";

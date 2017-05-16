@@ -30,7 +30,7 @@ module.exports = React.createClass({
         if (this.props.right) {
             return (
                 <TouchableOpacity onPress={action} style={styles.horizontal}>
-                    <Text style={[styles.sheet_icon_text, {color: this.props.text_color}]}>
+                    <Text style={[styles.sheet_icon_text, {color: this.props.text_color, fontSize: this.props.fontSize}]}>
                         {this.props.text}
                     </Text>
                     <View style={[styles.sheet_icon, {alignItems: this.props.align}]}>
