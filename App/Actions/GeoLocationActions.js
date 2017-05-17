@@ -46,26 +46,23 @@ export function loadGeoLocation(enableHighAccuracy) {
     );
 }
 
-BackgroundGeolocation.configure({
-      desiredAccuracy: 10,
-      stationaryRadius: 50,
-      distanceFilter: 50,
-      locationTimeout: 30,
-      notificationTitle: 'Background tracking',
-      notificationText: 'enabled',
-      debug: false,
-      startOnBoot: false,
-      stopOnTerminate: false,
-      locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
-      interval: 60000,
-      fastestInterval: 20000,
-      activitiesInterval: 20000,
-      stopOnStillActivity: false,
-});
-
 
 export function startWatchingGeoLocation() {
 
+    BackgroundGeolocation.configure({
+          desiredAccuracy: 10,
+          stationaryRadius: 50,
+          distanceFilter: 50,
+          locationTimeout: 30,
+          debug: false,
+          startOnBoot: false,
+          stopOnTerminate: false,
+          locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
+          interval: 300000,
+          fastestInterval: 20000,
+          activitiesInterval: 20000,
+          stopOnStillActivity: false,
+    });
 
     BackgroundGeolocation.on('location', (location) => {
         dispatch({
