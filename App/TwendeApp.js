@@ -28,6 +28,7 @@ var CurrentRidePage = require('./Pages/CurrentRidePage');
 var CurrentLocationPage = require('./Pages/CurrentLocationPage');
 var DriverListPage = require('./Pages/DriverListPage');
 var DriverHomePage = require('./Pages/DriverHomePage');
+var DriverRidePage = require('./Pages/DriverRidePage');
 var NoNavigatorPage = require('./Pages/NoNavigatorPage');
 var TermsPage = require('./Pages/TermsPage');
 var FarePricePage = require('./Pages/FarePricePage');
@@ -246,16 +247,31 @@ var TwendeApp = React.createClass({
         if (this.state.currentUser.is_driver) {
             if (currentRide.state === 'requested') {
                 sounds.alarm2.play();
-            }
-            if (currentRide.state === 'canceled') {
+                this.navigator.push({
+                    id: 'DriverRidePage',
+                    currentUser: this.state.currentUser,
+                    currentRide: currentRide
+                });
+            } else if (['accepted', 'driving', 'dropoff', 'payment'].indexOf(currentRide.state) > -1) {
                 this.state.currentUser.state = 'unavailable';
+                this.navigator.push({
+                    id: 'DriverRidePage',
+                    currentUser: this.state.currentUser,
+                    currentRide: currentRide
+                });
+            } else if (currentRide.state === 'finalized' && !currentRide.driver_rating) {
+                this.navigator.push({
+                    id: 'DriverRidePage',
+                    currentUser: this.state.currentUser,
+                    currentRide: currentRide
+                });
+            } else {
+                this.navigator.push({
+                    id: 'DriverHomePage',
+                    currentUser: this.state.currentUser,
+                    currentRide: currentRide
+                });
             }
-            this.navigator.push({
-                id: 'DriverHomePage',
-                currentUser: this.state.currentUser,
-                currentRide: currentRide
-            });
-
         } else {
             if (currentRide.state === 'canceled') {
                 // Create a new ride so you end up at driver list.
@@ -614,9 +630,19 @@ var TwendeApp = React.createClass({
                     navigator={navigator}/>
             );
         }
+
         if (routeId === 'DriverHomePage') {
             return (
                 <DriverHomePage
+                    openDrawer={this.openDrawer}
+                    goToPage={this.goToPage}
+                    currentUser={this.state.currentUser}
+                    navigator={navigator}/>
+            );
+        }
+        if (routeId === 'DriverRidePage') {
+            return (
+                <DriverRidePage
                     openDrawer={this.openDrawer}
                     goToPage={this.goToPage}
                     currentUser={this.state.currentUser}
