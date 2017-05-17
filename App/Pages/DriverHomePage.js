@@ -3,26 +3,17 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-    Alert,
-    Linking,
     View,
     Text,
-    TextInput,
     Switch,
-    ActivityIndicator,
     Navigator,
-    TouchableOpacity,
     ToastAndroid,
-    Image
     } = ReactNative;
 
-import CurrentRideStore from '../Stores/CurrentRideStore';
-import CurrentUserStore from '../Stores/CurrentUserStore';
 import GeoLocationStore from '../Stores/GeoLocationStore';
 var Map = require('../Components/Map');
 var NavIcon = require('../Components/NavIcon');
 var IconText = require('../Components/IconText');
-import { Icon } from 'react-native-material-design';
 var Avatar = require('../Components/Avatar');
 var Link = require('../Components/Link');
 var Line = require('../Components/Line');
@@ -32,7 +23,6 @@ var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
 var Rating = require('../Components/Rating');
 var StarRating = require('../Components/StarRating');
-var Avatar = require('../Components/Avatar');
 
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
@@ -49,23 +39,11 @@ import TimerMixin from 'react-timer-mixin';
 const timer = require('react-native-timer');
 
 
-var DriverHomePage = React.createClass({
+module.exports = React.createClass({
 
     getInitialState: function () {
-        var region =  {
-            latitude: this.props.currentUser.latitude,
-            longitude: this.props.currentUser.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01
-        };
-        if (this.props.currentRide.origin) {
-            region['latitude'] =  this.props.currentRide.origin.latitude;
-            region['longitude']= this.props.currentRide.origin.longitude;
-        }
         return {
             currentUser: this.props.currentUser,
-            currentRide: this.props.currentRide,
-            region: region,
             trueSwitchIsOn: true,
             falseSwitchIsOn: false,
             rating: 0,
@@ -109,12 +87,6 @@ var DriverHomePage = React.createClass({
     refreshItems: function(){
         ToastAndroid.show('Checking Customer Activity..', ToastAndroid.SHORT);
         loadRideList();
-        reloadCurrentUser();
-    },
-
-    refreshRide: function() {
-        ToastAndroid.show('Checking Customer Activity..', ToastAndroid.SHORT);
-        loadCurrentRide(this.props.currentRide.id);
         reloadCurrentUser();
     },
 
@@ -235,5 +207,3 @@ var NavigationBarRouteMapper = {
         );
     }
 };
-
-module.exports = DriverHomePage;

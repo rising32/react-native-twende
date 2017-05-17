@@ -16,8 +16,6 @@ var {
     Image
     } = ReactNative;
 
-import CurrentRideStore from '../Stores/CurrentRideStore';
-import CurrentUserStore from '../Stores/CurrentUserStore';
 import GeoLocationStore from '../Stores/GeoLocationStore';
 var Map = require('../Components/Map');
 var NavIcon = require('../Components/NavIcon');
@@ -32,15 +30,12 @@ var SheetIcon = require('../Components/SheetIcon');
 var SheetAvatar = require('../Components/SheetAvatar');
 var Rating = require('../Components/Rating');
 var StarRating = require('../Components/StarRating');
-var Avatar = require('../Components/Avatar');
-
 import {colors, styles} from "../Styles";
 import events from "../Constants/Events";
 import { updateCurrentRide,
          loadRideList,
          loadCurrentRide } from "../Actions/CurrentRideActions";
-import { updateCurrentUser,
-         reloadCurrentUser } from"../Actions/CurrentUserActions";
+import { reloadCurrentUser } from"../Actions/CurrentUserActions";
 import { startWatchingGeoLocation,
          loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
@@ -49,7 +44,7 @@ import TimerMixin from 'react-timer-mixin';
 const timer = require('react-native-timer');
 
 
-var DriverHomePage = React.createClass({
+module.exports = React.createClass({
 
     getInitialState: function () {
         var region =  {
@@ -551,4 +546,3 @@ var NavigationBarRouteMapper = {
     }
 };
 
-module.exports = DriverHomePage;
