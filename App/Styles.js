@@ -43,11 +43,6 @@ export var styles = StyleSheet.create({
     },
 
     // Text
-
-    baseText: {
-        fontFamily: 'gothamrounded_medium',
-     },
-
     text: {
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
@@ -59,6 +54,14 @@ export var styles = StyleSheet.create({
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
         textAlign: 'center',
+        color: colors.grey
+    },
+    
+    text_ride: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: 6,
         color: colors.grey
     },
 
@@ -73,6 +76,14 @@ export var styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         color: colors.secondary
+    },
+
+    text_timer: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: -22,
+        color: colors.grey
     },
 
     item_title: {
@@ -270,6 +281,10 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
 
+    horizontal: {
+        flexDirection: 'row',
+    },
+
     avatar_centre: {
         elevation: 10,
         flexDirection: 'row',
@@ -396,8 +411,7 @@ export var styles = StyleSheet.create({
 
     sheet_icon: {
         flexDirection: 'row',
-        marginRight: 10,
-        marginBottom: 0
+        marginRight: 10
     },
 
     sheet_icon_text: {
@@ -423,14 +437,14 @@ export var styles = StyleSheet.create({
     // Rider App
 
     text_box: {
-        elevation: 2,
+        elevation: 1,
         paddingBottom: 10,
         paddingTop: 10,
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 7,
-        marginLeft: 26,
-        marginRight: 26,
+        marginLeft: 30,
+        marginRight: 30,
         marginTop: -10,
         alignItems: 'center',
         backgroundColor: colors.box
@@ -626,8 +640,8 @@ export var styles = StyleSheet.create({
 
     item_image: {
         backgroundColor: '#999999',
-        width: 80,
-        height: 80
+        width: 90,
+        height: 90
     },
     item_content: {
         flex: 1,
@@ -673,12 +687,11 @@ export var styles = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'center',
         backgroundColor: colors.button_normal,
-        elevation: 4
+        elevation: 2
     },
 
     primary_button_finalize: {
         margin: 10,
-        marginBottom: -2,
         height: 40,
         bottom: 0,
         padding: 10,
@@ -686,7 +699,7 @@ export var styles = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'center',
         backgroundColor: colors.button_normal,
-        elevation: 4
+        elevation: 2
     },
 
     primary_button_flex: {

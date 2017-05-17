@@ -54,7 +54,10 @@ module.exports = React.createClass({
                     borderRadius: 2, 
                     backgroundColor: colors.button_normal,
                     elevation: 3,
-                    flex: 1
+                    alignSelf: 'flex-end',
+                    marginTop: -12,
+                    marginBottom: -6,
+                    marginLeft: 20
                 }}>
                     {icon}
                 <View style={{alignSelf: 'center'}}>

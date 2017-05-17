@@ -25,42 +25,42 @@ module.exports = React.createClass({
 
     render: function () {
         var action = this.props.action ? this.props.action : this.handleClick
+        var borderRadius = this.props.borderRadius ? this.props.borderRadius : 15
 
         if (this.props.right) {
             return (
-                <TouchableOpacity onPress={action} style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={[styles.sheet_icon_text, {color: this.props.text_color}]}>
-                                        {this.props.text}
-                                    </Text>
-                                <View style={[styles.sheet_icon, {alignItems: this.props.align}]}>
-                                <View style={[styles.sheet_icon_icon, {backgroundColor: this.props.backgroundColor, width: this.props.width, height: this.props.height}]}>
-                                    <Icon
-                                        name={this.props.name}
-                                        size={this.props.size} 
-                                        color={this.props.color}
-                                    />
-                                </View>
+                <TouchableOpacity onPress={action} style={styles.horizontal}>
+                    <Text style={[styles.sheet_icon_text, {color: this.props.text_color, fontSize: this.props.fontSize}]}>
+                        {this.props.text}
+                    </Text>
+                    <View style={[styles.sheet_icon, {alignItems: this.props.align}]}>
+                        <View style={[styles.sheet_icon_icon, {backgroundColor: this.props.backgroundColor, width: this.props.width, height: this.props.height}]}>
+                            <Icon
+                                name={this.props.name}
+                                size={this.props.size} 
+                                color={this.props.color}
+                            />
                         </View>
+                    </View>
                 </TouchableOpacity>
-                )
-            } 
+            )
+        } 
 
             return (
                 <TouchableOpacity onPress={action} style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={[styles.sheet_icon, {alignItems: this.props.align}]}>
-                                <View style={[styles.sheet_icon_icon, {backgroundColor: this.props.backgroundColor, width: this.props.width, height: this.props.height}]}>
-                                    <Icon
-                                        name={this.props.name}
-                                        size={this.props.size} 
-                                        color={this.props.color}
-                                    />
-                                </View>
-                                <Text style={[styles.sheet_icon_text, {color: this.props.text_color, fontSize: this.props.fontSize}]}>
-                                    {this.props.text}
-                                </Text>
+                    <View style={[styles.sheet_icon, {alignItems: this.props.align}]}>
+                        <View style={[styles.sheet_icon_icon, {backgroundColor: this.props.backgroundColor, borderRadius: borderRadius, width: this.props.width, height: this.props.height}]}>
+                            <Icon
+                                name={this.props.name}
+                                size={this.props.size} 
+                                color={this.props.color}
+                            />
                         </View>
+                        <Text style={[styles.sheet_icon_text, {color: this.props.text_color, fontSize: this.props.fontSize}]}>
+                            {this.props.text}
+                        </Text>
+                    </View>
                 </TouchableOpacity>
             )
-        
-    }
-})
+        }
+    })

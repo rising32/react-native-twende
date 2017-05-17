@@ -359,20 +359,20 @@ var TwendeApp = React.createClass({
                 </View>
                 <View style={styles.menu_list}>
                     <Link
-                        action={() => this.goToPage('CustomerSupportPage')}
-                        style={{padding: 8}}
-                        size={15}
-                        color={'#FFFFFF'}
-                        icon={'phone'}
-                        text={'Customer Support'}
-                    />
-                    <Link
                         style={{padding: 8}}
                         action={() => this.goToPage('ProfilePage')}
                         size={15}
                         color={'#FFFFFF'}
                         icon={'account-circle'}
                         text={'My Profile'}
+                    />
+                    <Link
+                        action={() => this.goToPage('CustomerSupportPage')}
+                        style={{padding: 8}}
+                        size={15}
+                        color={'#FFFFFF'}
+                        icon={'phone'}
+                        text={'Customer Support'}
                     />
                     <Link
                         action={() => this.goToPage('TermsPage')}
@@ -390,17 +390,7 @@ var TwendeApp = React.createClass({
                         icon={'lock-open'}
                         text={'Logout'}
                     />
-                    <Link
-                        action={this.closeApp}
-                        style={{padding: 8}}
-                        size={15}
-                        color={'#FFFFFF'}
-                        icon={'power-settings-new'}
-                        text={'Close Twende'}
-                    />
-
                 </View>
-
             </View>
         );
     },
@@ -430,11 +420,11 @@ var TwendeApp = React.createClass({
                 <View style={styles.menu_list}>
                     <Link
                         style={{padding: 8}}
-                        action={() => this.goToPage('DriverHomePage')}
+                        action={() => this.goToPage('ProfilePage')}
                         size={14}
                         color={'#FFFFFF'}
-                        icon={'motorcycle'}
-                        text={'Home'}
+                        icon={'account-circle'}
+                        text={'My Profile'}
                     />
                     <Link
                         action={() => this.goToPage('CustomerSupportPage')}
@@ -443,14 +433,6 @@ var TwendeApp = React.createClass({
                         color={'#FFFFFF'}
                         icon={'phone'}
                         text={'Customer support'}
-                    />
-                    <Link
-                        style={{padding: 8}}
-                        action={() => this.goToPage('ProfilePage')}
-                        size={14}
-                        color={'#FFFFFF'}
-                        icon={'account-circle'}
-                        text={'My Profile'}
                     />
                     <Link
                         style={{padding: 8}}
