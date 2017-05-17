@@ -4,7 +4,11 @@ import {dispatch} from '../Dispatcher';
 import actions from "../Constants/Actions";
 import config from "../config"
 var LocationService = require('../Services/LocationService');
-var React = require('react-native');
+var ReactNative = require('react-native');
+var {
+    ToastAndroid,
+    } = ReactNative;
+
 var watchId;
 
 export function loadGeoLocation(enableHighAccuracy) {
@@ -41,6 +45,24 @@ export function loadGeoLocation(enableHighAccuracy) {
         }
     );
 }
+
+BackgroundGeolocation.configure({
+      desiredAccuracy: 10,
+      stationaryRadius: 50,
+      distanceFilter: 50,
+      locationTimeout: 30,
+      notificationTitle: 'Background tracking',
+      notificationText: 'enabled',
+      debug: false,
+      startOnBoot: false,
+      stopOnTerminate: false,
+      locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
+      interval: 60000,
+      fastestInterval: 20000,
+      activitiesInterval: 20000,
+      stopOnStillActivity: false,
+});
+
 
 export function startWatchingGeoLocation() {
 
