@@ -18,6 +18,7 @@
     "react-native-maps": "^0.12.0",
     "react-native-material-design": "0.3.7",
     "react-native-material-kit": "^0.3.3",
+    "react-native-mauron85-background-geolocation": "^0.2.0-alpha.7",
     "react-native-progress": "3.1.0",
     "react-native-push-notification": "^2.2.0",
     "react-native-sound": "^0.8.3",

@@ -136,6 +136,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-mauron85-background-geolocation')
     compile project(':react-native-material-kit')
     compile project(':react-native-image-picker')
     compile project(':react-native-maps')
