@@ -54,10 +54,8 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
-        loadGeoLocation();
         const currentUser = this.state.currentUser;
         updateCurrentUser(currentUser);
-        currentUser.state = available ? 'available' : 'unavailable';
         if (currentUser.state === 'available') {
             startWatchingGeoLocation();
         }

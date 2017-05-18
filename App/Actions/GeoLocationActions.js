@@ -52,6 +52,8 @@ export function startWatchingGeoLocation() {
     BackgroundGeolocation.configure({
           desiredAccuracy: 10,
           stationaryRadius: 50,
+          notificationTitle: 'Background tracking',
+          notificationText: 'enabled',
           distanceFilter: 50,
           locationTimeout: 30,
           debug: false,
@@ -104,7 +106,7 @@ export function startWatchingGeoLocation() {
 
 
     BackgroundGeolocation.start(() => {
-        console.log('[DEBUG] BackgroundGeolocation started successfully');
+        ToastAndroid.show('Started updating your location', ToastAndroid.SHORT)
     });
 
 }
@@ -112,9 +114,6 @@ export function startWatchingGeoLocation() {
 export function stopWatchingGeoLocation() {
 
     BackgroundGeolocation.stop(() => {
-        console.log('[DEBUG] BackgroundGeolocation stopped successfully');
+        ToastAndroid.show('Stopped updating your location', ToastAndroid.SHORT)
     });
-
-    // navigator.geolocation.clearWatch(watchId);
-    // watchId = null;
 }
