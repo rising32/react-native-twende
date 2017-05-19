@@ -52,8 +52,8 @@ export function startWatchingGeoLocation() {
     BackgroundGeolocation.configure({
           desiredAccuracy: 10,
           stationaryRadius: 50,
-          notificationTitle: 'Background tracking',
-          notificationText: 'enabled',
+          notificationTitle: 'Twende Tracking',
+          notificationText: 'Customers can find you!',
           distanceFilter: 50,
           locationTimeout: 30,
           debug: false,
@@ -106,7 +106,7 @@ export function startWatchingGeoLocation() {
 
 
     BackgroundGeolocation.start(() => {
-        ToastAndroid.show('Started updating your location', ToastAndroid.SHORT)
+        // ToastAndroid.show('Started updating your location', ToastAndroid.SHORT)
     });
 
 }
@@ -114,6 +114,6 @@ export function startWatchingGeoLocation() {
 export function stopWatchingGeoLocation() {
 
     BackgroundGeolocation.stop(() => {
-        ToastAndroid.show('Stopped updating your location', ToastAndroid.SHORT)
+        ToastAndroid.show("Customers can't find you now." , ToastAndroid.SHORT)
     });
 }
