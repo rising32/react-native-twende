@@ -4,4 +4,7 @@
     <string name="fb_login_protocol_scheme">fb1627137227610764</string>
     <string name="android_google_maps_api_key">AIzaSyD7hZ7PX9dtaEnt9IvzMw4FmomwJvNyU_Q</string>
     <string name="app_name">Twende</string>
+    <string name="account_type">com.twendeapp</string>
+    <string name="content_authority">com.twendeapp.authority</string>
+
 </resources>

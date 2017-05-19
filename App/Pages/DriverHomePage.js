@@ -54,25 +54,16 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         GeoLocationStore.on(events.geoLocationLoaded, this.updateLocation);
-        loadGeoLocation();
-        startWatchingGeoLocation();
-    },
-
-        componentDidMount() {
-        this.showMessage();
+        const currentUser = this.state.currentUser;
+        updateCurrentUser(currentUser);
+        if (currentUser.state === 'available') {
+            startWatchingGeoLocation();
+        }
     },
 
     componentWillUnmount: function() {
         GeoLocationStore.removeListener(events.geoLocationLoaded, this.updateLocation);
         stopWatchingGeoLocation();
-        timer.clearTimeout(this);
-    },
-
-    // message when time is up when receiving request from customer
-    showMessage: function () {
-        this.setState({showMessage: true}, () => timer.setTimeout(
-        this, 'hideMessage', () => this.setState({showMessage: false}), 30000
-        ));
     },
 
     updateLocation: function(loc) {
@@ -91,8 +82,13 @@ module.exports = React.createClass({
     },
 
     toggleAvailability: function(available) {
-        var currentUser = this.state.currentUser;
+        const currentUser = this.state.currentUser;
         currentUser.state = available ? 'available' : 'unavailable';
+        if (currentUser.state === 'available') {
+            startWatchingGeoLocation();
+        } else {
+            stopWatchingGeoLocation();
+        }
         updateCurrentUser(currentUser);
     },
 

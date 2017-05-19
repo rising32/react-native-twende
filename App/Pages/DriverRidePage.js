@@ -75,7 +75,7 @@ module.exports = React.createClass({
         startWatchingGeoLocation();
     },
 
-        componentDidMount() {
+    componentDidMount() {
         this.showMessage();
     },
 
