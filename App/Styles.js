@@ -757,6 +757,14 @@ export var styles = StyleSheet.create({
         borderColor: '#ffffff'
     },
 
+    avatar_rider_item: {
+        width: 80,
+        height: 80,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: '#ffffff'
+    },
+
     menu_background: {
         width: 300,
         height: 200
