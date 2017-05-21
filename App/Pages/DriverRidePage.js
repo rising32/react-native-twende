@@ -233,19 +233,19 @@ module.exports = React.createClass({
         );
     },
 
-    renderCustomer: function (customer) {
-        return (
-            <Text style={styles.customer_title}>
-                {customer}
-            </Text>
-        )
-    },
-
     renderHeader: function (header) {
         return (
         <Text style={styles.item_title}>
             {header}
         </Text>
+        )
+    },
+
+    renderCustomer: function (customer) {
+        return (
+            <Text style={styles.customer_title}>
+                {customer}
+            </Text>
         )
     },
 
@@ -297,9 +297,9 @@ module.exports = React.createClass({
         var top = this.renderSheetTop(false);
         var header = this.renderHeader("Incoming Request");
         var customer = this.renderCustomer(ride.customer.name);
-        var away = this.renderText(away);
+        var away = "time away";
         if (ride.driver_distance) {
-            away = this.renderText(ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away");
+            away = ride.driver_distance.distance + " away";
         }
 
         return  (
@@ -314,15 +314,19 @@ module.exports = React.createClass({
                 {top}
                 <View style={styles.text_box}>
                     {customer}
-                    {away}
                     <Rating
                         maxStars={5}
+                        showNumber={false}
+                        color={colors.grey}
                         rating={ride.customer.rating}
-                        colorOn={colors.secondary}
+                        colorOn={colors.rating}
                         colorOff={colors.action_disabled}
                         size={20}
                         style={styles.item}
                     />
+                    <Text>
+                        {away}
+                    </Text>
                     <View style={styles.timer}>
                         <Text style={styles.text_timer}>
                             Time to accept:

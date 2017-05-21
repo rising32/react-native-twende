@@ -15,10 +15,10 @@ export var colors = {
     primary_dark: '#d1af42',
     action_secondary: '#555555', // dark grey
     action_disabled: '#E0E0E0', // light grey
-    grey: '#848484', // medium grey
+    grey: '#606060', // medium grey
     text: '#333333',
     text_important: '#1da69a', // kan vervangen worden met action
-    title: '#555555',
+    title: '#4c4c4c',
     border: '#777777',
     nav_text: '#877a42',
     box: '#FFFFFF',
@@ -29,9 +29,9 @@ export var colors = {
     button_over: '#228BE1',
     button_clicked: '#1C79CE',
     button_text: '#FFFFFF',
-    username: '#757575',
     star_rating: '#ffeb3b',
-    white: '#ffffff'
+    white: '#ffffff',
+    rating: '#ffe000'
 };
 
 export var styles = StyleSheet.create({
@@ -82,17 +82,17 @@ export var styles = StyleSheet.create({
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
         textAlign: 'center',
+        marginTop: 2,
         marginBottom: -22,
         color: colors.grey
     },
 
     countdown_timer: {
         fontFamily: 'gothamrounded_medium',
-        fontSize: 34,
+        fontSize: 30,
         textAlign: 'center',
-
-        marginTop: -12,
-        color: colors.grey
+        marginTop: -8,
+        color: colors.action
     },
 
     countdown_timer_view: {
@@ -265,9 +265,10 @@ export var styles = StyleSheet.create({
 
     customer_title: {
         fontSize: 20,
+        marginBottom: -4,
         fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
-        color: colors.secondary
+        color: colors.title
     },
 
     loginPage: {
@@ -634,8 +635,8 @@ export var styles = StyleSheet.create({
 
     list_title: {
         fontFamily: 'gothamrounded_bold',
-        color: colors.username,
-        fontSize: 16
+        color: colors.grey,
+        fontSize: 17
     },
 
     item_titlecentre: {
