@@ -198,8 +198,8 @@ var CurrentRidePage = React.createClass({
     renderConnecting: function () {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
-        var text = this.renderText("Wait for response"); 
-        var text_no_response = this.renderText("Rider not responding. Please cancel and find other rider or call support!"); 
+        var text = this.renderText("Waiting for response "); 
+        var text_no_response = this.renderText("Please cancel and find other rider or call support!"); 
 
         return (
             <View style={styles.page_ride}>
@@ -211,54 +211,62 @@ var CurrentRidePage = React.createClass({
                     />
                 </View>            
                 {top}
-                <View style={styles.text_box}>
-                    <Text style={styles.item_title}>
-                        Requesting {ride.driver.name}!
-                    </Text>
-                    <View>
-                        {this.state.showMessage ? (
-                        <View style={styles.timer}>
-                            {text}
-                            <Timer ms={60000} />
-                        </View>
-                        ) : (
-                        <View style={styles.timer}>
-                            {text_no_response}
-                        </View>
-                        )}                    
-                    </View>
-                </View>
                 {this.state.showMessage ? (
-                <View style={styles.telephone_button}>
-                    <SheetIcon
-                        url={"tel: " + ride.driver.phone}
-                        name={'phone'}
-                        size={23}
-                        text_color={colors.action}
-                        color={colors.white}
-                        width={30}
-                        height={30}
-                        backgroundColor={colors.action}
-                        text={"  CALL " + ride.driver.name.toUpperCase()}
-                        fontSize={15}
-                    />
-                </View>
-                    ) : (
-                <View style={styles.telephone_button}>
-                    <SheetIcon
-                        url={"tel: 0791398120"}
-                        name={'phone'}
-                        size={23}
-                        text_color={colors.action}
-                        color={colors.white}
-                        width={30}
-                        height={30}
-                        backgroundColor={colors.action}
-                        text={"CALL SUPPORT"}
-                        fontSize={16}
-                    />
-                </View>
-                    )}      
+                    <View>
+                        <View style={styles.text_box}>
+                            <Text style={styles.item_title}>
+                                Requesting {ride.driver.name}!
+                            </Text>
+                            <View style={styles.timer}>
+                                {text}
+                                <Timer 
+                                    ms={600000} 
+                                    style={styles.countdown_timer_view}
+                                    textstyle={styles.countdown_timer}
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.telephone_button}>
+                            <SheetIcon
+                                url={"tel: " + ride.driver.phone}
+                                name={'phone'}
+                                size={23}
+                                text_color={colors.action}
+                                color={colors.white}
+                                width={30}
+                                height={30}
+                                backgroundColor={colors.action}
+                                text={"  CALL " + ride.driver.name.toUpperCase()}
+                                fontSize={15}
+                            />
+                        </View>
+                    </View>
+                ) : (
+                    <View>
+                        <View style={styles.text_box}>
+                            <Text style={styles.item_title}>
+                                Rider not Responding
+                            </Text>
+                            <View style={styles.timer}>
+                                {text_no_response}
+                            </View>
+                        </View>
+                        <View style={styles.telephone_button}>
+                            <SheetIcon
+                                url={"tel: 0791398120"}
+                                name={'phone'}
+                                size={23}
+                                text_color={colors.action}
+                                color={colors.white}
+                                width={30}
+                                height={30}
+                                backgroundColor={colors.action}
+                                text={"CALL SUPPORT"}
+                                fontSize={16}
+                            />
+                        </View>
+                    </View>
+                )}                        
             </View>
         )
     },

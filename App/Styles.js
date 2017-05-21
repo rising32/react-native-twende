@@ -86,6 +86,20 @@ export var styles = StyleSheet.create({
         color: colors.grey
     },
 
+    countdown_timer: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 34,
+        textAlign: 'center',
+
+        marginTop: -12,
+        color: colors.grey
+    },
+
+    countdown_timer_view: {
+        width: 50,
+        height: 24
+    },
+
     item_title: {
         textAlign: 'center',
         margin: 4,

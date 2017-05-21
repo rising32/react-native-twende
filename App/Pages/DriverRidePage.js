@@ -323,11 +323,15 @@ module.exports = React.createClass({
                         size={20}
                         style={styles.item}
                     />
-                    <Text style={styles.text_timer}>
-                        Time to accept:
-                    </Text>
                     <View style={styles.timer}>
-                        <Timer/>
+                        <Text style={styles.text_timer}>
+                            Time to accept:
+                        </Text>
+                        <Timer 
+                            ms={600000} 
+                            style={styles.countdown_timer_view}
+                            textstyle={styles.countdown_timer}
+                        />
                     </View>
                 </View>
                 <Button
