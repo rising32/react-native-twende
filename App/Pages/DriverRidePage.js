@@ -88,7 +88,7 @@ module.exports = React.createClass({
     // message when time is up when receiving request from customer
     showMessage: function () {
         this.setState({showMessage: true}, () => timer.setTimeout(
-        this, 'hideMessage', () => this.setState({showMessage: false}), 30000
+        this, 'hideMessage', () => this.setState({showMessage: false}), 60000
         ));
     },
 
@@ -308,37 +308,72 @@ module.exports = React.createClass({
                     />
                 </View>
                 {top}
-                <View style={styles.text_box}>
-                    {customer}
-                    <Rating
-                        maxStars={5}
-                        showNumber={false}
-                        color={colors.grey}
-                        rating={ride.customer.rating}
-                        colorOn={colors.rating}
-                        colorOff={colors.action_disabled}
-                        size={20}
-                        style={styles.item}
-                    />
-                    <Text style={styles.text_important}>
-                        {ride.driver_distance.distance} away
-                    </Text>
-                    <View style={styles.timer}>
-                        <Text style={styles.text_timer}>
-                            Time to accept:
-                        </Text>
-                        <Timer 
-                            ms={600000} 
-                            style={styles.countdown_timer_view}
-                            textstyle={styles.countdown_timer}
+                 {this.state.showMessage ? (
+                <View>
+                    <View style={styles.text_box}>
+                        {customer}
+                        <Rating
+                            maxStars={5}
+                            showNumber={false}
+                            color={colors.grey}
+                            rating={ride.customer.rating}
+                            colorOn={colors.rating}
+                            colorOff={colors.action_disabled}
+                            size={20}
+                            style={styles.item}
                         />
+                        <Text style={styles.text_important}>
+                            {ride.driver_distance.distance} away
+                        </Text>
+                            <Text style={styles.text_timer}>
+                                Time to accept:
+                            </Text>
+
+                            <View style={styles.countdown_timer_container}>
+                                <Timer 
+                                    ms={600000} 
+                                    style={styles.countdown_timer_view}
+                                    textstyle={styles.countdown_timer}
+                                />
+                            </View>
+
                     </View>
+                    <Button
+                        action={this.acceptRide}
+                        text={"ACCEPT REQUEST"}
+                        color={colors.action}
+                    />
                 </View>
-                <Button
-                    action={this.acceptRide}
-                    text={"ACCEPT REQUEST"}
-                    color={colors.action}
-                />
+                ) : (
+                <View>
+                    <View style={styles.text_box}>
+                        {customer}
+                        <Rating
+                            maxStars={5}
+                            showNumber={false}
+                            color={colors.grey}
+                            rating={ride.customer.rating}
+                            colorOn={colors.rating}
+                            colorOff={colors.action_disabled}
+                            size={20}
+                            style={styles.item}
+                        />
+                        <Text style={styles.text_important}>
+                            {ride.driver_distance.distance} away
+                        </Text>
+                        <Text style={[styles.countdown_timer, {fontSize: 16}]}>
+                            You didn't respond in time. The request will be aborted soon.
+                        </Text>
+                        <View style={styles.timer}>
+                        </View>
+                    </View>
+                    <Button
+                        action={this.acceptRide}
+                        text={"ACCEPT REQUEST"}
+                        color={colors.action}
+                    />
+                </View>
+                )}  
             </View>
         );
     },
@@ -390,7 +425,7 @@ module.exports = React.createClass({
 
         // components in screen
         var top = this.renderSheetTop();
-        var header =this.renderHeader("Hi " + ride.customer.first_name + ",");
+        var header =this.renderHeader("Hi " + ride.driver.first_name + ",");
         var text = this.renderTextRide("Please offer me a helmet & hair net. Ride carefully!");
 
         return  (

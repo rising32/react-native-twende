@@ -83,21 +83,30 @@ export var styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         marginTop: 2,
-        marginBottom: -22,
+        marginBottom: -30,
         color: colors.grey
+
     },
 
     countdown_timer: {
         fontFamily: 'gothamrounded_medium',
-        fontSize: 30,
-        textAlign: 'center',
-        marginTop: -8,
-        color: colors.action
+        fontSize: 34,
+        textAlign: 'right',
+        color: colors.secondary,
+        alignItems: 'flex-start',
+        marginTop: -6,
+        marginBottom: -40,
+        backgroundColor: colors.white
     },
 
     countdown_timer_view: {
-        width: 50,
-        height: 24
+        width: 60,
+        height: 30
+    },
+
+    countdown_timer_container: {
+        backgroundColor: colors.text_box,
+        alignSelf: 'flex-end'
     },
 
     item_title: {
@@ -260,10 +269,11 @@ export var styles = StyleSheet.create({
     },
 
     empty_view_loginpage: {
-        flex: 0.1,
+        flex: 0.2,
         backgroundColor: colors.background,
         justifyContent: 'flex-end',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        alignSelf: 'flex-end'
     },
 
 
@@ -308,7 +318,8 @@ export var styles = StyleSheet.create({
 
     timer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        height: 30
     },
 
     horizontal: {
@@ -507,8 +518,7 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,
-        marginTop: 20,
-        marginBottom: -20
+        marginTop: -20
     },
 
     // Sheet (persistent bottom sheet)
@@ -729,21 +739,6 @@ export var styles = StyleSheet.create({
         elevation: 2
     },
 
-    login_button: {
-        margin: 20,
-        marginTop: 28,
-        marginBottom: 28,
-        height: 40,
-        width: 260,
-        bottom: 0,
-        padding: 10,
-        borderRadius: 4, 
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.secondary,
-        elevation: 2
-    },
-
     primary_button_finalize: {
         margin: 10,
         height: 40,
@@ -779,6 +774,21 @@ export var styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'gothamrounded_medium',
         color: colors.button_text
+    },
+
+    login_button: {
+        margin: 20,
+        marginTop: 28,
+        marginBottom: 28,
+        height: 40,
+        width: 260,
+        bottom: 0,
+        padding: 10,
+        borderRadius: 4, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.secondary,
+        elevation: 2
     },
 
     // Step bar

@@ -140,15 +140,6 @@ module.exports = React.createClass({
                     {header}
                     {text}
                 </View>
-                <View style={styles.switch}>
-                    <View></View>
-                    <Switch
-                        onTintColor={colors.action}
-                        onValueChange={(val) => this.toggleAvailability(val)}
-                        value={is_available}
-                    />
-                    <View></View>
-                </View>
                 <View style={styles.toggle}>
                     <Button
                         action={() => this.toggleAvailability(false)}
@@ -163,13 +154,22 @@ module.exports = React.createClass({
                         color={colors.action}
                     />
                 </View>
+                 <View style={styles.switch}>
+                    <View></View>
+                    <Switch
+                        onTintColor={colors.action}
+                        onValueChange={(val) => this.toggleAvailability(val)}
+                        value={is_available}
+                    />
+                    <View></View>
+                </View>
                 <View style={styles.avatar_centre_column}>
                     <IconText
                         icon={statusIcon}
                         text={statusText}
                         color={colors.action_secondary}
                         style={{margin: 10}}
-                        size ={14}
+                        size ={16}
                         iconSize={26}
                     />
                 </View>

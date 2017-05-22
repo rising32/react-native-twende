@@ -202,7 +202,7 @@ var CurrentRidePage = React.createClass({
     renderConnecting: function () {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
-        var avatar_twende = this.renderSheetTop(false, false); 
+        var avatar_twende = this.renderSheetTop(true, false); 
         var text = this.renderText("Request Time: "); 
         var text_no_response = this.renderText("Please cancel and find other rider or call support!"); 
 
@@ -236,14 +236,17 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.text_important}>
                             {ride.driver_distance.distance} away
                         </Text>
-                                <View style={styles.timer}>
-                                    {text}
-                                    <Timer 
-                                        ms={600000} 
-                                        style={styles.countdown_timer_view}
-                                        textstyle={styles.countdown_timer}
-                                    />
-                                </View>
+                                <Text style={styles.text_timer}>
+                                {text}
+                            </Text>
+
+                            <View style={styles.countdown_timer_container}>
+                                <Timer 
+                                    ms={600000} 
+                                    style={styles.countdown_timer_view}
+                                    textstyle={styles.countdown_timer}
+                                />
+                            </View>
                             </View>
                             <View style={styles.telephone_button}>
                                 <SheetIcon
