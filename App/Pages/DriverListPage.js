@@ -116,6 +116,7 @@ var DriverListPage = React.createClass({
                                 );
                             },
                             RightButton: () =>{},
+                            
                             Title: (route, navigator, index, navState) => {
                                 return (
                                     <Text style={styles.nav_title}>

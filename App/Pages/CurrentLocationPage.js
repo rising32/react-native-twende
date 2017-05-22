@@ -229,7 +229,7 @@ const CurrentLocationPage = React.createClass({
                         />
                     </View>
                     <View style={styles.avatar_centre}>
-                        <Avatar image={this.props.currentUser.avatar}/>
+                        <Avatar />
                     </View>
                     <View style={styles.renderItemRight}>
                     </View>

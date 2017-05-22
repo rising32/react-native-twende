@@ -71,17 +71,24 @@ const FarePricePage = React.createClass({
                     <Text style={styles.item_title}>
                         Our Price
                     </Text>
-                    <Text style={[styles.text_finalize, {color: colors.secondary}]}>
-                        Pick-up fee: 60 shilling
-                    </Text>
-                    <Text style={[styles.text_finalize, {color: colors.secondary}]}>
-                        Kilometer price: 50 shilling
-                    </Text>
+                    <View style={styles.timer}>
+                        <Text style={styles.text_finalize}>
+                            Pick-up fee: 60 shilling 
+                        </Text>
+                    </View>
+                    <View style={styles.timer}>
+                        <Text style={styles.text_finalize}>
+                            Kilometer price: 50 shilling
+                        </Text>
+                    </View>
                     <Line/>
                     <Text style={styles.text_finalize}>
                         The app keeps track of the kilometers.
                         At the end of the trip you can pay
                         with mobile money or cash
+                    </Text>
+                    <Text style={styles.text_finalize}>
+                        {"\n"} Have a safe journey! 
                     </Text>
                     </View>
                 <View>

@@ -22,7 +22,7 @@ export var colors = {
     border: '#777777',
     nav_text: '#877a42',
     box: '#FFFFFF',
-    login: '#f4f4f4',
+    background: '#f4f4f4',
     error: '#992200', // Dark Red
     box_dark: '#E0E0E0',
     button_normal: '#2BA59A',
@@ -108,6 +108,21 @@ export var styles = StyleSheet.create({
         fontSize: 16,
     },
 
+    customer_title: {
+        fontSize: 18,
+        marginBottom: -4,
+        fontFamily: 'gothamrounded_medium',
+        textAlign: 'center',
+        color: colors.title
+    },
+
+    customer_title_small: {
+        fontSize: 18,
+        fontFamily: 'gothamrounded_medium',
+        textAlign: 'center',
+        color: colors.title
+    },
+
     // Splash
 
     splash: {
@@ -159,7 +174,7 @@ export var styles = StyleSheet.create({
         borderWidth: 1,
         margin: 4,
         elevation: 10,
-        backgroundColor: colors.login
+        backgroundColor: colors.background
     },
 
     spinner_text: {
@@ -220,7 +235,7 @@ export var styles = StyleSheet.create({
 
     // Page Elements
     page: {
-        backgroundColor: colors.box_dark,
+        backgroundColor: colors.background,
         marginTop: 56,
         justifyContent: 'space-around',
         flex: 1
@@ -240,9 +255,17 @@ export var styles = StyleSheet.create({
     },
 
     empty_view_riderhome: {
-        backgroundColor: colors.box_dark,
+        backgroundColor: colors.background,
         flex: 0.8
     },
+
+    empty_view_loginpage: {
+        flex: 0.1,
+        backgroundColor: colors.background,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
+    },
+
 
     scroll_page: {
         // justifyContent doesn't work with ScrollView
@@ -263,17 +286,9 @@ export var styles = StyleSheet.create({
         color: colors.secondary
     },
 
-    customer_title: {
-        fontSize: 20,
-        marginBottom: -4,
-        fontFamily: 'gothamrounded_medium',
-        textAlign: 'center',
-        color: colors.title
-    },
-
     loginPage: {
         flex: 1,
-        backgroundColor: colors.login,
+        backgroundColor: colors.background,
         alignItems: 'center',
         justifyContent: 'space-around'
     },
@@ -421,7 +436,7 @@ export var styles = StyleSheet.create({
         paddingTop: 8,
         paddingLeft: 20,
         paddingRight: 20,
-        backgroundColor: colors.login
+        backgroundColor: colors.background
     },
 
     sheet_icon: {
@@ -485,6 +500,15 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10
+    },
+
+    switch: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        marginTop: 20,
+        marginBottom: -20
     },
 
     // Sheet (persistent bottom sheet)
@@ -702,6 +726,21 @@ export var styles = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'center',
         backgroundColor: colors.button_normal,
+        elevation: 2
+    },
+
+    login_button: {
+        margin: 20,
+        marginTop: 28,
+        marginBottom: 28,
+        height: 40,
+        width: 260,
+        bottom: 0,
+        padding: 10,
+        borderRadius: 4, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.secondary,
         elevation: 2
     },
 

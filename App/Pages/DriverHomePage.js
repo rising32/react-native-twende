@@ -140,6 +140,15 @@ module.exports = React.createClass({
                     {header}
                     {text}
                 </View>
+                <View style={styles.switch}>
+                    <View></View>
+                    <Switch
+                        onTintColor={colors.action}
+                        onValueChange={(val) => this.toggleAvailability(val)}
+                        value={is_available}
+                    />
+                    <View></View>
+                </View>
                 <View style={styles.toggle}>
                     <Button
                         action={() => this.toggleAvailability(false)}
@@ -147,12 +156,6 @@ module.exports = React.createClass({
                         style={styles.primary_button_flex}
                         color={colors.disable}
                         />
-                    <Switch
-                        style={{borderColor: colors.action}}
-                        onTintColor={colors.action}
-                        onValueChange={(val) => this.toggleAvailability(val)}
-                        value={is_available}
-                    />
                     <Button
                         action={() => this.toggleAvailability(true)}
                         text={"Available"}

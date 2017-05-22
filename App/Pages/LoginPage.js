@@ -16,11 +16,12 @@ var {
     } = ReactNative;
 
 import {colors, styles} from "../Styles";
+import Avatar from "../Components/Avatar";
 var IconText = require('../Components/IconText');
 const FacebookLogin = require('react-native-facebook-login');
 var { FBLogin, FBLoginManager } = FacebookLogin;
 import events from "../Constants/Events";
-var Link = require('../Components/Link');
+var SheetIcon = require('../Components/SheetIcon');
 import Dispatcher from "../Dispatcher";
 import CurrentUserStore from '../Stores/CurrentUserStore';
 import { loginCurrentUser }  from '../Actions/CurrentUserActions';
@@ -98,41 +99,6 @@ var LoginPage = React.createClass({
     },
 
 
-    renderSocialLogin: function () {
-        let fbToken;
-        return (
-            <FBLogin
-                style={{flex: 0}}
-                permissions={["email"]}
-                loginBehavior={FBLoginManager.LoginBehaviors.Native}
-                onLogin={
-                    (data) => {
-                        this.setState({ready: true});
-                        loadFacebookUser(data);
-                    }
-                }
-                onLogout={() => {
-                  console.log("Logged out.");
-                  this.setState({ user : null });
-                }}
-                onLoginFound={(data) => {
-                    this.setState({ready: true});
-                    loadFacebookUser(data);
-                }}
-                onLoginNotFound={() => {
-                  console.log("No user logged in.");
-                  this.setState({ user : null });
-                }}
-                onError={(data) =>{
-                  console.log("ERROR");
-                  console.log(data);
-                }}
-                onCancel={() => {
-                  console.log("User cancelled.");
-                }}/>
-        )
-    },
-
     renderUsernameLogin: function () {
         return (
             <View>
@@ -171,8 +137,6 @@ var LoginPage = React.createClass({
         var error = this.state.error ?
             <IconText color={colors.error} icon={"error"} text={"Error logging in"}/> : null;
 
-        var content = this.renderSocialLogin();
-
         var spinner;
         if (this.state.ready || this.state.animating) {
             spinner = (
@@ -185,41 +149,73 @@ var LoginPage = React.createClass({
             );
         }
 
+        let fbToken;
+
         return (
             <View style={styles.loginPage}>
-                <View style={{flex: 0.15}}>
+                <View style={styles.empty_view_loginpage}>
+                </View>     
+                <View style={styles.empty_view_loginpage}>
                 </View>
-                <View style={{flex: 0.2, marginTop: 20, justifyContent: 'flex-end'}}>
-                        <Image
-                          style={{width: 105, height: 105}}
-                          source={require('../assets/logo.png')}/>
+                <View style={styles.empty_view_loginpage}>
                 </View>
-                <View style={{flex: 0.2, justifyContent: 'flex-end'}}>
-                    <Text style={[styles.item_title, {textAlign: 'center', color: colors.secondary, fontSize: 30}]}>
+                <Avatar/>
+                <View style={styles.text_box}>
+                    <Text style={styles.item_title}>
                         Karibu!
                     </Text>
-                </View>
-                 <View style={{flex: 0.1, marginTop: 20, justifyContent: 'center'}}>
-                    <View>
-                        <Image
-                          style={{width: 50, height: 33}}
-                          source={require('../assets/flagkenya.png')}/>
-                    </View>
-                </View>
-                <View style={{flex: 0.2, alignItems: 'center', margin: 10, justifyContent: 'flex-end'}}>
-                    <Text style={[styles.item_title, {textAlign: 'center', fontSize: 15}]}>
-                        By using this application, you agree to the Terms of Service and Privacy Policy
+                    <Text style={styles.text_finalize}>
+                        By using this application, you agree to the Terms of Service and Privacy Policy {'\n'} 
                     </Text>
-                    <View style={{alignItems: 'center', marginTop: 10}}>
-                        <Link
-                            action={() => this.props.navigator.push({id: 'TermsPage'})}
-                            text={'View Terms of Service'}
-                            color={colors.action}
-                        />
-                    </View>
+                    <SheetIcon
+                        action={() => this.props.navigator.push({id: 'TermsPage'})}
+                        text={'VIEW TERMS OF SERVICE'}
+                        fontfamily={'gothamrounded_bold'}
+                        name={'library-books'}
+                        color={colors.white}
+                        size={20}
+                        backgroundColor={colors.secondary}
+                        width={27}
+                        height={27}
+                        text_color={colors.secondary}
+                    />
                 </View>
-                <View style={{flex: 0.2, justifyContent: 'center'}}>
-                        {error}{content}              
+                <View style={styles.empty_view_loginpage}>
+
+                    <FBLogin
+                        style={styles.login_button}
+                        onClickColor={colors.background}
+                        permissions={["email"]}
+                        loginBehavior={FBLoginManager.LoginBehaviors.Native}
+                        icon={'phone'}
+                        facebookText={"FACEBOOK LOGIN"}
+                        onLogin={
+                            (data) => {
+                                this.setState({ready: true});
+                                loadFacebookUser(data);
+                            }
+                        }
+                        onLogout={() => {
+                          console.log("Logged out.");
+                          this.setState({ user : null });
+                        }}
+                        onLoginFound={(data) => {
+                            this.setState({ready: true});
+                            loadFacebookUser(data);
+                        }}
+                        onLoginNotFound={() => {
+                          console.log("No user logged in.");
+                          this.setState({ user : null });
+                        }}
+                        onError={(data) =>{
+                          console.log("ERROR");
+                          console.log(data);
+                        }}
+                        onCancel={() => {
+                          console.log("User cancelled.");
+                        }}
+                    />
+                    
                 </View>
                 <View style={styles.activity_indicator}> 
                     {spinner}

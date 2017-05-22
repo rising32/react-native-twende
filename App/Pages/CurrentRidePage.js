@@ -16,6 +16,7 @@ var {
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
+var Rating = require('../Components/Rating');
 var Banner = require('../Components/Banner');
 var IconText = require('../Components/IconText');
 var Iconed = require('../Components/Iconed');
@@ -143,14 +144,17 @@ var CurrentRidePage = React.createClass({
         updateCurrentRide(ride);
     },
 
-    renderSheetTop: function (renderRoute=true) {
+    renderSheetTop: function (renderRoute=true, renderAvatar=true) {
         var ride = this.props.currentRide;
 
         return (
             <View style={styles.sheet_top}>
                 <View style={styles.renderItemLeft}>
                 </View>
-                <Avatar image={ride.driver.avatar}/>
+                {renderAvatar ?
+                    <Avatar image={ride.driver.avatar}/>
+                : <Avatar/>
+                }
                 <View style={styles.renderItemRight}>
                 {renderRoute ?
                     <SheetIcon
@@ -198,7 +202,8 @@ var CurrentRidePage = React.createClass({
     renderConnecting: function () {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
-        var text = this.renderText("Waiting for response "); 
+        var avatar_twende = this.renderSheetTop(false, false); 
+        var text = this.renderText("Request Time: "); 
         var text_no_response = this.renderText("Please cancel and find other rider or call support!"); 
 
         return (
@@ -210,60 +215,78 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>            
-                {top}
                 {this.state.showMessage ? (
                     <View>
-                        <View style={styles.text_box}>
-                            <Text style={styles.item_title}>
-                                Requesting {ride.driver.name}!
-                            </Text>
-                            <View style={styles.timer}>
-                                {text}
-                                <Timer 
-                                    ms={600000} 
-                                    style={styles.countdown_timer_view}
-                                    textstyle={styles.countdown_timer}
+                        {top}
+                        <View>
+                            <View style={styles.text_box}>
+                                <Text style={styles.customer_title}>
+                                    {ride.driver.name}
+                                </Text>
+                                <Rating
+                                    maxStars={5}
+                                    showNumber={false}
+                                    color={colors.grey}
+                                    rating={ride.driver.rating}
+                                    colorOn={colors.rating}
+                                    colorOff={colors.action_disabled}
+                                    size={20}
+                                    style={styles.item}
+                                />
+                        <Text style={styles.text_important}>
+                            {ride.driver_distance.distance} away
+                        </Text>
+                                <View style={styles.timer}>
+                                    {text}
+                                    <Timer 
+                                        ms={600000} 
+                                        style={styles.countdown_timer_view}
+                                        textstyle={styles.countdown_timer}
+                                    />
+                                </View>
+                            </View>
+                            <View style={styles.telephone_button}>
+                                <SheetIcon
+                                    url={"tel: " + ride.driver.phone}
+                                    name={'phone'}
+                                    size={23}
+                                    text_color={colors.action}
+                                    color={colors.white}
+                                    width={30}
+                                    height={30}
+                                    backgroundColor={colors.action}
+                                    text={"  CALL " + ride.driver.name.toUpperCase()}
+                                    fontSize={15}
                                 />
                             </View>
-                        </View>
-                        <View style={styles.telephone_button}>
-                            <SheetIcon
-                                url={"tel: " + ride.driver.phone}
-                                name={'phone'}
-                                size={23}
-                                text_color={colors.action}
-                                color={colors.white}
-                                width={30}
-                                height={30}
-                                backgroundColor={colors.action}
-                                text={"  CALL " + ride.driver.name.toUpperCase()}
-                                fontSize={15}
-                            />
                         </View>
                     </View>
                 ) : (
                     <View>
-                        <View style={styles.text_box}>
-                            <Text style={styles.item_title}>
-                                Rider not Responding
-                            </Text>
-                            <View style={styles.timer}>
-                                {text_no_response}
+                    {avatar_twende}
+                        <View>
+                            <View style={styles.text_box}>
+                                <Text style={styles.item_title}>
+                                    Rider not Responding
+                                </Text>
+                                <View style={styles.timer}>
+                                    {text_no_response}
+                                </View>
                             </View>
-                        </View>
-                        <View style={styles.telephone_button}>
-                            <SheetIcon
-                                url={"tel: 0791398120"}
-                                name={'phone'}
-                                size={23}
-                                text_color={colors.action}
-                                color={colors.white}
-                                width={30}
-                                height={30}
-                                backgroundColor={colors.action}
-                                text={"CALL SUPPORT"}
-                                fontSize={16}
-                            />
+                            <View style={styles.telephone_button}>
+                                <SheetIcon
+                                    url={"tel: 0791398120"}
+                                    name={'phone'}
+                                    size={23}
+                                    text_color={colors.action}
+                                    color={colors.white}
+                                    width={30}
+                                    height={30}
+                                    backgroundColor={colors.action}
+                                    text={"CALL SUPPORT"}
+                                    fontSize={16}
+                                />
+                            </View>
                         </View>
                     </View>
                 )}                        
@@ -400,13 +423,14 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.text_box}>
                     <Avatar/>
                         <Text style={styles.item_title}>
-                            Fare Price
+                            Ride Fare
+                        </Text>
+
+                        <Text style={styles.text_finalize}>
+                            Your trip was {ride.distance.distance}
                         </Text>
                         <Text style={styles.heavy_text}>
                             {ride.ride_fare.amount} {ride.ride_fare.currency}
-                        </Text>
-                        <Text style={styles.text_finalize}>
-                            Your trip was {ride.distance.distance}
                         </Text>
                         <Line/>
                         <Text style={styles.text_finalize}>

@@ -58,6 +58,7 @@ var DriverItem = React.createClass({
                                 />
                             </View>
                             <IconText
+                                icon="motorcycle"
                                 size={14}
                                 color={colors.action}
                                 text={this.fuzzyDistance()} 

@@ -203,13 +203,13 @@ module.exports = React.createClass({
                             name={'motorcycle'}
                             text={'ROUTE'}
                             size={20}
-                            text_color={colors.action}
+                            text_color={colors.secondary}
                             align={'flex-start'}
                             fontSize={13}
                             color={colors.white}
                             width={27}
                             height={27}
-                            backgroundColor={colors.action}
+                            backgroundColor={colors.secondary}
                         /> : <Text />
                     }
                 </View>
@@ -274,10 +274,10 @@ module.exports = React.createClass({
     },
 
     renderEarnings: function (fare_amount, fare_currency) {
-        fare_amount = fare_amount * 0.8;
+        fare_amount = fare_amount * 0.2;
         return (
             <Text style={styles.text}>
-                Rider earning: {fare_amount} {fare_currency}
+                Commission (20%): {fare_amount} {fare_currency}
             </Text>
         )
     },
@@ -297,10 +297,6 @@ module.exports = React.createClass({
         var top = this.renderSheetTop(false);
         var header = this.renderHeader("Incoming Request");
         var customer = this.renderCustomer(ride.customer.name);
-        var away = "time away";
-        if (ride.driver_distance) {
-            away = ride.driver_distance.distance + " away";
-        }
 
         return  (
             <View style={styles.page_ride}>
@@ -324,8 +320,8 @@ module.exports = React.createClass({
                         size={20}
                         style={styles.item}
                     />
-                    <Text>
-                        {away}
+                    <Text style={styles.text_important}>
+                        {ride.driver_distance.distance} away
                     </Text>
                     <View style={styles.timer}>
                         <Text style={styles.text_timer}>
@@ -382,7 +378,7 @@ module.exports = React.createClass({
                 </View>
                 <Button
                     action={this.startRide}
-                    text={"WE GO!"}
+                    text={"TWENDE!"}
                     color={colors.action}
                     />
             </View>
@@ -394,8 +390,8 @@ module.exports = React.createClass({
 
         // components in screen
         var top = this.renderSheetTop();
-        var header =this.renderHeader("Hi" + ride.customer.first_name);
-        var text = this.renderTextRide("Please offer me a helmet & hair net.\nRide carefully!");
+        var header =this.renderHeader("Hi " + ride.customer.first_name + ",");
+        var text = this.renderTextRide("Please offer me a helmet & hair net. Ride carefully!");
 
         return  (
             <View style={styles.page_ride}>
@@ -408,6 +404,7 @@ module.exports = React.createClass({
                 </View>
                 {top}
                 <View style={styles.text_box}>
+                    {header}
                     {text}
                     <SheetIcon
                         name={'phone'}
@@ -435,7 +432,7 @@ module.exports = React.createClass({
         var ride = this.props.currentRide;
 
         // screen components
-        var header = this.renderHeader("Payment");
+        var header = this.renderHeader("Ride Fare");
         var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
@@ -447,8 +444,8 @@ module.exports = React.createClass({
                 <View style={styles.text_box}>
                     <Avatar />
                     {header}
-                    {ride_fare}
                     {distance}
+                    {ride_fare}
                     {rider_earnings}
                     <Line/>
                     {text}
