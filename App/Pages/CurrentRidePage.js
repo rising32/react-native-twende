@@ -236,7 +236,7 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.text_important}>
                             {ride.driver_distance.distance} away
                         </Text>
-                                <Text style={styles.text_timer}>
+                            <Text style={styles.text_timer}>
                                 {text}
                             </Text>
 
@@ -272,9 +272,9 @@ var CurrentRidePage = React.createClass({
                                 <Text style={styles.item_title}>
                                     Rider not Responding
                                 </Text>
-                                <View style={styles.timer}>
+                                <Text style={styles.text}>
                                     {text_no_response}
-                                </View>
+                                </Text>
                             </View>
                             <View style={styles.telephone_button}>
                                 <SheetIcon

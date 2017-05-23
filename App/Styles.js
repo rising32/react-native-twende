@@ -99,6 +99,16 @@ export var styles = StyleSheet.create({
         backgroundColor: colors.white
     },
 
+    countdown_timer_text: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 18,
+        textAlign: 'center',
+        color: colors.secondary,
+        marginBottom: -28,
+        alignItems: 'flex-start',
+        backgroundColor: colors.white
+    },
+
     countdown_timer_view: {
         width: 60,
         height: 30
@@ -269,11 +279,11 @@ export var styles = StyleSheet.create({
     },
 
     empty_view_loginpage: {
-        flex: 0.2,
+        flex: 0.13,
         backgroundColor: colors.background,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'flex-end',
-        alignSelf: 'flex-end'
+        alignSelf: 'center'
     },
 
 

@@ -361,7 +361,7 @@ module.exports = React.createClass({
                         <Text style={styles.text_important}>
                             {ride.driver_distance.distance} away
                         </Text>
-                        <Text style={[styles.countdown_timer, {fontSize: 16}]}>
+                        <Text style={styles.countdown_timer_text}>
                             You didn't respond in time. The request will be aborted soon.
                         </Text>
                         <View style={styles.timer}>
@@ -384,7 +384,7 @@ module.exports = React.createClass({
         // components in screen
         var top = this.renderSheetTop();
         var header =this.renderHeader("Hi " + ride.customer.first_name + ",");
-        var text = this.renderTextRide("First give me a call. Then pick me up.");
+        var text = this.renderTextRide("First give me a call. Then pick me up. Press the next button when we start the trip!");
 
         return  (
             <View style={styles.page_ride}>
