@@ -55,8 +55,8 @@ module.exports = React.createClass({
                     backgroundColor: colors.button_normal,
                     elevation: 3,
                     alignSelf: 'flex-end',
-                    marginTop: -12,
-                    marginBottom: -6,
+                    marginTop: -22,
+                    marginBottom: 0,
                     marginLeft: 20
                 }}>
                     {icon}

@@ -88,7 +88,7 @@ module.exports = React.createClass({
     // message when time is up when receiving request from customer
     showMessage: function () {
         this.setState({showMessage: true}, () => timer.setTimeout(
-        this, 'hideMessage', () => this.setState({showMessage: false}), 30000
+        this, 'hideMessage', () => this.setState({showMessage: false}), 60000
         ));
     },
 
@@ -203,13 +203,13 @@ module.exports = React.createClass({
                             name={'motorcycle'}
                             text={'ROUTE'}
                             size={20}
-                            text_color={colors.action}
+                            text_color={colors.secondary}
                             align={'flex-start'}
                             fontSize={13}
                             color={colors.white}
                             width={27}
                             height={27}
-                            backgroundColor={colors.action}
+                            backgroundColor={colors.secondary}
                         /> : <Text />
                     }
                 </View>
@@ -233,19 +233,19 @@ module.exports = React.createClass({
         );
     },
 
-    renderCustomer: function (customer) {
-        return (
-            <Text style={styles.customer_title}>
-                {customer}
-            </Text>
-        )
-    },
-
     renderHeader: function (header) {
         return (
         <Text style={styles.item_title}>
             {header}
         </Text>
+        )
+    },
+
+    renderCustomer: function (customer) {
+        return (
+            <Text style={styles.customer_title}>
+                {customer}
+            </Text>
         )
     },
 
@@ -265,19 +265,11 @@ module.exports = React.createClass({
         )
     },
 
-    renderFare: function (fare_amount, fare_currency) {
-        return (
-            <Text style={styles.heavy_text}>
-                {fare_amount} {fare_currency}
-            </Text>
-        )
-    },
-
     renderEarnings: function (fare_amount, fare_currency) {
-        fare_amount = fare_amount * 0.8;
+        fare_amount = fare_amount * 0.2;
         return (
             <Text style={styles.text}>
-                Rider earning: {fare_amount} {fare_currency}
+                Commission (20%): {fare_amount} {fare_currency}
             </Text>
         )
     },
@@ -297,10 +289,6 @@ module.exports = React.createClass({
         var top = this.renderSheetTop(false);
         var header = this.renderHeader("Incoming Request");
         var customer = this.renderCustomer(ride.customer.name);
-        var away = this.renderText(away);
-        if (ride.driver_distance) {
-            away = this.renderText(ride.driver_distance.distance + " (" + ride.driver_distance.duration + ") away");
-        }
 
         return  (
             <View style={styles.page_ride}>
@@ -312,29 +300,67 @@ module.exports = React.createClass({
                     />
                 </View>
                 {top}
-                <View style={styles.text_box}>
-                    {customer}
-                    {away}
-                    <Rating
-                        maxStars={5}
-                        rating={ride.customer.rating}
-                        colorOn={colors.secondary}
-                        colorOff={colors.action_disabled}
-                        size={20}
-                        style={styles.item}
-                    />
-                    <Text style={styles.text_timer}>
-                        Time to accept:
-                    </Text>
-                    <View style={styles.timer}>
-                        <Timer/>
+                 {this.state.showMessage ? (
+                <View>
+                    <View style={styles.text_box}>
+                        {customer}
+                        <Rating
+                            maxStars={5}
+                            showNumber={false}
+                            color={colors.grey}
+                            rating={ride.customer.rating}
+                            colorOn={colors.rating}
+                            colorOff={colors.action_disabled}
+                            size={20}
+                            style={styles.item}
+                        />
+                        <Text style={styles.text_timer}>
+                            {ride.driver_distance.distance} away
+                        </Text>
+                        <View style={styles.countdown_timer_container}>
+                            <Timer 
+                                ms={600000} 
+                                style={styles.countdown_timer_view}
+                                textstyle={styles.countdown_timer}
+                            />
+                        </View>
                     </View>
+                    <Button
+                        action={this.acceptRide}
+                        text={"ACCEPT REQUEST"}
+                        color={colors.action}
+                    />
                 </View>
-                <Button
-                    action={this.acceptRide}
-                    text={"ACCEPT REQUEST"}
-                    color={colors.action}
-                />
+                ) : (
+                <View>
+                    <View style={styles.text_box}>
+                        {customer}
+                        <Rating
+                            maxStars={5}
+                            showNumber={false}
+                            color={colors.grey}
+                            rating={ride.customer.rating}
+                            colorOn={colors.rating}
+                            colorOff={colors.action_disabled}
+                            size={20}
+                            style={styles.item}
+                        />
+                        <Text style={styles.text_important}>
+                            {ride.driver_distance.distance} away
+                        </Text>
+                        <Text style={styles.countdown_timer_text}>
+                            You didn't respond in time. The request will be aborted soon.
+                        </Text>
+                        <View style={styles.timer}>
+                        </View>
+                    </View>
+                    <Button
+                        action={this.acceptRide}
+                        text={"ACCEPT REQUEST"}
+                        color={colors.action}
+                    />
+                </View>
+                )}  
             </View>
         );
     },
@@ -345,7 +371,7 @@ module.exports = React.createClass({
         // components in screen
         var top = this.renderSheetTop();
         var header =this.renderHeader("Hi " + ride.customer.first_name + ",");
-        var text = this.renderTextRide("First give me a call. Then pick me up.");
+        var text = this.renderTextRide("First give me a call. Then pick me up. Press the next button when we start the trip!");
 
         return  (
             <View style={styles.page_ride}>
@@ -374,7 +400,7 @@ module.exports = React.createClass({
                 </View>
                 <Button
                     action={this.startRide}
-                    text={"WE GO!"}
+                    text={"TWENDE!"}
                     color={colors.action}
                     />
             </View>
@@ -386,8 +412,8 @@ module.exports = React.createClass({
 
         // components in screen
         var top = this.renderSheetTop();
-        var header =this.renderHeader("Hi" + ride.customer.first_name);
-        var text = this.renderTextRide("Please offer me a helmet & hair net.\nRide carefully!");
+        var header =this.renderHeader("Hi " + ride.driver.first_name + ",");
+        var text = this.renderTextRide("Please offer me a helmet & hair net. Ride carefully!");
 
         return  (
             <View style={styles.page_ride}>
@@ -400,6 +426,7 @@ module.exports = React.createClass({
                 </View>
                 {top}
                 <View style={styles.text_box}>
+                    {header}
                     {text}
                     <SheetIcon
                         name={'phone'}
@@ -427,8 +454,7 @@ module.exports = React.createClass({
         var ride = this.props.currentRide;
 
         // screen components
-        var header = this.renderHeader("Payment");
-        var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
+        var header = this.renderHeader("Ride Fare");
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
         var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: 'Ride'");
@@ -439,8 +465,10 @@ module.exports = React.createClass({
                 <View style={styles.text_box}>
                     <Avatar />
                     {header}
-                    {ride_fare}
                     {distance}
+                    <Text style={styles.heavy_text}>
+                        {ride.fare}
+                    </Text>
                     {rider_earnings}
                     <Line/>
                     {text}
@@ -460,7 +488,6 @@ module.exports = React.createClass({
 
         // screen components
         var header = this.renderHeader("Rating");
-        var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var text = this.renderText("How was your ride with " + ride.customer.first_name +"?");
 
         return  (
@@ -476,7 +503,7 @@ module.exports = React.createClass({
                               onChange={this.rateRide}
                               maxStars={5}
                               rating={0}
-                              colorOn={colors.action}
+                              colorOn={colors.rating}
                               colorOff={colors.action_disabled}
                           />
                         <Button
@@ -493,7 +520,25 @@ module.exports = React.createClass({
 
     renderScene: function(route, navigator) {
         var ride = this.props.currentRide;
-        var content = <Text>Something went wrong. Ride state {ride.state}</Text>;
+        var content =  
+            <View>
+                <View style={styles.avatar_centre}>
+                    <Avatar
+                        style={styles.avatar}
+                    />
+                </View>
+            <View style={styles.text_box}>
+                <Text style={styles.text_finalize}>
+                    Something went wrong. Ride state {ride.state}
+                </Text>
+                <Link 
+                    icon={'motorcycle'} 
+                    text={'Return Home'}
+                    action={() => this.props.navigator.push({id: 'DriverHomePage'})}
+                />
+            </View>
+            </View>;
+
         var currentUser = this.props.currentUser;
         switch (ride.state) {
             case 'requested' :

@@ -15,23 +15,23 @@ export var colors = {
     primary_dark: '#d1af42',
     action_secondary: '#555555', // dark grey
     action_disabled: '#E0E0E0', // light grey
-    grey: '#848484', // medium grey
+    grey: '#606060', // medium grey
     text: '#333333',
     text_important: '#1da69a', // kan vervangen worden met action
-    title: '#555555',
+    title: '#4c4c4c',
     border: '#777777',
     nav_text: '#877a42',
     box: '#FFFFFF',
-    login: '#f4f4f4',
+    background: '#f4f4f4',
     error: '#992200', // Dark Red
     box_dark: '#E0E0E0',
     button_normal: '#2BA59A',
     button_over: '#228BE1',
     button_clicked: '#1C79CE',
     button_text: '#FFFFFF',
-    username: '#757575',
     star_rating: '#ffeb3b',
-    white: '#ffffff'
+    white: '#ffffff',
+    rating: '#ffe000'
 };
 
 export var styles = StyleSheet.create({
@@ -82,8 +82,41 @@ export var styles = StyleSheet.create({
         fontFamily: 'gothamrounded_medium',
         fontSize: 14,
         textAlign: 'center',
-        marginBottom: -22,
-        color: colors.grey
+        marginTop: 2,
+        marginBottom: -30,
+        color: colors.action
+
+    },
+
+    countdown_timer: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 34,
+        textAlign: 'right',
+        color: colors.secondary,
+        alignItems: 'flex-start',
+        marginTop: -6,
+        marginBottom: -40,
+        backgroundColor: colors.white
+    },
+
+    countdown_timer_text: {
+        fontFamily: 'gothamrounded_medium',
+        fontSize: 18,
+        textAlign: 'center',
+        color: colors.secondary,
+        marginBottom: -28,
+        alignItems: 'flex-start',
+        backgroundColor: colors.white
+    },
+
+    countdown_timer_view: {
+        width: 60,
+        height: 30
+    },
+
+    countdown_timer_container: {
+        backgroundColor: colors.text_box,
+        alignSelf: 'flex-end'
     },
 
     item_title: {
@@ -92,6 +125,21 @@ export var styles = StyleSheet.create({
         fontFamily: 'gothamrounded_bold',
         color: colors.title,
         fontSize: 16,
+    },
+
+    customer_title: {
+        fontSize: 18,
+        marginBottom: -4,
+        fontFamily: 'gothamrounded_medium',
+        textAlign: 'center',
+        color: colors.title
+    },
+
+    customer_title_small: {
+        fontSize: 18,
+        fontFamily: 'gothamrounded_medium',
+        textAlign: 'center',
+        color: colors.title
     },
 
     // Splash
@@ -145,7 +193,7 @@ export var styles = StyleSheet.create({
         borderWidth: 1,
         margin: 4,
         elevation: 10,
-        backgroundColor: colors.login
+        backgroundColor: colors.background
     },
 
     spinner_text: {
@@ -206,7 +254,7 @@ export var styles = StyleSheet.create({
 
     // Page Elements
     page: {
-        backgroundColor: colors.box_dark,
+        backgroundColor: colors.background,
         marginTop: 56,
         justifyContent: 'space-around',
         flex: 1
@@ -226,9 +274,18 @@ export var styles = StyleSheet.create({
     },
 
     empty_view_riderhome: {
-        backgroundColor: colors.box_dark,
+        backgroundColor: colors.background,
         flex: 0.8
     },
+
+    empty_view_loginpage: {
+        flex: 0.13,
+        backgroundColor: colors.background,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+        alignSelf: 'center'
+    },
+
 
     scroll_page: {
         // justifyContent doesn't work with ScrollView
@@ -249,16 +306,9 @@ export var styles = StyleSheet.create({
         color: colors.secondary
     },
 
-    customer_title: {
-        fontSize: 20,
-        fontFamily: 'gothamrounded_medium',
-        textAlign: 'center',
-        color: colors.secondary
-    },
-
     loginPage: {
         flex: 1,
-        backgroundColor: colors.login,
+        backgroundColor: colors.background,
         alignItems: 'center',
         justifyContent: 'space-around'
     },
@@ -278,7 +328,8 @@ export var styles = StyleSheet.create({
 
     timer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        height: 30
     },
 
     horizontal: {
@@ -406,7 +457,7 @@ export var styles = StyleSheet.create({
         paddingTop: 8,
         paddingLeft: 20,
         paddingRight: 20,
-        backgroundColor: colors.login
+        backgroundColor: colors.background
     },
 
     sheet_icon: {
@@ -470,6 +521,14 @@ export var styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10
+    },
+
+    switch: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        marginTop: -20
     },
 
     // Sheet (persistent bottom sheet)
@@ -620,8 +679,8 @@ export var styles = StyleSheet.create({
 
     list_title: {
         fontFamily: 'gothamrounded_bold',
-        color: colors.username,
-        fontSize: 16
+        color: colors.grey,
+        fontSize: 17
     },
 
     item_titlecentre: {
@@ -725,6 +784,21 @@ export var styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'gothamrounded_medium',
         color: colors.button_text
+    },
+
+    login_button: {
+        margin: 20,
+        marginTop: 28,
+        marginBottom: 28,
+        height: 40,
+        width: 260,
+        bottom: 0,
+        padding: 10,
+        borderRadius: 4, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.secondary,
+        elevation: 2
     },
 
     // Step bar

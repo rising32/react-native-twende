@@ -28,7 +28,7 @@ var DriverItem = React.createClass({
         if (dist > 240) {
         return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 2.5).toFixed(0) + ' min)';
         }
-        return Math.round(dist)  + 'm (' + (((dist / 100) / 10) * 3 * 60).toFixed(0) + ' sec)';
+        return Math.round(dist)  + ' m (' + (((dist / 100) / 10) * 3 * 60).toFixed(0) + ' sec)';
     },
 
     render: function () {
@@ -47,20 +47,22 @@ var DriverItem = React.createClass({
                             <Text style={styles.list_title}>
                                 {this.props.driver.name}
                             </Text>
-                            <IconText icon="motorcycle"
-                                      size={14}
-                                      color={colors.action}
-                                      text={this.fuzzyDistance()} />
-                            <View style={{width: 100}}>
+                            <View style={{width: 85}}>
                                 <Rating
+                                    showNumber={false}
                                     maxStars={5}
                                     rating={this.props.driver.rating}
-                                    colorOn={colors.secondary}
+                                    colorOn={colors.rating}
                                     colorOff={colors.action_disabled}
-                                    size={16}
+                                    size={18}
                                 />
                             </View>
-                            
+                            <IconText
+                                icon="motorcycle"
+                                size={14}
+                                color={colors.action}
+                                text={this.fuzzyDistance()} 
+                            />
                                 <ButtonListview 
                                     action={this.props.onSelect}
                                     text={"REQUEST"} 

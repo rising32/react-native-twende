@@ -147,12 +147,6 @@ module.exports = React.createClass({
                         style={styles.primary_button_flex}
                         color={colors.disable}
                         />
-                    <Switch
-                        style={{borderColor: colors.action}}
-                        onTintColor={colors.action}
-                        onValueChange={(val) => this.toggleAvailability(val)}
-                        value={is_available}
-                    />
                     <Button
                         action={() => this.toggleAvailability(true)}
                         text={"Available"}
@@ -160,13 +154,22 @@ module.exports = React.createClass({
                         color={colors.action}
                     />
                 </View>
+                 <View style={styles.switch}>
+                    <View></View>
+                    <Switch
+                        onTintColor={colors.action}
+                        onValueChange={(val) => this.toggleAvailability(val)}
+                        value={is_available}
+                    />
+                    <View></View>
+                </View>
                 <View style={styles.avatar_centre_column}>
                     <IconText
                         icon={statusIcon}
                         text={statusText}
                         color={colors.action_secondary}
                         style={{margin: 10}}
-                        size ={14}
+                        size ={16}
                         iconSize={26}
                     />
                 </View>
@@ -198,7 +201,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                TWENDE
+                Rider Availability
             </Text>
         );
     }

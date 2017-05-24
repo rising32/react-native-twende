@@ -229,7 +229,7 @@ const CurrentLocationPage = React.createClass({
                         />
                     </View>
                     <View style={styles.avatar_centre}>
-                        <Avatar image={this.props.currentUser.avatar}/>
+                        <Avatar />
                     </View>
                     <View style={styles.renderItemRight}>
                     </View>
@@ -240,7 +240,7 @@ const CurrentLocationPage = React.createClass({
                         Karibu {this.props.currentUser.first_name}!
                     </Text>
                     <Text style={styles.text}>
-                        Swipe the map to change your pick up location
+                        Move the map to change your pick up location
                     </Text>
                 </View>
                 </View>

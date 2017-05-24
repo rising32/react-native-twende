@@ -16,6 +16,7 @@ var {
 import {colors, styles} from "../Styles";
 import Avatar from "../Components/Avatar";
 import { Icon } from 'react-native-material-design';
+var Rating = require('../Components/Rating');
 var Banner = require('../Components/Banner');
 var IconText = require('../Components/IconText');
 var Iconed = require('../Components/Iconed');
@@ -143,14 +144,17 @@ var CurrentRidePage = React.createClass({
         updateCurrentRide(ride);
     },
 
-    renderSheetTop: function (renderRoute=true) {
+    renderSheetTop: function (renderRoute=true, renderAvatar=true) {
         var ride = this.props.currentRide;
 
         return (
             <View style={styles.sheet_top}>
                 <View style={styles.renderItemLeft}>
                 </View>
-                <Avatar image={ride.driver.avatar}/>
+                {renderAvatar ?
+                    <Avatar image={ride.driver.avatar}/>
+                : <Avatar/>
+                }
                 <View style={styles.renderItemRight}>
                 {renderRoute ?
                     <SheetIcon
@@ -198,8 +202,8 @@ var CurrentRidePage = React.createClass({
     renderConnecting: function () {
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
-        var text = this.renderText("Wait for response"); 
-        var text_no_response = this.renderText("Rider not responding. Please cancel and find other rider or call support!"); 
+        var avatar_twende = this.renderSheetTop(true, false); 
+        var text_no_response = this.renderText("Please cancel and find other rider or call support!"); 
 
         return (
             <View style={styles.page_ride}>
@@ -210,55 +214,80 @@ var CurrentRidePage = React.createClass({
                         customer={ride.origin}
                     />
                 </View>            
-                {top}
-                <View style={styles.text_box}>
-                    <Text style={styles.item_title}>
-                        Requesting {ride.driver.name}!
-                    </Text>
-                    <View>
-                        {this.state.showMessage ? (
-                        <View style={styles.timer}>
-                            {text}
-                            <Timer ms={60000} />
-                        </View>
-                        ) : (
-                        <View style={styles.timer}>
-                            {text_no_response}
-                        </View>
-                        )}                    
-                    </View>
-                </View>
                 {this.state.showMessage ? (
-                <View style={styles.telephone_button}>
-                    <SheetIcon
-                        url={"tel: " + ride.driver.phone}
-                        name={'phone'}
-                        size={23}
-                        text_color={colors.action}
-                        color={colors.white}
-                        width={30}
-                        height={30}
-                        backgroundColor={colors.action}
-                        text={"  CALL " + ride.driver.name.toUpperCase()}
-                        fontSize={15}
-                    />
-                </View>
-                    ) : (
-                <View style={styles.telephone_button}>
-                    <SheetIcon
-                        url={"tel: 0791398120"}
-                        name={'phone'}
-                        size={23}
-                        text_color={colors.action}
-                        color={colors.white}
-                        width={30}
-                        height={30}
-                        backgroundColor={colors.action}
-                        text={"CALL SUPPORT"}
-                        fontSize={16}
-                    />
-                </View>
-                    )}      
+                    <View>
+                        {top}
+                        <View>
+                            <View style={styles.text_box}>
+                                <Text style={styles.customer_title}>
+                                    {ride.driver.name}
+                                </Text>
+                                <Rating
+                                    maxStars={5}
+                                    showNumber={false}
+                                    color={colors.grey}
+                                    rating={ride.driver.rating}
+                                    colorOn={colors.rating}
+                                    colorOff={colors.action_disabled}
+                                    size={20}
+                                    style={styles.item}
+                                />
+                        <Text style={styles.text_timer}>
+                            {ride.driver_distance.distance} away
+                        </Text>
+                            <View style={styles.countdown_timer_container}>
+                                <Timer 
+                                    ms={600000} 
+                                    style={styles.countdown_timer_view}
+                                    textstyle={styles.countdown_timer}
+                                />
+                            </View>
+                            </View>
+                            <View style={styles.telephone_button}>
+                                <SheetIcon
+                                    url={"tel: " + ride.driver.phone}
+                                    name={'phone'}
+                                    size={23}
+                                    text_color={colors.action}
+                                    color={colors.white}
+                                    width={30}
+                                    height={30}
+                                    backgroundColor={colors.action}
+                                    text={"  CALL " + ride.driver.name.toUpperCase()}
+                                    fontSize={15}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                ) : (
+                    <View>
+                    {avatar_twende}
+                        <View>
+                            <View style={styles.text_box}>
+                                <Text style={styles.item_title}>
+                                    Rider not Responding
+                                </Text>
+                                <Text style={styles.text}>
+                                    {text_no_response}
+                                </Text>
+                            </View>
+                            <View style={styles.telephone_button}>
+                                <SheetIcon
+                                    url={"tel: 0791398120"}
+                                    name={'phone'}
+                                    size={23}
+                                    text_color={colors.action}
+                                    color={colors.white}
+                                    width={30}
+                                    height={30}
+                                    backgroundColor={colors.action}
+                                    text={"CALL SUPPORT"}
+                                    fontSize={16}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                )}                        
             </View>
         )
     },
@@ -392,13 +421,14 @@ var CurrentRidePage = React.createClass({
                 <View style={styles.text_box}>
                     <Avatar/>
                         <Text style={styles.item_title}>
-                            Fare Price
+                            Ride Fare
+                        </Text>
+
+                        <Text style={styles.text_finalize}>
+                            Your trip was {ride.distance.distance}
                         </Text>
                         <Text style={styles.heavy_text}>
                             {ride.ride_fare.amount} {ride.ride_fare.currency}
-                        </Text>
-                        <Text style={styles.text_finalize}>
-                            Your trip was {ride.distance.distance}
                         </Text>
                         <Line/>
                         <Text style={styles.text_finalize}>
@@ -427,6 +457,7 @@ var CurrentRidePage = React.createClass({
     renderPayment: function () {
         var ride = this.props.currentRide;
         var text;
+        console.log(ride);
 
         if (ride.payment_method == 'mpesa') {
             var header = "M-Pesa Payment";
@@ -491,7 +522,7 @@ var CurrentRidePage = React.createClass({
                         onChange={this.rateRide}
                         maxStars={5}
                         rating={0}
-                        colorOn={colors.action}
+                        colorOn={colors.rating}
                         colorOff={colors.action_disabled}
                     />
                     <Button

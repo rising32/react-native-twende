@@ -395,7 +395,7 @@ var TwendeApp = React.createClass({
                         style={{padding: 8}}
                         size={15}
                         color={'#FFFFFF'}
-                        icon={'assignment'}
+                        icon={'library-books'}
                         text={'Terms'}
                     />
                     <Link
@@ -469,7 +469,7 @@ var TwendeApp = React.createClass({
                         style={{padding: 8}}
                         size={14}
                         color={'#FFFFFF'}
-                        icon={'assignment'}
+                        icon={'library-books'}
                         text={'Terms'}
                     />
                     <Link
@@ -479,14 +479,6 @@ var TwendeApp = React.createClass({
                         color={'#FFFFFF'}
                         icon={'lock-open'}
                         text={'Logout'}
-                    />
-                    <Link
-                        action={this.closeApp}
-                        style={{padding: 8}}
-                        size={14}
-                        color={'#FFFFFF'}
-                        icon={'power-settings-new'}
-                        text={'Close Twende'}
                     />
                 </View>
             </View>
@@ -566,7 +558,7 @@ var TwendeApp = React.createClass({
                     goBack={this.goBack}
                     state={this.state}
                     configureScene={(route) => {
-                        return Navigator.SceneConfigs.FadeAndroid;
+                    return Navigator.SceneConfigs.FadeAndroid;
                     }}
                 />
             <StatusBar

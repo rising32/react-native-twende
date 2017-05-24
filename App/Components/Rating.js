@@ -50,13 +50,23 @@ var Rating = React.createClass({
                      size={size} />
             );
         }
+
+        if (this.props.showNumber) {
         return (
             <View style={[this.props.style, styles.starRatingContainer]}>
                 {starButtons}
-                <Text style={{color: colors.secondary, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
+                <Text style={{color: this.props.color, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
             </View>
         );
     }
+
+            return (
+            <View style={[this.props.style, styles.starRatingContainer]}>
+                {starButtons}
+            </View>
+        );
+    }
+
 });
 
 
