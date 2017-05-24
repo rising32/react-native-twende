@@ -203,7 +203,6 @@ var CurrentRidePage = React.createClass({
         var ride = this.props.currentRide;
         var top = this.renderSheetTop();   
         var avatar_twende = this.renderSheetTop(true, false); 
-        var text = this.renderText("Request Time: "); 
         var text_no_response = this.renderText("Please cancel and find other rider or call support!"); 
 
         return (
@@ -233,13 +232,9 @@ var CurrentRidePage = React.createClass({
                                     size={20}
                                     style={styles.item}
                                 />
-                        <Text style={styles.text_important}>
+                        <Text style={styles.text_timer}>
                             {ride.driver_distance.distance} away
                         </Text>
-                            <Text style={styles.text_timer}>
-                                {text}
-                            </Text>
-
                             <View style={styles.countdown_timer_container}>
                                 <Timer 
                                     ms={600000} 
@@ -462,6 +457,7 @@ var CurrentRidePage = React.createClass({
     renderPayment: function () {
         var ride = this.props.currentRide;
         var text;
+        console.log(ride);
 
         if (ride.payment_method == 'mpesa') {
             var header = "M-Pesa Payment";
@@ -526,7 +522,7 @@ var CurrentRidePage = React.createClass({
                         onChange={this.rateRide}
                         maxStars={5}
                         rating={0}
-                        colorOn={colors.action}
+                        colorOn={colors.rating}
                         colorOff={colors.action_disabled}
                     />
                     <Button

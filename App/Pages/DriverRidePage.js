@@ -265,14 +265,6 @@ module.exports = React.createClass({
         )
     },
 
-    renderFare: function (fare_amount, fare_currency) {
-        return (
-            <Text style={styles.heavy_text}>
-                {fare_amount} {fare_currency}
-            </Text>
-        )
-    },
-
     renderEarnings: function (fare_amount, fare_currency) {
         fare_amount = fare_amount * 0.2;
         return (
@@ -322,21 +314,16 @@ module.exports = React.createClass({
                             size={20}
                             style={styles.item}
                         />
-                        <Text style={styles.text_important}>
+                        <Text style={styles.text_timer}>
                             {ride.driver_distance.distance} away
                         </Text>
-                            <Text style={styles.text_timer}>
-                                Time to accept:
-                            </Text>
-
-                            <View style={styles.countdown_timer_container}>
-                                <Timer 
-                                    ms={600000} 
-                                    style={styles.countdown_timer_view}
-                                    textstyle={styles.countdown_timer}
-                                />
-                            </View>
-
+                        <View style={styles.countdown_timer_container}>
+                            <Timer 
+                                ms={600000} 
+                                style={styles.countdown_timer_view}
+                                textstyle={styles.countdown_timer}
+                            />
+                        </View>
                     </View>
                     <Button
                         action={this.acceptRide}
@@ -468,7 +455,6 @@ module.exports = React.createClass({
 
         // screen components
         var header = this.renderHeader("Ride Fare");
-        var ride_fare = this.renderFare(ride.ride_fare.amount, ride.ride_fare.currency);
         var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
         var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: 'Ride'");
@@ -480,7 +466,9 @@ module.exports = React.createClass({
                     <Avatar />
                     {header}
                     {distance}
-                    {ride_fare}
+                    <Text style={styles.heavy_text}>
+                        {ride.fare}
+                    </Text>
                     {rider_earnings}
                     <Line/>
                     {text}
@@ -500,7 +488,6 @@ module.exports = React.createClass({
 
         // screen components
         var header = this.renderHeader("Rating");
-        var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var text = this.renderText("How was your ride with " + ride.customer.first_name +"?");
 
         return  (
@@ -516,7 +503,7 @@ module.exports = React.createClass({
                               onChange={this.rateRide}
                               maxStars={5}
                               rating={0}
-                              colorOn={colors.action}
+                              colorOn={colors.rating}
                               colorOff={colors.action_disabled}
                           />
                         <Button
@@ -533,7 +520,25 @@ module.exports = React.createClass({
 
     renderScene: function(route, navigator) {
         var ride = this.props.currentRide;
-        var content = <Text>Something went wrong. Ride state {ride.state}</Text>;
+        var content =  
+            <View>
+                <View style={styles.avatar_centre}>
+                    <Avatar
+                        style={styles.avatar}
+                    />
+                </View>
+            <View style={styles.text_box}>
+                <Text style={styles.text_finalize}>
+                    Something went wrong. Ride state {ride.state}
+                </Text>
+                <Link 
+                    icon={'motorcycle'} 
+                    text={'Return Home'}
+                    action={() => this.props.navigator.push({id: 'DriverHomePage'})}
+                />
+            </View>
+            </View>;
+
         var currentUser = this.props.currentUser;
         switch (ride.state) {
             case 'requested' :

@@ -84,7 +84,7 @@ export var styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 2,
         marginBottom: -30,
-        color: colors.grey
+        color: colors.action
 
     },
 
