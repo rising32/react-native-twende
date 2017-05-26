@@ -201,7 +201,7 @@ var NavigationBarRouteMapper = {
     Title(route, navigator, index, nextState) {
         return (
             <Text style={styles.nav_title}>
-                Rider Home
+                RIDER HOME
             </Text>
         );
     }
