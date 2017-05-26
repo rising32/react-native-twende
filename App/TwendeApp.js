@@ -177,6 +177,11 @@ var TwendeApp = React.createClass({
 
     logout: function () {
         this.closeDrawer();
+        let user = this.state.currentUser;
+        if (user.is_driver) {
+            user.state = 'unvailable';
+            updateCurrentUser(user);
+        }
         logoutCurrentUser();
         logoutFacebookUser();
     },
