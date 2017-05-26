@@ -449,7 +449,6 @@ module.exports = React.createClass({
         );
     },
 
-
     renderDropoff: function() {
         var ride = this.props.currentRide;
 
@@ -492,31 +491,46 @@ module.exports = React.createClass({
 
         return  (
             <View style={styles.page_finalize}>
-                <View>
-                </View>
-                    <View style={styles.text_box}>
-                        <Avatar />
-                        {header}
-                        {text}
-                        <Line/>
-                          <StarRating
-                              onChange={this.rateRide}
-                              maxStars={5}
-                              rating={0}
-                              colorOn={colors.rating}
-                              colorOff={colors.action_disabled}
-                          />
-                        <Button
-                            action={this.finishRide}
-                            text={"FINISH"}
-                            style={styles.primary_button_finalize}
-                        />
+                <View style={styles.text_box}>
+                    <Avatar />
+                    {header}
+                    {text}
+                    <Line/>
+                      <StarRating
+                          onChange={this.rateRide}
+                          maxStars={5}
+                          rating={0}
+                          colorOn={colors.rating}
+                          colorOff={colors.action_disabled}
+                      />
+                    <Button
+                        action={this.finishRide}
+                        text={"FINISH"}
+                        style={styles.primary_button_finalize}
+                    />
 
-                    </View>
-                    <Banner/>
                 </View>
-            );
-        },
+                <Banner/>
+            </View>
+        );
+    },
+
+    renderWaiting: function() {
+        var ride = this.props.currentRide;
+        var header = this.renderHeader("Waiting");
+        var text = this.renderText("Hang on, we are upting this ride.");
+
+        return  (
+            <View style={styles.page_finalize}>
+                <View style={styles.text_box}>
+                    <Avatar />
+                    {header}
+                    {text}
+                </View>
+                <Banner/>
+            </View>
+        );
+    },
 
     renderScene: function(route, navigator) {
         var ride = this.props.currentRide;
@@ -557,7 +571,12 @@ module.exports = React.createClass({
                 content = this.renderFinalized();
                 break;
             case 'finalized' :
-                content = this.renderFinalized();
+                if (ride.driver_rating) {
+                    this.refreshRide(ride);
+                    content = this.renderWaiting();
+                } else {
+                    content = this.renderFinalized();
+                }
                 break;
         }
 
