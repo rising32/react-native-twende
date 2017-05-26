@@ -265,7 +265,7 @@ module.exports = React.createClass({
         )
     },
 
-    renderEarnings: function (fare_amount, fare_currency) {
+    renderCommission: function (fare_amount, fare_currency) {
         fare_amount = fare_amount * 0.2;
         return (
             <Text style={styles.text}>
@@ -455,7 +455,7 @@ module.exports = React.createClass({
 
         // screen components
         var header = this.renderHeader("Ride Fare");
-        var rider_earnings = this.renderEarnings(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
+        var commission = this.renderCommission(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
         var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: 'Ride'");
 
@@ -469,7 +469,7 @@ module.exports = React.createClass({
                     <Text style={styles.heavy_text}>
                         {ride.fare}
                     </Text>
-                    {rider_earnings}
+                    {commission}
                     <Line/>
                     {text}
                     <Button
