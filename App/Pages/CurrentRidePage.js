@@ -412,7 +412,6 @@ var CurrentRidePage = React.createClass({
     },
 
     renderDropOff: function () {
-
         var ride = this.props.currentRide;
 
         return (
@@ -423,7 +422,6 @@ var CurrentRidePage = React.createClass({
                         <Text style={styles.item_title}>
                             Ride Fare
                         </Text>
-
                         <Text style={styles.text_finalize}>
                             Your trip was {ride.distance.distance}
                         </Text>
@@ -456,14 +454,11 @@ var CurrentRidePage = React.createClass({
 
     renderPayment: function () {
         var ride = this.props.currentRide;
-        var text;
-        console.log(ride);
+        var header = "Payment"
 
         if (ride.payment_method == 'mpesa') {
-            var header = "M-Pesa Payment";
-            text = "Choose Paybill Number: 653839" + "\n" + "Account No: Ride";
+            var text = "Choose Paybill Number: 653839" + "\n" + "Account No: Ride";
         } else {
-            var header = "Cash Payment";
             var text = "Please pay the cash amount to rider";
         }
 

@@ -268,27 +268,10 @@ module.exports = React.createClass({
         )
     },
 
-    renderText: function (text) {
-        return (
-            <Text style={styles.text_finalize}>
-                {text}
-            </Text>
-        )
-    },
-
     renderTextRide: function (text) {
         return (
             <Text style={styles.text_ride}>
                 {text}
-            </Text>
-        )
-    },
-
-    renderCommission: function (fare_amount, fare_currency) {
-        fare_amount = fare_amount * 0.2;
-        return (
-            <Text style={styles.text}>
-                Commission (20%): {fare_amount} {fare_currency}
             </Text>
         )
     },
@@ -431,7 +414,7 @@ module.exports = React.createClass({
 
         // components in screen
         var top = this.renderSheetTop();
-        var header =this.renderHeader("Hi " + ride.driver.first_name + ",");
+        var header = this.renderHeader("Hi " + ride.driver.first_name + ",");
         var text = this.renderTextRide("Please offer me a helmet & hair net. Ride carefully!");
 
         return  (
@@ -474,7 +457,7 @@ module.exports = React.createClass({
         // screen components
         var header = this.renderHeader("Ride Fare");
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText("Make sure " + ride.customer.first_name + " chooses Cash or M-pesa. Request for payment!");
+        var commission = this.props.currentRide.ride_fare.amount * 0.2;
 
         return  (
             <View style={styles.page_finalize}>
@@ -486,12 +469,17 @@ module.exports = React.createClass({
                     <Text style={styles.heavy_text}>
                         {ride.fare}
                     </Text>
+                     <Text style={styles.text}>
+                        Commission (20%): {commission} KES
+                    </Text>
                     <Line/>
-                    {text}
+                    <Text style={styles.text_finalize}>
+                        Request for payment from {ride.customer.name}
+                    </Text>
                     <Button
                         action={this.choosePayment}
                         style={styles.primary_button_finalize}
-                        text={"FINALIZE"}
+                        text={"NEXT"}
                     />
                 </View>
                 <Banner/>
@@ -504,8 +492,6 @@ module.exports = React.createClass({
 
         // screen components
         var header = this.renderHeader("Payment");
-        var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText("Confirm payment by " + ride.customer.first_name);
 
         return  (
             <View style={styles.page_finalize}>
@@ -513,12 +499,16 @@ module.exports = React.createClass({
                 <View style={styles.text_box}>
                     <Avatar />
                     {header}
-                    {distance}
                     <Text style={styles.heavy_text}>
                         {ride.fare}
                     </Text>
+                    <Text style={styles.text}>
+                        Confirm payment by {ride.customer.name}
+                    </Text>
                     <Line/>
-                    {text}
+                    <Text style={styles.text}>
+                        M-Pesa Payment: Choose Paybill Number: 653839. Account No: Ride
+                    </Text>
                     <Button
                         action={this.completePayment}
                         style={styles.primary_button_finalize}
@@ -535,7 +525,6 @@ module.exports = React.createClass({
 
         // screen components
         var header = this.renderHeader("Rating");
-        var text = this.renderText("How was your ride with " + ride.customer.first_name +"?");
 
         return  (
             <View style={styles.page_finalize}>
@@ -543,7 +532,9 @@ module.exports = React.createClass({
                 <View style={styles.text_box}>
                     <Avatar />
                     {header}
-                    {text}
+                     <Text style={styles.text}>
+                        How was your ride with {ride.customer.name}?
+                    </Text>
                     <Line/>
                       <StarRating
                           onChange={this.rateRide}
