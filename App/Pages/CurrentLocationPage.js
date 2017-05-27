@@ -129,7 +129,7 @@ const CurrentLocationPage = React.createClass({
         } else if (this.state.origin.latitude == 0) {
             Alert.alert(
                 'Pick up location not set',
-                'Please move the map to set your loation and make sure location service is enabled..',
+                'Please move the map to set your location and make sure location service is enabled..',
                 [
                     {text: 'OK'}
                 ],
