@@ -147,6 +147,25 @@ module.exports = React.createClass({
         this.setState({rating: rating});
     },
 
+    choosePayment: function(){
+        var ride = this.props.currentRide;
+        ride.driver_price = this.state.price;
+        ride.driver_rating = this.state.rating;
+        ride.state = 'payment';
+        ride.payment_method = 'cash';
+        this.setState({currentRide: ride});
+        updateCurrentRide(ride);
+    },
+
+    completePayment: function(){
+        var ride = this.props.currentRide;
+        ride.driver_price = this.state.price;
+        ride.driver_rating = this.state.rating;
+        ride.state = 'finalized';
+        this.setState({currentRide: ride});
+        updateCurrentRide(ride);
+    },
+
     finishRide: function() {
         var ride = this.props.currentRide;
         ride.driver_price = this.state.price;
@@ -449,14 +468,13 @@ module.exports = React.createClass({
         );
     },
 
-    renderDropoff: function() {
+    renderDropOff: function() {
         var ride = this.props.currentRide;
 
         // screen components
         var header = this.renderHeader("Ride Fare");
-        var commission = this.renderCommission(this.props.currentRide.ride_fare.amount, this.props.currentRide.ride_fare.currency);
         var distance = this.renderDistance("The trip was " + ride.distance.distance);
-        var text = this.renderText(ride.customer.first_name + " pays cash or M-pesa. Paybill No: 653839. Account No: 'Ride'");
+        var text = this.renderText("Make sure " + ride.customer.first_name + " chooses Cash or M-pesa. Request for payment!");
 
         return  (
             <View style={styles.page_finalize}>
@@ -468,11 +486,10 @@ module.exports = React.createClass({
                     <Text style={styles.heavy_text}>
                         {ride.fare}
                     </Text>
-                    {commission}
                     <Line/>
                     {text}
                     <Button
-                        action={this.finishRide}
+                        action={this.choosePayment}
                         style={styles.primary_button_finalize}
                         text={"FINALIZE"}
                     />
@@ -482,7 +499,38 @@ module.exports = React.createClass({
         );
     },
 
-    renderFinalized: function() {
+    renderPayment: function() {
+        var ride = this.props.currentRide;
+
+        // screen components
+        var header = this.renderHeader("Payment");
+        var distance = this.renderDistance("The trip was " + ride.distance.distance);
+        var text = this.renderText("Confirm payment by " + ride.customer.first_name);
+
+        return  (
+            <View style={styles.page_finalize}>
+                <View></View>
+                <View style={styles.text_box}>
+                    <Avatar />
+                    {header}
+                    {distance}
+                    <Text style={styles.heavy_text}>
+                        {ride.fare}
+                    </Text>
+                    <Line/>
+                    {text}
+                    <Button
+                        action={this.completePayment}
+                        style={styles.primary_button_finalize}
+                        text={"CONFIRM PAYMENT"}
+                    />
+                </View>
+                <Banner/>
+            </View>
+        );
+    },
+
+    renderFinalize: function() {
         var ride = this.props.currentRide;
 
         // screen components
@@ -491,6 +539,7 @@ module.exports = React.createClass({
 
         return  (
             <View style={styles.page_finalize}>
+                <View></View>
                 <View style={styles.text_box}>
                     <Avatar />
                     {header}
@@ -508,24 +557,6 @@ module.exports = React.createClass({
                         text={"FINISH"}
                         style={styles.primary_button_finalize}
                     />
-
-                </View>
-                <Banner/>
-            </View>
-        );
-    },
-
-    renderWaiting: function() {
-        var ride = this.props.currentRide;
-        var header = this.renderHeader("Waiting");
-        var text = this.renderText("Hang on, we are upting this ride.");
-
-        return  (
-            <View style={styles.page_finalize}>
-                <View style={styles.text_box}>
-                    <Avatar />
-                    {header}
-                    {text}
                 </View>
                 <Banner/>
             </View>
@@ -564,19 +595,14 @@ module.exports = React.createClass({
              case 'driving' :
                 content = this.renderDriving();
                 break;
-            case 'dropoff' :
-                content = this.renderDropoff();
+           case 'dropoff' :
+                content = this.renderDropOff();
                 break;
-            case 'payment' :
-                content = this.renderFinalized();
+            case 'payment':
+                content = this.renderPayment();
                 break;
-            case 'finalized' :
-                if (ride.driver_rating) {
-                    this.refreshRide(ride);
-                    content = this.renderWaiting();
-                } else {
-                    content = this.renderFinalized();
-                }
+            case 'finalized':
+                content = this.renderFinalize();
                 break;
         }
 
