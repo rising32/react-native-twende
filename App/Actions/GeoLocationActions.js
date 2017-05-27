@@ -3,6 +3,7 @@ import BackgroundGeolocation from 'react-native-mauron85-background-geolocation'
 import {dispatch} from '../Dispatcher';
 import actions from "../Constants/Actions";
 import config from "../config"
+import {sendError} from "../Actions/ErrorLogActions";
 var LocationService = require('../Services/LocationService');
 var ReactNative = require('react-native');
 var {

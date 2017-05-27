@@ -177,6 +177,11 @@ var TwendeApp = React.createClass({
 
     logout: function () {
         this.closeDrawer();
+        let user = this.state.currentUser;
+        if (user.is_driver) {
+            user.state = 'unvailable';
+            updateCurrentUser(user);
+        }
         logoutCurrentUser();
         logoutFacebookUser();
     },
@@ -266,9 +271,14 @@ var TwendeApp = React.createClass({
                     currentRide: currentRide
                 });
             } else {
+                const currentUser = this.state.currentUser;
+                if (currentRide.state === 'canceled') {
+                    currentUser.state = 'avialable';
+                    this.setState('currentUser', currentUser);
+                }
                 this.navigator.push({
                     id: 'DriverHomePage',
-                    currentUser: this.state.currentUser,
+                    currentUser: currentUser,
                     currentRide: currentRide
                 });
             }

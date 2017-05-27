@@ -71,13 +71,9 @@ const FarePricePage = React.createClass({
                     <Text style={styles.item_title}>
                         Our Price
                     </Text>
-                    <View style={styles.timer}>
-                        <Text style={styles.text_finalize}>
-                            Pick-up fee: 50 shilling 
-                        </Text>
-                    </View>
-                    <View style={styles.timer}>
-                        <Text style={styles.text_finalize}>
+                    <View>
+                        <Text style={styles.text}>
+                            Pick-up fee: 50 shilling {"\n"} 
                             Kilometer price: 50 shilling
                         </Text>
                     </View>

@@ -122,7 +122,7 @@ module.exports = React.createClass({
 
     renderScene: function(route, navigator) {
         var is_available = this.state.currentUser.state == 'available';
-        var header = this.renderHeader("Hi " + this.props.currentUser.first_name);
+        var header = this.renderHeader("Hi " + this.props.currentUser.first_name + ",");
         var text = this.renderText("Are you available for a ride?");
         var statusText = "Customer cannot find you";
         var statusIcon = "not-interested";
