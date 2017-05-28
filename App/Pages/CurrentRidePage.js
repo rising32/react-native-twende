@@ -35,7 +35,7 @@ import {
 import events from "../Constants/Events";
 import { sounds } from "../Sounds";
 import { Bubbles } from 'react-native-loader';
-import Timer from 'react-native-timer-component';
+import Timer from '../Components/Timer';
 import TimerMixin from 'react-timer-mixin';
 const timer = require('react-native-timer');
 var SheetIcon = require('../Components/SheetIcon');
@@ -239,7 +239,7 @@ var CurrentRidePage = React.createClass({
                                 <Timer 
                                     ms={600000} 
                                     style={styles.countdown_timer_view}
-                                    textstyle={styles.countdown_timer}
+                                    textStyle={styles.countdown_timer}
                                 />
                             </View>
                             </View>

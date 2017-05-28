@@ -34,7 +34,6 @@ import { updateCurrentUser,
 import { startWatchingGeoLocation,
          loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
-import Timer from 'react-native-timer-component';
 import TimerMixin from 'react-timer-mixin';
 const timer = require('react-native-timer');
 
