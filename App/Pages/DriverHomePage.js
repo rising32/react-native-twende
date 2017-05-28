@@ -174,7 +174,7 @@ module.exports = React.createClass({
                     <Link
                         style={{padding:10, marginBottom: 10}}
                         action={this.refreshItems}
-                        text={'refresh'}
+                        text={'VIEW REQUEST'}
                         icon={'autorenew'}
                     />
                 </View>
