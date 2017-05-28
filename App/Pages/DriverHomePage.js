@@ -34,7 +34,6 @@ import { updateCurrentUser,
 import { startWatchingGeoLocation,
          loadGeoLocation,
          stopWatchingGeoLocation } from "../Actions/GeoLocationActions";
-import Timer from 'react-native-timer-component';
 import TimerMixin from 'react-timer-mixin';
 const timer = require('react-native-timer');
 
@@ -175,7 +174,7 @@ module.exports = React.createClass({
                     <Link
                         style={{padding:10, marginBottom: 10}}
                         action={this.refreshItems}
-                        text={'refresh'}
+                        text={'VIEW REQUEST'}
                         icon={'autorenew'}
                     />
                 </View>
