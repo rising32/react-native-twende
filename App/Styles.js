@@ -525,7 +525,7 @@ export var styles = StyleSheet.create({
 
     switch: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
         padding: 10,
         marginTop: -20

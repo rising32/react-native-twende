@@ -51,7 +51,6 @@ import {
     updateCurrentUser } from './Actions/CurrentUserActions';
 import { logoutFacebookUser }  from './Actions/SocialActions';
 var PushNotification = require('react-native-push-notification');
-import { notify } from "./Actions/NotifyActions"
 import {
     refreshCurrentRide,
     loadRideList } from "./Actions/CurrentRideActions";
@@ -115,7 +114,7 @@ var TwendeApp = React.createClass({
     },
 
     backButton: function() {
-        var navigator = this.navigator
+        var navigator = this.navigator;
         if (navigator.getCurrentRoutes().length > 2) {
             navigator.pop();
             return true;
@@ -126,7 +125,7 @@ var TwendeApp = React.createClass({
     },
 
     componentWillMount: function () {
-        PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+        PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
         BackAndroid.addEventListener("hardwareBackPress", this.backButton);
         CurrentRideStore.on(events.currentRideLoaded, this.currentRideLoaded);
         CurrentRideStore.on(events.noCurrentRide, this.noCurrentRide);
@@ -251,7 +250,6 @@ var TwendeApp = React.createClass({
         this.setState({currentRide: currentRide});
         if (this.state.currentUser.is_driver) {
             if (currentRide.state === 'requested') {
-                sounds.alarm2.play();
                 this.navigator.push({
                     id: 'DriverRidePage',
                     currentUser: this.state.currentUser,
@@ -325,11 +323,18 @@ var TwendeApp = React.createClass({
                 },
                 onNotification: function (notification) {
                     if (notification.title) {
-                        notify(notification.title, notification.message);
+                        let sound = 'default';
+                        if (notification.sound === 'jingle') {
+                            sound = 'alarm2.mp3';
+                        }
+                        PushNotification.localNotification({
+                            title: notification.title,
+                            message: notification.message,
+                            soundName: sound
+                        });
                     }
                     if (notification.ride) {
                         window.setTimeout(loadRideList, 800);
-                        // loadRideList();
                         // Some how loading specific ride here gives a 404
                         // refreshCurrentRide(notification.ride);
                     }

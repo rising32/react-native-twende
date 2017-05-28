@@ -31,7 +31,7 @@ var IconText = React.createClass({
             >
                 {icon}
                 <View style={styles.link}>
-                    <Text style={{color: color, fontSize: size, width: 200, fontFamily: 'gothamrounded_medium' }}>
+                    <Text style={{color: color, fontSize: size, fontFamily: 'gothamrounded_medium' }}>
                         {text}
                     </Text>
                 </View>
