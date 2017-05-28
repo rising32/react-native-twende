@@ -155,13 +155,11 @@ module.exports = React.createClass({
                     />
                 </View>
                  <View style={styles.switch}>
-                    <View></View>
                     <Switch
                         onTintColor={colors.action}
                         onValueChange={(val) => this.toggleAvailability(val)}
                         value={is_available}
                     />
-                    <View></View>
                 </View>
                 <View style={styles.avatar_centre_column}>
                     <IconText

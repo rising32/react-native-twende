@@ -1,4 +1,4 @@
-// const server = 'http://10.0.0.35:8000';
+// const server = 'http://192.168.0.169:8000';
 const server = 'https://api.twende.co.ke';
 const apiUrl =  server + '/api/';
 const mediaUrl = server;
