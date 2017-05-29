@@ -791,6 +791,7 @@ export var styles = StyleSheet.create({
         marginTop: 28,
         marginBottom: 28,
         height: 40,
+        maxHeight: 110,
         width: 260,
         bottom: 0,
         padding: 10,
