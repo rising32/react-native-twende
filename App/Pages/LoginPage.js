@@ -157,8 +157,6 @@ var LoginPage = React.createClass({
                 </View>     
                 <View style={styles.empty_view_loginpage}>
                 </View>
-                <View style={styles.empty_view_loginpage}>
-                </View>
                 <Avatar/>
                 <View style={styles.text_box}>
                     <Text style={styles.item_title}>
