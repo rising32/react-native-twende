@@ -129,7 +129,6 @@ export var styles = StyleSheet.create({
 
     customer_title: {
         fontSize: 18,
-        marginBottom: -4,
         fontFamily: 'gothamrounded_medium',
         textAlign: 'center',
         color: colors.title
@@ -864,7 +863,8 @@ export var styles = StyleSheet.create({
     // StarRating
     star_rating: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor:'transparent'
     },
     starRatingContainer: {
         flexDirection: 'row',

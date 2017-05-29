@@ -53,7 +53,7 @@ var Rating = React.createClass({
 
         if (this.props.showNumber) {
         return (
-            <View style={[this.props.style, styles.starRatingContainer]}>
+            <View style={[styles.starRatingContainer, {backgroundColor: this.props.backgroundColor}]}>
                 {starButtons}
                 <Text style={{color: this.props.color, fontFamily: 'gothamrounded_medium', fontSize: 12, marginLeft: 4}}>{rating}</Text>
             </View>
@@ -61,7 +61,7 @@ var Rating = React.createClass({
     }
 
             return (
-            <View style={[this.props.style, styles.starRatingContainer]}>
+             <View style={[styles.starRatingContainer, {backgroundColor: this.props.backgroundColor}]}>
                 {starButtons}
             </View>
         );
