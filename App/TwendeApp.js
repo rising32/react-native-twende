@@ -195,7 +195,8 @@ var TwendeApp = React.createClass({
                 currentRide: this.state.currentRide
             });
         } catch (err) {
-            alert(err);
+            sendError("ERROR", err, null, this.state.currentRide.id);
+            ToastAndroid.show("Something went wrong. Please reload the app", ToastAndroid.LONG)
         }
     },
 
@@ -209,6 +210,7 @@ var TwendeApp = React.createClass({
             });
         } catch (err) {
             sendError("ERROR", err, null, this.state.currentRide.id);
+            ToastAndroid.show("Something went wrong. Please reload the app", ToastAndroid.LONG)
         }
     },
 
