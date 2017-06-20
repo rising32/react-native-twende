@@ -148,7 +148,7 @@ module.exports = React.createClass({
     },
 
     choosePayment: function(){
-        var ride = this.props.currentRide;
+        const ride = this.props.currentRide;
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
         ride.state = 'payment';
@@ -158,23 +158,18 @@ module.exports = React.createClass({
     },
 
     completePayment: function(){
-        var ride = this.props.currentRide;
-        ride.driver_price = this.state.price;
-        ride.driver_rating = this.state.rating;
+        const ride = this.props.currentRide;
         ride.state = 'finalized';
         this.setState({currentRide: ride});
         updateCurrentRide(ride);
     },
 
     finishRide: function() {
-        var ride = this.props.currentRide;
+        const ride = this.props.currentRide;
         ride.driver_price = this.state.price;
         ride.driver_rating = this.state.rating;
         ride.state = 'finalized';
-
         updateCurrentRide(ride);
-
-        // Reload currentUser to get new user state
         reloadCurrentUser();
     },
 

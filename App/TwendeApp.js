@@ -40,6 +40,7 @@ var IconText = require('./Components/IconText');
 var Link = require('./Components/Link');
 import { colors, styles } from "./Styles";
 import { sounds } from "./Sounds";
+import {sendError} from "./Actions/ErrorLogActions";
 import events from "./Constants/Events";
 import CurrentUserStore from './Stores/CurrentUserStore';
 import CurrentRideStore from './Stores/CurrentRideStore';
@@ -187,10 +188,30 @@ var TwendeApp = React.createClass({
 
     goToPage: function (pageId) {
         this.closeDrawer();
-        this.navigator.push({
-            id: pageId,
-            currentUser: this.state.currentUser
-        });
+        try {
+            this.navigator.push({
+                id: pageId,
+                currentUser: this.state.currentUser,
+                currentRide: this.state.currentRide
+            });
+        } catch (err) {
+            sendError("ERROR", err, null, this.state.currentRide.id);
+            ToastAndroid.show("Something went wrong. Please reload the app", ToastAndroid.LONG)
+        }
+    },
+
+    replacePage: function (pageId) {
+        this.closeDrawer();
+        try {
+            this.navigator.replace({
+                id: pageId,
+                currentUser: this.state.currentUser,
+                currentRide: this.state.currentRide
+            });
+        } catch (err) {
+            sendError("ERROR", err, null, this.state.currentRide.id);
+            ToastAndroid.show("Something went wrong. Please reload the app", ToastAndroid.LONG)
+        }
     },
 
     goBack: function () {
@@ -214,7 +235,7 @@ var TwendeApp = React.createClass({
     },
 
     noCurrentRide: function() {
-        var currentRoute = this.navigator.getCurrentRoutes().pop().id;
+        const currentRoute = this.navigator.getCurrentRoutes().pop().id;
         if (this.state.currentUser.is_driver) {
             if (currentRoute !== 'DriverHomePage') {
                 this.navigator.push({
@@ -239,8 +260,10 @@ var TwendeApp = React.createClass({
     },
 
     currentRideLoaded: function(currentRide) {
-        let previous = this.state.currentRide;
+        const previous = this.state.currentRide;
+        const currentUser = this.state.currentUser;
         if (previous.id === currentRide.id
+                && currentRide.state !== 'finalized'
                 && previous.state === currentRide.state
                 && previous.driver.username === currentRide.driver.username) {
             // Nothing much changed. Just update state and return.
@@ -248,37 +271,26 @@ var TwendeApp = React.createClass({
             return;
         }
         this.setState({currentRide: currentRide});
-        if (this.state.currentUser.is_driver) {
+        if (currentUser.is_driver) {
             if (currentRide.state === 'requested') {
-                this.navigator.push({
-                    id: 'DriverRidePage',
-                    currentUser: this.state.currentUser,
-                    currentRide: currentRide
-                });
+                this.replacePage('DriverRidePage');
             } else if (['accepted', 'driving', 'dropoff', 'payment'].indexOf(currentRide.state) > -1) {
                 this.state.currentUser.state = 'unavailable';
-                this.navigator.push({
-                    id: 'DriverRidePage',
-                    currentUser: this.state.currentUser,
-                    currentRide: currentRide
-                });
-            } else if (currentRide.state === 'finalized' && !currentRide.driver_rating) {
-                this.navigator.push({
-                    id: 'DriverRidePage',
-                    currentUser: this.state.currentUser,
-                    currentRide: currentRide
-                });
+                this.replacePage('DriverRidePage');
+            } else if (currentRide.state === 'finalized') {
+                if (currentRide.driver_rating > 0 ) {
+                    // Ride finalized and rated: Go home
+                    this.replacePage('DriverHomePage');
+                } else {
+                    // Ride finalized but still needs rider rate
+                    this.replacePage('DriverRidePage');
+                }
             } else {
-                const currentUser = this.state.currentUser;
                 if (currentRide.state === 'canceled') {
-                    currentUser.state = 'avialable';
+                    currentUser.state = 'available';
                     this.setState('currentUser', currentUser);
                 }
-                this.navigator.push({
-                    id: 'DriverHomePage',
-                    currentUser: currentUser,
-                    currentRide: currentRide
-                });
+                this.replacePage('DriverHomePage');
             }
         } else {
             if (currentRide.state === 'canceled') {
@@ -289,28 +301,13 @@ var TwendeApp = React.createClass({
                 };
                 createCurrentRide(ride);
             } else if (currentRide.state === 'new') {
-                this.navigator.replace({
-                    id: 'DriverListPage',
-                    currentUser: this.state.currentUser,
-                    currentRide: currentRide
-                });
+                this.replacePage('DriverListPage');
             } else if (['requested', 'accepted', 'driving', 'dropoff', 'payment'].indexOf(currentRide.state) > -1) {
-                this.navigator.replace({
-                    id: 'CurrentRidePage',
-                    currentUser: this.state.currentUser,
-                    currentRide: currentRide
-                });
+                this.replacePage('CurrentRidePage');
             } else if (currentRide.state === 'finalized' && !currentRide.customer_rating) {
-                this.navigator.replace({
-                    id: 'CurrentRidePage',
-                    currentUser: this.state.currentUser,
-                    currentRide: currentRide
-                });
+                this.replacePage('CurrentRidePage');
             } else {
-                this.navigator.replace({
-                    id: 'CurrentLocationPage',
-                    currentUser: this.state.currentUser
-                });
+                this.replacePage('CurrentLocationPage');
             }
         }
     },
