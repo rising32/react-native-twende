@@ -4,6 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.magus.fblogin.FacebookLoginPackage;
 import com.marianhello.react.BackgroundGeolocationPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -33,6 +36,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new MapsPackage(),
+            new ImagePickerPackage(),
+            new FacebookLoginPackage(),
             new BackgroundGeolocationPackage(),
             new ReactMaterialKitPackage(),
             new ImagePickerPackage(),
